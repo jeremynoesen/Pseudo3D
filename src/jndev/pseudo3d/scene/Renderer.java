@@ -60,10 +60,10 @@ public class Renderer {
             Image scaledImage = image.getScaledInstance((int) (image.getWidth(null) * scale),
                     (int) (image.getHeight(null) * scale), Image.SCALE_FAST);
             
-            double x = ((objPos.getX() - camPos.getX()) * scale) + (size / 2);
-            double y = ((objPos.getY() - camPos.getY()) * scale) + (size / 2);
+            double x = ((objPos.getX() - camPos.getX()) * scale) + (panel.getWidth() / 2.0);
+            double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
             
-            graphics.drawImage(scaledImage, (int) x, (int) y, null);
+            graphics.drawImage(scaledImage, (int) x, panel.getHeight() - (int) y, null);
             
         }
         
