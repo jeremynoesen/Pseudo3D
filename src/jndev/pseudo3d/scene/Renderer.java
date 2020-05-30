@@ -57,13 +57,19 @@ public class Renderer {
             if (Double.compare(scale, 0) == 0) continue; //don't render objects that are too small
     
             Image image = object.getSprite();
-            Image scaledImage = image.getScaledInstance((int) (image.getWidth(null) * scale),
-                    (int) (image.getHeight(null) * scale), Image.SCALE_FAST);
+            int imgWidth = image.getWidth(null);
+            int imgHeight = image.getHeight(null);
+            
+            Image scaledImage = image.getScaledInstance((int) (imgWidth * scale),
+                    (int) (imgHeight * scale), Image.SCALE_FAST);
+            int imgWidthScaled = scaledImage.getWidth(null);
+            int imgHeightScaled = scaledImage.getHeight(null);
             
             double x = ((objPos.getX() - camPos.getX()) * scale) + (panel.getWidth() / 2.0);
             double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
             
-            graphics.drawImage(scaledImage, (int) x, panel.getHeight() - (int) y, null);
+            graphics.drawImage(scaledImage, (int) (x - (imgWidthScaled / 2.0)),
+                    (int) ((panel.getHeight() - y) - (imgHeightScaled / 2.0)), null);
             
         }
         
