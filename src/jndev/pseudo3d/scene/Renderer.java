@@ -1,6 +1,7 @@
 package jndev.pseudo3d.scene;
 
 import jndev.pseudo3d.object.Object;
+import jndev.pseudo3d.util.Vector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,23 +39,30 @@ public class Renderer {
         panel.repaint();
         
         for (Object object : scene.getObjects()) {
-            
-            if (object.getPosition().getZ() <= scene.getCamera().getPosition().getZ())
+    
+            Camera camera = scene.getCamera();
+            Vector objPos = object.getPosition();
+            Vector camPos = camera.getPosition();
+    
+            if (objPos.getZ() <= camPos.getZ())
                 break; //prevent rendering objects behind camera
+    
+            double fov = camera.getFieldOfView();
+            double size = camera.getSensorSize();
             
-            Image image = object.getSprite();
-            
-            double oppositeSide = (object.getPosition().getZ() - scene.getCamera().getPosition().getZ()) *
-                    (Math.sin(Math.toRadians(scene.getCamera().getFieldOfView())) / Math.sin(Math.toRadians(90 - scene.getCamera().getFieldOfView())));
-            double scale = (2 * oppositeSide) / scene.getCamera().getSensorSize();
+            double oppositeSide = (objPos.getZ() - camPos.getZ()) *
+                    (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov)));
+            double scale = (2 * oppositeSide) / size;
             
             if (Double.compare(scale, 0) == 0) continue; //don't render objects that are too small
-            
+    
+            Image image = object.getSprite();
             Image scaledImage = image.getScaledInstance((int) (image.getWidth(null) * scale),
                     (int) (image.getHeight(null) * scale), Image.SCALE_FAST);
             
-            double x = 0; //todo get window x value
-            double y = 0; //todo get window y value
+            double x = ((objPos.getX() - camPos.getX()) * scale) + (size / 2);
+            double y = ((objPos.getY() - camPos.getY()) * scale) + (size / 2);
+            
             graphics.drawImage(scaledImage, (int) x, (int) y, null);
             
         }
