@@ -5,14 +5,12 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 /**
  * this class is used to load and retrieve all sprites for a game
  */
-public class SpriteLoader {
-    private static HashMap<String, Image> sprites = new HashMap<>();
-    private static Logger logger = Logger.getLogger(SpriteLoader.class.getName());
+public class Sprites {
+    private static final HashMap<String, Image> sprites = new HashMap<>();
     
     /**
      * this will load all sprite images of .png format into an array list with a name that relates to their relative
@@ -20,7 +18,7 @@ public class SpriteLoader {
      *
      * @param dir directory where sprites are stored
      */
-    public static void loadSprites(File dir) {
+    public static void load(File dir) {
         for (File file : dir.listFiles()) {
             if (!file.isDirectory() && file.getName().toLowerCase().endsWith(".png")) {
                 String[] pathFiles = dir.getPath().split("/");
@@ -37,12 +35,11 @@ public class SpriteLoader {
                 fileName = fileName.toUpperCase();
                 try {
                     sprites.put(fileName, ImageIO.read(file));
-                    logger.info("Loaded sprite: " + fileName);
                 } catch (IOException e) {
-                    logger.severe("Unable to load sprite: " + fileName);
+                    e.printStackTrace();
                 }
             } else {
-                loadSprites(file);
+                load(file);
             }
         }
     }
@@ -53,7 +50,7 @@ public class SpriteLoader {
      * @param name name of sprite to retrieve
      * @return Image object of sprite
      */
-    public static Image getSprite(String name) {
+    public static Image get(String name) {
         return sprites.get(name);
     }
 }

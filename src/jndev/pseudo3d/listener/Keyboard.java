@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * class to keep track of key strokes allowing multiple key presses
  */
-public class KeyboardListener extends KeyAdapter {
+public class Keyboard extends KeyAdapter {
     
     /**
      * set of all keys pressed
