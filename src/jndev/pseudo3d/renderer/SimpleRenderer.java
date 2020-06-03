@@ -40,6 +40,9 @@ public class SimpleRenderer {
         Graphics graphics = panel.getGraphics();
         panel.repaint();
         
+        if (scene.getBackground() == null) graphics.setColor(Color.WHITE);
+        else graphics.setColor(scene.getBackground());
+        
         for (Object object : scene.getObjects()) {
             
             Camera camera = scene.getCamera();
@@ -56,7 +59,8 @@ public class SimpleRenderer {
                     (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov)));
             double scale = (2 * oppositeSide) / size;
             
-            if (Double.compare(scale, 0) == 0 || object.getSprite() == null) continue; //don't render objects that are too small
+            if (Double.compare(scale, 0) == 0 || object.getSprite() == null || objPos.getZ() < camera.getViewDistance())
+                continue; //don't render objects that are too small, without a sprite, or are past the view distance
             
             Image image = object.getSprite();
             int imgWidth = image.getWidth(null);
