@@ -49,17 +49,18 @@ public class SimpleRenderer {
             Vector objPos = object.getPosition();
             Vector camPos = camera.getPosition();
             
-            if (objPos.getZ() <= camPos.getZ())
+            if (objPos.getZ() >= camPos.getZ())
                 break; //prevent rendering objects behind camera
             
             double fov = camera.getFieldOfView();
             double size = camera.getSensorSize();
+            double viewDist = camera.getViewDistance();
             
             double oppositeSide = (objPos.getZ() - camPos.getZ()) *
                     (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov)));
             double scale = (2 * oppositeSide) / size;
             
-            if (Double.compare(scale, 0) == 0 || object.getSprite() == null || objPos.getZ() < camera.getViewDistance())
+            if (Double.compare(scale, 0) == 0 || object.getSprite() == null || objPos.getZ() < viewDist)
                 continue; //don't render objects that are too small, without a sprite, or are past the view distance
             
             Image image = object.getSprite();
