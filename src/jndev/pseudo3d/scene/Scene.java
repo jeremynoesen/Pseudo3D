@@ -3,6 +3,7 @@ package jndev.pseudo3d.scene;
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.renderer.Camera;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -22,6 +23,11 @@ public class Scene {
     private Camera camera;
     
     /**
+     * background color of scene;
+     */
+    private Color background;
+    
+    /**
      * comparator used to sort objects from high to low z position
      */
     private Comparator<Object> zComparator = (o1, o2) -> (int) (o2.getPosition().getZ() - o1.getPosition().getZ());
@@ -32,6 +38,7 @@ public class Scene {
     public Scene() {
         objects = new ArrayList<>();
         camera = new Camera();
+        background = Color.WHITE;
     }
     
     /**
@@ -42,6 +49,7 @@ public class Scene {
     public Scene(Scene scene) {
         objects = new ArrayList<>(scene.getObjects());
         camera = scene.getCamera();
+        background = scene.getBackground();
     }
     
     /**
@@ -108,5 +116,23 @@ public class Scene {
      */
     public void setCamera(Camera camera) {
         this.camera = camera;
+    }
+    
+    /**
+     * get the background color for the scene
+     *
+     * @return background color of scene
+     */
+    public Color getBackground() {
+        return background;
+    }
+    
+    /**
+     * set a color to show when the scene is rendered, like a sky color
+     *
+     * @param background color to set as background
+     */
+    public void setBackground(Color background) {
+        this.background = background;
     }
 }
