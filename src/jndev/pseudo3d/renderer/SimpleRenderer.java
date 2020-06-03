@@ -1,15 +1,17 @@
-package jndev.pseudo3d.scene;
+package jndev.pseudo3d.renderer;
 
 import jndev.pseudo3d.object.Object;
+import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 
 import javax.swing.*;
 import java.awt.*;
 
 /**
- * scene renderer, will turn a scene into a jpanel with graphics
+ * simple scene renderer, will turn a scene into a jpanel with graphics. depth scaling is uniform based on z distance
+ * from camera
  */
-public class Renderer {
+public class SimpleRenderer {
     
     /**
      * render a scene to a new jpanel
@@ -39,14 +41,14 @@ public class Renderer {
         panel.repaint();
         
         for (Object object : scene.getObjects()) {
-    
+            
             Camera camera = scene.getCamera();
             Vector objPos = object.getPosition();
             Vector camPos = camera.getPosition();
-    
+            
             if (objPos.getZ() <= camPos.getZ())
                 break; //prevent rendering objects behind camera
-    
+            
             double fov = camera.getFieldOfView();
             double size = camera.getSensorSize();
             
@@ -54,8 +56,8 @@ public class Renderer {
                     (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov)));
             double scale = (2 * oppositeSide) / size;
             
-            if (Double.compare(scale, 0) == 0) continue; //don't render objects that are too small
-    
+            if (Double.compare(scale, 0) == 0 || object.getSprite() == null) continue; //don't render objects that are too small
+            
             Image image = object.getSprite();
             int imgWidth = image.getWidth(null);
             int imgHeight = image.getHeight(null);

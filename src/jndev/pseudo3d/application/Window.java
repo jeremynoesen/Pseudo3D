@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 
-public class Window extends JFrame {
+public class Window extends JFrame { //todo fps for drawing, put rendered frames together
     
     public Window() {
         initializeUI();

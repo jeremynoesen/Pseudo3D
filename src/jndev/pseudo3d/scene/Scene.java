@@ -1,6 +1,7 @@
 package jndev.pseudo3d.scene;
 
 import jndev.pseudo3d.object.Object;
+import jndev.pseudo3d.renderer.Camera;
 
 import java.util.ArrayList;
 import java.util.Comparator;
