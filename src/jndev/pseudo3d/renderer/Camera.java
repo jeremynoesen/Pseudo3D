@@ -13,6 +13,11 @@ public class Camera {
     private double fieldOfView;
     
     /**
+     * how far away the camera is able to render
+     */
+    private double viewDistance;
+    
+    /**
      * camera sensor size. rendered scenes will scale to fit a square with side length of sensorSize pixels
      */
     private double sensorSize;
@@ -29,6 +34,7 @@ public class Camera {
         position = new Vector(0, 0, 0);
         fieldOfView = 90;
         sensorSize = 500;
+        viewDistance = 500;
     }
     
     /**
@@ -37,10 +43,11 @@ public class Camera {
      * @param position camera position
      * @param fieldOfView field of view in degrees
      */
-    public Camera(Vector position, double sensorSize, double fieldOfView) {
+    public Camera(Vector position, double sensorSize, double fieldOfView, double viewDistance) {
         this.position = position;
         this.fieldOfView = fieldOfView;
         this.sensorSize = sensorSize;
+        this.viewDistance = viewDistance;
     }
     
     /**
@@ -52,6 +59,7 @@ public class Camera {
         position = camera.getPosition();
         fieldOfView = camera.getFieldOfView();
         sensorSize = camera.getSensorSize();
+        viewDistance = camera.getViewDistance();
     }
     
     /**
@@ -106,5 +114,23 @@ public class Camera {
      */
     public void setSensorSize(double sensorSize) {
         this.sensorSize = sensorSize;
+    }
+    
+    /**
+     * get the view distance for the camera
+     *
+     * @return camera view distance
+     */
+    public double getViewDistance() {
+        return viewDistance;
+    }
+    
+    /**
+     * set how far away the camera is able to view objects
+     *
+     * @param viewDistance new view distance for camera
+     */
+    public void setViewDistance(double viewDistance) {
+        this.viewDistance = viewDistance;
     }
 }
