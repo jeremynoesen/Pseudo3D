@@ -75,9 +75,9 @@ class TestPanel extends JPanel implements ActionListener {
         if (Keyboard.isPressed(KeyEvent.VK_S))
             object.setPosition(object.getPosition().setZ(object.getPosition().getZ() + 1));
         if (Keyboard.isPressed(KeyEvent.VK_A))
-            object.setPosition(object.getPosition().setX(object.getPosition().getX() + 5));
-        if (Keyboard.isPressed(KeyEvent.VK_D))
             object.setPosition(object.getPosition().setX(object.getPosition().getX() - 5));
+        if (Keyboard.isPressed(KeyEvent.VK_D))
+            object.setPosition(object.getPosition().setX(object.getPosition().getX() + 5));
         if (Keyboard.isPressed(KeyEvent.VK_UP))
             object.setPosition(object.getPosition().setY(object.getPosition().getY() + 5));
         if (Keyboard.isPressed(KeyEvent.VK_DOWN))
