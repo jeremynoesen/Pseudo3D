@@ -15,30 +15,13 @@ import java.awt.*;
 public class SimpleRenderer {
     
     /**
-     * render a scene to a new jpanel
-     *
-     * @param scene scene to render
-     * @return new jpanel with rendered scene
-     */
-    public static JPanel render(Scene scene) {
-        
-        JPanel panel = new JPanel();
-        
-        render(scene, panel);
-        
-        return panel;
-        
-    }
-    
-    /**
      * render a scene to an existing jpanel
      *
      * @param scene scene to render
      * @param panel jpanel to render to
      */
-    public static void render(Scene scene, JPanel panel) {
+    public static void render(Scene scene, JPanel panel, Graphics graphics) {
         
-        Graphics graphics = panel.getGraphics();
         panel.repaint();
         
         if (scene.getBackground() == null) graphics.setColor(Color.WHITE);
@@ -57,7 +40,7 @@ public class SimpleRenderer {
             if (objPos.getZ() >= camPos.getZ())
                 break; //prevent rendering objects behind camera
             
-            if (object.getSprite() == null || objPos.getZ() < viewDist)
+            if (object.getSprite() == null || camPos.getZ() - objPos.getZ() > viewDist)
                 continue; //don't render objects with no sprite or further than view distance
             
             double scale = (2 * (objPos.getZ() - camPos.getZ()) *
