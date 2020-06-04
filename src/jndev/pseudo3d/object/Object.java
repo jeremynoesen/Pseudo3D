@@ -28,6 +28,7 @@ public class Object extends Collision {
     public Object() {
         super();
         scene = null;
+        sprite = null;
     }
     
     /**
@@ -38,6 +39,7 @@ public class Object extends Collision {
     public Object(Object object) {
         super(object);
         scene = object.getScene();
+        sprite = object.getSprite();
     }
     
     /**
