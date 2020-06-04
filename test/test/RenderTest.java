@@ -55,7 +55,7 @@ class TestPanel extends JPanel implements ActionListener {
         object.setPosition(new Vector(0, 0, -40));
         scene.addObject(object);
         Camera camera = new Camera();
-        camera.setFieldOfView(1);
+        camera.setFieldOfView(90);
         scene.setCamera(camera);
         setSize(new Dimension(500, 500));
         Timer timer = new Timer(10, this);

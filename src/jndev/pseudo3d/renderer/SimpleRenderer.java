@@ -34,17 +34,15 @@ public class SimpleRenderer {
             Vector objPos = object.getPosition();
             Vector camPos = camera.getPosition();
             double fov = camera.getFieldOfView() / 2.0;
-            double size = camera.getSensorSize();
-            double viewDist = camera.getViewDistance();
             
             if (objPos.getZ() >= camPos.getZ())
                 break; //prevent rendering objects behind camera
             
-            if (object.getSprite() == null || camPos.getZ() - objPos.getZ() > viewDist)
+            if (object.getSprite() == null || camPos.getZ() - objPos.getZ() > camera.getViewDistance())
                 continue; //don't render objects with no sprite or further than view distance
             
             double scale = (2 * (camPos.getZ() - objPos.getZ()) *
-                    (Math.sin(Math.toRadians(90 - fov)) / Math.sin(Math.toRadians(fov)))) / size;
+                    (Math.sin(Math.toRadians(90 - fov)) / Math.sin(Math.toRadians(fov)))) / camera.getSensorSize();
             //scale objects based on fov angle and distance from camera
             
             if (Double.compare(scale, 0) == 0)
