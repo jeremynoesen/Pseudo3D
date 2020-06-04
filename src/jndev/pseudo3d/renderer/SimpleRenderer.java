@@ -43,7 +43,7 @@ public class SimpleRenderer {
             if (object.getSprite() == null || camPos.getZ() - objPos.getZ() > viewDist)
                 continue; //don't render objects with no sprite or further than view distance
             
-            double scale = (2 * (objPos.getZ() - camPos.getZ()) *
+            double scale = (2 * (camPos.getZ() - objPos.getZ()) *
                     (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov)))) / size;
             //scale objects based on fov angle and distance from camera
             
