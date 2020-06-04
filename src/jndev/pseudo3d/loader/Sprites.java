@@ -14,7 +14,7 @@ public class Sprites {
     
     /**
      * this will load all sprite images of .png format into an array list with a name that relates to their relative
-     * path. a sprite stored in resources/sprites/player/front.png will be saved as PLAYER_FRONT
+     * path. a sprite stored in res/sprites/player/front.png will be saved as PLAYER_FRONT
      *
      * @param dir directory where sprites are stored
      */

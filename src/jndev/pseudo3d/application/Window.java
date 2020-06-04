@@ -22,7 +22,7 @@ public class Window extends JFrame { //todo fps for drawing, put rendered frames
     }
     
     private void initializeUI() {
-        Sprites.load(new File("/resources/sprites"));
+        Sprites.load(new File("res/sprites/"));
         addKeyListener(new Keyboard());
     
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
