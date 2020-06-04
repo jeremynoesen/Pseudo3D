@@ -43,6 +43,7 @@ public class SimpleRenderer {
         
         if (scene.getBackground() == null) graphics.setColor(Color.WHITE);
         else graphics.setColor(scene.getBackground());
+        //draw scene background color
         
         for (Object object : scene.getObjects()) {
             
@@ -56,11 +57,12 @@ public class SimpleRenderer {
             if (objPos.getZ() >= camPos.getZ())
                 break; //prevent rendering objects behind camera
             
-            if(object.getSprite() == null || objPos.getZ() < viewDist)
+            if (object.getSprite() == null || objPos.getZ() < viewDist)
                 continue; //don't render objects with no sprite or further than view distance
             
             double scale = (2 * (objPos.getZ() - camPos.getZ()) *
                     (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov)))) / size;
+            //scale objects based on fov angle and distance from camera
             
             if (Double.compare(scale, 0) == 0)
                 continue; //don't render objects that are too small
@@ -70,10 +72,12 @@ public class SimpleRenderer {
             int heightScaled = (int) (image.getHeight(null) * scale);
             double x = ((objPos.getX() - camPos.getX()) * scale) + (panel.getWidth() / 2.0);
             double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
+            //scale image dimensions and coordinates
             
             graphics.drawImage(image, (int) (x - (widthScaled / 2.0)),
                     (int) ((panel.getHeight() - y) - (heightScaled / 2.0)),
                     widthScaled, heightScaled, panel);
+            //draw image to panel
             
         }
         
