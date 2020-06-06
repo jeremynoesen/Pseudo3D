@@ -13,33 +13,21 @@ public class Sprites {
     private static final HashMap<String, Image> sprites = new HashMap<>();
     
     /**
-     * this will load all sprite images of .png format into an array list with a name that relates to their relative
-     * path. a sprite stored in res/sprites/player/front.png will be saved as PLAYER_FRONT
+     * this will load all sprite images of .png format into an array list with the file's name without an extension
      *
      * @param dir directory where sprites are stored
      */
     public static void load(File dir) {
         for (File file : dir.listFiles()) {
-            if (!file.isDirectory() && file.getName().toLowerCase().endsWith(".png")) {
-                String[] pathFiles = dir.getPath().split("/");
-                String fileName = "";
-                boolean start = false;
-                for (String pathFile : pathFiles) {
-                    if (dir.getPath().replace("/", "").trim().endsWith(pathFile)) {
-                        start = true;
-                        continue;
-                    }
-                    if (start) fileName += pathFile + "_";
-                }
-                fileName += file.getName().substring(0, file.getName().indexOf("."));
-                fileName = fileName.toUpperCase();
+            if (file.isFile() && file.getName().toLowerCase().endsWith(".png")) {
                 try {
-                    sprites.put(fileName, ImageIO.read(file));
+                    sprites.put(file.getName().replace(".png", ""), ImageIO.read(file));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                load(file);
+                if (file.isDirectory())
+                    load(file);
             }
         }
     }
