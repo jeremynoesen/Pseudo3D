@@ -38,8 +38,6 @@ public class RenderTest extends JFrame {
         setLocationRelativeTo(null);
         setSize(new Dimension(500, 500));
     }
-    
-
 }
 
 class TestPanel extends JPanel implements ActionListener {
