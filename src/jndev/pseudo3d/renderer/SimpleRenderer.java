@@ -24,8 +24,8 @@ public class SimpleRenderer {
         
         panel.repaint();
         
-        if (scene.getBackground() == null) graphics.setColor(Color.WHITE);
-        else graphics.setColor(scene.getBackground());
+        if (scene.getBackground() == null) panel.setBackground(Color.WHITE);
+        else panel.setBackground(scene.getBackground());
         //draw scene background color
         
         for (Object object : scene.getObjects()) {

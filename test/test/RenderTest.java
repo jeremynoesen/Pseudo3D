@@ -38,8 +38,6 @@ public class RenderTest extends JFrame {
         setLocationRelativeTo(null);
         setSize(new Dimension(500, 500));
     }
-    
-
 }
 
 class TestPanel extends JPanel implements ActionListener {
@@ -57,6 +55,7 @@ class TestPanel extends JPanel implements ActionListener {
         Camera camera = new Camera();
         camera.setFieldOfView(90);
         scene.setCamera(camera);
+        scene.setBackground(Color.BLACK);
         setSize(new Dimension(500, 500));
         Timer timer = new Timer(10, this);
         timer.start();
