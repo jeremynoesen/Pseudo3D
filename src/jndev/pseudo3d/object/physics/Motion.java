@@ -5,6 +5,8 @@ import jndev.pseudo3d.util.Vector;
 
 /**
  * abstract class to handle simple 2D motion for objects
+ *
+ * @author JNDev (Jeremaster101)
  */
 public abstract class Motion extends Box {
     

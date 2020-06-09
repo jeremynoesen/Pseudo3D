@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 /**
  * object for games, has physics and various methods to get object status
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Object extends Collision {
     

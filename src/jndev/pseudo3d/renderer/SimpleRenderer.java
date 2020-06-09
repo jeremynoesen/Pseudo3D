@@ -1,6 +1,5 @@
 package jndev.pseudo3d.renderer;
 
-import jndev.pseudo3d.loader.Sprites;
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
@@ -11,6 +10,8 @@ import java.awt.*;
 /**
  * simple scene renderer, will turn a scene into a jpanel with graphics. depth scaling is uniform based on z distance
  * from camera
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class SimpleRenderer {
     

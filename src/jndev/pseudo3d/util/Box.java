@@ -4,6 +4,8 @@ import java.util.Objects;
 
 /**
  * 3D box, used for bounding boxes and other operations
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Box {
     
