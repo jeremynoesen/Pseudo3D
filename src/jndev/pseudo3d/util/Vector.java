@@ -4,6 +4,8 @@ import java.util.Objects;
 
 /**
  * 3D vector and related mathematical operators
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Vector {
     

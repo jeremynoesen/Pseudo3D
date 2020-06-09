@@ -8,6 +8,8 @@ import java.util.Set;
 
 /**
  * abstract class to handle collisions for an object
+ *
+ * @author JNDev (Jeremaster101)
  */
 public abstract class Collision extends Motion {
     
@@ -88,7 +90,7 @@ public abstract class Collision extends Motion {
     /**
      * check if an object has collided with another object
      */
-    private void checkCollisions() {
+    private void checkCollisions() { //todo object priority so the right object gets its position fixed
         colliding = false;
         overlapping = false;
         allColliding.clear();

@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 /**
  * this class is used to load and retrieve all sprites for a game
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Sprites {
     private static final HashMap<String, Image> sprites = new HashMap<>();
