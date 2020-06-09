@@ -7,6 +7,8 @@ import java.util.Set;
 
 /**
  * class to keep track of key strokes allowing multiple key presses
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Keyboard extends KeyAdapter {
     

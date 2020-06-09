@@ -9,6 +9,8 @@ import java.util.Comparator;
 
 /**
  * scene to place objects on as well as a camera to render them
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Scene {
     
