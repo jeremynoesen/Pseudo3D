@@ -14,21 +14,29 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-public class RenderTest extends JPanel implements ActionListener {
+public class CollisionTest extends JPanel implements ActionListener {
     
     private Scene scene;
     private Object object;
     
-    public RenderTest() {
+    public CollisionTest() {
         scene = new Scene();
         object = new Object();
         object.setSprite(Sprites.get("front"));
         object.setGravity(0);
-        object.setPosition(new Vector(0, 0, -40));
+        object.setPosition(new Vector(0, 0, -100));
+        object.setWidth(object.getSprite().getWidth(null));
+        object.setHeight(object.getSprite().getHeight(null));
+        object.setDepth(20);
         scene.addObject(object);
         
+        Object copy = new Object(object);
+        copy.setPosition(new Vector(0, 200, -100));
+        copy.setGravity(1);
+        scene.addObject(copy);
+        
         Camera camera = new Camera();
-        camera.setFieldOfView(90);
+        camera.setFieldOfView(120);
         
         scene.setCamera(camera);
         scene.setBackground(Color.BLACK);
@@ -72,4 +80,5 @@ public class RenderTest extends JPanel implements ActionListener {
             object.setPosition(object.getPosition().setY(object.getPosition().getY() - 1));
         scene.tick();
     }
+    
 }
