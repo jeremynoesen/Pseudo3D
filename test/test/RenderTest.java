@@ -13,52 +13,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
-public class RenderTest extends JFrame {
-    
-    public RenderTest() {
-        initializeUI();
-    }
-    
-    public static void main(String[] args) {
-        
-        EventQueue.invokeLater(() -> {
-            RenderTest window = new RenderTest();
-            window.setVisible(true);
-    
-        });
-    }
-    
-    private void initializeUI() {
-        Sprites.load(new File("res/sprites/"));
-        addKeyListener(new Keyboard());
-        add(new TestPanel());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setSize(new Dimension(500, 500));
-    }
-}
-
-class TestPanel extends JPanel implements ActionListener {
+public class RenderTest extends JPanel implements ActionListener {
     
     private Scene scene;
     private Object object;
     
-    public TestPanel() {
+    public RenderTest() {
         scene = new Scene();
         object = new Object();
         object.setSprite(Sprites.get("front"));
         object.setGravity(0);
         object.setPosition(new Vector(0, 0, -40));
         scene.addObject(object);
+        
         Camera camera = new Camera();
         camera.setFieldOfView(90);
+        
         scene.setCamera(camera);
         scene.setBackground(Color.BLACK);
+        
         setSize(new Dimension(500, 500));
+        
         Timer timer = new Timer(10, this);
         timer.start();
+        
         setVisible(true);
         requestFocus();
     }

@@ -217,7 +217,6 @@ public abstract class Collision extends Motion {
      * @return velocity 1 final
      */
     private double calcMomentumV1f(double m1, double m2, double v1i, double v2i) {
-        if (m1 == 0) return 0;
         return (((m1 - m2) / (m1 + m2)) * v1i) + (((2 * m2) / (m1 + m2)) * v2i);
     }
     
@@ -231,7 +230,6 @@ public abstract class Collision extends Motion {
      * @return velocity 2 final
      */
     private double calcMomentumV2f(double m1, double m2, double v1i, double v2i) {
-        if (m2 == 0) return 0;
         return (((2 * m1) / (m1 + m2)) * v1i) + (((m2 - m1) / (m1 + m2)) * v2i);
     }
     
