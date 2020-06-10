@@ -1,6 +1,5 @@
 package jndev.pseudo3d.object.physics;
 
-import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Side;
 
@@ -98,87 +97,142 @@ public abstract class Collision extends Motion {
     /**
      * check if an object has collided with another object
      */
-    private void checkCollisions() { //todo object priority so the right object gets its position fixed
+    private void checkCollisions() {
         colliding = false;
         overlapping = false;
         allColliding.clear();
         allOverlapping.clear();
         
-        for (Collision object : scene.getObjects()) {
+        for (Collision object : scene.getObjects()) { //loop through all objects in scene
             
-            if (object == this) continue;
+            if (object == this) continue; //ignore self
             
-            if (overlaps(object)) {
+            if (overlaps(object)) { //check for an overlap
                 
-                if (object.isCollidable() && collidable) {
+                if (object.isCollidable() && collidable) { //if this and other object can collide
                     
                     colliding = true;
                     allColliding.add(object);
                     side = getOverlappingSide();
                     
-                    fixPosition(object, getOverlappingDistance(), side);
+                    doCollision(object, getOverlappingDistance(), side);
+                    //do the collision and momentum calculations
                     
                 } else if (!object.isCollidable() || !collidable) {
                     overlapping = true;
-                    allOverlapping.add(object);
+                    allOverlapping.add(object); //set overlapping if can't collide
                 }
             }
         }
     }
     
     /**
-     * fix the position of this object
+     * fix the position of this object and apply conservation of momentum
      *
-     * @param object object colliding with this object
+     * @param object      object colliding with this object
      * @param collideDist distance of overlap
-     * @param side side of overlap
+     * @param side        side of overlap
      */
-    private void fixPosition(Collision object, double collideDist, Side side) {
+    private void doCollision(Collision object, double collideDist, Side side) {
         
         switch (side) {
             case TOP:
                 // check if this object is the faster object to prevent fixing the wrong object
                 if (Math.abs(getVelocity().getY()) > Math.abs(object.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() - collideDist));
-                    setVelocity(getVelocity().setY(0));
+                    //fix object position so it is not overlapping
+                    
+                    setVelocity(getVelocity().setY(calcMomentumV1f(
+                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
+                    object.setVelocity(getVelocity().setY(calcMomentumV2f(
+                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
+                    //set objects' velocities for momentum
                 }
                 break;
             
             case BOTTOM:
                 if (Math.abs(getVelocity().getY()) > Math.abs(object.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() + collideDist));
-                    setVelocity(getVelocity().setY(0));
+                    
+                    setVelocity(getVelocity().setY(calcMomentumV1f(
+                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
+                    object.setVelocity(getVelocity().setY(calcMomentumV2f(
+                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
                 }
                 break;
             
             case LEFT:
                 if (Math.abs(getVelocity().getX()) > Math.abs(object.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() + collideDist));
-                    setVelocity(getVelocity().setX(0));
+                    
+                    setVelocity(getVelocity().setX(calcMomentumV1f(
+                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
+                    object.setVelocity(getVelocity().setX(calcMomentumV2f(
+                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
                 }
                 break;
             
             case RIGHT:
                 if (Math.abs(getVelocity().getX()) > Math.abs(object.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() - collideDist));
-                    setVelocity(getVelocity().setX(0));
+                    
+                    setVelocity(getVelocity().setX(calcMomentumV1f(
+                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
+                    object.setVelocity(getVelocity().setX(calcMomentumV2f(
+                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
                 }
                 break;
             
             case BACK:
                 if (Math.abs(getVelocity().getZ()) > Math.abs(object.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() + collideDist));
-                    setVelocity(getVelocity().setZ(0));
+                    
+                    setVelocity(getVelocity().setZ(calcMomentumV1f(
+                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
+                    object.setVelocity(getVelocity().setZ(calcMomentumV2f(
+                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
                 }
                 break;
             
             case FRONT:
                 if (Math.abs(getVelocity().getZ()) > Math.abs(object.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() - collideDist));
-                    setVelocity(getVelocity().setZ(0));
+                    
+                    setVelocity(getVelocity().setZ(calcMomentumV1f(
+                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
+                    object.setVelocity(getVelocity().setZ(calcMomentumV2f(
+                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
                 }
                 break;
         }
+    }
+    
+    /**
+     * calculate velocity 1 final using perfectly elastic collisions
+     *
+     * @param m1  mass 1
+     * @param m2  mass 2
+     * @param v1i velocity 1 initial
+     * @param v2i velocity 2 initial
+     * @return velocity 1 final
+     */
+    private double calcMomentumV1f(double m1, double m2, double v1i, double v2i) {
+        if (m1 == 0) return 0;
+        return (((m1 - m2) / (m1 + m2)) * v1i) + (((2 * m2) / (m1 + m2)) * v2i);
+    }
+    
+    /**
+     * calculate velocity 2 final using perfectly elastic collisions
+     *
+     * @param m1  mass 1
+     * @param m2  mass 2
+     * @param v1i velocity 1 initial
+     * @param v2i velocity 2 initial
+     * @return velocity 2 final
+     */
+    private double calcMomentumV2f(double m1, double m2, double v1i, double v2i) {
+        if (m2 == 0) return 0;
+        return (((2 * m1) / (m1 + m2)) * v1i) + (((m2 - m1) / (m1 + m2)) * v2i);
     }
     
     /**
@@ -272,7 +326,8 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * set the mass of the object to be used for collision calculations
+     * set the mass of the object to be used for collision calculations. a value of 0 will make the object immune to
+     * the effects momentum
      *
      * @param mass new object mass
      */
