@@ -49,6 +49,11 @@ public abstract class Collision extends Motion {
     private final Set<Collision> allOverlapping;
     
     /**
+     * mass of the object used for momentum calculations
+     */
+    private double mass;
+    
+    /**
      * initializes all booleans to false and initializes array lists
      */
     protected Collision() {
@@ -60,6 +65,7 @@ public abstract class Collision extends Motion {
         side = Side.NONE;
         allColliding = new HashSet<>();
         allOverlapping = new HashSet<>();
+        mass = 1;
     }
     
     /**
@@ -76,6 +82,7 @@ public abstract class Collision extends Motion {
         side = collision.getCollidingSide();
         allColliding = new HashSet<>(collision.getCollidingObjects());
         allOverlapping = new HashSet<>(collision.getOverlappingObjects());
+        mass = collision.getMass();
     }
     
     /**
@@ -216,5 +223,23 @@ public abstract class Collision extends Motion {
      */
     public Side getCollidingSide() {
         return side;
+    }
+    
+    /**
+     * get the mass of the object
+     *
+     * @return object mass
+     */
+    public double getMass() {
+        return mass;
+    }
+    
+    /**
+     * set the mass of the object to be used for collision calculations
+     *
+     * @param mass new object mass
+     */
+    public void setMass(double mass) {
+        this.mass = mass;
     }
 }
