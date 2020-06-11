@@ -83,8 +83,8 @@ public abstract class Collision extends Motion {
      */
     @Override
     public void tick() {
-        checkCollisions();
         super.tick();
+        checkCollisions();
     }
     
     /**
@@ -103,7 +103,7 @@ public abstract class Collision extends Motion {
             if (overlaps(object)) { //check for an overlap
                 
                 if (object.isCollidable() && collidable) { //if this and other object can collide
-    
+                    
                     //do the collision calculations
                     doCollision(object, getOverlappingDistance(), getOverlappingSide());
                     
@@ -129,47 +129,73 @@ public abstract class Collision extends Motion {
         
         switch (side) {
             case BOTTOM:
-                // check if this object is the faster object to prevent fixing the wrong object
-                if (getVelocity().getY() < object.getVelocity().getY()) {
-                    setPosition(getPosition().setY(getPosition().getY() + collideDist));
-                    //fix object position so it is not overlapping
-                    setVelocity(getVelocity().setY(0));
-                    //set object velocity to 0 in the same direction
+                // check if this object is moving in the direction of the collising side
+                if (getVelocity().getY() < 0) {
+                    // check if the object is faster
+                    if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
+                        setPosition(getPosition().setY(getPosition().getY() + collideDist));
+                        //fix object position so it is not overlapping
+                        setVelocity(getVelocity().setY(0));
+                        //set object velocity to 0 in the same direction
+                    } else {
+                        setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
+                        // if not the faster object, cancel its velocity to prevent drifting
+                    }
                 }
                 break;
-    
+            
             case TOP:
-                if (getVelocity().getY() > object.getVelocity().getY()) {
-                    setPosition(getPosition().setY(getPosition().getY() - collideDist));
-                    setVelocity(getVelocity().setY(0));
+                if (getVelocity().getY() > 0) {
+                    if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
+                        setPosition(getPosition().setY(getPosition().getY() - collideDist));
+                        setVelocity(getVelocity().setY(0));
+                    } else {
+                        setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
+                    }
                 }
                 break;
-                
+            
             case LEFT:
-                if (getVelocity().getX() < object.getVelocity().getX()) {
-                    setPosition(getPosition().setX(getPosition().getX() + collideDist));
-                    setVelocity(getVelocity().setX(0));
+                if (getVelocity().getX() < 0) {
+                    if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
+                        setPosition(getPosition().setX(getPosition().getX() + collideDist));
+                        setVelocity(getVelocity().setX(0));
+                    } else {
+                        setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
+                    }
                 }
                 break;
             
             case RIGHT:
-                if (getVelocity().getX() > object.getVelocity().getX()) {
-                    setPosition(getPosition().setX(getPosition().getX() - collideDist));
-                    setVelocity(getVelocity().setX(0));
+                if (getVelocity().getX() > 0) {
+                    if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
+                        setPosition(getPosition().setX(getPosition().getX() - collideDist));
+                        setVelocity(getVelocity().setX(0));
+                    } else {
+                        setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
+                    }
                 }
                 break;
             
             case BACK:
-                if (getVelocity().getZ() < object.getVelocity().getZ()) {
-                    setPosition(getPosition().setZ(getPosition().getZ() + collideDist));
-                    setVelocity(getVelocity().setZ(0));
+                if (getVelocity().getZ() < 0) {
+                    if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
+                        setPosition(getPosition().setZ(getPosition().getZ() + collideDist));
+                        setVelocity(getVelocity().setZ(0));
+                    } else {
+                        setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
+                    }
                 }
                 break;
             
             case FRONT:
-                if (getVelocity().getZ() > object.getVelocity().getZ()) {
-                    setPosition(getPosition().setZ(getPosition().getZ() - collideDist));
-                    setVelocity(getVelocity().setZ(0));
+                if (getVelocity().getZ() > 0) {
+                    if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
+                        setPosition(getPosition().setZ(getPosition().getZ() - collideDist));
+                        setVelocity(getVelocity().setZ(0));
+                    } else {
+                        setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
+                    }
                 }
                 break;
         }
