@@ -103,13 +103,9 @@ public abstract class Collision extends Motion {
             if (overlaps(object)) { //check for an overlap
                 
                 if (object.isCollidable() && collidable) { //if this and other object can collide
-                    
-                    colliding = true;
-                    allColliding.add(object);
-                    side = getOverlappingSide();
-                    
-                    doCollision(object, getOverlappingDistance(), side);
-                    //do the collision and momentum calculations
+    
+                    //do the collision calculations
+                    doCollision(object, getOverlappingDistance(), getOverlappingSide());
                     
                 } else if (!object.isCollidable() || !collidable) {
                     overlapping = true;
@@ -120,55 +116,58 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * fix the position of this object
+     * fix the position of this object instantly
      *
      * @param object      object colliding with this object
      * @param collideDist distance of overlap
      * @param side        side of overlap
      */
     private void doCollision(Collision object, double collideDist, Side side) {
+        colliding = true;
+        allColliding.add(object);
+        this.side = side;
         
         switch (side) {
-            case TOP:
+            case BOTTOM:
                 // check if this object is the faster object to prevent fixing the wrong object
-                if (Math.abs(getVelocity().getY()) > Math.abs(object.getVelocity().getY())) {
-                    setPosition(getPosition().setY(getPosition().getY() - collideDist));
+                if (getVelocity().getY() <= object.getVelocity().getY()) {
+                    setPosition(getPosition().setY(getPosition().getY() + collideDist));
                     //fix object position so it is not overlapping
                     setVelocity(getVelocity().setY(0));
                     //set object velocity to 0 in the same direction
                 }
                 break;
-            
-            case BOTTOM:
-                if (Math.abs(getVelocity().getY()) > Math.abs(object.getVelocity().getY())) {
-                    setPosition(getPosition().setY(getPosition().getY() + collideDist));
+    
+            case TOP:
+                if (getVelocity().getY() >= object.getVelocity().getY()) {
+                    setPosition(getPosition().setY(getPosition().getY() - collideDist));
                     setVelocity(getVelocity().setY(0));
                 }
                 break;
-            
+                
             case LEFT:
-                if (Math.abs(getVelocity().getX()) > Math.abs(object.getVelocity().getX())) {
+                if (getVelocity().getX() <= object.getVelocity().getX()) {
                     setPosition(getPosition().setX(getPosition().getX() + collideDist));
                     setVelocity(getVelocity().setX(0));
                 }
                 break;
             
             case RIGHT:
-                if (Math.abs(getVelocity().getX()) > Math.abs(object.getVelocity().getX())) {
+                if (getVelocity().getX() >= object.getVelocity().getX()) {
                     setPosition(getPosition().setX(getPosition().getX() - collideDist));
                     setVelocity(getVelocity().setX(0));
                 }
                 break;
             
             case BACK:
-                if (Math.abs(getVelocity().getZ()) > Math.abs(object.getVelocity().getZ())) {
+                if (getVelocity().getZ() <= object.getVelocity().getZ()) {
                     setPosition(getPosition().setZ(getPosition().getZ() + collideDist));
                     setVelocity(getVelocity().setZ(0));
                 }
                 break;
             
             case FRONT:
-                if (Math.abs(getVelocity().getZ()) > Math.abs(object.getVelocity().getZ())) {
+                if (getVelocity().getZ() >= object.getVelocity().getZ()) {
                     setPosition(getPosition().setZ(getPosition().getZ() - collideDist));
                     setVelocity(getVelocity().setZ(0));
                 }
