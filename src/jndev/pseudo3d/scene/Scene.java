@@ -32,7 +32,7 @@ public class Scene {
     /**
      * comparator used to sort objects from high to low z position
      */
-    private Comparator<Object> zComparator = (o1, o2) -> (int) (o2.getPosition().getZ() - o1.getPosition().getZ());
+    private Comparator<Object> zComparator = (o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ());
     
     /**
      * create a new scene
