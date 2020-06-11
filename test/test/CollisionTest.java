@@ -31,8 +31,8 @@ public class CollisionTest extends JPanel implements ActionListener {
         scene.addObject(object);
         
         Object copy = new Object(object);
-        copy.setPosition(new Vector(0, 0, -50));
-        //copy.setGravity(1);
+        copy.setPosition(new Vector(0, 200, -100));
+        copy.setGravity(1);
         scene.addObject(copy);
         
         Camera camera = new Camera();
