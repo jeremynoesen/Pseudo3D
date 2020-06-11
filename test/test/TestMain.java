@@ -28,7 +28,7 @@ public class TestMain extends JFrame {
         //add(new RenderTest());
         add(new CollisionTest());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(new Dimension(1200, 1200));
         setLocationRelativeTo(null);
-        setSize(new Dimension(500, 500));
     }
 }
