@@ -61,11 +61,13 @@ public class CollisionTest extends JPanel implements ActionListener {
         if (Keyboard.isPressed(KeyEvent.VK_W)) {
             object.setVelocity(object.getVelocity().setZ(-1));
             object.setSprite(Sprites.get("front"));
+            object.setWidth(object.getSprite().getWidth(null));
         }
         
         if (Keyboard.isPressed(KeyEvent.VK_S)) {
             object.setVelocity(object.getVelocity().setZ(1));
             object.setSprite(Sprites.get("front"));
+            object.setWidth(object.getSprite().getWidth(null));
         }
         
         if(!Keyboard.isPressed(KeyEvent.VK_W) && !Keyboard.isPressed(KeyEvent.VK_S)) {
@@ -75,11 +77,13 @@ public class CollisionTest extends JPanel implements ActionListener {
         if (Keyboard.isPressed(KeyEvent.VK_A)) {
             object.setVelocity(object.getVelocity().setX(-1));
             object.setSprite(Sprites.get("left"));
+            object.setWidth(object.getSprite().getWidth(null));
         }
         
         if (Keyboard.isPressed(KeyEvent.VK_D)) {
             object.setVelocity(object.getVelocity().setX(1));
             object.setSprite(Sprites.get("right"));
+            object.setWidth(object.getSprite().getWidth(null));
         }
     
         if(!Keyboard.isPressed(KeyEvent.VK_A) && !Keyboard.isPressed(KeyEvent.VK_D)) {
