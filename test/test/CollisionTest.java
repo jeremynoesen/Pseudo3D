@@ -28,13 +28,11 @@ public class CollisionTest extends JPanel implements ActionListener {
         object.setWidth(object.getSprite().getWidth(null));
         object.setHeight(object.getSprite().getHeight(null));
         object.setDepth(20);
-        object.setMass(10);
         scene.addObject(object);
         
         Object copy = new Object(object);
         copy.setPosition(new Vector(0, 200, -100));
         copy.setGravity(1);
-        copy.setMass(5);
         scene.addObject(copy);
         
         Camera camera = new Camera();
@@ -60,26 +58,26 @@ public class CollisionTest extends JPanel implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (Keyboard.isPressed(KeyEvent.VK_W)) {
-//            object.setPosition(object.getPosition().setZ(object.getPosition().getZ() - 1));
-//            object.setSprite(Sprites.get("front"));
-//        }
-//        if (Keyboard.isPressed(KeyEvent.VK_S)) {
-//            object.setPosition(object.getPosition().setZ(object.getPosition().getZ() + 1));
-//            object.setSprite(Sprites.get("front"));
-//        }
-//        if (Keyboard.isPressed(KeyEvent.VK_A)) {
-//            object.setPosition(object.getPosition().setX(object.getPosition().getX() - 1));
-//            object.setSprite(Sprites.get("left"));
-//        }
-//        if (Keyboard.isPressed(KeyEvent.VK_D)) {
-//            object.setPosition(object.getPosition().setX(object.getPosition().getX() + 1));
-//            object.setSprite(Sprites.get("right"));
-//        }
-//        if (Keyboard.isPressed(KeyEvent.VK_UP))
-//            object.setPosition(object.getPosition().setY(object.getPosition().getY() + 1));
-//        if (Keyboard.isPressed(KeyEvent.VK_DOWN))
-//            object.setPosition(object.getPosition().setY(object.getPosition().getY() - 1));
+        if (Keyboard.isPressed(KeyEvent.VK_W)) {
+            object.setPosition(object.getPosition().setZ(object.getPosition().getZ() - 1));
+            object.setSprite(Sprites.get("front"));
+        }
+        if (Keyboard.isPressed(KeyEvent.VK_S)) {
+            object.setPosition(object.getPosition().setZ(object.getPosition().getZ() + 1));
+            object.setSprite(Sprites.get("front"));
+        }
+        if (Keyboard.isPressed(KeyEvent.VK_A)) {
+            object.setPosition(object.getPosition().setX(object.getPosition().getX() - 1));
+            object.setSprite(Sprites.get("left"));
+        }
+        if (Keyboard.isPressed(KeyEvent.VK_D)) {
+            object.setPosition(object.getPosition().setX(object.getPosition().getX() + 1));
+            object.setSprite(Sprites.get("right"));
+        }
+        if (Keyboard.isPressed(KeyEvent.VK_UP))
+            object.setPosition(object.getPosition().setY(object.getPosition().getY() + 1));
+        if (Keyboard.isPressed(KeyEvent.VK_DOWN))
+            object.setPosition(object.getPosition().setY(object.getPosition().getY() - 1));
         scene.tick();
     }
     

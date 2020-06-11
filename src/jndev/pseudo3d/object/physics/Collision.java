@@ -49,11 +49,6 @@ public abstract class Collision extends Motion {
     private final Set<Collision> allOverlapping;
     
     /**
-     * mass of the object used for momentum calculations
-     */
-    private double mass;
-    
-    /**
      * initializes all booleans to false and initializes array lists
      */
     protected Collision() {
@@ -65,7 +60,6 @@ public abstract class Collision extends Motion {
         side = Side.NONE;
         allColliding = new HashSet<>();
         allOverlapping = new HashSet<>();
-        mass = 1;
     }
     
     /**
@@ -82,7 +76,6 @@ public abstract class Collision extends Motion {
         side = collision.getCollidingSide();
         allColliding = new HashSet<>(collision.getCollidingObjects());
         allOverlapping = new HashSet<>(collision.getOverlappingObjects());
-        mass = collision.getMass();
     }
     
     /**
@@ -127,7 +120,7 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * fix the position of this object and apply conservation of momentum
+     * fix the position of this object
      *
      * @param object      object colliding with this object
      * @param collideDist distance of overlap
@@ -141,96 +134,46 @@ public abstract class Collision extends Motion {
                 if (Math.abs(getVelocity().getY()) > Math.abs(object.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() - collideDist));
                     //fix object position so it is not overlapping
-                    
-                    setVelocity(getVelocity().setY(calcMomentumV1f(
-                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
-                    object.setVelocity(getVelocity().setY(calcMomentumV2f(
-                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
-                    //set objects' velocities for momentum
+                    setVelocity(getVelocity().setY(0));
+                    //set object velocity to 0 in the same direction
                 }
                 break;
             
             case BOTTOM:
                 if (Math.abs(getVelocity().getY()) > Math.abs(object.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() + collideDist));
-                    
-                    setVelocity(getVelocity().setY(calcMomentumV1f(
-                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
-                    object.setVelocity(getVelocity().setY(calcMomentumV2f(
-                            mass, object.getMass(), getVelocity().getY(), object.getVelocity().getY())));
+                    setVelocity(getVelocity().setY(0));
                 }
                 break;
             
             case LEFT:
                 if (Math.abs(getVelocity().getX()) > Math.abs(object.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() + collideDist));
-                    
-                    setVelocity(getVelocity().setX(calcMomentumV1f(
-                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
-                    object.setVelocity(getVelocity().setX(calcMomentumV2f(
-                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
+                    setVelocity(getVelocity().setX(0));
                 }
                 break;
             
             case RIGHT:
                 if (Math.abs(getVelocity().getX()) > Math.abs(object.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() - collideDist));
-                    
-                    setVelocity(getVelocity().setX(calcMomentumV1f(
-                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
-                    object.setVelocity(getVelocity().setX(calcMomentumV2f(
-                            mass, object.getMass(), getVelocity().getX(), object.getVelocity().getX())));
+                    setVelocity(getVelocity().setX(0));
                 }
                 break;
             
             case BACK:
                 if (Math.abs(getVelocity().getZ()) > Math.abs(object.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() + collideDist));
-                    
-                    setVelocity(getVelocity().setZ(calcMomentumV1f(
-                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
-                    object.setVelocity(getVelocity().setZ(calcMomentumV2f(
-                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
+                    setVelocity(getVelocity().setZ(0));
                 }
                 break;
             
             case FRONT:
                 if (Math.abs(getVelocity().getZ()) > Math.abs(object.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() - collideDist));
-                    
-                    setVelocity(getVelocity().setZ(calcMomentumV1f(
-                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
-                    object.setVelocity(getVelocity().setZ(calcMomentumV2f(
-                            mass, object.getMass(), getVelocity().getZ(), object.getVelocity().getZ())));
+                    setVelocity(getVelocity().setZ(0));
                 }
                 break;
         }
-    }
-    
-    /**
-     * calculate velocity 1 final using perfectly elastic collisions
-     *
-     * @param m1  mass 1
-     * @param m2  mass 2
-     * @param v1i velocity 1 initial
-     * @param v2i velocity 2 initial
-     * @return velocity 1 final
-     */
-    private double calcMomentumV1f(double m1, double m2, double v1i, double v2i) {
-        return (((m1 - m2) / (m1 + m2)) * v1i) + (((2 * m2) / (m1 + m2)) * v2i);
-    }
-    
-    /**
-     * calculate velocity 2 final using perfectly elastic collisions
-     *
-     * @param m1  mass 1
-     * @param m2  mass 2
-     * @param v1i velocity 1 initial
-     * @param v2i velocity 2 initial
-     * @return velocity 2 final
-     */
-    private double calcMomentumV2f(double m1, double m2, double v1i, double v2i) {
-        return (((2 * m1) / (m1 + m2)) * v1i) + (((m2 - m1) / (m1 + m2)) * v2i);
     }
     
     /**
@@ -312,24 +255,5 @@ public abstract class Collision extends Motion {
      */
     public Side getCollidingSide() {
         return side;
-    }
-    
-    /**
-     * get the mass of the object
-     *
-     * @return object mass
-     */
-    public double getMass() {
-        return mass;
-    }
-    
-    /**
-     * set the mass of the object to be used for collision calculations. a value of 0 will make the object immune to
-     * the effects momentum
-     *
-     * @param mass new object mass
-     */
-    public void setMass(double mass) {
-        this.mass = mass;
     }
 }
