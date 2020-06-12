@@ -18,22 +18,23 @@ public class CollisionTest extends JPanel implements ActionListener {
     
     private Scene scene;
     private Object object;
+    private Object copy;
     
     public CollisionTest() {
         scene = new Scene();
         object = new Object();
         object.setSprite(Sprites.get("front"));
         object.setGravity(0);
-        object.setPosition(new Vector(0, 100, -100));
+        object.setPosition(new Vector(0, -100, -100));
         object.setWidth(object.getSprite().getWidth(null));
         object.setHeight(object.getSprite().getHeight(null));
         object.setDepth(10);
         //object.setVelocity(new Vector(0, -1, 0));
         scene.addObject(object);
         
-        Object copy = new Object(object);
-        copy.setPosition(new Vector(0, -100, -100));
-        copy.setGravity(0);
+        copy = new Object(object);
+        copy.setPosition(new Vector(0, 100, -100));
+        copy.setGravity(1);
         //copy.setVelocity(new Vector(0, 1, 0));
         scene.addObject(copy);
         
@@ -103,7 +104,10 @@ public class CollisionTest extends JPanel implements ActionListener {
         if(!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
             object.setVelocity(object.getVelocity().setY(0));
         }
-        
+    
+        //copy.setVelocity(new Vector(0.0981, 0, 0));
+    
+    
         scene.tick();
     }
     
