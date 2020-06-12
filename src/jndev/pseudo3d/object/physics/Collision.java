@@ -83,8 +83,8 @@ public abstract class Collision extends Motion {
      */
     @Override
     public void tick() {
-        checkCollisions();
         super.tick();
+        checkCollisions();
     }
     
     /**
