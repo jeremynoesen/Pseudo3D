@@ -24,19 +24,22 @@ public class CollisionTest extends JPanel implements ActionListener {
         scene = new Scene();
         object = new Object();
         object.setSprite(Sprites.get("front"));
-        object.setGravity(0);
-        object.setPosition(new Vector(0, -100, -100));
+        object.setGravity(1);
+        object.setPosition(new Vector(0, 100, -100));
         object.setWidth(object.getSprite().getWidth(null));
         object.setHeight(object.getSprite().getHeight(null));
         object.setDepth(10);
-        //object.setVelocity(new Vector(0, -1, 0));
         scene.addObject(object);
         
         copy = new Object(object);
-        copy.setPosition(new Vector(0, 100, -100));
-        copy.setGravity(1);
-        //copy.setVelocity(new Vector(0, 1, 0));
+        copy.setPosition(new Vector(0, -150, -100));
+        copy.setGravity(0);
         scene.addObject(copy);
+        
+        Object copy2 = new Object(copy);
+        copy2.setPosition(new Vector(50, -100, -100));
+        scene.addObject(copy2);
+        
         
         Camera camera = new Camera();
         camera.setFieldOfView(70);
@@ -93,17 +96,17 @@ public class CollisionTest extends JPanel implements ActionListener {
             object.setVelocity(object.getVelocity().setX(0));
         }
 
-        if (Keyboard.isPressed(KeyEvent.VK_UP)) {
-            object.setVelocity(object.getVelocity().setY(1));
-        }
-
-        if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-            object.setVelocity(object.getVelocity().setY(-1));
-        }
-
-        if(!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-            object.setVelocity(object.getVelocity().setY(0));
-        }
+//        if (Keyboard.isPressed(KeyEvent.VK_UP)) {
+//            object.setVelocity(object.getVelocity().setY(1));
+//        }
+//
+//        if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+//            object.setVelocity(object.getVelocity().setY(-1));
+//        }
+//
+//        if(!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+//            object.setVelocity(object.getVelocity().setY(0));
+//        }
     
         //copy.setVelocity(new Vector(0.0981, 0, 0));
     
