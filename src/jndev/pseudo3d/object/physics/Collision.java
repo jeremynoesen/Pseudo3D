@@ -124,8 +124,7 @@ public abstract class Collision extends Motion {
     private void doCollision(Collision object) {
         colliding = true;
         allColliding.add(object);
-        
-        Side side = Side.NONE;
+        //set object to colliding
         
         double left = Math.abs(getMinimum().getX() - object.getMaximum().getX());
         double right = Math.abs(getMaximum().getX() - object.getMinimum().getX());
@@ -133,26 +132,34 @@ public abstract class Collision extends Motion {
         double top = Math.abs(getMaximum().getY() - object.getMinimum().getY());
         double back = Math.abs(getMinimum().getZ() - object.getMaximum().getZ());
         double front = Math.abs(getMaximum().getZ() - object.getMinimum().getZ());
+        //get overlap distances
         
-        double collideDist = Math.min(Math.min(Math.min(left, right), Math.min(top, bottom)), Math.min(front, back));
+        double minx = left <= right ? left : right;
+        double miny = top <= bottom ? top : bottom;
+        double minz = front <= back ? front : back;
+        double minxy = minx <= miny ? minx : miny;
+        double min = minxy <= minz ? minxy : minz;
         //find min overlap
-        
-        //use min overlap to determine colliding side
-        if (collideDist == left) {
+    
+        Side side = Side.NONE;
+    
+        if (min == left) {
             side = Side.LEFT;
-        } else if (collideDist == right) {
+        } else if (min == right) {
             side = Side.RIGHT;
-        } else if (collideDist == top) {
+        } else if (min == top) {
             side = Side.TOP;
-        } else if (collideDist == bottom) {
+        } else if (min == bottom) {
             side = Side.BOTTOM;
-        } else if (collideDist == back) {
+        } else if (min == back) {
             side = Side.BACK;
-        } else if (collideDist == front) {
+        } else if (min == front) {
             side = Side.FRONT;
         }
-        
+        //use min overlap to determine colliding side
+    
         sides.add(side);
+        //add to list of colliding sides
         
         switch (side) {
             case BOTTOM:
@@ -160,7 +167,7 @@ public abstract class Collision extends Motion {
                 if (getVelocity().getY() < 0) {
                     // check if the object is faster
                     if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
-                        setPosition(getPosition().setY(getPosition().getY() + collideDist));
+                        setPosition(getPosition().setY(getPosition().getY() + min));
                         //fix object position so it is not overlapping
                         setVelocity(getVelocity().setY(0));
                         //set object velocity to 0 in the same direction
@@ -174,7 +181,7 @@ public abstract class Collision extends Motion {
             case TOP:
                 if (getVelocity().getY() > 0) {
                     if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
-                        setPosition(getPosition().setY(getPosition().getY() - collideDist));
+                        setPosition(getPosition().setY(getPosition().getY() - min));
                         setVelocity(getVelocity().setY(0));
                     } else {
                         setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
@@ -185,7 +192,7 @@ public abstract class Collision extends Motion {
             case LEFT:
                 if (getVelocity().getX() < 0) {
                     if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
-                        setPosition(getPosition().setX(getPosition().getX() + collideDist));
+                        setPosition(getPosition().setX(getPosition().getX() + min));
                         setVelocity(getVelocity().setX(0));
                     } else {
                         setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
@@ -196,7 +203,7 @@ public abstract class Collision extends Motion {
             case RIGHT:
                 if (getVelocity().getX() > 0) {
                     if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
-                        setPosition(getPosition().setX(getPosition().getX() - collideDist));
+                        setPosition(getPosition().setX(getPosition().getX() - min));
                         setVelocity(getVelocity().setX(0));
                     } else {
                         setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
@@ -207,7 +214,7 @@ public abstract class Collision extends Motion {
             case BACK:
                 if (getVelocity().getZ() < 0) {
                     if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
-                        setPosition(getPosition().setZ(getPosition().getZ() + collideDist));
+                        setPosition(getPosition().setZ(getPosition().getZ() + min));
                         setVelocity(getVelocity().setZ(0));
                     } else {
                         setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
@@ -218,7 +225,7 @@ public abstract class Collision extends Motion {
             case FRONT:
                 if (getVelocity().getZ() > 0) {
                     if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
-                        setPosition(getPosition().setZ(getPosition().getZ() - collideDist));
+                        setPosition(getPosition().setZ(getPosition().getZ() - min));
                         setVelocity(getVelocity().setZ(0));
                     } else {
                         setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
