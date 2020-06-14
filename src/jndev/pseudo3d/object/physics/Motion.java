@@ -16,19 +16,24 @@ public abstract class Motion extends Box {
     private final double GRAVITY = 0.0981;
     
     /**
-     * position of object
+     * position of object (units)
      */
     private Vector position;
     
     /**
-     * velocity of object
+     * velocity of object, or rate of change of position (units / tick)
      */
     private Vector velocity;
     
     /**
-     * acceleration of object
+     * acceleration of object, or rate of change of velocity (units / tick ^ 2)
      */
     private Vector acceleration;
+    
+    /**
+     * jerk of an object, or rate of change of acceleration (units / tick ^ 3)
+     */
+    private Vector jerk;
     
     /**
      * value to multiply gravity constant by
@@ -40,9 +45,10 @@ public abstract class Motion extends Box {
      */
     protected Motion() {
         super();
-        position = new Vector(0, 0, 0);
-        velocity = new Vector(0, 0, 0);
-        acceleration = new Vector(0, 0, 0);
+        position = new Vector();
+        velocity = new Vector();
+        acceleration = new Vector();
+        jerk = new Vector();
         gravityMultiplier = 1.0;
     }
     
@@ -56,6 +62,7 @@ public abstract class Motion extends Box {
         position = motion.getPosition();
         velocity = motion.getVelocity();
         acceleration = motion.getAcceleration();
+        jerk = motion.getJerk();
         gravityMultiplier = motion.getGravity();
     }
     
@@ -68,9 +75,12 @@ public abstract class Motion extends Box {
     }
     
     /**
-     * update the motion of an object in 2D space using acceleration, velocity, and position
+     * update the motion of an object in 2D space using jerk, acceleration, velocity, and position
      */
     private void updateMotion() {
+        acceleration = new Vector(acceleration.getX() + jerk.getX(),
+                acceleration.getY() + jerk.getY(),
+                acceleration.getZ() + jerk.getZ());
         velocity = new Vector(velocity.getX() + acceleration.getX(),
                 velocity.getY() + acceleration.getY() - (GRAVITY * gravityMultiplier),
                 velocity.getZ() + acceleration.getZ());
@@ -80,8 +90,7 @@ public abstract class Motion extends Box {
     }
     
     /**
-     * get the position vector of the object a new instance is returned so the vector cannot modify the actual position
-     * of the object
+     * get the position vector of the object
      *
      * @return position vector of object
      */
@@ -102,8 +111,7 @@ public abstract class Motion extends Box {
     }
     
     /**
-     * get the velocity vector of the object a new instance is returned so the vector cannot modify the actual velocity
-     * of the object
+     * get the velocity vector of the object
      *
      * @return velocity vector of an object
      */
@@ -121,8 +129,7 @@ public abstract class Motion extends Box {
     }
     
     /**
-     * get the acceleration vector of the object a new instance is returned so the vector cannot modify the actual
-     * acceleration of the object
+     * get the acceleration vector of the object
      *
      * @return acceleration vector of an object
      */
@@ -131,12 +138,30 @@ public abstract class Motion extends Box {
     }
     
     /**
-     * get the acceleration of the object
+     * set the acceleration of the object
      *
      * @param acceleration acceleration vector
      */
     public void setAcceleration(Vector acceleration) {
         this.acceleration = acceleration;
+    }
+    
+    /**
+     * get the jerk vector of the object
+     *
+     * @return jerk of the object
+     */
+    public Vector getJerk() {
+        return jerk;
+    }
+    
+    /**
+     * set the jerk of the object
+     *
+     * @param jerk jerk vector
+     */
+    public void setJerk(Vector jerk) {
+        this.jerk = jerk;
     }
     
     /**
