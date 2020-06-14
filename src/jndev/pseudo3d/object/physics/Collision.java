@@ -34,9 +34,9 @@ public abstract class Collision extends Motion {
     private boolean overlapping;
     
     /**
-     * side the object is colliding or overlapping with
+     * sides the object is colliding with
      */
-    private Side side;
+    private final Set<Side> sides;
     
     /**
      * list of objects this one is colliding with
@@ -57,7 +57,7 @@ public abstract class Collision extends Motion {
         collidable = true;
         colliding = false;
         overlapping = false;
-        side = Side.NONE;
+        sides = new HashSet<>();
         allColliding = new HashSet<>();
         allOverlapping = new HashSet<>();
     }
@@ -73,7 +73,7 @@ public abstract class Collision extends Motion {
         collidable = collision.isCollidable();
         colliding = collision.isColliding();
         overlapping = collision.isOverlapping();
-        side = collision.getCollidingSide();
+        sides = new HashSet<>(collision.getCollidingSides());
         allColliding = new HashSet<>(collision.getCollidingObjects());
         allOverlapping = new HashSet<>(collision.getOverlappingObjects());
     }
@@ -93,6 +93,7 @@ public abstract class Collision extends Motion {
     private void checkCollisions() {
         colliding = false;
         overlapping = false;
+        sides.clear();
         allColliding.clear();
         allOverlapping.clear();
         
@@ -136,7 +137,7 @@ public abstract class Collision extends Motion {
         double collideDist = Math.min(Math.min(Math.min(left, right), Math.min(top, bottom)), Math.min(front, back));
         //find min overlap
         
-        //use min overlap to determine side to use to fix for collisions
+        //use min overlap to determine colliding side
         if (collideDist == left) {
             side = Side.LEFT;
         } else if (collideDist == right) {
@@ -150,6 +151,8 @@ public abstract class Collision extends Motion {
         } else if (collideDist == front) {
             side = Side.FRONT;
         }
+        
+        sides.add(side);
         
         switch (side) {
             case BOTTOM:
@@ -298,11 +301,11 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * get the side the object is colliding with
+     * get the sides the object is colliding with
      *
-     * @return side the object is colliding or overlapping on
+     * @return set of sides the object is colliding on
      */
-    public Side getCollidingSide() {
-        return side;
+    public Set<Side> getCollidingSides() {
+        return sides;
     }
 }
