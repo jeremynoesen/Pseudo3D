@@ -58,7 +58,7 @@ public class CollisionTest extends JPanel implements ActionListener {
     
     @Override
     public void paintComponent(Graphics g) {
-        super.paintComponents(g);
+        super.paintComponent(g);
         SimpleRenderer.render(scene, this, g);
     }
     

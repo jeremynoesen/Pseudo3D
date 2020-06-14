@@ -25,16 +25,6 @@ public class Box {
     private double depth;
     
     /**
-     * distance of overlap, 0 if not overlapping
-     */
-    private double overlapDistance;
-    
-    /**
-     * overlapped side NONE if not overlapping
-     */
-    private Side overlapSide;
-    
-    /**
      * minimum point of box
      */
     private Vector min;
@@ -57,8 +47,6 @@ public class Box {
         height = 0;
         depth = 0;
         position = new Vector(0, 0, 0);
-        overlapDistance = 0;
-        overlapSide = Side.NONE;
         min = new Vector(0, 0, 0);
         max = new Vector(0, 0, 0);
     }
@@ -77,8 +65,6 @@ public class Box {
         this.height = Math.abs(height);
         this.depth = Math.abs(depth);
         this.position = position;
-        overlapDistance = 0;
-        overlapSide = Side.NONE;
         min = new Vector(position.getX() - (width / 2.0), position.getY() - (height / 2.0), position.getZ() - (depth / 2.0));
         max = new Vector(position.getX() + (width / 2.0), position.getY() + (height / 2.0), position.getZ() + (depth / 2.0));
     }
@@ -93,8 +79,6 @@ public class Box {
         this.height = box.getHeight();
         this.depth = box.getDepth();
         this.position = box.getPosition();
-        this.overlapDistance = box.getOverlappingDistance();
-        this.overlapSide = box.getOverlappingSide();
         this.min = box.getMinimum();
         this.max = box.getMaximum();
     }
@@ -198,60 +182,15 @@ public class Box {
     }
     
     /**
-     * checks if a box overlaps this box. If they do, the distance of the overlap is calculated and the side in which
-     * the overlap occurs is noted
+     * checks if a box overlaps this box
      *
      * @param box box to check for overlaps
      * @return true if the box overlaps this box
      */
     public boolean overlaps(Box box) {
-        
-        if (min.getX() <= box.getMaximum().getX() && max.getX() >= box.getMinimum().getX() &&
+        return min.getX() <= box.getMaximum().getX() && max.getX() >= box.getMinimum().getX() &&
                 min.getY() <= box.getMaximum().getY() && max.getY() >= box.getMinimum().getY() &&
-                min.getZ() <= box.getMaximum().getZ() && max.getZ() >= box.getMinimum().getZ()) {
-            double left = Math.abs(min.getX() - box.getMaximum().getX());
-            double right = Math.abs(max.getX() - box.getMinimum().getX());
-            double bottom = Math.abs(min.getY() - box.getMaximum().getY());
-            double top = Math.abs(max.getY() - box.getMinimum().getY());
-            double back = Math.abs(min.getZ() - box.getMaximum().getZ());
-            double front = Math.abs(max.getZ() - box.getMinimum().getZ());
-            overlapDistance = Math.min(Math.min(Math.min(left, right), Math.min(top, bottom)), Math.min(front, back));
-            if (overlapDistance == left) {
-                overlapSide = Side.LEFT;
-            } else if (overlapDistance == right) {
-                overlapSide = Side.RIGHT;
-            } else if (overlapDistance == top) {
-                overlapSide = Side.TOP;
-            } else if (overlapDistance == bottom) {
-                overlapSide = Side.BOTTOM;
-            } else if (overlapDistance == back) {
-                overlapSide = Side.BACK;
-            } else if (overlapDistance == front) {
-                overlapSide = Side.FRONT;
-            }
-            return true;
-        }
-        overlapSide = Side.NONE;
-        overlapDistance = 0;
-        return false;
-    }
-    
-    /**
-     * get the side the overlap occurs on. NONE if there are no overlaps
-     *
-     * @return overlap side
-     */
-    public Side getOverlappingSide() {
-        return overlapSide;
-    }
-    
-    /**
-     * get the distance of the overlap
-     *
-     * @return distance of overlap
-     */
-    public double getOverlappingDistance() {
-        return overlapDistance;
+                min.getZ() <= box.getMaximum().getZ() && max.getZ() >= box.getMinimum().getZ();
     }
     
     /**

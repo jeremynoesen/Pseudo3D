@@ -105,9 +105,9 @@ public abstract class Collision extends Motion {
                 if (object.isCollidable() && collidable) { //if this and other object can collide
                     
                     //do the collision calculations
-                    doCollision(object, getOverlappingDistance(), getOverlappingSide());
+                    doCollision(object);
                     
-                } else if (!object.isCollidable() || !collidable) {
+                } else {
                     overlapping = true;
                     allOverlapping.add(object); //set overlapping if can't collide
                 }
@@ -116,16 +116,40 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * fix the position of this object instantly
+     * fix the position of this object
      *
-     * @param object      object colliding with this object
-     * @param collideDist distance of overlap
-     * @param side        side of overlap
+     * @param object object colliding with this object
      */
-    private void doCollision(Collision object, double collideDist, Side side) {
+    private void doCollision(Collision object) {
         colliding = true;
         allColliding.add(object);
-        this.side = side;
+        
+        Side side = Side.NONE;
+        
+        double left = Math.abs(getMinimum().getX() - object.getMaximum().getX());
+        double right = Math.abs(getMaximum().getX() - object.getMinimum().getX());
+        double bottom = Math.abs(getMinimum().getY() - object.getMaximum().getY());
+        double top = Math.abs(getMaximum().getY() - object.getMinimum().getY());
+        double back = Math.abs(getMinimum().getZ() - object.getMaximum().getZ());
+        double front = Math.abs(getMaximum().getZ() - object.getMinimum().getZ());
+        
+        double collideDist = Math.min(Math.min(Math.min(left, right), Math.min(top, bottom)), Math.min(front, back));
+        //find min overlap
+        
+        //use min overlap to determine side to use to fix for collisions
+        if (collideDist == left) {
+            side = Side.LEFT;
+        } else if (collideDist == right) {
+            side = Side.RIGHT;
+        } else if (collideDist == top) {
+            side = Side.TOP;
+        } else if (collideDist == bottom) {
+            side = Side.BOTTOM;
+        } else if (collideDist == back) {
+            side = Side.BACK;
+        } else if (collideDist == front) {
+            side = Side.FRONT;
+        }
         
         switch (side) {
             case BOTTOM:
