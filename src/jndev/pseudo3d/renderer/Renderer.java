@@ -13,7 +13,7 @@ import java.awt.*;
  *
  * @author JNDev (Jeremaster101)
  */
-public class SimpleRenderer {
+public class Renderer {
     
     /**
      * render a scene to an existing jpanel

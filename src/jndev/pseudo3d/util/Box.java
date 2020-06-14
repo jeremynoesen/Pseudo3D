@@ -3,7 +3,7 @@ package jndev.pseudo3d.util;
 import java.util.Objects;
 
 /**
- * 3D box, used for bounding boxes and other operations
+ * simple 3-dimensional box
  *
  * @author JNDev (Jeremaster101)
  */
@@ -52,8 +52,7 @@ public class Box {
     }
     
     /**
-     * create a new box at location with specified width and height. Overlapped data is set to default values. the
-     * actual locations of the min and max points of the bounds of the box are calculated as well.
+     * create a new box at location with specified width and height
      *
      * @param width    width of box
      * @param height   height of box

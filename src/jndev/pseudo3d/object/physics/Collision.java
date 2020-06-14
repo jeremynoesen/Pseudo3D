@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * abstract class to handle collisions for an object
+ * collision data for an object
  *
  * @author JNDev (Jeremaster101)
  */
@@ -24,29 +24,14 @@ public abstract class Collision extends Motion {
     private boolean collidable;
     
     /**
-     * whether or not an object is colliding
-     */
-    private boolean colliding;
-    
-    /**
-     * whether or not an object is overlapping
-     */
-    private boolean overlapping;
-    
-    /**
      * sides the object is colliding with
      */
-    private final Set<Side> sides;
+    private final Set<Side> collidingSides;
     
     /**
      * list of objects this one is colliding with
      */
-    private final Set<Collision> allColliding;
-    
-    /**
-     * list of objects this one is overlapping
-     */
-    private final Set<Collision> allOverlapping;
+    private final Set<Collision> collidingObjects;
     
     /**
      * initializes all booleans to false and initializes array lists
@@ -55,11 +40,8 @@ public abstract class Collision extends Motion {
         super();
         scene = null;
         collidable = true;
-        colliding = false;
-        overlapping = false;
-        sides = new HashSet<>();
-        allColliding = new HashSet<>();
-        allOverlapping = new HashSet<>();
+        collidingSides = new HashSet<>();
+        collidingObjects = new HashSet<>();
     }
     
     /**
@@ -71,11 +53,8 @@ public abstract class Collision extends Motion {
         super(collision);
         scene = collision.getScene();
         collidable = collision.isCollidable();
-        colliding = collision.isColliding();
-        overlapping = collision.isOverlapping();
-        sides = new HashSet<>(collision.getCollidingSides());
-        allColliding = new HashSet<>(collision.getCollidingObjects());
-        allOverlapping = new HashSet<>(collision.getOverlappingObjects());
+        collidingSides = new HashSet<>(collision.collidingSides);
+        collidingObjects = new HashSet<>(collision.collidingObjects);
     }
     
     /**
@@ -91,140 +70,115 @@ public abstract class Collision extends Motion {
      * check if an object has collided with another object
      */
     private void checkCollisions() {
-        colliding = false;
-        overlapping = false;
-        sides.clear();
-        allColliding.clear();
-        allOverlapping.clear();
+        collidingSides.clear();
+        collidingObjects.clear();
         
         for (Collision object : scene.getObjects()) { //loop through all objects in scene
-            
             if (object == this) continue; //ignore self
-            
             if (overlaps(object)) { //check for an overlap
-                
                 if (object.isCollidable() && collidable) { //if this and other object can collide
-                    
                     //do the collision calculations
                     doCollision(object);
-                    
-                } else {
-                    overlapping = true;
-                    allOverlapping.add(object); //set overlapping if can't collide
                 }
             }
         }
     }
     
     /**
-     * fix the position of this object
+     * fix the position of this object to make a collision occur
      *
      * @param object object colliding with this object
      */
     private void doCollision(Collision object) {
-        colliding = true;
-        allColliding.add(object);
+        collidingObjects.add(object);
+        //set object to colliding
         
-        Side side = Side.NONE;
+        double[] overlaps = new double[6];
+        overlaps[0] = Math.abs(getMinimum().getX() - object.getMaximum().getX()); //left
+        overlaps[1] = Math.abs(getMaximum().getX() - object.getMinimum().getX()); //right
+        overlaps[2] = Math.abs(getMinimum().getY() - object.getMaximum().getY()); //bottom
+        overlaps[3] = Math.abs(getMaximum().getY() - object.getMinimum().getY()); //top
+        overlaps[4] = Math.abs(getMinimum().getZ() - object.getMaximum().getZ()); //back
+        overlaps[5] = Math.abs(getMaximum().getZ() - object.getMinimum().getZ()); //front
+        //get overlap distances
         
-        double left = Math.abs(getMinimum().getX() - object.getMaximum().getX());
-        double right = Math.abs(getMaximum().getX() - object.getMinimum().getX());
-        double bottom = Math.abs(getMinimum().getY() - object.getMaximum().getY());
-        double top = Math.abs(getMaximum().getY() - object.getMinimum().getY());
-        double back = Math.abs(getMinimum().getZ() - object.getMaximum().getZ());
-        double front = Math.abs(getMaximum().getZ() - object.getMinimum().getZ());
-        
-        double collideDist = Math.min(Math.min(Math.min(left, right), Math.min(top, bottom)), Math.min(front, back));
+        double distance = overlaps[0];
+        for (int i = 0; i <= 5; i++) {
+            if(overlaps[i] < distance) distance = overlaps[i];
+        }
         //find min overlap
         
-        //use min overlap to determine colliding side
-        if (collideDist == left) {
-            side = Side.LEFT;
-        } else if (collideDist == right) {
-            side = Side.RIGHT;
-        } else if (collideDist == top) {
-            side = Side.TOP;
-        } else if (collideDist == bottom) {
-            side = Side.BOTTOM;
-        } else if (collideDist == back) {
-            side = Side.BACK;
-        } else if (collideDist == front) {
-            side = Side.FRONT;
-        }
-        
-        sides.add(side);
-        
-        switch (side) {
-            case BOTTOM:
-                // check if this object is moving in the direction of the collising side
-                if (getVelocity().getY() < 0) {
-                    // check if the object is faster
-                    if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
-                        setPosition(getPosition().setY(getPosition().getY() + collideDist));
-                        //fix object position so it is not overlapping
-                        setVelocity(getVelocity().setY(0));
-                        //set object velocity to 0 in the same direction
-                    } else {
-                        setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
-                        // if not the faster object, cancel its velocity to prevent drifting
-                    }
+        if (distance == overlaps[0]) {
+            // check if this object is moving in the direction of the collising side
+            if (getVelocity().getX() < 0) {
+                // check if the object is faster
+                if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
+                    setPosition(getPosition().setX(getPosition().getX() + distance));
+                    //fix object position so it is not overlapping
+                    setVelocity(getVelocity().setX(0));
+                    //set object velocity to 0 in the same direction
+                } else {
+                    setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
+                    //if not the faster object, cancel its velocity to prevent drifting
                 }
-                break;
+            }
+            collidingSides.add(Side.LEFT);
+            //add side to list of colliding sides
             
-            case TOP:
-                if (getVelocity().getY() > 0) {
-                    if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
-                        setPosition(getPosition().setY(getPosition().getY() - collideDist));
-                        setVelocity(getVelocity().setY(0));
-                    } else {
-                        setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
-                    }
+        } else if (distance == overlaps[1]) {
+            if (getVelocity().getX() > 0) {
+                if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
+                    setPosition(getPosition().setX(getPosition().getX() - distance));
+                    setVelocity(getVelocity().setX(0));
+                } else {
+                    setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
                 }
-                break;
+            }
+            collidingSides.add(Side.RIGHT);
             
-            case LEFT:
-                if (getVelocity().getX() < 0) {
-                    if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
-                        setPosition(getPosition().setX(getPosition().getX() + collideDist));
-                        setVelocity(getVelocity().setX(0));
-                    } else {
-                        setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
-                    }
+        } else if (distance == overlaps[2]) {
+            if (getVelocity().getY() < 0) {
+                if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
+                    setPosition(getPosition().setY(getPosition().getY() + distance));
+                    setVelocity(getVelocity().setY(0));
+                } else {
+                    setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
-                break;
+            }
+            collidingSides.add(Side.BOTTOM);
             
-            case RIGHT:
-                if (getVelocity().getX() > 0) {
-                    if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
-                        setPosition(getPosition().setX(getPosition().getX() - collideDist));
-                        setVelocity(getVelocity().setX(0));
-                    } else {
-                        setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
-                    }
+        } else if (distance == overlaps[3]) {
+            if (getVelocity().getY() > 0) {
+                if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
+                    setPosition(getPosition().setY(getPosition().getY() - distance));
+                    setVelocity(getVelocity().setY(0));
+                } else {
+                    setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
-                break;
+            }
+            collidingSides.add(Side.TOP);
             
-            case BACK:
-                if (getVelocity().getZ() < 0) {
-                    if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
-                        setPosition(getPosition().setZ(getPosition().getZ() + collideDist));
-                        setVelocity(getVelocity().setZ(0));
-                    } else {
-                        setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
-                    }
+        } else if (distance == overlaps[4]) {
+            if (getVelocity().getZ() < 0) {
+                if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
+                    setPosition(getPosition().setZ(getPosition().getZ() + distance));
+                    setVelocity(getVelocity().setZ(0));
+                } else {
+                    setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
-                break;
+            }
+            collidingSides.add(Side.BACK);
             
-            case FRONT:
-                if (getVelocity().getZ() > 0) {
-                    if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
-                        setPosition(getPosition().setZ(getPosition().getZ() - collideDist));
-                        setVelocity(getVelocity().setZ(0));
-                    } else {
-                        setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
-                    }
+        } else if (distance == overlaps[5]) {
+            if (getVelocity().getZ() > 0) {
+                if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
+                    setPosition(getPosition().setZ(getPosition().getZ() - distance));
+                    setVelocity(getVelocity().setZ(0));
+                } else {
+                    setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
-                break;
+            }
+            collidingSides.add(Side.FRONT);
         }
     }
     
@@ -265,47 +219,37 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * get the objects this object is colliding with. only works with collidable objects
-     *
-     * @return list of objects this object is colliding with
-     */
-    public Set<Collision> getCollidingObjects() {
-        return allColliding;
-    }
-    
-    /**
-     * check if an object overlaps another. only works if other objects are non collidable
-     *
-     * @return list of objects this object overlaps
-     */
-    public Set<Collision> getOverlappingObjects() {
-        return allOverlapping;
-    }
-    
-    /**
      * check if the object is currently colliding with another object
      *
      * @return true if the object has collided with another object
      */
     public boolean isColliding() {
-        return colliding;
+        return !collidingObjects.isEmpty();
     }
     
     /**
-     * check if the object is overlapping another object
+     * check if an object(s) collides with this object
      *
-     * @return true if an object overlaps another
+     * @param object object(s) to check if colliding with
+     * @return true if this object collides with the other object(s)
      */
-    public boolean isOverlapping() {
-        return overlapping;
+    public boolean collidesWith(Collision... object) {
+        for(Collision o : object) {
+            if(!collidingObjects.contains(o)) return false;
+        }
+        return true;
     }
     
     /**
-     * get the sides the object is colliding with
+     * check if this object is colliding on the specified side(s)
      *
-     * @return set of sides the object is colliding on
+     * @param side side(s) of the object
+     * @return true if the object is colliding on the side(s)
      */
-    public Set<Side> getCollidingSides() {
-        return sides;
+    public boolean collidesOn(Side... side) {
+        for(Side s : side) {
+            if(!collidingSides.contains(s)) return false;
+        }
+        return true;
     }
 }
