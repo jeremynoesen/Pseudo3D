@@ -4,7 +4,7 @@ import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.loader.Sprites;
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.renderer.Camera;
-import jndev.pseudo3d.renderer.SimpleRenderer;
+import jndev.pseudo3d.renderer.Renderer;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 
@@ -45,7 +45,7 @@ public class RenderTest extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        SimpleRenderer.render(scene, this, g);
+        Renderer.render(scene, this, g);
     }
     
     @Override

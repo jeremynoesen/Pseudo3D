@@ -4,7 +4,7 @@ import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Vector;
 
 /**
- * abstract class to handle simple 2D motion for objects
+ * motion data for an object
  *
  * @author JNDev (Jeremaster101)
  */
