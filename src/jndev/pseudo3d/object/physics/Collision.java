@@ -126,112 +126,92 @@ public abstract class Collision extends Motion {
         allColliding.add(object);
         //set object to colliding
         
-        double left = Math.abs(getMinimum().getX() - object.getMaximum().getX());
-        double right = Math.abs(getMaximum().getX() - object.getMinimum().getX());
-        double bottom = Math.abs(getMinimum().getY() - object.getMaximum().getY());
-        double top = Math.abs(getMaximum().getY() - object.getMinimum().getY());
-        double back = Math.abs(getMinimum().getZ() - object.getMaximum().getZ());
-        double front = Math.abs(getMaximum().getZ() - object.getMinimum().getZ());
+        double[] overlaps = new double[6];
+        overlaps[0] = Math.abs(getMinimum().getX() - object.getMaximum().getX()); //left
+        overlaps[1] = Math.abs(getMaximum().getX() - object.getMinimum().getX()); //right
+        overlaps[2] = Math.abs(getMinimum().getY() - object.getMaximum().getY()); //bottom
+        overlaps[3] = Math.abs(getMaximum().getY() - object.getMinimum().getY()); //top
+        overlaps[4] = Math.abs(getMinimum().getZ() - object.getMaximum().getZ()); //back
+        overlaps[5] = Math.abs(getMaximum().getZ() - object.getMinimum().getZ()); //front
         //get overlap distances
         
-        double minx = left <= right ? left : right;
-        double miny = top <= bottom ? top : bottom;
-        double minz = front <= back ? front : back;
-        double minxy = minx <= miny ? minx : miny;
-        double min = minxy <= minz ? minxy : minz;
-        //find min overlap
-    
-        Side side = Side.NONE;
-    
-        if (min == left) {
-            side = Side.LEFT;
-        } else if (min == right) {
-            side = Side.RIGHT;
-        } else if (min == top) {
-            side = Side.TOP;
-        } else if (min == bottom) {
-            side = Side.BOTTOM;
-        } else if (min == back) {
-            side = Side.BACK;
-        } else if (min == front) {
-            side = Side.FRONT;
+        double distance = overlaps[0];
+        for (int i = 0; i <= 5; i++) {
+            if(overlaps[i] < distance) distance = overlaps[i];
         }
-        //use min overlap to determine colliding side
-    
-        sides.add(side);
-        //add to list of colliding sides
+        //find min overlap
         
-        switch (side) {
-            case BOTTOM:
-                // check if this object is moving in the direction of the collising side
-                if (getVelocity().getY() < 0) {
-                    // check if the object is faster
-                    if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
-                        setPosition(getPosition().setY(getPosition().getY() + min));
-                        //fix object position so it is not overlapping
-                        setVelocity(getVelocity().setY(0));
-                        //set object velocity to 0 in the same direction
-                    } else {
-                        setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
-                        // if not the faster object, cancel its velocity to prevent drifting
-                    }
+        if (distance == overlaps[0]) {
+            // check if this object is moving in the direction of the collising side
+            if (getVelocity().getX() < 0) {
+                // check if the object is faster
+                if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
+                    setPosition(getPosition().setX(getPosition().getX() + distance));
+                    //fix object position so it is not overlapping
+                    setVelocity(getVelocity().setX(0));
+                    //set object velocity to 0 in the same direction
+                } else {
+                    setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
+                    //if not the faster object, cancel its velocity to prevent drifting
                 }
-                break;
+            }
+            sides.add(Side.LEFT);
+            //add side to list of colliding sides
             
-            case TOP:
-                if (getVelocity().getY() > 0) {
-                    if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
-                        setPosition(getPosition().setY(getPosition().getY() - min));
-                        setVelocity(getVelocity().setY(0));
-                    } else {
-                        setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
-                    }
+        } else if (distance == overlaps[1]) {
+            if (getVelocity().getX() > 0) {
+                if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
+                    setPosition(getPosition().setX(getPosition().getX() - distance));
+                    setVelocity(getVelocity().setX(0));
+                } else {
+                    setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
                 }
-                break;
+            }
+            sides.add(Side.RIGHT);
             
-            case LEFT:
-                if (getVelocity().getX() < 0) {
-                    if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
-                        setPosition(getPosition().setX(getPosition().getX() + min));
-                        setVelocity(getVelocity().setX(0));
-                    } else {
-                        setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
-                    }
+        } else if (distance == overlaps[2]) {
+            if (getVelocity().getY() < 0) {
+                if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
+                    setPosition(getPosition().setY(getPosition().getY() + distance));
+                    setVelocity(getVelocity().setY(0));
+                } else {
+                    setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
-                break;
+            }
+            sides.add(Side.BOTTOM);
             
-            case RIGHT:
-                if (getVelocity().getX() > 0) {
-                    if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
-                        setPosition(getPosition().setX(getPosition().getX() - min));
-                        setVelocity(getVelocity().setX(0));
-                    } else {
-                        setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
-                    }
+        } else if (distance == overlaps[3]) {
+            if (getVelocity().getY() > 0) {
+                if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
+                    setPosition(getPosition().setY(getPosition().getY() - distance));
+                    setVelocity(getVelocity().setY(0));
+                } else {
+                    setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
-                break;
+            }
+            sides.add(Side.TOP);
             
-            case BACK:
-                if (getVelocity().getZ() < 0) {
-                    if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
-                        setPosition(getPosition().setZ(getPosition().getZ() + min));
-                        setVelocity(getVelocity().setZ(0));
-                    } else {
-                        setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
-                    }
+        } else if (distance == overlaps[4]) {
+            if (getVelocity().getZ() < 0) {
+                if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
+                    setPosition(getPosition().setZ(getPosition().getZ() + distance));
+                    setVelocity(getVelocity().setZ(0));
+                } else {
+                    setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
-                break;
+            }
+            sides.add(Side.BACK);
             
-            case FRONT:
-                if (getVelocity().getZ() > 0) {
-                    if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
-                        setPosition(getPosition().setZ(getPosition().getZ() - min));
-                        setVelocity(getVelocity().setZ(0));
-                    } else {
-                        setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
-                    }
+        } else if (distance == overlaps[5]) {
+            if (getVelocity().getZ() > 0) {
+                if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
+                    setPosition(getPosition().setZ(getPosition().getZ() - distance));
+                    setVelocity(getVelocity().setZ(0));
+                } else {
+                    setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
-                break;
+            }
+            sides.add(Side.FRONT);
         }
     }
     
