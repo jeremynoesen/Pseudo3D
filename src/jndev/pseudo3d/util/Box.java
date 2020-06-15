@@ -193,12 +193,24 @@ public class Box {
     }
     
     /**
+     * check if a box is inside this box
+     *
+     * @param box box to check
+     * @return true if the box is inside this box
+     */
+    public boolean contains(Box box) {
+        return min.getX() <= box.getMinimum().getX() && max.getX() >= box.getMaximum().getX() &&
+                min.getY() <= box.getMinimum().getY() && max.getY() >= box.getMaximum().getY() &&
+                min.getZ() <= box.getMinimum().getZ() && max.getZ() >= box.getMaximum().getZ();
+    }
+    
+    /**
      * check if this box contains a position
      *
      * @param position position to check
      * @return true of the box contains this position
      */
-    public boolean containsPosition(Vector position) {
+    public boolean contains(Vector position) {
         return min.getX() <= position.getX() && max.getX() >= position.getX() &&
                 min.getY() <= position.getY() && max.getY() >= position.getY() &&
                 min.getZ() <= position.getZ() && max.getZ() >= position.getZ();

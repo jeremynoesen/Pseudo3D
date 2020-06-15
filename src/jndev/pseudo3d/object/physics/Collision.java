@@ -229,29 +229,23 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * check if an object(s) collides with this object
+     * check if an object collides with this object
      *
-     * @param object object(s) to check if colliding with
-     * @return true if this object collides with the other object(s)
+     * @param object object to check if colliding with
+     * @return true if this object collides with the other object
      */
-    public boolean collidesWith(Collision... object) {
-        for (Collision o : object) {
-            if (!collidingObjects.contains(o)) return false;
-        }
-        return true;
+    public boolean collidesWith(Collision object) {
+        return collidingObjects.contains(object);
     }
     
     /**
-     * check if this object is colliding on the specified side(s)
+     * check if this object is colliding on the specified side
      *
-     * @param side side(s) of the object
-     * @return true if the object is colliding on the side(s)
+     * @param side side of the object
+     * @return true if the object is colliding on the side
      */
-    public boolean collidesOn(Side... side) {
-        for (Side s : side) {
-            if (!collidingSides.contains(s)) return false;
-        }
-        return true;
+    public boolean collidesOn(Side side) {
+        return collidingSides.contains(side);
     }
     
     /**

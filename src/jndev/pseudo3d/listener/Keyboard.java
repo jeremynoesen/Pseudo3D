@@ -27,16 +27,13 @@ public class Keyboard extends KeyAdapter {
     }
     
     /**
-     * check if a key or keys are pressed
+     * check if a key is pressed
      *
-     * @param key key(s) to check if pressed (KeyEvent.VK_KEYNAME)
-     * @return true if all keys are pressed
+     * @param key key to check if pressed (KeyEvent.VK_KEYNAME)
+     * @return true if the key is pressed
      */
-    public static boolean isPressed(int... key) {
-        for(int k : key) {
-            if(!pressed.contains(k)) return false;
-        }
-        return true;
+    public static boolean isPressed(int key) {
+        return pressed.contains(key);
     }
     
     /**
