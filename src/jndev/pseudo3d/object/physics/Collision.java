@@ -24,29 +24,14 @@ public abstract class Collision extends Motion {
     private boolean collidable;
     
     /**
-     * whether or not an object is colliding
-     */
-    private boolean colliding;
-    
-    /**
-     * whether or not an object is overlapping
-     */
-    private boolean overlapping;
-    
-    /**
      * sides the object is colliding with
      */
-    private final Set<Side> sides;
+    private final Set<Side> collidingSides;
     
     /**
      * list of objects this one is colliding with
      */
-    private final Set<Collision> allColliding;
-    
-    /**
-     * list of objects this one is overlapping
-     */
-    private final Set<Collision> allOverlapping;
+    private final Set<Collision> collidingObjects;
     
     /**
      * initializes all booleans to false and initializes array lists
@@ -55,11 +40,8 @@ public abstract class Collision extends Motion {
         super();
         scene = null;
         collidable = true;
-        colliding = false;
-        overlapping = false;
-        sides = new HashSet<>();
-        allColliding = new HashSet<>();
-        allOverlapping = new HashSet<>();
+        collidingSides = new HashSet<>();
+        collidingObjects = new HashSet<>();
     }
     
     /**
@@ -71,11 +53,8 @@ public abstract class Collision extends Motion {
         super(collision);
         scene = collision.getScene();
         collidable = collision.isCollidable();
-        colliding = collision.isColliding();
-        overlapping = collision.isOverlapping();
-        sides = new HashSet<>(collision.getCollidingSides());
-        allColliding = new HashSet<>(collision.getCollidingObjects());
-        allOverlapping = new HashSet<>(collision.getOverlappingObjects());
+        collidingSides = new HashSet<>(collision.collidingSides);
+        collidingObjects = new HashSet<>(collision.collidingObjects);
     }
     
     /**
@@ -91,39 +70,27 @@ public abstract class Collision extends Motion {
      * check if an object has collided with another object
      */
     private void checkCollisions() {
-        colliding = false;
-        overlapping = false;
-        sides.clear();
-        allColliding.clear();
-        allOverlapping.clear();
+        collidingSides.clear();
+        collidingObjects.clear();
         
         for (Collision object : scene.getObjects()) { //loop through all objects in scene
-            
             if (object == this) continue; //ignore self
-            
             if (overlaps(object)) { //check for an overlap
-                
                 if (object.isCollidable() && collidable) { //if this and other object can collide
-                    
                     //do the collision calculations
                     doCollision(object);
-                    
-                } else {
-                    overlapping = true;
-                    allOverlapping.add(object); //set overlapping if can't collide
                 }
             }
         }
     }
     
     /**
-     * fix the position of this object
+     * fix the position of this object to make a collision occur
      *
      * @param object object colliding with this object
      */
     private void doCollision(Collision object) {
-        colliding = true;
-        allColliding.add(object);
+        collidingObjects.add(object);
         //set object to colliding
         
         double[] overlaps = new double[6];
@@ -155,7 +122,7 @@ public abstract class Collision extends Motion {
                     //if not the faster object, cancel its velocity to prevent drifting
                 }
             }
-            sides.add(Side.LEFT);
+            collidingSides.add(Side.LEFT);
             //add side to list of colliding sides
             
         } else if (distance == overlaps[1]) {
@@ -167,7 +134,7 @@ public abstract class Collision extends Motion {
                     setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
                 }
             }
-            sides.add(Side.RIGHT);
+            collidingSides.add(Side.RIGHT);
             
         } else if (distance == overlaps[2]) {
             if (getVelocity().getY() < 0) {
@@ -178,7 +145,7 @@ public abstract class Collision extends Motion {
                     setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
             }
-            sides.add(Side.BOTTOM);
+            collidingSides.add(Side.BOTTOM);
             
         } else if (distance == overlaps[3]) {
             if (getVelocity().getY() > 0) {
@@ -189,7 +156,7 @@ public abstract class Collision extends Motion {
                     setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
             }
-            sides.add(Side.TOP);
+            collidingSides.add(Side.TOP);
             
         } else if (distance == overlaps[4]) {
             if (getVelocity().getZ() < 0) {
@@ -200,7 +167,7 @@ public abstract class Collision extends Motion {
                     setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
             }
-            sides.add(Side.BACK);
+            collidingSides.add(Side.BACK);
             
         } else if (distance == overlaps[5]) {
             if (getVelocity().getZ() > 0) {
@@ -211,7 +178,7 @@ public abstract class Collision extends Motion {
                     setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
             }
-            sides.add(Side.FRONT);
+            collidingSides.add(Side.FRONT);
         }
     }
     
@@ -252,47 +219,37 @@ public abstract class Collision extends Motion {
     }
     
     /**
-     * get the objects this object is colliding with. only works with collidable objects
-     *
-     * @return list of objects this object is colliding with
-     */
-    public Set<Collision> getCollidingObjects() {
-        return allColliding;
-    }
-    
-    /**
-     * check if an object overlaps another. only works if other objects are non collidable
-     *
-     * @return list of objects this object overlaps
-     */
-    public Set<Collision> getOverlappingObjects() {
-        return allOverlapping;
-    }
-    
-    /**
      * check if the object is currently colliding with another object
      *
      * @return true if the object has collided with another object
      */
     public boolean isColliding() {
-        return colliding;
+        return !collidingObjects.isEmpty();
     }
     
     /**
-     * check if the object is overlapping another object
+     * check if an object(s) collides with this object
      *
-     * @return true if an object overlaps another
+     * @param object object(s) to check if colliding with
+     * @return true if this object collides with the other object(s)
      */
-    public boolean isOverlapping() {
-        return overlapping;
+    public boolean collidesWith(Collision... object) {
+        for(Collision o : object) {
+            if(!collidingObjects.contains(o)) return false;
+        }
+        return true;
     }
     
     /**
-     * get the sides the object is colliding with
+     * check if this object is colliding on the specified side(s)
      *
-     * @return set of sides the object is colliding on
+     * @param side side(s) of the object
+     * @return true if the object is colliding on the side(s)
      */
-    public Set<Side> getCollidingSides() {
-        return sides;
+    public boolean collidesOn(Side... side) {
+        for(Side s : side) {
+            if(!collidingSides.contains(s)) return false;
+        }
+        return true;
     }
 }
