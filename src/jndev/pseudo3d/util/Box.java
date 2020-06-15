@@ -3,7 +3,7 @@ package jndev.pseudo3d.util;
 import java.util.Objects;
 
 /**
- * 3D box, used for bounding boxes and other operations
+ * simple 3-dimensional box
  *
  * @author JNDev (Jeremaster101)
  */

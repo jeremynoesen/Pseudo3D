@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * abstract class to handle collisions for an object
+ * collision data for an object
  *
  * @author JNDev (Jeremaster101)
  */
