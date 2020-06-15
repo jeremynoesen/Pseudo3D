@@ -1,6 +1,7 @@
 package jndev.pseudo3d.object.physics;
 
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Side;
 
 import java.util.HashSet;
@@ -104,7 +105,7 @@ public abstract class Collision extends Motion {
         
         double distance = overlaps[0];
         for (int i = 0; i <= 5; i++) {
-            if(overlaps[i] < distance) distance = overlaps[i];
+            if (overlaps[i] < distance) distance = overlaps[i];
         }
         //find min overlap
         
@@ -234,8 +235,8 @@ public abstract class Collision extends Motion {
      * @return true if this object collides with the other object(s)
      */
     public boolean collidesWith(Collision... object) {
-        for(Collision o : object) {
-            if(!collidingObjects.contains(o)) return false;
+        for (Collision o : object) {
+            if (!collidingObjects.contains(o)) return false;
         }
         return true;
     }
@@ -247,9 +248,21 @@ public abstract class Collision extends Motion {
      * @return true if the object is colliding on the side(s)
      */
     public boolean collidesOn(Side... side) {
-        for(Side s : side) {
-            if(!collidingSides.contains(s)) return false;
+        for (Side s : side) {
+            if (!collidingSides.contains(s)) return false;
         }
         return true;
+    }
+    
+    /**
+     * check if an object overlaps another. will return false if this object is colliding
+     *
+     * @param box object to check for overlaps
+     * @return true if the object overlaps the other, false if not or if this object is colliding
+     */
+    @Override
+    public boolean overlaps(Box box) {
+        if (isColliding()) return false;
+        return super.overlaps(box);
     }
 }
