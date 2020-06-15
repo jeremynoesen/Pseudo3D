@@ -262,7 +262,7 @@ public abstract class Collision extends Motion {
      */
     @Override
     public boolean overlaps(Box box) {
-        if (isColliding()) return false;
+        if (box instanceof Collision && collidesWith((Collision) box)) return false;
         return super.overlaps(box);
     }
 }
