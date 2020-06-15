@@ -109,6 +109,9 @@ public class CollisionTest extends JPanel implements ActionListener {
 //        }
     
         //copy.setVelocity(new Vector(0.0981, 0, 0));
+        
+        //System.out.println("Colliding: " + object.collidesWith(copy) + ", Overlapping: " + object.overlaps(copy));
+        //System.out.println(object.getVelocity());
     
     
         scene.tick();

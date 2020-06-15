@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Object extends Collision {
     
     /**
-     * board this object is on
+     * scene this object is in
      */
     private Scene scene;
     
