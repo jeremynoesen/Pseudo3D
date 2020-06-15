@@ -76,7 +76,7 @@ public abstract class Collision extends Motion {
         
         for (Collision object : scene.getObjects()) { //loop through all objects in scene
             if (object == this) continue; //ignore self
-            if (overlaps(object)) { //check for an overlap
+            if (super.overlaps(object)) { //check for an overlap
                 if (object.isCollidable() && collidable) { //if this and other object can collide
                     //do the collision calculations
                     doCollision(object);
