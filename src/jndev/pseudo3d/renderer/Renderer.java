@@ -53,11 +53,19 @@ public class Renderer {
             double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
             //scale image dimensions and coordinates
             
-            graphics.drawImage(image, (int) (x - (widthScaled / 2.0)),
-                    (int) ((panel.getHeight() - y) - (heightScaled / 2.0)),
-                    widthScaled, heightScaled, panel);
-            //draw image to panel
+            int minX = (int) (x - (widthScaled / 2.0));
+            int maxX = (int) (x + (widthScaled / 2.0));
+            int minY = (int) ((panel.getHeight() - y) - (heightScaled / 2.0));
+            int maxY = (int) ((panel.getHeight() - y) + (heightScaled / 2.0));
+            //image bounds after scaling
             
+            if (((minX >= 0 && minX <= panel.getWidth()) || (maxX >= 0 && maxX <= panel.getWidth())) &&
+                    ((minY >= 0 && minY <= panel.getHeight()) || (maxY >= 0 && maxY <= panel.getHeight()))) {
+                //check if image is within panel boundary
+                
+                graphics.drawImage(image, minX, minY, widthScaled, heightScaled, panel);
+                //draw image to panel
+            }
         }
     }
 }
