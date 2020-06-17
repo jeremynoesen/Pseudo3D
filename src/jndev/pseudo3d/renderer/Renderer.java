@@ -22,9 +22,6 @@ public class Renderer {
      * @param panel jpanel to render to
      */
     public static void render(Scene scene, JPanel panel, Graphics graphics) {
-        
-        panel.repaint();
-        
         if (scene.getBackground() == null) panel.setBackground(Color.WHITE);
         else panel.setBackground(scene.getBackground());
         //draw scene background color
@@ -62,8 +59,5 @@ public class Renderer {
             //draw image to panel
             
         }
-        
-        Toolkit.getDefaultToolkit().sync();
-        
     }
 }
