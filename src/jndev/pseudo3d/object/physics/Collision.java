@@ -35,6 +35,16 @@ public abstract class Collision extends Motion {
     private final Set<Collision> collidingObjects;
     
     /**
+     * true if the object is colliding
+     */
+    private boolean colliding;
+    
+    /**
+     * true if object is overlapping
+     */
+    private boolean overlapping;
+    
+    /**
      * initializes all booleans to false and initializes array lists
      */
     protected Collision() {
@@ -43,6 +53,7 @@ public abstract class Collision extends Motion {
         collidable = true;
         collidingSides = new HashSet<>();
         collidingObjects = new HashSet<>();
+        overlapping = false;
     }
     
     /**
@@ -71,6 +82,8 @@ public abstract class Collision extends Motion {
      * check if an object has collided with another object
      */
     private void checkCollisions() {
+        colliding = false;
+        overlapping = false;
         collidingSides.clear();
         collidingObjects.clear();
         
@@ -80,6 +93,8 @@ public abstract class Collision extends Motion {
                 if (object.isCollidable() && collidable) { //if this and other object can collide
                     //do the collision calculations
                     doCollision(object);
+                } else {
+                    overlapping = true;
                 }
             }
         }
@@ -91,6 +106,7 @@ public abstract class Collision extends Motion {
      * @param object object colliding with this object
      */
     private void doCollision(Collision object) {
+        colliding = true;
         collidingObjects.add(object);
         //set object to colliding
         
@@ -225,7 +241,7 @@ public abstract class Collision extends Motion {
      * @return true if the object has collided with another object
      */
     public boolean isColliding() {
-        return !collidingObjects.isEmpty();
+        return colliding;
     }
     
     /**
@@ -258,5 +274,14 @@ public abstract class Collision extends Motion {
     public boolean overlaps(Box box) {
         if (box instanceof Collision && collidesWith((Collision) box)) return false;
         return super.overlaps(box);
+    }
+    
+    /**
+     * see if this object is overlapping any object
+     *
+     * @return true if overlapping
+     */
+    public boolean isOverlapping() {
+        return overlapping;
     }
 }
