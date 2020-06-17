@@ -14,22 +14,22 @@ public class GameLoop extends JPanel {
     /**
      * active scene to render and tick
      */
-    private static Scene activeScene;
+    private static Scene activeScene = null;
     
     /**
-     * framerate at which the graphics updates
+     * rate at which the graphics updates
      */
-    private static int graphicsFPS;
+    private static int graphicsFrequency = 60;
     
     /**
-     * framerate at which the physics updates
+     * rate at which the physics updates
      */
-    private static int physicsFPS;
+    private static int physicsFrequency = 120;
     
     /**
      * whether the game is paused or not
      */
-    private static boolean paused;
+    private static boolean paused = true;
     
     /**
      * time in milliseconds that the loop started
@@ -40,10 +40,6 @@ public class GameLoop extends JPanel {
      * create a new game loop and initialize values
      */
     GameLoop() {
-        activeScene = null;
-        graphicsFPS = 60;
-        physicsFPS = 120;
-        paused = true;
         startTime = System.currentTimeMillis();
         doLoop();
         setVisible(true);
@@ -59,9 +55,9 @@ public class GameLoop extends JPanel {
             while (true) {
                 if (!paused) {
                     long time = System.currentTimeMillis() - startTime;
-                    long graphicsTime = 1000 / graphicsFPS;
-                    long physicsTime = 1000 / physicsFPS;
-                    if (time != prev) {
+                    long graphicsTime = 1000 / graphicsFrequency;
+                    long physicsTime = 1000 / physicsFrequency;
+                    if (time > prev) {
                         if (time % graphicsTime == 0) updateGraphics();
                         if (time % physicsTime == 0) updatePhysics();
                     }
@@ -92,8 +88,8 @@ public class GameLoop extends JPanel {
      *
      * @param fps frames per second
      */
-    public static void setGraphicsFPS(int fps) {
-        graphicsFPS = Math.min(fps, physicsFPS);
+    public static void setGraphicsFrequency(int fps) {
+        graphicsFrequency = Math.min(fps, physicsFrequency);
     }
     
     /**
@@ -101,8 +97,8 @@ public class GameLoop extends JPanel {
      *
      * @param fps frames per second
      */
-    public static void setPhysicsFPS(int fps) {
-        physicsFPS = Math.max(fps, graphicsFPS);
+    public static void setPhysicsFrequency(int fps) {
+        physicsFrequency = Math.max(fps, graphicsFrequency);
     }
     
     /**

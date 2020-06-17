@@ -36,6 +36,7 @@ public class Application extends JFrame {
         addKeyListener(new Keyboard());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setSize(new Dimension(1000, 1000));
         add(new GameLoop());
     }
 }

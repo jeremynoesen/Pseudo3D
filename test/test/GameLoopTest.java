@@ -14,6 +14,8 @@ import java.io.File;
 public class GameLoopTest {
     
     public static void main(String[] args) {
+        Application.launch();
+    
         Sprites.load(new File("res/sprites/"));
         Scene scene = new Scene();
         Object object = new Object();
@@ -35,8 +37,7 @@ public class GameLoopTest {
     
         scene.setCamera(camera);
         scene.setBackground(Color.BLACK);
-    
-        Application.launch();
+        
         GameLoop.setActiveScene(scene);
         GameLoop.start();
         
