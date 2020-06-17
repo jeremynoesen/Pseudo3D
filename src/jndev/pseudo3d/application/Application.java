@@ -20,11 +20,9 @@ public class Application extends JFrame {
     }
     
     /**
-     * main method, will show the window and start the application
-     *
-     * @param args
+     * start the application
      */
-    public static void main(String[] args) {
+    public static void launch() {
         EventQueue.invokeLater(() -> {
             Application application = new Application();
             application.setVisible(true);
@@ -35,9 +33,10 @@ public class Application extends JFrame {
      * initialize the listeners and load all necessary files
      */
     private void initialize() {
-        Sprites.load(new File("res/sprites/"));
         addKeyListener(new Keyboard());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setSize(new Dimension(1000, 1000));
+        add(new GameLoop());
     }
 }
