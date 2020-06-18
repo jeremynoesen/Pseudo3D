@@ -1,7 +1,6 @@
 package test;
 
 import jndev.pseudo3d.application.Application;
-import jndev.pseudo3d.application.GameLoop;
 import jndev.pseudo3d.loader.Sprites;
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.renderer.Camera;
@@ -14,8 +13,6 @@ import java.io.File;
 public class GameLoopTest {
     
     public static void main(String[] args) {
-        Application.launch();
-    
         Sprites.load(new File("res/sprites/"));
         Scene scene = new Scene();
         Object object = new Object();
@@ -37,11 +34,9 @@ public class GameLoopTest {
     
         scene.setCamera(camera);
         scene.setBackground(Color.BLACK);
-        
-        GameLoop.setActiveScene(scene);
-        GameLoop.start();
-        
     
+        Application.launch(1000, 1000);
+        Application.getGameLoop().setActiveScene(scene);
+        Application.getGameLoop().start();
     }
-
 }
