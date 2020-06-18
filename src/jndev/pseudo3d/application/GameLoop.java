@@ -159,6 +159,15 @@ public class GameLoop extends JPanel {
     }
     
     /**
+     * get the current active scene
+     *
+     * @return active scene
+     */
+    public Scene getActiveScene() {
+        return activeScene;
+    }
+    
+    /**
      * render the active scene
      *
      * @param g graphics
