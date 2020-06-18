@@ -53,7 +53,9 @@ public class Scene {
      * tick the scene once and every object in it. also sort all objects by z location from high to low
      */
     public void tick() {
-        objects.forEach(Object::tick);
+        for(int i = 0; i < objects.size(); i++) {
+            objects.get(i).tick();
+        }
     }
     
     /**
