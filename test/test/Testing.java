@@ -41,7 +41,7 @@ public class Testing {
         Application.getGameLoop().setActiveScene(scene);
         Application.getGameLoop().start();
         
-        Application.getGameLoop().addRunnable(() -> {
+        Application.getGameLoop().inject(() -> {
             if (Keyboard.isPressed(KeyEvent.VK_W)) {
                 object.setVelocity(object.getVelocity().setZ(-1));
                 object.setSprite(Sprites.get("front"));
