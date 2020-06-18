@@ -14,45 +14,49 @@ public class GameLoop extends JPanel {
     /**
      * active scene to render and tick
      */
-    private static Scene activeScene = null;
+    private Scene activeScene;
     
     /**
      * rate at which the graphics updates
      */
-    private static int graphicsFrequency = 60;
+    private int graphicsFrequency;
     
     /**
      * rate at which the physics updates
      */
-    private static int physicsFrequency = 120;
+    private int physicsFrequency;
     
     /**
-     * whether the game is paused or not
+     * whether the game is paused or not, default true
      */
-    private static boolean paused = true;
+    private boolean paused;
     
     /**
-     * time in milliseconds that the loop started
+     * whether the game loop has been stopped or not, default false
      */
-    private long startTime;
+    private boolean end;
     
     /**
-     * create a new game loop and initialize values
+     * create a new game loop with default values
      */
     GameLoop() {
-        startTime = System.currentTimeMillis();
-        doLoop();
-        setVisible(true);
-        requestFocus();
+        activeScene = null;
+        graphicsFrequency = 60;
+        physicsFrequency = 120;
+        paused = true;
+        end = false;
     }
     
     /**
-     * main game loop
+     * start the loop
      */
-    private void doLoop() {
+    public void start() {
+        paused = false;
+        long startTime = System.currentTimeMillis();
+        
         Thread thread = new Thread(() -> {
             long prev = 0;
-            while (true) {
+            while (!end) {
                 if (!paused) {
                     long time = System.currentTimeMillis() - startTime;
                     long graphicsTime = 1000 / graphicsFrequency;
@@ -67,38 +71,48 @@ public class GameLoop extends JPanel {
         });
         thread.start();
         thread.setName("Game Loop");
+        
+        setVisible(true);
+        requestFocus();
     }
     
     /**
-     * start the loop
+     * stop the loop
      */
-    public static void start() {
-        paused = false;
+    public void stop() {
+        end = true;
     }
     
     /**
      * pause the loop
      */
-    public static void stop() {
+    public void pause() {
         paused = true;
     }
     
     /**
-     * set the FPS for graphics refreshing
-     *
-     * @param fps frames per second
+     * unpause the loop
      */
-    public static void setGraphicsFrequency(int fps) {
-        graphicsFrequency = Math.min(fps, physicsFrequency);
+    public void resume() {
+        paused = false;
     }
     
     /**
-     * set the FPS for physics ticking
+     * set the frequency for graphics rendering
      *
-     * @param fps frames per second
+     * @param frequency renders per second (Hertz)
      */
-    public static void setPhysicsFrequency(int fps) {
-        physicsFrequency = Math.max(fps, graphicsFrequency);
+    public void setGraphicsFrequency(int frequency) {
+        graphicsFrequency = Math.min(frequency, physicsFrequency);
+    }
+    
+    /**
+     * set the frequency for physics calculations
+     *
+     * @param frequency calculations per second (Hertz)
+     */
+    public void setPhysicsFrequency(int frequency) {
+        physicsFrequency = Math.max(frequency, graphicsFrequency);
     }
     
     /**
@@ -121,18 +135,17 @@ public class GameLoop extends JPanel {
      *
      * @param scene scene to set as active scene to tick and render
      */
-    public static void setActiveScene(Scene scene) {
+    public void setActiveScene(Scene scene) {
         activeScene = scene;
     }
     
     /**
      * render the active scene
      *
-     * @param g
+     * @param g graphics
      */
     @Override
     public void paintComponent(Graphics g) {
         if (activeScene != null) Renderer.render(activeScene, this, g);
     }
-    
 }

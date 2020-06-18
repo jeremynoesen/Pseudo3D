@@ -1,11 +1,9 @@
 package jndev.pseudo3d.application;
 
 import jndev.pseudo3d.listener.Keyboard;
-import jndev.pseudo3d.loader.Sprites;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
 /**
  * main application for any project using Pseudo3D
@@ -13,30 +11,53 @@ import java.io.File;
 public class Application extends JFrame {
     
     /**
-     * create a new application and initialize
+     * instance of application
      */
-    private Application() {
-        initialize();
-    }
+    private static Application application = new Application();
+    
+    /**
+     * the main game loop
+     */
+    private static GameLoop gameLoop = new GameLoop();
+    
+    /**
+     * can't create a new instance outside Application class
+     */
+    private Application() {}
     
     /**
      * start the application
+     *
+     * @param width window width
+     * @param height window height
      */
-    public static void launch() {
+    public static void launch(int width, int height) {
         EventQueue.invokeLater(() -> {
-            Application application = new Application();
-            application.setVisible(true);
+            initialize(width, height);
         });
     }
     
     /**
      * initialize the listeners and load all necessary files
+     *
+     * @param width window width
+     * @param height window height
      */
-    private void initialize() {
-        addKeyListener(new Keyboard());
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setSize(new Dimension(1000, 1000));
-        add(new GameLoop());
+    private static void initialize(int width, int height) {
+        application.addKeyListener(new Keyboard());
+        application.add(gameLoop);
+        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        application.setLocationRelativeTo(null);
+        application.setSize(new Dimension(width, height));
+        application.setVisible(true);
+    }
+    
+    /**
+     * get the application's game loop
+     *
+     * @return game loop
+     */
+    public static GameLoop getGameLoop() {
+        return gameLoop;
     }
 }
