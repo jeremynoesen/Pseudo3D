@@ -1,6 +1,7 @@
 package test;
 
 import jndev.pseudo3d.application.Application;
+import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.loader.Sprites;
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.renderer.Camera;
@@ -8,6 +9,7 @@ import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
 public class GameLoopTest {
@@ -40,7 +42,37 @@ public class GameLoopTest {
         Application.getGameLoop().start();
         
         Application.getGameLoop().addRunnable(() -> {
-            System.out.println("test");
+            if (Keyboard.isPressed(KeyEvent.VK_W)) {
+                object.setVelocity(object.getVelocity().setZ(-1));
+                object.setSprite(Sprites.get("front"));
+                object.setWidth(object.getSprite().getWidth(null));
+            }
+    
+            if (Keyboard.isPressed(KeyEvent.VK_S)) {
+                object.setVelocity(object.getVelocity().setZ(1));
+                object.setSprite(Sprites.get("front"));
+                object.setWidth(object.getSprite().getWidth(null));
+            }
+    
+            if(!Keyboard.isPressed(KeyEvent.VK_W) && !Keyboard.isPressed(KeyEvent.VK_S)) {
+                object.setVelocity(object.getVelocity().setZ(0));
+            }
+    
+            if (Keyboard.isPressed(KeyEvent.VK_A)) {
+                object.setVelocity(object.getVelocity().setX(-1));
+                object.setSprite(Sprites.get("left"));
+                object.setWidth(object.getSprite().getWidth(null));
+            }
+    
+            if (Keyboard.isPressed(KeyEvent.VK_D)) {
+                object.setVelocity(object.getVelocity().setX(1));
+                object.setSprite(Sprites.get("right"));
+                object.setWidth(object.getSprite().getWidth(null));
+            }
+    
+            if(!Keyboard.isPressed(KeyEvent.VK_A) && !Keyboard.isPressed(KeyEvent.VK_D)) {
+                object.setVelocity(object.getVelocity().setX(0));
+            }
         });
     }
 }
