@@ -19,15 +19,15 @@ public class Testing {
         Scene scene = new Scene();
         Object object = new Object();
         object.setSprite(Sprites.get("front"));
-        object.setGravity(0);
-        object.setPosition(new Vector(0, 100, -100));
+        object.setGravity(1);
+        object.setPosition(new Vector(0, 50, -100));
         object.setWidth(10);
         object.setHeight(20);
         object.setDepth(10);
         scene.addObject(object);
     
         Object copy = new Object(object);
-        copy.setPosition(new Vector(0, -150, -100));
+        copy.setPosition(new Vector(0, -50, -100));
         copy.setGravity(0);
         scene.addObject(copy);
     
@@ -42,48 +42,50 @@ public class Testing {
         Application.getGameLoop().start();
         
         Application.getGameLoop().inject(() -> {
-            if (Keyboard.isPressed(KeyEvent.VK_W)) {
-                object.setVelocity(object.getVelocity().setZ(-1));
-                object.setSprite(Sprites.get("front"));
-                object.setWidth(object.getSprite().getWidth(null));
-            }
+            if(Application.getGameLoop().getActiveScene().equals(scene)) {
+                if (Keyboard.isPressed(KeyEvent.VK_W)) {
+                    object.setVelocity(object.getVelocity().setZ(-1));
+                    object.setSprite(Sprites.get("front"));
+                    object.setWidth(object.getSprite().getWidth(null));
+                }
     
-            if (Keyboard.isPressed(KeyEvent.VK_S)) {
-                object.setVelocity(object.getVelocity().setZ(1));
-                object.setSprite(Sprites.get("front"));
-                object.setWidth(object.getSprite().getWidth(null));
-            }
+                if (Keyboard.isPressed(KeyEvent.VK_S)) {
+                    object.setVelocity(object.getVelocity().setZ(1));
+                    object.setSprite(Sprites.get("front"));
+                    object.setWidth(object.getSprite().getWidth(null));
+                }
     
-            if(!Keyboard.isPressed(KeyEvent.VK_W) && !Keyboard.isPressed(KeyEvent.VK_S)) {
-                object.setVelocity(object.getVelocity().setZ(0));
-            }
+                if (!Keyboard.isPressed(KeyEvent.VK_W) && !Keyboard.isPressed(KeyEvent.VK_S)) {
+                    object.setVelocity(object.getVelocity().setZ(0));
+                }
     
-            if (Keyboard.isPressed(KeyEvent.VK_A)) {
-                object.setVelocity(object.getVelocity().setX(-1));
-                object.setSprite(Sprites.get("left"));
-                object.setWidth(object.getSprite().getWidth(null));
-            }
+                if (Keyboard.isPressed(KeyEvent.VK_A)) {
+                    object.setVelocity(object.getVelocity().setX(-1));
+                    object.setSprite(Sprites.get("left"));
+                    object.setWidth(object.getSprite().getWidth(null));
+                }
     
-            if (Keyboard.isPressed(KeyEvent.VK_D)) {
-                object.setVelocity(object.getVelocity().setX(1));
-                object.setSprite(Sprites.get("right"));
-                object.setWidth(object.getSprite().getWidth(null));
-            }
+                if (Keyboard.isPressed(KeyEvent.VK_D)) {
+                    object.setVelocity(object.getVelocity().setX(1));
+                    object.setSprite(Sprites.get("right"));
+                    object.setWidth(object.getSprite().getWidth(null));
+                }
     
-            if(!Keyboard.isPressed(KeyEvent.VK_A) && !Keyboard.isPressed(KeyEvent.VK_D)) {
-                object.setVelocity(object.getVelocity().setX(0));
-            }
+                if (!Keyboard.isPressed(KeyEvent.VK_A) && !Keyboard.isPressed(KeyEvent.VK_D)) {
+                    object.setVelocity(object.getVelocity().setX(0));
+                }
     
-            if (Keyboard.isPressed(KeyEvent.VK_UP)) {
-                object.setVelocity(object.getVelocity().setY(1));
-            }
+                if (Keyboard.isPressed(KeyEvent.VK_UP)) {
+                    object.setVelocity(object.getVelocity().setY(1));
+                }
     
-            if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-                object.setVelocity(object.getVelocity().setY(-1));
-            }
+                if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+                    object.setVelocity(object.getVelocity().setY(-1));
+                }
     
-            if(!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-                object.setVelocity(object.getVelocity().setY(0));
+//                if (!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+//                    object.setVelocity(object.getVelocity().setY(0));
+//                }
             }
         });
     }
