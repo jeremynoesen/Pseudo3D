@@ -29,8 +29,8 @@ public class Renderer {
         scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
         //sort objects by z position so objects can be drawn in front of others
         
-        for (Object object : scene.getObjects()) {
-            
+        for (int i = 0; i < scene.getObjects().size(); i++) {
+            Object object = scene.getObjects().get(i);
             Camera camera = scene.getCamera();
             Vector objPos = object.getPosition();
             Vector camPos = camera.getPosition();

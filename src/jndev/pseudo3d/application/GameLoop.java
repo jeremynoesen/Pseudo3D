@@ -58,8 +58,8 @@ public class GameLoop extends JPanel {
                     long graphicsTime = 1000 / graphicsFrequency;
                     long physicsTime = 1000 / physicsFrequency;
                     if (time > prev) {
-                        if (time % graphicsTime == 0) updateGraphics();
                         if (time % physicsTime == 0) updatePhysics();
+                        if (time % graphicsTime == 0) updateGraphics();
                     }
                     prev = time;
                 }
@@ -116,6 +116,11 @@ public class GameLoop extends JPanel {
         Toolkit.getDefaultToolkit().sync();
     }
     
+    /**
+     * set the active scene that will be ticked and rendered by the game loop
+     *
+     * @param scene scene to set as active scene to tick and render
+     */
     public static void setActiveScene(Scene scene) {
         activeScene = scene;
     }
