@@ -70,11 +70,11 @@ public class GameLoop extends JPanel {
                     long graphicsTime = 1000 / graphicsFrequency;
                     long physicsTime = 1000 / physicsFrequency;
                     if (time > prev) {
-                        if (time % physicsTime == 0) updatePhysics();
-                        if (time % graphicsTime == 0) {
-                            updateGraphics();
+                        if (time % physicsTime == 0) {
                             runnables.forEach(Runnable::run);
+                            updatePhysics();
                         }
+                        if (time % graphicsTime == 0) updateGraphics();
                     }
                     prev = time;
                 }
