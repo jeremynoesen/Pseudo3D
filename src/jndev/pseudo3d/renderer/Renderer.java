@@ -26,6 +26,9 @@ public class Renderer {
         else panel.setBackground(scene.getBackground());
         //draw scene background color
         
+        scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
+        //sort objects by z position so objects can be drawn in front of others
+        
         for (Object object : scene.getObjects()) {
             
             Camera camera = scene.getCamera();

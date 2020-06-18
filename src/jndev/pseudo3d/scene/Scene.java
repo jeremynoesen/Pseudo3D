@@ -30,11 +30,6 @@ public class Scene {
     private Color background;
     
     /**
-     * comparator used to sort objects from high to low z position
-     */
-    private Comparator<Object> zComparator = (o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ());
-    
-    /**
      * create a new scene
      */
     public Scene() {
@@ -59,7 +54,6 @@ public class Scene {
      */
     public void tick() {
         objects.forEach(Object::tick);
-        objects.sort(zComparator);
     }
     
     /**
