@@ -13,12 +13,12 @@ public class Application extends JFrame {
     /**
      * instance of application
      */
-    private static Application application = new Application();
+    private static final Application application = new Application();
     
     /**
      * the main game loop
      */
-    private static GameLoop gameLoop = new GameLoop();
+    private static final GameLoop gameLoop = new GameLoop();
     
     /**
      * can't create a new instance outside Application class
@@ -32,9 +32,7 @@ public class Application extends JFrame {
      * @param height window height
      */
     public static void launch(int width, int height) {
-        EventQueue.invokeLater(() -> {
-            initialize(width, height);
-        });
+        EventQueue.invokeLater(() -> initialize(width, height));
     }
     
     /**
@@ -47,8 +45,8 @@ public class Application extends JFrame {
         application.addKeyListener(new Keyboard());
         application.add(gameLoop);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        application.setLocationRelativeTo(null);
         application.setSize(new Dimension(width, height));
+        application.setLocationRelativeTo(null);
         application.setVisible(true);
     }
     
