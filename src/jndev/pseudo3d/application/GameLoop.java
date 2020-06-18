@@ -62,29 +62,37 @@ public class GameLoop extends JPanel {
         paused = false;
         long startTime = System.currentTimeMillis();
         
+        //start loop in new thread
         Thread thread = new Thread(() -> {
             long prev = 0;
             while (!end) {
                 if (!paused) {
                     long time = System.currentTimeMillis() - startTime;
-                    long graphicsTime = 1000 / graphicsFrequency;
-                    long physicsTime = 1000 / physicsFrequency;
+                    long graphicsDelta = 1000 / graphicsFrequency;
+                    long physicsDelta = 1000 / physicsFrequency;
+                    //get time intervals
                     if (time > prev) {
-                        if (time % physicsTime == 0) {
+                        //only run when time changes
+                        if (time % physicsDelta == 0) {
                             runnables.forEach(Runnable::run);
+                            //run all runnables
                             updatePhysics();
+                            //update scene physics
                         }
-                        if (time % graphicsTime == 0) updateGraphics();
+                        if (time % graphicsDelta == 0)
+                            updateGraphics();
+                        //update scene graphics
                     }
                     prev = time;
                 }
             }
         });
         thread.start();
-        thread.setName("Game Loop");
+        //start thread
         
         setVisible(true);
         requestFocus();
+        //set panel visible and focused
     }
     
     /**
@@ -166,7 +174,7 @@ public class GameLoop extends JPanel {
      *
      * @param runnable runnable
      */
-    public void addRunnable(Runnable runnable) {
+    public void inject(Runnable runnable) {
         runnables.add(runnable);
     }
     
@@ -175,7 +183,7 @@ public class GameLoop extends JPanel {
      *
      * @param runnable runnable
      */
-    public void removeRunnable(Runnable runnable) {
+    public void remove(Runnable runnable) {
         runnables.remove(runnable);
     }
 }
