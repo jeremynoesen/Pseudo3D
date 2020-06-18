@@ -38,5 +38,9 @@ public class GameLoopTest {
         Application.launch(1000, 1000);
         Application.getGameLoop().setActiveScene(scene);
         Application.getGameLoop().start();
+        
+        Application.getGameLoop().addRunnable(() -> {
+            System.out.println("test");
+        });
     }
 }
