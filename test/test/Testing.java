@@ -12,14 +12,14 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
-public class GameLoopTest {
+public class Testing {
     
     public static void main(String[] args) {
         Sprites.load(new File("res/sprites/"));
         Scene scene = new Scene();
         Object object = new Object();
         object.setSprite(Sprites.get("front"));
-        object.setGravity(1);
+        object.setGravity(0);
         object.setPosition(new Vector(0, 100, -100));
         object.setWidth(10);
         object.setHeight(20);
@@ -72,6 +72,18 @@ public class GameLoopTest {
     
             if(!Keyboard.isPressed(KeyEvent.VK_A) && !Keyboard.isPressed(KeyEvent.VK_D)) {
                 object.setVelocity(object.getVelocity().setX(0));
+            }
+    
+            if (Keyboard.isPressed(KeyEvent.VK_UP)) {
+                object.setVelocity(object.getVelocity().setY(1));
+            }
+    
+            if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+                object.setVelocity(object.getVelocity().setY(-1));
+            }
+    
+            if(!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+                object.setVelocity(object.getVelocity().setY(0));
             }
         });
     }
