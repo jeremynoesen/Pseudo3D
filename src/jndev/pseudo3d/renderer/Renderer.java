@@ -37,14 +37,14 @@ public class Renderer {
             Vector camPos = camera.getPosition();
             double fov = Math.toRadians(camera.getFieldOfView() / 2.0);
             
-            if (objPos.getZ() >= camPos.getZ())
+            if (objPos.getZ() > camPos.getZ())
                 break; //prevent rendering objects behind camera
             
-            if (object.getSprite() == null || camPos.getZ() - objPos.getZ() > camera.getViewDistance())
+            if (object.getSprite() == null || camPos.getZ() - objPos.getZ() >= camera.getViewDistance())
                 continue; //don't render objects with no sprite or further than view distance
             
-            double scale = camera.getSensorSize() / (2 * (camPos.getZ() - objPos.getZ()) *
-                    (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)));
+            double scale = camera.getSensorSize() / (camera.getSensorSize() + (2 * (camPos.getZ() - objPos.getZ()) *
+                    (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))));
             //scale objects based on fov angle and distance from camera
             
             if (Double.compare(scale, 0) == 0)
