@@ -35,7 +35,7 @@ public class Renderer {
             Camera camera = scene.getCamera();
             Vector objPos = object.getPosition();
             Vector camPos = camera.getPosition();
-            double fov = camera.getFieldOfView() / 2.0;
+            double fov = Math.toRadians(camera.getFieldOfView() / 2.0);
             
             if (objPos.getZ() >= camPos.getZ())
                 break; //prevent rendering objects behind camera
@@ -44,7 +44,7 @@ public class Renderer {
                 continue; //don't render objects with no sprite or further than view distance
             
             double scale = camera.getSensorSize() / (2 * (camPos.getZ() - objPos.getZ()) *
-                    (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov))));
+                    (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)));
             //scale objects based on fov angle and distance from camera
             
             if (Double.compare(scale, 0) == 0)
@@ -56,9 +56,9 @@ public class Renderer {
             double x = ((objPos.getX() - camPos.getX()) * scale) + (panel.getWidth() / 2.0);
             double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
             //scale image dimensions and coordinates
-    
+            
             Box screen = new Box(panel.getWidth(), panel.getHeight(), 0,
-                    new Vector(panel.getWidth() / 2, panel.getHeight() / 2, 0));
+                    new Vector(panel.getWidth() / 2.0, panel.getHeight() / 2.0, 0));
             Box sprite = new Box(widthScaled, heightScaled, 0,
                     new Vector(x, y, 0));
             //boxes to represent image and panel bounds
