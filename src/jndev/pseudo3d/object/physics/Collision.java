@@ -5,6 +5,7 @@ import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Side;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -283,5 +284,35 @@ public abstract class Collision extends Motion {
      */
     public boolean isOverlapping() {
         return overlapping;
+    }
+    
+    /**
+     * check if the collision data is equal to another set of collision data
+     *
+     * @param o object to check
+     * @return true if the collision datas are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Collision collision = (Collision) o;
+        return collidable == collision.collidable &&
+                colliding == collision.colliding &&
+                overlapping == collision.overlapping &&
+                Objects.equals(scene, collision.scene) &&
+                Objects.equals(collidingSides, collision.collidingSides) &&
+                Objects.equals(collidingObjects, collision.collidingObjects);
+    }
+    
+    /**
+     * get the hash code for the collision data
+     *
+     * @return hash code for collision data
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), scene, collidable, collidingSides, collidingObjects, colliding, overlapping);
     }
 }
