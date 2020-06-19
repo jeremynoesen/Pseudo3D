@@ -19,7 +19,7 @@ public class Testing {
         Scene scene = new Scene();
         Object object = new Object();
         object.setSprite(Sprites.get("front"));
-        object.setGravity(1);
+        object.setGravity(0);
         object.setPosition(new Vector(0, 0, -100));
         object.setWidth(10);
         object.setHeight(20);
@@ -37,7 +37,7 @@ public class Testing {
         
         Camera camera = new Camera();
         camera.setFieldOfView(0);
-        camera.setSensorSize(2000);
+        camera.setSensorSize(500);
         
         scene.setCamera(camera);
         scene.setBackground(Color.BLACK);
@@ -99,6 +99,8 @@ public class Testing {
                 if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                     camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
                 }
+                
+                System.out.println(object.getPosition());
             }
         });
     }
