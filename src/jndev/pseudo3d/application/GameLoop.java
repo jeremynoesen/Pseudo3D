@@ -36,7 +36,7 @@ public class GameLoop extends JPanel {
     /**
      * whether the game loop has been stopped or not, default false
      */
-    private boolean end;
+    private boolean stopped;
     
     /**
      * runnables to be inserted into the game loop
@@ -51,7 +51,7 @@ public class GameLoop extends JPanel {
         graphicsFrequency = 60;
         physicsFrequency = 120;
         paused = true;
-        end = false;
+        stopped = false;
         runnables = new HashSet<>();
     }
     
@@ -65,7 +65,7 @@ public class GameLoop extends JPanel {
         //start loop in new thread
         Thread thread = new Thread(() -> {
             long prev = 0;
-            while (!end) {
+            while (!stopped) {
                 if (!paused) {
                     long time = System.currentTimeMillis() - startTime;
                     long graphicsDelta = 1000 / graphicsFrequency;
@@ -99,7 +99,7 @@ public class GameLoop extends JPanel {
      * stop the loop
      */
     public void stop() {
-        end = true;
+        stopped = true;
     }
     
     /**
