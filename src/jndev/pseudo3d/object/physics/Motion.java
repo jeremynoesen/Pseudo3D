@@ -197,9 +197,9 @@ public abstract class Motion extends Box {
         if (!super.equals(o)) return false;
         Motion motion = (Motion) o;
         return Double.compare(motion.gravityMultiplier, gravityMultiplier) == 0 &&
-                Objects.equals(position, motion.position) &&
-                Objects.equals(velocity, motion.velocity) &&
-                Objects.equals(acceleration, motion.acceleration) &&
-                Objects.equals(jerk, motion.jerk);
+                position.equals(motion.position) &&
+                velocity.equals(motion.velocity) &&
+                acceleration.equals(motion.acceleration) &&
+                jerk.equals(motion.jerk);
     }
 }

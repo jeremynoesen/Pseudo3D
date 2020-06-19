@@ -115,7 +115,7 @@ public class Object extends Collision {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Object object = (Object) o;
-        return Objects.equals(scene, object.scene) &&
+        return scene.equals(object.scene) &&
                 Objects.equals(sprite, object.sprite);
     }
 }

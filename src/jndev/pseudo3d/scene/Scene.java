@@ -146,7 +146,7 @@ public class Scene {
         if (o == null || getClass() != o.getClass()) return false;
         Scene scene = (Scene) o;
         return Objects.equals(objects, scene.objects) &&
-                Objects.equals(camera, scene.camera) &&
+                camera.equals(scene.camera) &&
                 Objects.equals(background, scene.background);
     }
 }

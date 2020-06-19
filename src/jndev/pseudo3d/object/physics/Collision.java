@@ -301,7 +301,7 @@ public abstract class Collision extends Motion {
         return collidable == collision.collidable &&
                 colliding == collision.colliding &&
                 overlapping == collision.overlapping &&
-                Objects.equals(scene, collision.scene) &&
+                scene.equals(collision.scene) &&
                 Objects.equals(collidingSides, collision.collidingSides) &&
                 Objects.equals(collidingObjects, collision.collidingObjects);
     }
