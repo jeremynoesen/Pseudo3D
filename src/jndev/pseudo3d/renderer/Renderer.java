@@ -17,14 +17,14 @@ import java.awt.*;
 public class Renderer {
     
     /**
-     * render a scene to an existing jpanel
+     * render a scene frame to a JPanel's graphics
      *
      * @param scene scene to render
      * @param panel jpanel to render to
+     * @param graphics jpanel graphics from paintComponent method
      */
     public static void render(Scene scene, JPanel panel, Graphics graphics) {
-        if (scene.getBackground() == null) panel.setBackground(Color.WHITE);
-        else panel.setBackground(scene.getBackground());
+        panel.setBackground(scene.getBackground());
         //draw scene background color
         
         scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
@@ -32,6 +32,7 @@ public class Renderer {
         
         for (int i = 0; i < scene.getObjects().size(); i++) {
             Object object = scene.getObjects().get(i);
+            
             Camera camera = scene.getCamera();
             Vector objPos = object.getPosition();
             Vector camPos = camera.getPosition();

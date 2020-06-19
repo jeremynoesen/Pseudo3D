@@ -8,7 +8,6 @@ import jndev.pseudo3d.renderer.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -20,7 +19,7 @@ public class Testing {
         Object object = new Object();
         object.setSprite(Sprites.get("front"));
         object.setGravity(0);
-        object.setPosition(new Vector(0, 0, -100));
+        object.setPosition(new Vector(0, 0, 0));
         object.setWidth(10);
         object.setHeight(20);
         object.setDepth(10);
@@ -37,10 +36,11 @@ public class Testing {
         
         Camera camera = new Camera();
         camera.setFieldOfView(0);
-        camera.setSensorSize(500);
+        camera.setSensorSize(1000);
+        camera.setPosition(new Vector(0, 0, -100));
         
         scene.setCamera(camera);
-        scene.setBackground(Color.BLACK);
+        //scene.setBackground(Color.BLACK);
         
         Application.launch(1000, 1000);
         Application.getGameLoop().setActiveScene(scene);
@@ -80,17 +80,17 @@ public class Testing {
                     object.setVelocity(object.getVelocity().setX(0));
                 }
 
-//                if (Keyboard.isPressed(KeyEvent.VK_UP)) {
-//                    object.setVelocity(object.getVelocity().setY(1));
-//                }
-//
-//                if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-//                    object.setVelocity(object.getVelocity().setY(-1));
-//                }
-//
-//                if (!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-//                    object.setVelocity(object.getVelocity().setY(0));
-//                }
+                if (Keyboard.isPressed(KeyEvent.VK_SPACE)) {
+                    object.setVelocity(object.getVelocity().setY(1));
+                }
+
+                if (Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
+                    object.setVelocity(object.getVelocity().setY(-1));
+                }
+
+                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
+                    object.setVelocity(object.getVelocity().setY(0));
+                }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_UP)) {
                     camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
