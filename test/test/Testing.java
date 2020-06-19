@@ -36,7 +36,7 @@ public class Testing {
         
         Camera camera = new Camera();
         camera.setFieldOfView(0);
-        camera.setSensorSize(500);
+        camera.setSensorSize(1000);
         camera.setPosition(new Vector(0, 0, -100));
         
         scene.setCamera(camera);
@@ -99,6 +99,8 @@ public class Testing {
                 if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                     camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
                 }
+                
+                System.out.println(object.getPosition());
             }
         });
     }
