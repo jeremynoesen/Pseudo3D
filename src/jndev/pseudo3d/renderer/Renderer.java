@@ -2,6 +2,7 @@ package jndev.pseudo3d.renderer;
 
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Vector;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class Renderer {
             Camera camera = scene.getCamera();
             Vector objPos = object.getPosition();
             Vector camPos = camera.getPosition();
-            double fov = camera.getFieldOfView() / 2.0;
+            double fov = Math.toRadians(camera.getFieldOfView() / 2.0);
             
             if (objPos.getZ() >= camPos.getZ())
                 break; //prevent rendering objects behind camera
@@ -43,7 +44,7 @@ public class Renderer {
                 continue; //don't render objects with no sprite or further than view distance
             
             double scale = camera.getSensorSize() / (2 * (camPos.getZ() - objPos.getZ()) *
-                    (Math.sin(Math.toRadians(fov)) / Math.sin(Math.toRadians(90 - fov))));
+                    (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)));
             //scale objects based on fov angle and distance from camera
             
             if (Double.compare(scale, 0) == 0)
@@ -56,17 +57,18 @@ public class Renderer {
             double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
             //scale image dimensions and coordinates
             
-            int minX = (int) (x - (widthScaled / 2.0));
-            int maxX = (int) (x + (widthScaled / 2.0));
-            int minY = (int) ((panel.getHeight() - y) - (heightScaled / 2.0));
-            int maxY = (int) ((panel.getHeight() - y) + (heightScaled / 2.0));
-            //image bounds after scaling
+            Box screen = new Box(panel.getWidth(), panel.getHeight(), 0,
+                    new Vector(panel.getWidth() / 2.0, panel.getHeight() / 2.0, 0));
+            Box sprite = new Box(widthScaled, heightScaled, 0,
+                    new Vector(x, y, 0));
+            //boxes to represent image and panel bounds
             
-            if (((minX >= 0 && minX <= panel.getWidth()) || (maxX >= 0 && maxX <= panel.getWidth())) &&
-                    ((minY >= 0 && minY <= panel.getHeight()) || (maxY >= 0 && maxY <= panel.getHeight()))) {
-                //check if image is within panel boundary
+            if (sprite.overlaps(screen)) {
+                //check if any part of image is within panel bounds
                 
-                graphics.drawImage(image, minX, minY, widthScaled, heightScaled, panel);
+                graphics.drawImage(image, (int) (x - (widthScaled / 2.0)),
+                        (int) ((panel.getHeight() - y) - (heightScaled / 2.0)),
+                        widthScaled, heightScaled, panel);
                 //draw image to panel
             }
         }
