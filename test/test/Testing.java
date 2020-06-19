@@ -8,7 +8,6 @@ import jndev.pseudo3d.renderer.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -20,7 +19,7 @@ public class Testing {
         Object object = new Object();
         object.setSprite(Sprites.get("front"));
         object.setGravity(0);
-        object.setPosition(new Vector(0, 0, -100));
+        object.setPosition(new Vector(0, 0, 0));
         object.setWidth(10);
         object.setHeight(20);
         object.setDepth(10);
@@ -38,9 +37,10 @@ public class Testing {
         Camera camera = new Camera();
         camera.setFieldOfView(0);
         camera.setSensorSize(500);
+        camera.setPosition(new Vector(0, 0, -100));
         
         scene.setCamera(camera);
-        scene.setBackground(Color.BLACK);
+        //scene.setBackground(Color.BLACK);
         
         Application.launch(1000, 1000);
         Application.getGameLoop().setActiveScene(scene);
@@ -99,8 +99,6 @@ public class Testing {
                 if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                     camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
                 }
-                
-                System.out.println(object.getPosition());
             }
         });
     }
