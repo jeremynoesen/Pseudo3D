@@ -5,7 +5,7 @@ import jndev.pseudo3d.renderer.Camera;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * scene to place objects on as well as a camera to render them
@@ -132,5 +132,21 @@ public class Scene {
      */
     public void setBackground(Color background) {
         this.background = background;
+    }
+    
+    /**
+     * check if a scene is identical to this scene
+     *
+     * @param o object to check
+     * @return true if the scene is equal to this scene
+     */
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Scene scene = (Scene) o;
+        return Objects.equals(objects, scene.objects) &&
+                camera.equals(scene.camera) &&
+                Objects.equals(background, scene.background);
     }
 }
