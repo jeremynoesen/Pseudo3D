@@ -269,14 +269,4 @@ public class Box {
                 Double.compare(b.getDepth(), depth) == 0 &&
                 b.getPosition().equals(position);
     }
-    
-    /**
-     * get the hash code of the box
-     *
-     * @return hash code of box
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(width, height, depth, position);
-    }
 }

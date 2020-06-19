@@ -305,14 +305,4 @@ public abstract class Collision extends Motion {
                 Objects.equals(collidingSides, collision.collidingSides) &&
                 Objects.equals(collidingObjects, collision.collidingObjects);
     }
-    
-    /**
-     * get the hash code for the collision data
-     *
-     * @return hash code for collision data
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), scene, collidable, collidingSides, collidingObjects, colliding, overlapping);
-    }
 }

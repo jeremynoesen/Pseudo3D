@@ -149,14 +149,4 @@ public class Scene {
                 Objects.equals(camera, scene.camera) &&
                 Objects.equals(background, scene.background);
     }
-    
-    /**
-     * get the hash code of this scene
-     *
-     * @return hash code of this scene
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(objects, camera, background);
-    }
 }

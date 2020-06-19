@@ -202,14 +202,4 @@ public abstract class Motion extends Box {
                 Objects.equals(acceleration, motion.acceleration) &&
                 Objects.equals(jerk, motion.jerk);
     }
-    
-    /**
-     * get the hash code for motion data
-     *
-     * @return hash code for motion data
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), position, velocity, acceleration, jerk, gravityMultiplier);
-    }
 }

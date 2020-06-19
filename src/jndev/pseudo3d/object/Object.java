@@ -118,14 +118,4 @@ public class Object extends Collision {
         return Objects.equals(scene, object.scene) &&
                 Objects.equals(sprite, object.sprite);
     }
-    
-    /**
-     * get the hash code of this object
-     *
-     * @return hash code of object
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), scene, sprite);
-    }
 }
