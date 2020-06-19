@@ -2,6 +2,7 @@ package jndev.pseudo3d.renderer;
 
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Vector;
 
 import javax.swing.*;
@@ -55,18 +56,19 @@ public class Renderer {
             double x = ((objPos.getX() - camPos.getX()) * scale) + (panel.getWidth() / 2.0);
             double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
             //scale image dimensions and coordinates
+    
+            Box screen = new Box(panel.getWidth(), panel.getHeight(), 0,
+                    new Vector(panel.getWidth() / 2, panel.getHeight() / 2, 0));
+            Box sprite = new Box(widthScaled, heightScaled, 0,
+                    new Vector(x, y, 0));
+            //boxes to represent image and panel bounds
             
-            int minX = (int) (x - (widthScaled / 2.0));
-            int maxX = (int) (x + (widthScaled / 2.0));
-            int minY = (int) ((panel.getHeight() - y) - (heightScaled / 2.0));
-            int maxY = (int) ((panel.getHeight() - y) + (heightScaled / 2.0));
-            //image bounds after scaling
-            
-            if (((minX >= 0 && minX <= panel.getWidth()) || (maxX >= 0 && maxX <= panel.getWidth())) &&
-                    ((minY >= 0 && minY <= panel.getHeight()) || (maxY >= 0 && maxY <= panel.getHeight()))) {
-                //check if image is within panel boundary
+            if (sprite.overlaps(screen)) {
+                //check if any part of image is within panel bounds
                 
-                graphics.drawImage(image, minX, minY, widthScaled, heightScaled, panel);
+                graphics.drawImage(image, (int) (x - (widthScaled / 2.0)),
+                        (int) ((panel.getHeight() - y) - (heightScaled / 2.0)),
+                        widthScaled, heightScaled, panel);
                 //draw image to panel
             }
         }
