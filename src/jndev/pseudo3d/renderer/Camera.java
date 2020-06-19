@@ -2,10 +2,9 @@ package jndev.pseudo3d.renderer;
 
 import jndev.pseudo3d.util.Vector;
 
-import java.util.Objects;
-
 /**
- * this is used to determine where to render a scene
+ * camera used to determine where to render a scene. objects in the same z position as the camera will be rendered 1:1
+ * scale, objects behind the camera will be larger, and objects in front of the camera will be smaller
  *
  * @author JNDev (Jeremaster101)
  */
@@ -44,7 +43,7 @@ public class Camera {
     /**
      * constructs a new camera with set position, sensor res, and field of view
      *
-     * @param position camera position
+     * @param position    camera position
      * @param fieldOfView field of view in degrees
      */
     public Camera(Vector position, double sensorSize, double fieldOfView, double viewDistance) {
