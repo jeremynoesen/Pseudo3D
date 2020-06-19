@@ -6,6 +6,7 @@ import jndev.pseudo3d.util.Box;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * object for games, has physics and various methods to get object status
@@ -100,5 +101,21 @@ public class Object extends Collision {
      */
     public void setSprite(Image sprite) {
         this.sprite = sprite;
+    }
+    
+    /**
+     * check if this object is identical to another
+     *
+     * @param o object to check
+     * @return true if this object is identical to the other object
+     */
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Object object = (Object) o;
+        return scene.equals(object.scene) &&
+                Objects.equals(sprite, object.sprite);
     }
 }

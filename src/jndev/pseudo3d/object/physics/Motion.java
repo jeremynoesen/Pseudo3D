@@ -3,6 +3,8 @@ package jndev.pseudo3d.object.physics;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Vector;
 
+import java.util.Objects;
+
 /**
  * motion data for an object
  *
@@ -180,5 +182,24 @@ public abstract class Motion extends Box {
      */
     public void setGravity(double multiplier) {
         gravityMultiplier = multiplier;
+    }
+    
+    /**
+     * check if this motion data is equal to another
+     *
+     * @param o object to check
+     * @return true if the motion datas are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Motion motion = (Motion) o;
+        return Double.compare(motion.gravityMultiplier, gravityMultiplier) == 0 &&
+                position.equals(motion.position) &&
+                velocity.equals(motion.velocity) &&
+                acceleration.equals(motion.acceleration) &&
+                jerk.equals(motion.jerk);
     }
 }

@@ -2,6 +2,8 @@ package jndev.pseudo3d.renderer;
 
 import jndev.pseudo3d.util.Vector;
 
+import java.util.Objects;
+
 /**
  * this is used to determine where to render a scene
  *
@@ -134,5 +136,22 @@ public class Camera {
      */
     public void setViewDistance(double viewDistance) {
         this.viewDistance = viewDistance;
+    }
+    
+    /**
+     * check if a camera is equal to this one
+     *
+     * @param o object to check
+     * @return true if the object is equal to this camera
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Camera camera = (Camera) o;
+        return Double.compare(camera.fieldOfView, fieldOfView) == 0 &&
+                Double.compare(camera.viewDistance, viewDistance) == 0 &&
+                Double.compare(camera.sensorSize, sensorSize) == 0 &&
+                position.equals(camera.position);
     }
 }

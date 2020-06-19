@@ -230,14 +230,4 @@ public class Vector {
                 Double.compare(v.getY(), y) == 0 &&
                 Double.compare(v.getZ(), z) == 0;
     }
-    
-    /**
-     * get the hash code of the vector
-     *
-     * @return hash code of vector
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y, z);
-    }
 }
