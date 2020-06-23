@@ -80,17 +80,17 @@ public class Testing {
                     object.setVelocity(object.getVelocity().setX(0));
                 }
 
-//                if (Keyboard.isPressed(KeyEvent.VK_UP)) {
-//                    object.setVelocity(object.getVelocity().setY(1));
-//                }
-//
-//                if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-//                    object.setVelocity(object.getVelocity().setY(-1));
-//                }
-//
-//                if (!Keyboard.isPressed(KeyEvent.VK_UP) && !Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-//                    object.setVelocity(object.getVelocity().setY(0));
-//                }
+                if (Keyboard.isPressed(KeyEvent.VK_SPACE)) {
+                    object.setVelocity(object.getVelocity().setY(1));
+                }
+
+                if (Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
+                    object.setVelocity(object.getVelocity().setY(-1));
+                }
+
+                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
+                    object.setVelocity(object.getVelocity().setY(0));
+                }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_UP)) {
                     camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
