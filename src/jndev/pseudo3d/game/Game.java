@@ -13,12 +13,12 @@ public class Game extends JFrame {
     /**
      * instance of application
      */
-    private static Game game;
+    private static Game game = new Game();
     
     /**
      * the main game loop
      */
-    private static Loop loop;
+    private static Loop loop = new Loop();
     
     /**
      * can't create a new instance outside Application class
@@ -42,8 +42,6 @@ public class Game extends JFrame {
      * @param height window height
      */
     private static void initialize(int width, int height) {
-        game = new Game();
-        loop = new Loop();
         game.addKeyListener(new Keyboard());
         game.add(loop);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
