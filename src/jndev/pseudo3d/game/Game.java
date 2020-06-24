@@ -1,4 +1,4 @@
-package jndev.pseudo3d.application;
+package jndev.pseudo3d.game;
 
 import jndev.pseudo3d.listener.Keyboard;
 
@@ -8,22 +8,22 @@ import java.awt.*;
 /**
  * main application for any project using Pseudo3D
  */
-public class Application extends JFrame {
+public class Game extends JFrame {
     
     /**
      * instance of application
      */
-    private static final Application application = new Application();
+    private static Game game;
     
     /**
      * the main game loop
      */
-    private static final GameLoop gameLoop = new GameLoop();
+    private static Loop loop;
     
     /**
      * can't create a new instance outside Application class
      */
-    private Application() {}
+    private Game() {}
     
     /**
      * start the application
@@ -42,12 +42,14 @@ public class Application extends JFrame {
      * @param height window height
      */
     private static void initialize(int width, int height) {
-        application.addKeyListener(new Keyboard());
-        application.add(gameLoop);
-        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        application.setSize(new Dimension(width, height));
-        application.setLocationRelativeTo(null);
-        application.setVisible(true);
+        game = new Game();
+        loop = new Loop();
+        game.addKeyListener(new Keyboard());
+        game.add(loop);
+        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        game.setSize(new Dimension(width, height));
+        game.setLocationRelativeTo(null);
+        game.setVisible(true);
     }
     
     /**
@@ -55,7 +57,7 @@ public class Application extends JFrame {
      *
      * @return game loop
      */
-    public static GameLoop getGameLoop() {
-        return gameLoop;
+    public static Loop getLoop() {
+        return loop;
     }
 }
