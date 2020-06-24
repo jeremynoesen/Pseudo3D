@@ -1,4 +1,4 @@
-package jndev.pseudo3d.application;
+package jndev.pseudo3d.game;
 
 import jndev.pseudo3d.renderer.Renderer;
 import jndev.pseudo3d.scene.Scene;
@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * game loop to update graphics and physics for the active scene
  */
-public class GameLoop extends JPanel {
+public class Loop extends JPanel {
     
     /**
      * active scene to render and tick
@@ -46,7 +46,7 @@ public class GameLoop extends JPanel {
     /**
      * create a new game loop with default values
      */
-    GameLoop() {
+    Loop() {
         activeScene = null;
         graphicsFrequency = 60;
         physicsFrequency = 120;

@@ -1,6 +1,6 @@
 package test;
 
-import jndev.pseudo3d.application.Application;
+import jndev.pseudo3d.game.Game;
 import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.loader.Sprites;
 import jndev.pseudo3d.object.Object;
@@ -42,12 +42,12 @@ public class Testing {
         scene.setCamera(camera);
         //scene.setBackground(Color.BLACK);
         
-        Application.launch(1000, 1000);
-        Application.getGameLoop().setActiveScene(scene);
-        Application.getGameLoop().start();
+        Game.launch(1000, 1000);
+        Game.getLoop().setActiveScene(scene);
+        Game.getLoop().start();
         
-        Application.getGameLoop().inject(() -> {
-            if (Application.getGameLoop().getActiveScene().equals(scene)) {
+        Game.getLoop().inject(() -> {
+            if (Game.getLoop().getActiveScene().equals(scene)) {
                 if (Keyboard.isPressed(KeyEvent.VK_W)) {
                     object.setVelocity(object.getVelocity().setZ(-1));
                     object.setSprite(Sprites.get("front"));
