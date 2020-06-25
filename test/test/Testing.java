@@ -19,8 +19,8 @@ public class Testing {
         Scene scene = new Scene();
         Object object = new Object();
         object.setSprite(Sprite.get("res/sprites/player/front.png"));
-        object.setGravity(0);
-        object.setPosition(new Vector(0, 0, 0));
+        object.setGravity(1);
+        object.setPosition(new Vector(0, 0, -100));
         object.setWidth(object.getSprite().getWidth(null));
         object.setHeight(object.getSprite().getHeight(null));
         object.setDepth(object.getSprite().getWidth(null));
@@ -29,7 +29,7 @@ public class Testing {
         for(int j = 1; j <= 20; j++) {
             for (int i = 1; i <= 10; i++) {
                 Object copy = new Object(object);
-                copy.setPosition(new Vector(40 * j - 400, -400, -20 * i));
+                copy.setPosition(new Vector(object.getWidth() * j - 450, -400, -object.getWidth() * i));
                 copy.setGravity(0);
                 scene.addObject(copy);
             }
@@ -85,9 +85,9 @@ public class Testing {
                     object.setVelocity(object.getVelocity().setY(-1));
                 }
 
-                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
-                    object.setVelocity(object.getVelocity().setY(0));
-                }
+//                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
+//                    object.setVelocity(object.getVelocity().setY(0));
+//                }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_UP)) {
                     camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
@@ -96,6 +96,8 @@ public class Testing {
                 if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                     camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
                 }
+                
+                System.out.println(object.getVelocity());
             }
         });
     }
