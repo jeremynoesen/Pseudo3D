@@ -51,8 +51,10 @@ public class Renderer {
                     (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))));
             //scale objects based on fov angle and distance from camera
             
-            if (scale <= 0)
-                continue; //don't render objects that are too small
+            if (Double.compare(scale, 0) == 0) continue;
+            //do not render objects that are too small
+            else if (Double.compare(scale, 0) < 0) break;
+            //stop render if objects have negative scale (too far in front of camera)
             
             Image image = object.getSprite();
             int widthScaled = (int) (image.getWidth(null) * scale);
