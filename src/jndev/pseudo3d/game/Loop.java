@@ -174,10 +174,7 @@ public class Loop extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-        if (activeScene != null) {
-            super.paintComponent(g);
-            Renderer.render(activeScene, this, g);
-        }
+        Renderer.render(activeScene, this, g);
     }
     
     /**
