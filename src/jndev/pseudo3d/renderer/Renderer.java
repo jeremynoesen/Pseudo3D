@@ -24,6 +24,8 @@ public class Renderer {
      * @param graphics jpanel graphics from paintComponent method
      */
     public static void render(Scene scene, JPanel panel, Graphics graphics) {
+        clear(scene, panel, graphics);
+
         panel.setBackground(scene.getBackground());
         //draw scene background color
         
@@ -70,5 +72,10 @@ public class Renderer {
                 //draw image to panel
             }
         }
+    }
+
+    public static void clear(Scene scene, JPanel panel, Graphics graphics) {
+        graphics.setColor(scene.getBackground());
+        graphics.fillRect(0, 0, panel.getWidth(), panel.getHeight());
     }
 }
