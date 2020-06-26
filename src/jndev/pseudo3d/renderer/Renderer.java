@@ -35,20 +35,23 @@ public class Renderer {
         
         scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
         //sort objects by z position so objects can be drawn in front of others
-        
+    
+        Camera camera = scene.getCamera();
+        Vector camPos = camera.getPosition();
+        double fov = Math.toRadians(camera.getFieldOfView() / 2.0);
+        double sensorSize = camera.getSensorSize();
+        //camera data
+    
         for (int i = 0; i < scene.getObjects().size(); i++) {
             Object object = scene.getObjects().get(i);
-            Camera camera = scene.getCamera();
             Vector objPos = object.getPosition();
-            Vector camPos = camera.getPosition();
-            double fov = Math.toRadians(camera.getFieldOfView() / 2.0);
-            //commonly used values
+            //object data
             
             if (object.getSprite() == null || camPos.getZ() - objPos.getZ() >= camera.getViewDistance()) continue;
             //don't render objects with no sprite or further than view distance
             
-            double scale = camera.getSensorSize() / (camera.getSensorSize() +
-                    (2 * (camPos.getZ() - objPos.getZ()) * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))));
+            double scale = sensorSize / (sensorSize + (2 *
+                    (camPos.getZ() - objPos.getZ()) * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))));
             //scale objects based on fov angle and distance from camera using law of sines and camera sensor size
             
             if (Double.compare(scale, 0) == 0) continue;

@@ -96,8 +96,6 @@ public class Testing {
                 if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                     camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
                 }
-                
-                System.out.println(object.getVelocity());
             }
         });
     }
