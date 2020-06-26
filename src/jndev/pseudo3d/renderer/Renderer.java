@@ -70,7 +70,7 @@ public class Renderer {
             
             Box screen = new Box(gWidth, gHeight, 0,
                     new Vector(gWidth / 2.0, gHeight / 2.0, 0));
-            Box sprite = new Box(widthScaled, heightScaled, 0,
+            Box sprite = new Box(widthScaled, heightScaled, 1,
                     new Vector(x, y, 0));
             //boxes to represent image and panel bounds
             
