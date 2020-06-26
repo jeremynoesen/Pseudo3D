@@ -3,8 +3,6 @@ package jndev.pseudo3d.object.physics;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Vector;
 
-import java.util.Objects;
-
 /**
  * motion data for an object
  *
