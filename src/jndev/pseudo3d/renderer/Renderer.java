@@ -5,7 +5,6 @@ import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Vector;
 
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -17,20 +16,23 @@ import java.awt.*;
 public class Renderer {
     
     /**
-     * render a scene frame to a JPanel's graphics
+     * render a scene frame to graphics
      *
      * @param scene    scene to render
-     * @param panel    jpanel to render to
-     * @param graphics jpanel graphics from paintComponent method
+     * @param graphics graphics to render to
      */
-    public static void render(Scene scene, JPanel panel, Graphics graphics) {
+    public static void render(Scene scene, Graphics graphics) {
         if (scene == null) return;
         //don't attempt rendering a null scene
         
         graphics.setColor(scene.getBackground());
         //draw scene background color
         
-        graphics.fillRect(0, 0, panel.getWidth(), panel.getHeight());
+        int gWidth = (int) graphics.getClipBounds().getWidth();
+        int gHeight = (int) graphics.getClipBounds().getHeight();
+        //graphics dimensions
+        
+        graphics.fillRect(0, 0, gWidth, gHeight);
         //clear out last drawn frame
         
         scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
@@ -62,12 +64,12 @@ public class Renderer {
             Image image = object.getSprite();
             int widthScaled = (int) (image.getWidth(null) * scale);
             int heightScaled = (int) (image.getHeight(null) * scale);
-            double x = ((objPos.getX() - camPos.getX()) * scale) + (panel.getWidth() / 2.0);
-            double y = ((objPos.getY() - camPos.getY()) * scale) + (panel.getHeight() / 2.0);
+            double x = ((objPos.getX() - camPos.getX()) * scale) + (gWidth / 2.0);
+            double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight / 2.0);
             //scale image dimensions and coordinates
             
-            Box screen = new Box(panel.getWidth(), panel.getHeight(), 0,
-                    new Vector(panel.getWidth() / 2.0, panel.getHeight() / 2.0, 0));
+            Box screen = new Box(gWidth, gHeight, 0,
+                    new Vector(gWidth / 2.0, gHeight / 2.0, 0));
             Box sprite = new Box(widthScaled, heightScaled, 0,
                     new Vector(x, y, 0));
             //boxes to represent image and panel bounds
@@ -76,8 +78,8 @@ public class Renderer {
                 //check if any part of image is visible in panel
                 
                 graphics.drawImage(image, (int) (x - (widthScaled / 2.0)),
-                        (int) ((panel.getHeight() - y) - (heightScaled / 2.0)),
-                        widthScaled, heightScaled, panel);
+                        (int) ((gHeight - y) - (heightScaled / 2.0)),
+                        widthScaled, heightScaled, null);
                 //draw image to panel
             }
         }
