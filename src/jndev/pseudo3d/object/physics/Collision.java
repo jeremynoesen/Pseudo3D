@@ -87,16 +87,24 @@ public abstract class Collision extends Motion {
         overlapping = false;
         collidingSides.clear();
         collidingObjects.clear();
+        //reset all collision data
         
-        for (int i = 0; i < scene.getObjects().size(); i++) { //loop through all objects in scene
+        for (int i = 0; i < scene.getObjects().size(); i++) {
             Collision object = scene.getObjects().get(i);
-            if (object == this) continue; //ignore self
-            if (super.overlaps(object)) { //check for an overlap
-                if (object.isCollidable() && collidable) { //if this and other object can collide
-                    //do the collision calculations
+            //loop through all objects in scene
+            
+            if (object == this) continue;
+            //ignore self
+            
+            if (super.overlaps(object)) {
+                //check for an overlap
+                if (object.isCollidable() && collidable) {
+                    //if this and other object can collide
                     doCollision(object);
+                    //do the collision calculations
                 } else {
                     overlapping = true;
+                    //set overlapping
                 }
             }
         }
