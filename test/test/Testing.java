@@ -12,14 +12,22 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
+/**
+ * testing class for testing various bits of this project
+ */
 public class Testing {
     
+    /**
+     * run the test scene
+     *
+     * @param args program arguments
+     */
     public static void main(String[] args) {
         Sprite.load(new File("res/sprites/"));
         Scene scene = new Scene();
         Object object = new Object();
         object.setSprite(Sprite.get("res/sprites/player/front.png"));
-        object.setGravity(0);
+        object.setGravity(1);
         object.setPosition(new Vector(0, 0, -100));
         object.setWidth(object.getSprite().getWidth(null));
         object.setHeight(object.getSprite().getHeight(null));
@@ -36,7 +44,7 @@ public class Testing {
         }
         
         Camera camera = new Camera();
-        camera.setFieldOfView(0);
+        camera.setFieldOfView(90);
         camera.setSensorSize(1000);
         camera.setPosition(new Vector(0, 0, -100));
         
@@ -85,17 +93,17 @@ public class Testing {
                     object.setVelocity(object.getVelocity().setY(-1));
                 }
 
-                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
-                    object.setVelocity(object.getVelocity().setY(0));
-                }
+//                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
+//                    object.setVelocity(object.getVelocity().setY(0));
+//                }
                 
-                if (Keyboard.isPressed(KeyEvent.VK_UP)) {
-                    camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
-                }
-                
-                if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-                    camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
-                }
+//                if (Keyboard.isPressed(KeyEvent.VK_UP)) {
+//                    camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
+//                }
+//
+//                if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+//                    camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
+//                }
             }
         });
     }
