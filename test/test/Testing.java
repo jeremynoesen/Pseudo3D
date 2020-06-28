@@ -28,10 +28,10 @@ public class Testing {
         Object object = new Object();
         object.setSprite(Sprite.get("res/sprites/player/front.png"));
         object.setGravity(1);
-        object.setPosition(new Vector(0, 0, -100));
         object.setWidth(object.getSprite().getWidth(null));
         object.setHeight(object.getSprite().getHeight(null));
         object.setDepth(object.getSprite().getWidth(null));
+        object.setPosition(new Vector(object.getWidth() * 10 - 450, 0, -object.getWidth()));
         scene.addObject(object);
         
         for(int j = 1; j < 20; j++) {
@@ -49,7 +49,7 @@ public class Testing {
         camera.setPosition(new Vector(0, 0, -100));
         
         scene.setCamera(camera);
-        scene.setBackground(Color.BLACK);
+        scene.setBackground(Color.WHITE);
         
         Game.launch(1000, 1000);
         Game.getLoop().setActiveScene(scene);
@@ -97,13 +97,13 @@ public class Testing {
 //                    object.setVelocity(object.getVelocity().setY(0));
 //                }
                 
-//                if (Keyboard.isPressed(KeyEvent.VK_UP)) {
-//                    camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
-//                }
-//
-//                if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
-//                    camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
-//                }
+                if (Keyboard.isPressed(KeyEvent.VK_UP)) {
+                    camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
+                }
+
+                if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
+                    camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
+                }
             }
         });
     }
