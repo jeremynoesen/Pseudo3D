@@ -83,6 +83,9 @@ public abstract class Collision extends Motion {
      * check if an object has collided with another object
      */
     private void checkCollisions() {
+//        fixMotion();
+        //fix motion to prevent clipping
+        
         colliding = false;
         overlapping = false;
         collidingSides.clear();
@@ -206,6 +209,24 @@ public abstract class Collision extends Motion {
                 }
             }
             collidingSides.add(Side.FRONT);
+        }
+    }
+    
+    /**
+     * fix motion vectors to prevent object clipping
+     */
+    private void fixMotion() {
+        if ((collidesOn(Side.LEFT) && getVelocity().getX() < 0) || (collidesOn(Side.RIGHT) && getVelocity().getX() > 0)) {
+            setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
+            setVelocity(getVelocity().setX(0));
+        }
+        if ((collidesOn(Side.BOTTOM) && getVelocity().getY() < 0) || (collidesOn(Side.TOP) && getVelocity().getY() > 0)) {
+            setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
+            setVelocity(getVelocity().setY(0));
+        }
+        if ((collidesOn(Side.BACK) && getVelocity().getZ() < 0) || (collidesOn(Side.FRONT) && getVelocity().getZ() > 0)) {
+            setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
+            setVelocity(getVelocity().setZ(0));
         }
     }
     
