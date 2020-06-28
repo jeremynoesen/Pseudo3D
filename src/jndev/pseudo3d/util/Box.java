@@ -185,9 +185,9 @@ public class Box {
      * @return true if the box overlaps this box
      */
     public boolean overlaps(Box box) {
-        return min.getX() < box.getMaximum().getX() && max.getX() > box.getMinimum().getX() &&
-                min.getY() < box.getMaximum().getY() && max.getY() > box.getMinimum().getY() &&
-                min.getZ() < box.getMaximum().getZ() && max.getZ() > box.getMinimum().getZ();
+        return min.getX() <= box.getMaximum().getX() && max.getX() >= box.getMinimum().getX() &&
+                min.getY() <= box.getMaximum().getY() && max.getY() >= box.getMinimum().getY() &&
+                min.getZ() <= box.getMaximum().getZ() && max.getZ() >= box.getMinimum().getZ();
     }
     
     /**
