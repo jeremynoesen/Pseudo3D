@@ -28,11 +28,11 @@ public class Renderer {
         graphics.setColor(scene.getBackground());
         //draw scene background color
         
-        int gWidth = (int) graphics.getClipBounds().getWidth();
-        int gHeight = (int) graphics.getClipBounds().getHeight();
+        double gWidth = graphics.getClipBounds().getWidth();
+        double gHeight = graphics.getClipBounds().getHeight();
         //graphics dimensions
         
-        graphics.fillRect(0, 0, gWidth, gHeight);
+        graphics.fillRect(0, 0, (int) Math.ceil(gWidth), (int) Math.ceil(gHeight));
         //clear out last drawn frame
         
         scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
@@ -52,7 +52,7 @@ public class Renderer {
             if (object.getSprite() == null || camPos.getZ() - objPos.getZ() >= camera.getViewDistance()) continue;
             //don't render objects with no sprite or further than view distance
             
-            double scale = sensorSize / (sensorSize + (2 *
+            double scale = sensorSize / (sensorSize + (2.0 *
                     (camPos.getZ() - objPos.getZ()) * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))));
             //scale objects based on fov angle and distance from camera using law of sines and camera sensor size
             
@@ -62,8 +62,8 @@ public class Renderer {
             //stop render if objects have negative scale (too far in front of camera)
             
             Image image = object.getSprite();
-            int widthScaled = (int) (image.getWidth(null) * scale);
-            int heightScaled = (int) (image.getHeight(null) * scale);
+            int widthScaled = (int) Math.ceil(image.getWidth(null) * scale);
+            int heightScaled = (int) Math.ceil(image.getHeight(null) * scale);
             double x = ((objPos.getX() - camPos.getX()) * scale) + (gWidth / 2.0);
             double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight / 2.0);
             //scale image dimensions and coordinates
