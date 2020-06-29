@@ -51,9 +51,9 @@ public class Vector {
      * @param vector vector to copy
      */
     public Vector(Vector vector) {
-        x = vector.getX();
-        y = vector.getY();
-        z = vector.getZ();
+        x = vector.x;
+        y = vector.y;
+        z = vector.z;
     }
     
     /**

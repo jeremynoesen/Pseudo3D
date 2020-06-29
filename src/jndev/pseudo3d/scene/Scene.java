@@ -44,9 +44,9 @@ public class Scene {
      * @param scene scene to copy
      */
     public Scene(Scene scene) {
-        objects = new ArrayList<>(scene.getObjects());
-        camera = scene.getCamera();
-        background = scene.getBackground();
+        objects = new ArrayList<>(scene.objects);
+        camera = scene.camera;
+        background = scene.background;
     }
     
     /**
