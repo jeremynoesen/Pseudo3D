@@ -48,7 +48,7 @@ public abstract class Collision extends Motion {
     /**
      * initializes all booleans to false and initializes array lists
      */
-    protected Collision() {
+    public Collision() {
         super();
         scene = null;
         collidable = true;
@@ -62,10 +62,10 @@ public abstract class Collision extends Motion {
      *
      * @param collision collision data to copy
      */
-    protected Collision(Collision collision) {
+    public Collision(Collision collision) {
         super(collision);
-        scene = collision.getScene();
-        collidable = collision.isCollidable();
+        scene = collision.scene;
+        collidable = collision.collidable;
         collidingSides = new HashSet<>(collision.collidingSides);
         collidingObjects = new HashSet<>(collision.collidingObjects);
     }

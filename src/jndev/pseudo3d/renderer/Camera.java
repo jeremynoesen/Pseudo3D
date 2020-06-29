@@ -59,10 +59,10 @@ public class Camera {
      * @param camera camera to copy
      */
     public Camera(Camera camera) {
-        position = camera.getPosition();
-        fieldOfView = camera.getFieldOfView();
-        sensorSize = camera.getSensorSize();
-        viewDistance = camera.getViewDistance();
+        position = camera.position;
+        fieldOfView = camera.fieldOfView;
+        sensorSize = camera.sensorSize;
+        viewDistance = camera.viewDistance;
     }
     
     /**

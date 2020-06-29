@@ -72,12 +72,12 @@ public class Box {
      * @param box box to copy
      */
     public Box(Box box) {
-        this.width = box.getWidth();
-        this.height = box.getHeight();
-        this.depth = box.getDepth();
-        this.position = box.getPosition();
-        this.min = box.getMinimum();
-        this.max = box.getMaximum();
+        this.width = box.width;
+        this.height = box.height;
+        this.depth = box.depth;
+        this.position = box.position;
+        this.min = box.min;
+        this.max = box.max;
     }
     
     /**

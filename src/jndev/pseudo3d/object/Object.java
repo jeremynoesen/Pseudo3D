@@ -41,8 +41,8 @@ public class Object extends Collision {
      */
     public Object(Object object) {
         super(object);
-        scene = object.getScene();
-        sprite = object.getSprite();
+        scene = object.scene;
+        sprite = object.sprite;
     }
     
     /**

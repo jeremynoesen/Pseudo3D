@@ -43,7 +43,7 @@ public abstract class Motion extends Box {
     /**
      * initialize all values
      */
-    protected Motion() {
+    public Motion() {
         super();
         position = new Vector();
         velocity = new Vector();
@@ -57,13 +57,13 @@ public abstract class Motion extends Box {
      *
      * @param motion motion to copy
      */
-    protected Motion(Motion motion) {
+    public Motion(Motion motion) {
         super(motion);
-        position = motion.getPosition();
-        velocity = motion.getVelocity();
-        acceleration = motion.getAcceleration();
-        jerk = motion.getJerk();
-        gravityScale = motion.getGravityScale();
+        position = motion.position;
+        velocity = motion.velocity;
+        acceleration = motion.acceleration;
+        jerk = motion.jerk;
+        gravityScale = motion.gravityScale;
     }
     
     /**
