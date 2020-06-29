@@ -26,6 +26,11 @@ public abstract class Motion extends Box {
     private Vector velocity;
     
     /**
+     * terminal velocity of an object. velocity can not exceed +/- the terminal velocity components
+     */
+    private Vector terminalVelocity;
+    
+    /**
      * acceleration of object, or rate of change of velocity (pixels / tick ^ 2)
      */
     private Vector acceleration;
@@ -47,6 +52,7 @@ public abstract class Motion extends Box {
         super();
         position = new Vector();
         velocity = new Vector();
+        terminalVelocity = new Vector(10, 10, 10);
         acceleration = new Vector();
         jerk = new Vector();
         gravityScale = 1.0;
@@ -61,6 +67,7 @@ public abstract class Motion extends Box {
         super(motion);
         position = motion.position;
         velocity = motion.velocity;
+        terminalVelocity = motion.terminalVelocity;
         acceleration = motion.acceleration;
         jerk = motion.jerk;
         gravityScale = motion.gravityScale;
@@ -81,12 +88,34 @@ public abstract class Motion extends Box {
         acceleration = new Vector(acceleration.getX() + jerk.getX(),
                 acceleration.getY() + jerk.getY(),
                 acceleration.getZ() + jerk.getZ());
-        velocity = new Vector(velocity.getX() + acceleration.getX(),
-                velocity.getY() + acceleration.getY() - (GRAVITY * gravityScale),
-                velocity.getZ() + acceleration.getZ());
+        //update acceleration based on jerk
+        
+        double vx = velocity.getX() + acceleration.getX();
+        double vy = velocity.getY() + acceleration.getY() - (GRAVITY * gravityScale);
+        double vz = velocity.getZ() + acceleration.getZ();
+        //update velocity based on acceleration and gravity
+        
+        if (vx > terminalVelocity.getX())
+            vx = terminalVelocity.getX();
+        if (vx < -terminalVelocity.getX())
+            vx = -terminalVelocity.getX();
+        if (vy > terminalVelocity.getY())
+            vy = terminalVelocity.getY();
+        if (vy < -terminalVelocity.getY())
+            vy = -terminalVelocity.getY();
+        if (vz > terminalVelocity.getZ())
+            vz = terminalVelocity.getZ();
+        if (vz < -terminalVelocity.getZ())
+            vz = -terminalVelocity.getZ();
+        //fix velocities to be within terminal velocity
+        
+        velocity = new Vector(vx, vy, vz);
+        //set new velocity
+        
         position = new Vector(position.getX() + velocity.getX(),
                 position.getY() + velocity.getY(),
                 position.getZ() + velocity.getZ());
+        //update position based on velocity
     }
     
     /**
@@ -180,6 +209,27 @@ public abstract class Motion extends Box {
      */
     public void setGravityScale(double scale) {
         gravityScale = scale;
+    }
+    
+    /**
+     * set terminal velocity for this object
+     *
+     * @return terminal velocity vector
+     */
+    public Vector getTerminalVelocity() {
+        return terminalVelocity;
+    }
+    
+    /**
+     * set the terminal velocity for this object
+     *
+     * @param terminalVelocity terminal velocity vector
+     */
+    public void setTerminalVelocity(Vector terminalVelocity) {
+        terminalVelocity = terminalVelocity.setX(Math.abs(terminalVelocity.getX()));
+        terminalVelocity = terminalVelocity.setY(Math.abs(terminalVelocity.getY()));
+        terminalVelocity = terminalVelocity.setZ(Math.abs(terminalVelocity.getZ()));
+        this.terminalVelocity = terminalVelocity;
     }
     
     /**
