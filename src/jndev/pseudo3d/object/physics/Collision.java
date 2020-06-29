@@ -28,12 +28,12 @@ public abstract class Collision extends Motion {
     /**
      * sides the object is colliding with
      */
-    public final Set<Side> collidingSides;
+    private final Set<Side> collidingSides;
     
     /**
      * list of objects this one is colliding with
      */
-    public final Set<Collision> collidingObjects;
+    private final Set<Collision> collidingObjects;
     
     /**
      * true if the object is colliding
