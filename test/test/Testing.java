@@ -34,7 +34,7 @@ public class Testing {
         object.setPosition(new Vector(object.getWidth() * 10 - 450, 0, -object.getWidth()));
         scene.addObject(object);
         
-        for(int j = 1; j < 20; j++) {
+        for (int j = 1; j < 20; j++) {
             for (int i = 1; i <= 10; i++) {
                 Object copy = new Object(object);
                 copy.setPosition(new Vector(object.getWidth() * j - 450, -400, -object.getWidth() * i));
@@ -57,12 +57,12 @@ public class Testing {
         
         Game.getLoop().inject(() -> {
             if (Game.getLoop().getActiveScene().equals(scene)) {
-                if (Keyboard.isPressed(KeyEvent.VK_W)) {
+                if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                     object.setVelocity(object.getVelocity().setZ(-1));
                     object.setSprite(Sprite.get("res/sprites/player/front.png"));
                 }
                 
-                if (Keyboard.isPressed(KeyEvent.VK_S)) {
+                if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
                     object.setVelocity(object.getVelocity().setZ(1));
                     object.setSprite(Sprite.get("res/sprites/player/front.png"));
                 }
@@ -84,23 +84,24 @@ public class Testing {
                 if (!Keyboard.isPressed(KeyEvent.VK_A) && !Keyboard.isPressed(KeyEvent.VK_D)) {
                     object.setVelocity(object.getVelocity().setX(0));
                 }
-
+                
                 if (Keyboard.isPressed(KeyEvent.VK_SPACE)) {
                     object.setVelocity(object.getVelocity().setY(1));
                 }
-
+                
                 if (Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
                     object.setVelocity(object.getVelocity().setY(-1));
                 }
-
-//                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
-//                    object.setVelocity(object.getVelocity().setY(0));
-//                }
+                
+                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT) &&
+                        object.getGravityScale() == 0) {
+                    object.setVelocity(object.getVelocity().setY(0));
+                }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_UP)) {
                     camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
                 }
-
+                
                 if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                     camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
                 }
