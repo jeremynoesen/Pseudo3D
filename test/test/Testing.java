@@ -27,7 +27,7 @@ public class Testing {
         Scene scene = new Scene();
         Object object = new Object();
         object.setSprite(Sprite.get("res/sprites/player/front.png"));
-        object.setGravity(1);
+        object.setGravityScale(1);
         object.setWidth(object.getSprite().getWidth(null));
         object.setHeight(object.getSprite().getHeight(null));
         object.setDepth(object.getSprite().getWidth(null));
@@ -38,7 +38,7 @@ public class Testing {
             for (int i = 1; i <= 10; i++) {
                 Object copy = new Object(object);
                 copy.setPosition(new Vector(object.getWidth() * j - 450, -400, -object.getWidth() * i));
-                copy.setGravity(0);
+                copy.setGravityScale(0);
                 scene.addObject(copy);
             }
         }

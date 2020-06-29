@@ -28,12 +28,12 @@ public abstract class Collision extends Motion {
     /**
      * sides the object is colliding with
      */
-    private final Set<Side> collidingSides;
+    public final Set<Side> collidingSides;
     
     /**
      * list of objects this one is colliding with
      */
-    private final Set<Collision> collidingObjects;
+    public final Set<Collision> collidingObjects;
     
     /**
      * true if the object is colliding
@@ -83,7 +83,7 @@ public abstract class Collision extends Motion {
      * check if an object has collided with another object
      */
     private void checkCollisions() {
-//        fixMotion();
+        fixMotion();
         //fix motion to prevent clipping
         
         colliding = false;
@@ -119,10 +119,6 @@ public abstract class Collision extends Motion {
      * @param object object colliding with this object
      */
     private void doCollision(Collision object) {
-        colliding = true;
-        collidingObjects.add(object);
-        //set object to colliding
-        
         double[] overlaps = new double[6];
         overlaps[0] = Math.abs(getMinimum().getX() - object.getMaximum().getX()); //left
         overlaps[1] = Math.abs(getMaximum().getX() - object.getMinimum().getX()); //right
@@ -132,11 +128,20 @@ public abstract class Collision extends Motion {
         overlaps[5] = Math.abs(getMaximum().getZ() - object.getMinimum().getZ()); //front
         //get overlap distances
         
+        int zeros = 0;
         double distance = overlaps[0];
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i < 6; i++) {
             if (overlaps[i] < distance) distance = overlaps[i];
+            if (Double.compare(overlaps[i], 0) == 0) zeros++;
         }
-        //find min overlap
+        //find min overlap and amount of 0 overlaps
+        
+        if (zeros > 1) return;
+        //if object has more than 1 0 overlaps, it is technically not touching, so stop collision
+        
+        colliding = true;
+        collidingObjects.add(object);
+        //set object to colliding
         
         if (distance == overlaps[0]) {
             // check if this object is moving in the direction of the collising side
