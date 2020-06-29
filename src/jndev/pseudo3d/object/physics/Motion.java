@@ -16,29 +16,29 @@ public abstract class Motion extends Box {
     private final double GRAVITY = 0.0981;
     
     /**
-     * position of object (units)
+     * position of object (pixels)
      */
     private Vector position;
     
     /**
-     * velocity of object, or rate of change of position (units / tick)
+     * velocity of object, or rate of change of position (pixels / tick)
      */
     private Vector velocity;
     
     /**
-     * acceleration of object, or rate of change of velocity (units / tick ^ 2)
+     * acceleration of object, or rate of change of velocity (pixels / tick ^ 2)
      */
     private Vector acceleration;
     
     /**
-     * jerk of an object, or rate of change of acceleration (units / tick ^ 3)
+     * jerk of an object, or rate of change of acceleration (pixels / tick ^ 3)
      */
     private Vector jerk;
     
     /**
-     * value to multiply gravity constant by
+     * value used to scale gravity constant
      */
-    private double gravityMultiplier;
+    private double gravityScale;
     
     /**
      * initialize all values
@@ -49,7 +49,7 @@ public abstract class Motion extends Box {
         velocity = new Vector();
         acceleration = new Vector();
         jerk = new Vector();
-        gravityMultiplier = 1.0;
+        gravityScale = 1.0;
     }
     
     /**
@@ -63,7 +63,7 @@ public abstract class Motion extends Box {
         velocity = motion.getVelocity();
         acceleration = motion.getAcceleration();
         jerk = motion.getJerk();
-        gravityMultiplier = motion.getGravity();
+        gravityScale = motion.getGravityScale();
     }
     
     /**
@@ -82,7 +82,7 @@ public abstract class Motion extends Box {
                 acceleration.getY() + jerk.getY(),
                 acceleration.getZ() + jerk.getZ());
         velocity = new Vector(velocity.getX() + acceleration.getX(),
-                velocity.getY() + acceleration.getY() - (GRAVITY * gravityMultiplier),
+                velocity.getY() + acceleration.getY() - (GRAVITY * gravityScale),
                 velocity.getZ() + acceleration.getZ());
         position = new Vector(position.getX() + velocity.getX(),
                 position.getY() + velocity.getY(),
@@ -134,7 +134,7 @@ public abstract class Motion extends Box {
      * @return acceleration vector of an object
      */
     public Vector getAcceleration() {
-        return acceleration;
+        return acceleration.setY(acceleration.getY() - (GRAVITY * gravityScale));
     }
     
     /**
@@ -165,21 +165,21 @@ public abstract class Motion extends Box {
     }
     
     /**
-     * gets the multiplier of gravity. default is 1.0
+     * get the scale gravity. default is 1.0
      *
-     * @return gravity multiplier
+     * @return gravity scale
      */
-    public double getGravity() {
-        return gravityMultiplier;
+    public double getGravityScale() {
+        return gravityScale;
     }
     
     /**
-     * set a different gravity multiplier
+     * set the gravity scale
      *
-     * @param multiplier gravity multiplier
+     * @param scale gravity scale
      */
-    public void setGravity(double multiplier) {
-        gravityMultiplier = multiplier;
+    public void setGravityScale(double scale) {
+        gravityScale = scale;
     }
     
     /**
@@ -194,7 +194,7 @@ public abstract class Motion extends Box {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Motion motion = (Motion) o;
-        return Double.compare(motion.gravityMultiplier, gravityMultiplier) == 0 &&
+        return Double.compare(motion.gravityScale, gravityScale) == 0 &&
                 position.equals(motion.position) &&
                 velocity.equals(motion.velocity) &&
                 acceleration.equals(motion.acceleration) &&
