@@ -67,7 +67,8 @@ public class Testing {
                     object.setSprite(Sprite.get("res/sprites/player/front.png"));
                 }
                 
-                if (!Keyboard.isPressed(KeyEvent.VK_W) && !Keyboard.isPressed(KeyEvent.VK_S)) {
+                if ((!Keyboard.isPressed(KeyEvent.VK_W) && !Keyboard.isPressed(KeyEvent.VK_S)) ||
+                        camera.getFieldOfView() == 0) {
                     object.setVelocity(object.getVelocity().setZ(0));
                 }
                 
