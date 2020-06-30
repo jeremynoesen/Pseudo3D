@@ -150,12 +150,12 @@ public abstract class Collision extends Motion {
                 if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() + distance));
                     //fix object position so it is not overlapping
-                    setVelocity(getVelocity().setX(0));
-                    //set object velocity to 0 in the same direction
                 } else {
                     setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
                     //if not the faster object, cancel its velocity to prevent drifting
                 }
+                setVelocity(getVelocity().setX(0));
+                //set object velocity to 0 in the same direction
             }
             collidingSides.add(Side.LEFT);
             //add side to list of colliding sides
@@ -164,10 +164,10 @@ public abstract class Collision extends Motion {
             if (getVelocity().getX() > 0) {
                 if (Math.abs(getVelocity().getX()) >= Math.abs(object.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() - distance));
-                    setVelocity(getVelocity().setX(0));
                 } else {
                     setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
                 }
+                setVelocity(getVelocity().setX(0));
             }
             collidingSides.add(Side.RIGHT);
             
@@ -175,10 +175,10 @@ public abstract class Collision extends Motion {
             if (getVelocity().getY() < 0) {
                 if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() + distance));
-                    setVelocity(getVelocity().setY(0));
                 } else {
                     setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
+                setVelocity(getVelocity().setY(0));
             }
             collidingSides.add(Side.BOTTOM);
             
@@ -186,10 +186,10 @@ public abstract class Collision extends Motion {
             if (getVelocity().getY() > 0) {
                 if (Math.abs(getVelocity().getY()) >= Math.abs(object.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() - distance));
-                    setVelocity(getVelocity().setY(0));
                 } else {
                     setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
                 }
+                setVelocity(getVelocity().setY(0));
             }
             collidingSides.add(Side.TOP);
             
@@ -197,10 +197,10 @@ public abstract class Collision extends Motion {
             if (getVelocity().getZ() < 0) {
                 if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() + distance));
-                    setVelocity(getVelocity().setZ(0));
                 } else {
                     setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
+                setVelocity(getVelocity().setZ(0));
             }
             collidingSides.add(Side.BACK);
             
@@ -208,10 +208,10 @@ public abstract class Collision extends Motion {
             if (getVelocity().getZ() > 0) {
                 if (Math.abs(getVelocity().getZ()) >= Math.abs(object.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() - distance));
-                    setVelocity(getVelocity().setZ(0));
                 } else {
                     setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
                 }
+                setVelocity(getVelocity().setZ(0));
             }
             collidingSides.add(Side.FRONT);
         }
