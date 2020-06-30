@@ -26,11 +26,6 @@ public abstract class Motion extends Box {
     private Vector velocity;
     
     /**
-     * terminal velocity of an object. velocity can not exceed +/- the terminal velocity components
-     */
-    private Vector terminalVelocity;
-    
-    /**
      * acceleration of object, or rate of change of velocity (pixels / tick ^ 2)
      */
     private Vector acceleration;
@@ -39,6 +34,16 @@ public abstract class Motion extends Box {
      * jerk of an object, or rate of change of acceleration (pixels / tick ^ 3)
      */
     private Vector jerk;
+    
+    /**
+     * vertical terminal velocity of an object
+     */
+    private double terminalVelocity;
+    
+    /**
+     * drag applied to the object, used to slow objects down per direction
+     */
+    private Vector drag;
     
     /**
      * value used to scale gravity constant
@@ -52,9 +57,10 @@ public abstract class Motion extends Box {
         super();
         position = new Vector();
         velocity = new Vector();
-        terminalVelocity = new Vector(10, 10, 10);
         acceleration = new Vector();
         jerk = new Vector();
+        terminalVelocity = 10;
+        drag = new Vector(0.005, 0.005, 0.005);
         gravityScale = 1.0;
     }
     
@@ -70,6 +76,7 @@ public abstract class Motion extends Box {
         terminalVelocity = motion.terminalVelocity;
         acceleration = motion.acceleration;
         jerk = motion.jerk;
+        drag = motion.drag;
         gravityScale = motion.gravityScale;
     }
     
@@ -91,23 +98,17 @@ public abstract class Motion extends Box {
         //update acceleration based on jerk
         
         double vx = velocity.getX() + acceleration.getX();
-        double vy = velocity.getY() + acceleration.getY() - (GRAVITY * gravityScale);
+        double vy = velocity.getY() + acceleration.getY() - (GRAVITY * gravityScale - drag.getY());
         double vz = velocity.getZ() + acceleration.getZ();
         //update velocity based on acceleration and gravity
         
-        if (vx > terminalVelocity.getX())
-            vx = terminalVelocity.getX();
-        if (vx < -terminalVelocity.getX())
-            vx = -terminalVelocity.getX();
-        if (vy > terminalVelocity.getY())
-            vy = terminalVelocity.getY();
-        if (vy < -terminalVelocity.getY())
-            vy = -terminalVelocity.getY();
-        if (vz > terminalVelocity.getZ())
-            vz = terminalVelocity.getZ();
-        if (vz < -terminalVelocity.getZ())
-            vz = -terminalVelocity.getZ();
-        //fix velocities to be within terminal velocity
+        if(vx < 0) vx = Math.min(vx + drag.getX(), 0);
+        if(vx > 0) vx = Math.max(vx - drag.getX(), 0);
+        if(vy < 0 && vy < -terminalVelocity) vy = Math.min(vy + drag.getY(), -terminalVelocity);
+        if(vy > 0) vy = Math.max(vy - drag.getY(), 0);
+        if(vz < 0) vz = Math.min(vz + drag.getZ(), 0);
+        if(vz > 0) vz = Math.max(vz - drag.getZ(), 0);
+        //modify velocity based on drag and terminal velocity
         
         velocity = new Vector(vx, vy, vz);
         //set new velocity
@@ -214,22 +215,37 @@ public abstract class Motion extends Box {
     /**
      * set terminal velocity for this object
      *
-     * @return terminal velocity vector
+     * @return terminal velocity
      */
-    public Vector getTerminalVelocity() {
+    public double getTerminalVelocity() {
         return terminalVelocity;
     }
     
     /**
      * set the terminal velocity for this object
      *
-     * @param terminalVelocity terminal velocity vector
+     * @param terminalVelocity terminal velocity
      */
-    public void setTerminalVelocity(Vector terminalVelocity) {
-        terminalVelocity = terminalVelocity.setX(Math.abs(terminalVelocity.getX()));
-        terminalVelocity = terminalVelocity.setY(Math.abs(terminalVelocity.getY()));
-        terminalVelocity = terminalVelocity.setZ(Math.abs(terminalVelocity.getZ()));
-        this.terminalVelocity = terminalVelocity;
+    public void setTerminalVelocity(double terminalVelocity) {
+        this.terminalVelocity = Math.abs(terminalVelocity);
+    }
+    
+    /**
+     * get the drag of the object
+     *
+     * @return drag vector of an object
+     */
+    public Vector getDrag() {
+        return drag;
+    }
+    
+    /**
+     * set the drag for the object
+     *
+     * @param drag drag of object
+     */
+    public void setDrag(Vector drag) {
+        this.drag = drag;
     }
     
     /**
