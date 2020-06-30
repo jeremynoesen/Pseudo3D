@@ -36,12 +36,13 @@ public abstract class Motion extends Box {
     private Vector jerk;
     
     /**
-     * vertical terminal velocity of an object
+     * vertical terminal velocity of an object (pixels / tick)
      */
     private double terminalVelocity;
     
     /**
-     * drag applied to the object, used to slow objects down per direction
+     * drag applied to the object, used to slow objects down per direction. for simplicity, this is essentially a
+     * negative acceleration vector (pixels / tick ^ 2)
      */
     private Vector drag;
     
@@ -102,12 +103,12 @@ public abstract class Motion extends Box {
         double vz = velocity.getZ() + acceleration.getZ();
         //update velocity based on acceleration and gravity
         
-        if(vx < 0) vx = Math.min(vx + drag.getX(), 0);
-        if(vx > 0) vx = Math.max(vx - drag.getX(), 0);
-        if(vy < 0 && vy < -terminalVelocity) vy = Math.min(vy + drag.getY(), -terminalVelocity);
-        if(vy > 0) vy = Math.max(vy - drag.getY(), 0);
-        if(vz < 0) vz = Math.min(vz + drag.getZ(), 0);
-        if(vz > 0) vz = Math.max(vz - drag.getZ(), 0);
+        if (vx < 0) vx = Math.min(vx + drag.getX(), 0);
+        if (vx > 0) vx = Math.max(vx - drag.getX(), 0);
+        if (vy < 0 && vy < -terminalVelocity) vy = Math.min(vy + drag.getY(), -terminalVelocity);
+        if (vy > 0) vy = Math.max(vy - drag.getY(), 0);
+        if (vz < 0) vz = Math.min(vz + drag.getZ(), 0);
+        if (vz > 0) vz = Math.max(vz - drag.getZ(), 0);
         //modify velocity based on drag and terminal velocity
         
         velocity = new Vector(vx, vy, vz);
