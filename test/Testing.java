@@ -1,10 +1,8 @@
-package test;
-
-import jndev.pseudo3d.game.Game;
+import jndev.pseudo3d.application.Game;
 import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.loader.Sprite;
 import jndev.pseudo3d.object.Object;
-import jndev.pseudo3d.renderer.Camera;
+import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 

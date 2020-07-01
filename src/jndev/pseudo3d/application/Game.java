@@ -1,4 +1,4 @@
-package jndev.pseudo3d.game;
+package jndev.pseudo3d.application;
 
 import jndev.pseudo3d.listener.Keyboard;
 

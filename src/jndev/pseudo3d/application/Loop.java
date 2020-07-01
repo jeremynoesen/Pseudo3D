@@ -1,6 +1,6 @@
-package jndev.pseudo3d.game;
+package jndev.pseudo3d.application;
 
-import jndev.pseudo3d.renderer.Renderer;
+import jndev.pseudo3d.scene.Renderer;
 import jndev.pseudo3d.scene.Scene;
 
 import javax.swing.*;

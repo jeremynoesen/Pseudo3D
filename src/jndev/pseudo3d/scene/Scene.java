@@ -1,9 +1,7 @@
 package jndev.pseudo3d.scene;
 
-import jndev.pseudo3d.object.AABBPhysics;
-import jndev.pseudo3d.object.Renderable;
+import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.object.Object;
-import jndev.pseudo3d.renderer.Camera;
 
 import java.awt.*;
 import java.util.ArrayList;

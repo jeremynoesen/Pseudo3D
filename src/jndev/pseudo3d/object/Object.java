@@ -1,5 +1,7 @@
 package jndev.pseudo3d.object;
 
+import jndev.pseudo3d.physics.AABBPhysics;
+import jndev.pseudo3d.scene.Renderable;
 import jndev.pseudo3d.util.Box;
 
 import java.awt.*;
@@ -46,7 +48,7 @@ public class Object extends AABBPhysics implements Renderable {
      */
     public ArrayList<Object> getNearbyObjects(double xRadius, double yRadius, double zRadius) {
         ArrayList<Object> nearby = new ArrayList<>();
-        if(getScene() == null) return nearby;
+        if (getScene() == null) return nearby;
         for (Renderable object : getScene().getObjects()) {
             if (object == this) continue;
             if (object instanceof Object) {

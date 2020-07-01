@@ -6,5 +6,5 @@ package jndev.pseudo3d.util;
  * @author JNDev (Jeremaster101)
  */
 public enum Side {
-    TOP, BOTTOM, LEFT, RIGHT, BACK, FRONT, NONE;
+    TOP, BOTTOM, LEFT, RIGHT, BACK, FRONT;
 }
