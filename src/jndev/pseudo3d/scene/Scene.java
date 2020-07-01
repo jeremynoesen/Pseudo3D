@@ -1,5 +1,7 @@
 package jndev.pseudo3d.scene;
 
+import jndev.pseudo3d.object.AABBPhysics;
+import jndev.pseudo3d.object.Renderable;
 import jndev.pseudo3d.object.Object;
 import jndev.pseudo3d.renderer.Camera;
 
@@ -17,7 +19,7 @@ public class Scene {
     /**
      * all objects in the scene
      */
-    private ArrayList<Object> objects;
+    private ArrayList<Renderable> objects;
     
     /**
      * camera for the scene to determine where to render from
@@ -54,7 +56,7 @@ public class Scene {
      */
     public void tick() {
         for(int i = 0; i < objects.size(); i++) {
-            objects.get(i).tick();
+            if(objects.get(i) instanceof AABBPhysics) ((AABBPhysics) objects.get(i)).tick();
         }
     }
     
@@ -63,7 +65,7 @@ public class Scene {
      *
      * @return ArrayList of all objects in this scene
      */
-    public ArrayList<Object> getObjects() {
+    public ArrayList<Renderable> getObjects() {
         return objects;
     }
     
@@ -72,7 +74,7 @@ public class Scene {
      *
      * @param object object to add
      */
-    public void addObject(Object object) {
+    public void addObject(Renderable object) {
         objects.add(object);
         object.setScene(this);
     }
@@ -94,7 +96,7 @@ public class Scene {
      *
      * @param objects ArrayList of objects
      */
-    public void setObjects(ArrayList<Object> objects) {
+    public void setObjects(ArrayList<Renderable> objects) {
         this.objects = objects;
     }
     

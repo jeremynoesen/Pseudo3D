@@ -28,16 +28,16 @@ public class Testing {
         Object object = new Object();
         object.setSprite(Sprite.get("res/sprites/player/front.png"));
         object.setGravityScale(1);
-        object.setWidth(object.getSprite().getWidth(null));
-        object.setHeight(object.getSprite().getHeight(null));
-        object.setDepth(object.getSprite().getWidth(null));
-        object.setPosition(new Vector(object.getWidth() * 10 - 450, 0, -object.getWidth()));
+        object.getBoundingBox().setWidth(object.getSprite().getWidth(null));
+        object.getBoundingBox().setHeight(object.getSprite().getHeight(null));
+        object.getBoundingBox().setDepth(object.getSprite().getWidth(null));
+        object.setPosition(new Vector(object.getBoundingBox().getWidth() * 10 - 450, 0, -object.getBoundingBox().getWidth()));
         scene.addObject(object);
         
         for (int j = 1; j < 20; j++) {
             for (int i = 1; i <= 10; i++) {
                 Object copy = new Object(object);
-                copy.setPosition(new Vector(object.getWidth() * j - 450, -400, -object.getWidth() * i));
+                copy.setPosition(new Vector(object.getBoundingBox().getWidth() * j - 450, -400, -object.getBoundingBox().getWidth() * i));
                 copy.setGravityScale(0);
                 scene.addObject(copy);
             }
