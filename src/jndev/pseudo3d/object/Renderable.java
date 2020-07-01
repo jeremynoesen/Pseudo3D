@@ -7,6 +7,8 @@ import java.awt.*;
 
 /**
  * renderable object added to a scene
+ *
+ * @author JNDev (Jeremaster101)
  */
 public interface Renderable {
     
