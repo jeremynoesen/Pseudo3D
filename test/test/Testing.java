@@ -14,6 +14,8 @@ import java.io.File;
 
 /**
  * testing class for testing various bits of this project
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Testing {
     
