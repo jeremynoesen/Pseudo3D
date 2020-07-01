@@ -6,12 +6,13 @@ import jndev.pseudo3d.util.Side;
 import jndev.pseudo3d.util.Vector;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
- * axis-aligned bounding box rigid body object
+ * axis-aligned bounding box rigid body physics
  */
-public class AABBRigidBody {
+public abstract class AABBPhysics {
     
     /**
      * gravity constant used for physics simulation. (pixels / tick ^ 2))
@@ -72,7 +73,7 @@ public class AABBRigidBody {
     /**
      * list of rigid bodies this one is colliding with
      */
-    private final Set<AABBRigidBody> collidingObjects;
+    private final Set<AABBPhysics> collidingObjects;
     
     /**
      * rigid body's collision status
@@ -92,7 +93,7 @@ public class AABBRigidBody {
     /**
      * create a new aabb rigid body with default values
      */
-    public AABBRigidBody() {
+    public AABBPhysics() {
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
@@ -111,21 +112,21 @@ public class AABBRigidBody {
     /**
      * copy constructor for aabb rigid bodies
      *
-     * @param aabbRigidBody aabb rigid body to copy
+     * @param aabbPhysics aabb rigid body to copy
      */
-    public AABBRigidBody(AABBRigidBody aabbRigidBody) {
-        position = aabbRigidBody.position;
-        velocity = aabbRigidBody.velocity;
-        terminalVelocity = aabbRigidBody.terminalVelocity;
-        acceleration = aabbRigidBody.acceleration;
-        jerk = aabbRigidBody.jerk;
-        drag = aabbRigidBody.drag;
-        gravityScale = aabbRigidBody.gravityScale;
-        scene = aabbRigidBody.scene;
-        collidable = aabbRigidBody.collidable;
-        collidingSides = new HashSet<>(aabbRigidBody.collidingSides);
-        collidingObjects = new HashSet<>(aabbRigidBody.collidingObjects);
-        box = new Box(aabbRigidBody.box);
+    public AABBPhysics(AABBPhysics aabbPhysics) {
+        position = aabbPhysics.position;
+        velocity = aabbPhysics.velocity;
+        terminalVelocity = aabbPhysics.terminalVelocity;
+        acceleration = aabbPhysics.acceleration;
+        jerk = aabbPhysics.jerk;
+        drag = aabbPhysics.drag;
+        gravityScale = aabbPhysics.gravityScale;
+        scene = aabbPhysics.scene;
+        collidable = aabbPhysics.collidable;
+        collidingSides = new HashSet<>(aabbPhysics.collidingSides);
+        collidingObjects = new HashSet<>(aabbPhysics.collidingObjects);
+        box = new Box(aabbPhysics.box);
     }
     
     /**
@@ -184,21 +185,26 @@ public class AABBRigidBody {
         //reset all collision data
         
         for (int i = 0; i < scene.getObjects().size(); i++) {
-            AABBRigidBody aabbRigidBody = scene.getObjects().get(i);
-            //loop through all objects in scene
-            
-            if (aabbRigidBody == this) continue;
-            //ignore self
-            
-            if (box.overlaps(aabbRigidBody.getBoundingBox())) {
-                //check for an overlap
-                if (aabbRigidBody.isCollidable() && collidable) {
-                    //if this and other object can collide
-                    doCollision(aabbRigidBody);
-                    //do the collision calculations
-                } else {
-                    overlapping = true;
-                    //set overlapping
+            Renderable object = scene.getObjects().get(i);
+            //loop through all renderable objects in scene
+    
+            if (object instanceof AABBPhysics) {
+        
+                AABBPhysics aabbRigidBody = (AABBPhysics) object;
+                
+                if (aabbRigidBody == this) continue;
+                //ignore self
+        
+                if (box.overlaps(aabbRigidBody.getBoundingBox())) {
+                    //check for an overlap
+                    if (aabbRigidBody.isCollidable() && collidable) {
+                        //if this and other object can collide
+                        doCollision(aabbRigidBody);
+                        //do the collision calculations
+                    } else {
+                        overlapping = true;
+                        //set overlapping
+                    }
                 }
             }
         }
@@ -207,16 +213,16 @@ public class AABBRigidBody {
     /**
      * fix the position of this rigid body to make a collision occur
      *
-     * @param aabbRigidBody rigid body colliding with this rigid body
+     * @param aabbPhysics rigid body colliding with this rigid body
      */
-    private void doCollision(AABBRigidBody aabbRigidBody) {
+    private void doCollision(AABBPhysics aabbPhysics) {
         double[] overlaps = new double[6];
-        overlaps[0] = Math.abs(box.getMinimum().getX() - box.getMaximum().getX()); //left
-        overlaps[1] = Math.abs(box.getMaximum().getX() - box.getMinimum().getX()); //right
-        overlaps[2] = Math.abs(box.getMinimum().getY() - box.getMaximum().getY()); //bottom
-        overlaps[3] = Math.abs(box.getMaximum().getY() - box.getMinimum().getY()); //top
-        overlaps[4] = Math.abs(box.getMinimum().getZ() - box.getMaximum().getZ()); //back
-        overlaps[5] = Math.abs(box.getMaximum().getZ() - box.getMinimum().getZ()); //front
+        overlaps[0] = Math.abs(box.getMinimum().getX() - aabbPhysics.getBoundingBox().getMaximum().getX()); //left
+        overlaps[1] = Math.abs(box.getMaximum().getX() - aabbPhysics.getBoundingBox().getMinimum().getX()); //right
+        overlaps[2] = Math.abs(box.getMinimum().getY() - aabbPhysics.getBoundingBox().getMaximum().getY()); //bottom
+        overlaps[3] = Math.abs(box.getMaximum().getY() - aabbPhysics.getBoundingBox().getMinimum().getY()); //top
+        overlaps[4] = Math.abs(box.getMinimum().getZ() - aabbPhysics.getBoundingBox().getMaximum().getZ()); //back
+        overlaps[5] = Math.abs(box.getMaximum().getZ() - aabbPhysics.getBoundingBox().getMinimum().getZ()); //front
         //get overlap distances
         
         int zeros = 0;
@@ -231,14 +237,14 @@ public class AABBRigidBody {
         //if object has more than 1 0 overlaps, it is technically not touching, so stop collision
         
         colliding = true;
-        collidingObjects.add(aabbRigidBody);
+        collidingObjects.add(aabbPhysics);
         //set object to colliding
         
         if (distance == overlaps[0]) {
             // check if this object is moving in the direction of the collising side
             if (getVelocity().getX() < 0) {
                 // check if the object is faster
-                if (Math.abs(getVelocity().getX()) >= Math.abs(aabbRigidBody.getVelocity().getX())) {
+                if (Math.abs(getVelocity().getX()) >= Math.abs(aabbPhysics.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() + distance));
                     //fix object position so it is not overlapping
                 } else {
@@ -253,7 +259,7 @@ public class AABBRigidBody {
             
         } else if (distance == overlaps[1]) {
             if (getVelocity().getX() > 0) {
-                if (Math.abs(getVelocity().getX()) >= Math.abs(aabbRigidBody.getVelocity().getX())) {
+                if (Math.abs(getVelocity().getX()) >= Math.abs(aabbPhysics.getVelocity().getX())) {
                     setPosition(getPosition().setX(getPosition().getX() - distance));
                 } else {
                     setPosition(getPosition().setX(getPosition().getX() - getVelocity().getX()));
@@ -264,7 +270,7 @@ public class AABBRigidBody {
             
         } else if (distance == overlaps[2]) {
             if (getVelocity().getY() < 0) {
-                if (Math.abs(getVelocity().getY()) >= Math.abs(aabbRigidBody.getVelocity().getY())) {
+                if (Math.abs(getVelocity().getY()) >= Math.abs(aabbPhysics.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() + distance));
                 } else {
                     setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
@@ -275,7 +281,7 @@ public class AABBRigidBody {
             
         } else if (distance == overlaps[3]) {
             if (getVelocity().getY() > 0) {
-                if (Math.abs(getVelocity().getY()) >= Math.abs(aabbRigidBody.getVelocity().getY())) {
+                if (Math.abs(getVelocity().getY()) >= Math.abs(aabbPhysics.getVelocity().getY())) {
                     setPosition(getPosition().setY(getPosition().getY() - distance));
                 } else {
                     setPosition(getPosition().setY(getPosition().getY() - getVelocity().getY()));
@@ -286,7 +292,7 @@ public class AABBRigidBody {
             
         } else if (distance == overlaps[4]) {
             if (getVelocity().getZ() < 0) {
-                if (Math.abs(getVelocity().getZ()) >= Math.abs(aabbRigidBody.getVelocity().getZ())) {
+                if (Math.abs(getVelocity().getZ()) >= Math.abs(aabbPhysics.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() + distance));
                 } else {
                     setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
@@ -297,7 +303,7 @@ public class AABBRigidBody {
             
         } else if (distance == overlaps[5]) {
             if (getVelocity().getZ() > 0) {
-                if (Math.abs(getVelocity().getZ()) >= Math.abs(aabbRigidBody.getVelocity().getZ())) {
+                if (Math.abs(getVelocity().getZ()) >= Math.abs(aabbPhysics.getVelocity().getZ())) {
                     setPosition(getPosition().setZ(getPosition().getZ() - distance));
                 } else {
                     setPosition(getPosition().setZ(getPosition().getZ() - getVelocity().getZ()));
@@ -501,11 +507,11 @@ public class AABBRigidBody {
     /**
      * check if an= rigid body collides with this rigid body
      *
-     * @param aabbRigidBody rigid body to check if colliding with
+     * @param aabbPhysics rigid body to check if colliding with
      * @return true if this rigid body collides with the other rigid body
      */
-    public boolean collidesWith(AABBRigidBody aabbRigidBody) {
-        return collidingObjects.contains(aabbRigidBody);
+    public boolean collidesWith(AABBPhysics aabbPhysics) {
+        return collidingObjects.contains(aabbPhysics);
     }
     
     /**
@@ -545,5 +551,32 @@ public class AABBRigidBody {
         Box newBox = new Box(box);
         newBox.setPosition(position);
         this.box = newBox;
+    }
+    
+    /**
+     * check if another aabb rigid body is equal to this one
+     *
+     * @param o object to check for equality
+     * @return true if the AABBRigidBody is equivalent to this one
+     */
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AABBPhysics that = (AABBPhysics) o;
+        return Double.compare(that.terminalVelocity, terminalVelocity) == 0 &&
+                Double.compare(that.gravityScale, gravityScale) == 0 &&
+                collidable == that.collidable &&
+                colliding == that.colliding &&
+                overlapping == that.overlapping &&
+                Objects.equals(position, that.position) &&
+                Objects.equals(velocity, that.velocity) &&
+                Objects.equals(acceleration, that.acceleration) &&
+                Objects.equals(jerk, that.jerk) &&
+                Objects.equals(drag, that.drag) &&
+                Objects.equals(scene, that.scene) &&
+                Objects.equals(collidingSides, that.collidingSides) &&
+                Objects.equals(collidingObjects, that.collidingObjects) &&
+                Objects.equals(box, that.box);
     }
 }
