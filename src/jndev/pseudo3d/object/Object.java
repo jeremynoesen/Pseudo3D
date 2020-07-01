@@ -1,7 +1,5 @@
 package jndev.pseudo3d.object;
 
-import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.object.physics.Collision;
 import jndev.pseudo3d.util.Box;
 
 import java.awt.*;
@@ -13,12 +11,7 @@ import java.util.Objects;
  *
  * @author JNDev (Jeremaster101)
  */
-public class Object extends Collision {
-    
-    /**
-     * scene this object is in
-     */
-    private Scene scene;
+public class Object extends AABBPhysics implements Renderable {
     
     /**
      * image that represents the object when rendered
@@ -30,7 +23,6 @@ public class Object extends Collision {
      */
     public Object() {
         super();
-        scene = null;
         sprite = null;
     }
     
@@ -41,7 +33,6 @@ public class Object extends Collision {
      */
     public Object(Object object) {
         super(object);
-        scene = object.scene;
         sprite = object.sprite;
     }
     
@@ -55,34 +46,17 @@ public class Object extends Collision {
      */
     public ArrayList<Object> getNearbyObjects(double xRadius, double yRadius, double zRadius) {
         ArrayList<Object> nearby = new ArrayList<>();
-        for (Object object : scene.getObjects()) {
+        if(getScene() == null) return nearby;
+        for (Renderable object : getScene().getObjects()) {
             if (object == this) continue;
-            Box area = new Box(xRadius * 2, yRadius * 2, zRadius  * 2, getPosition());
-            if (object.overlaps(area))
-                nearby.add(object);
+            if (object instanceof Object) {
+                Object o = (Object) object;
+                Box area = new Box(xRadius * 2, yRadius * 2, zRadius * 2, getPosition());
+                if (o.getBoundingBox().overlaps(area))
+                    nearby.add(o);
+            }
         }
         return nearby;
-    }
-    
-    /**
-     * get the board this object is currently on
-     *
-     * @return board this object is on
-     */
-    @Override
-    public Scene getScene() {
-        return scene;
-    }
-    
-    /**
-     * set the board the object is on
-     *
-     * @param scene board to place object on
-     */
-    @Override
-    public void setScene(Scene scene) {
-        this.scene = scene;
-        super.setScene(scene);
     }
     
     /**
@@ -90,6 +64,7 @@ public class Object extends Collision {
      *
      * @return image sprite of this object
      */
+    @Override
     public Image getSprite() {
         return sprite;
     }
@@ -99,6 +74,7 @@ public class Object extends Collision {
      *
      * @param sprite new image to set as the sprite
      */
+    @Override
     public void setSprite(Image sprite) {
         this.sprite = sprite;
     }
@@ -115,7 +91,6 @@ public class Object extends Collision {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Object object = (Object) o;
-        return scene.equals(object.scene) &&
-                Objects.equals(sprite, object.sprite);
+        return Objects.equals(sprite, object.sprite);
     }
 }

@@ -1,6 +1,6 @@
 package jndev.pseudo3d.renderer;
 
-import jndev.pseudo3d.object.Object;
+import jndev.pseudo3d.object.Renderable;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.Vector;
@@ -45,7 +45,7 @@ public class Renderer {
         //camera data
     
         for (int i = 0; i < scene.getObjects().size(); i++) {
-            Object object = scene.getObjects().get(i);
+            Renderable object = scene.getObjects().get(i);
             Vector objPos = object.getPosition();
             //object data
             

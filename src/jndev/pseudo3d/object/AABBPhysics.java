@@ -11,6 +11,8 @@ import java.util.Set;
 
 /**
  * axis-aligned bounding box rigid body physics
+ *
+ * @author JNDev (Jeremaster101)
  */
 public abstract class AABBPhysics {
     
@@ -105,6 +107,7 @@ public abstract class AABBPhysics {
         collidable = true;
         collidingSides = new HashSet<>();
         collidingObjects = new HashSet<>();
+        colliding = false;
         overlapping = false;
         box = new Box();
     }
@@ -126,6 +129,8 @@ public abstract class AABBPhysics {
         collidable = aabbPhysics.collidable;
         collidingSides = new HashSet<>(aabbPhysics.collidingSides);
         collidingObjects = new HashSet<>(aabbPhysics.collidingObjects);
+        colliding = aabbPhysics.colliding;
+        overlapping = aabbPhysics.overlapping;
         box = new Box(aabbPhysics.box);
     }
     
