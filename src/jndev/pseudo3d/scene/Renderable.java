@@ -1,6 +1,5 @@
-package jndev.pseudo3d.object;
+package jndev.pseudo3d.scene;
 
-import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 
 import java.awt.*;

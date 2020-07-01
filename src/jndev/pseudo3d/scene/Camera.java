@@ -1,4 +1,4 @@
-package jndev.pseudo3d.renderer;
+package jndev.pseudo3d.scene;
 
 import jndev.pseudo3d.util.Vector;
 
