@@ -32,6 +32,7 @@ public class Testing {
         object.getBoundingBox().setHeight(object.getSprite().getHeight(null));
         object.getBoundingBox().setDepth(object.getSprite().getWidth(null));
         object.setPosition(new Vector(object.getBoundingBox().getWidth() * 10 - 450, 0, -object.getBoundingBox().getWidth()));
+        object.setDrag(new Vector(0.05, 0.05, 0.05));
         scene.addObject(object);
         
         for (int j = 1; j < 20; j++) {
@@ -39,6 +40,7 @@ public class Testing {
                 Object copy = new Object(object);
                 copy.setPosition(new Vector(object.getBoundingBox().getWidth() * j - 450, -400, -object.getBoundingBox().getWidth() * i));
                 copy.setGravityScale(0);
+                copy.setFriction(new Vector(0.07, 0.07, 0.07));
                 scene.addObject(copy);
             }
         }

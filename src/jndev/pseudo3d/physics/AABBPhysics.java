@@ -52,6 +52,12 @@ public abstract class AABBPhysics {
     private Vector drag;
     
     /**
+     * friction applied to colliding objects. for simplicity, this is a negative acceleration vector (pixels / tick
+     * ^ 2)
+     */
+    private Vector friction;
+    
+    /**
      * value used to scale gravity constant
      */
     private double gravityScale;
@@ -69,7 +75,7 @@ public abstract class AABBPhysics {
     /**
      * list of objects this one is colliding with per side
      */
-    private final HashMap<Side, Set<AABBPhysics>> collidingObjects;
+    private final HashMap<Side, ArrayList<AABBPhysics>> collidingObjects;
     
     /**
      * object's collision status
@@ -96,6 +102,7 @@ public abstract class AABBPhysics {
         jerk = new Vector();
         terminalVelocity = 10;
         drag = new Vector(0.005, 0.005, 0.005);
+        friction = new Vector(0.05, 0.05, 0.05);
         gravityScale = 1.0;
         scene = null;
         collidable = true;
@@ -103,7 +110,7 @@ public abstract class AABBPhysics {
         overlapping = false;
         box = new Box();
         collidingObjects = new HashMap<>();
-        for (Side s : Side.values()) collidingObjects.put(s, new HashSet<>());
+        for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
     
     /**
@@ -118,6 +125,7 @@ public abstract class AABBPhysics {
         acceleration = aabbPhysics.acceleration;
         jerk = aabbPhysics.jerk;
         drag = aabbPhysics.drag;
+        friction = aabbPhysics.friction;
         gravityScale = aabbPhysics.gravityScale;
         scene = aabbPhysics.scene;
         collidable = aabbPhysics.collidable;
@@ -125,7 +133,7 @@ public abstract class AABBPhysics {
         overlapping = aabbPhysics.overlapping;
         box = new Box(aabbPhysics.box);
         collidingObjects = new HashMap<>();
-        for (Side s : Side.values()) collidingObjects.put(s, new HashSet<>());
+        for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
     
     /**
@@ -150,21 +158,75 @@ public abstract class AABBPhysics {
         double vz = velocity.getZ() + acceleration.getZ();
         //update velocity based on acceleration and gravity
         
-        if (vx < 0) vx = Math.min(vx + drag.getX(), 0);
-        if (vx > 0) vx = Math.max(vx - drag.getX(), 0);
-        if (vy < 0 && vy < -terminalVelocity) vy = Math.min(vy + drag.getY(), -terminalVelocity);
-        if (vy > 0) vy = Math.max(vy - drag.getY(), 0);
-        if (vz < 0) vz = Math.min(vz + drag.getZ(), 0);
-        if (vz > 0) vz = Math.max(vz - drag.getZ(), 0);
-        //modify velocity based on drag and terminal velocity
+        double fx = 0;
+        double fy = 0;
+        double fz = 0;
+        
+        //get friction to apply
+        if((collidesOn(Side.LEFT) && vx < 0) || (collidesOn(Side.RIGHT) && vx > 0)) {
+            //check if colliding and moving towards side
+            
+            collidingObjects.get(Side.LEFT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
+            collidingObjects.get(Side.RIGHT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
+            //sort objects per side by friction for specific axis
+            
+            double fyl = !collidingObjects.get(Side.LEFT).isEmpty() ? collidingObjects.get(Side.LEFT).get(0).getFriction().getY() : 0;
+            double fyr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getY() : 0;
+            fy = Math.max(fy, Math.max(fyl, fyr));
+            //get max friction
+            
+            collidingObjects.get(Side.LEFT).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
+            collidingObjects.get(Side.RIGHT).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
     
-        if ((collidesOn(Side.LEFT) && vx < 0) || (collidesOn(Side.RIGHT) && vx > 0))
-            vx = 0;
-        if ((collidesOn(Side.BOTTOM) && vy < 0) || (collidesOn(Side.TOP) && vy > 0))
-            vy = 0;
-        if ((collidesOn(Side.BACK) && vz < 0) || (collidesOn(Side.FRONT) && vz > 0))
-            vz = 0;
-        //prevent clipping if colliding
+            double fzl = !collidingObjects.get(Side.LEFT).isEmpty() ? collidingObjects.get(Side.LEFT).get(0).getFriction().getZ() : 0;
+            double fzr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ() : 0;
+            fz = Math.max(fz, Math.max(fzl, fzr));
+        }
+    
+        if((collidesOn(Side.BOTTOM) && vy < 0) || (collidesOn(Side.TOP) && vy > 0)) {
+            collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
+            collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
+    
+            double fxb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX() : 0;
+            double fxt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getX() : 0;
+            fx = Math.max(fx, Math.max(fxb, fxt));
+        
+            collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
+            collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
+    
+            double fzb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ() : 0;
+            double fzt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getZ() : 0;
+            fz = Math.max(fz, Math.max(fzb, fzt));
+        }
+    
+        if((collidesOn(Side.BACK) && vz < 0) || (collidesOn(Side.FRONT) && vz > 0)) {
+            collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
+            collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
+        
+            double fxb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getX() : 0;
+            double fxf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getX() : 0;
+            fx = Math.max(fx, Math.max(fxb, fxf));
+        
+            collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
+            collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
+        
+            double fyb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getY() : 0;
+            double fyf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getY() : 0;
+            fy = Math.max(fy, Math.max(fyb, fyf));
+        }
+        
+        if (vx < 0) vx = collidesOn(Side.LEFT) ? 0 : Math.min(vx + drag.getX() + fx, 0);
+        if (vx > 0) vx = collidesOn(Side.RIGHT) ? 0 : Math.max(vx - drag.getX() - fx, 0);
+        if (vy < 0) {
+            if (vy < -terminalVelocity)
+                vy = collidesOn(Side.BOTTOM) ? 0 : Math.min(vy + drag.getY() + fy, -terminalVelocity);
+            else
+                vy = collidesOn(Side.BOTTOM) ? 0 : vy + fy;
+        }
+        if (vy > 0) vy = collidesOn(Side.TOP) ? 0 : Math.max(vy - drag.getY() - fy, 0);
+        if (vz < 0) vz = collidesOn(Side.BACK) ? 0 : Math.min(vz + drag.getZ() + fz, 0);
+        if (vz > 0) vz = collidesOn(Side.FRONT) ? 0 : Math.max(vz - drag.getZ() - fz, 0);
+        //modify velocity based on friction, drag, terminal velocity, and collision status
         
         velocity = new Vector(vx, vy, vz);
         //set new velocity
@@ -184,8 +246,8 @@ public abstract class AABBPhysics {
     private void checkCollisions() {
         colliding = false;
         overlapping = false;
-        for (Set<AABBPhysics> physics : collidingObjects.values()) {
-            physics.clear();
+        for (ArrayList<AABBPhysics> list : collidingObjects.values()) {
+            list.clear();
         }
         //reset all collision data
         
@@ -446,6 +508,24 @@ public abstract class AABBPhysics {
     }
     
     /**
+     * get the friction of the object
+     *
+     * @return friction vector
+     */
+    public Vector getFriction() {
+        return friction;
+    }
+    
+    /**
+     * set the friction of the object
+     *
+     * @param friction friction vector
+     */
+    public void setFriction(Vector friction) {
+        this.friction = friction;
+    }
+    
+    /**
      * set the scene this object is in
      *
      * @param scene scene for collisions
@@ -498,7 +578,7 @@ public abstract class AABBPhysics {
      */
     public boolean collidesWith(AABBPhysics aabbPhysics) {
         
-        for (Set<AABBPhysics> list : collidingObjects.values()) {
+        for (ArrayList<AABBPhysics> list : collidingObjects.values()) {
             if (list.contains(aabbPhysics)) return true;
         }
         
@@ -519,7 +599,7 @@ public abstract class AABBPhysics {
      * check if an object collides with this one on a specific side
      *
      * @param aabbPhysics object to check if colliding with
-     * @param side side of object
+     * @param side        side of object
      * @return true if the object is colliding with the other object on the soecified side
      */
     public boolean collidesWithOn(AABBPhysics aabbPhysics, Side side) {
@@ -576,6 +656,7 @@ public abstract class AABBPhysics {
                 Objects.equals(acceleration, that.acceleration) &&
                 Objects.equals(jerk, that.jerk) &&
                 Objects.equals(drag, that.drag) &&
+                Objects.equals(friction, that.friction) &&
                 Objects.equals(scene, that.scene) &&
                 Objects.equals(collidingObjects, that.collidingObjects) &&
                 Objects.equals(box, that.box);
