@@ -2,6 +2,7 @@ package jndev.pseudo3d.object;
 
 import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.scene.Renderable;
+import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Box;
 
 import java.awt.*;
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author JNDev (Jeremaster101)
  */
-public class Object extends AABBPhysics implements Renderable {
+public class PhysicsObject extends AABBPhysics implements Renderable {
     
     /**
      * image that represents the object when rendered
@@ -23,7 +24,7 @@ public class Object extends AABBPhysics implements Renderable {
     /**
      * constructs a game object
      */
-    public Object() {
+    public PhysicsObject() {
         super();
         sprite = null;
     }
@@ -31,11 +32,11 @@ public class Object extends AABBPhysics implements Renderable {
     /**
      * copy constructor for objects
      *
-     * @param object object to copy
+     * @param physicsObject object to copy
      */
-    public Object(Object object) {
-        super(object);
-        sprite = object.sprite;
+    public PhysicsObject(PhysicsObject physicsObject) {
+        super(physicsObject);
+        sprite = physicsObject.sprite;
     }
     
     /**
@@ -46,13 +47,13 @@ public class Object extends AABBPhysics implements Renderable {
      * @param zRadius radius z
      * @return list of objects nearby
      */
-    public ArrayList<Object> getNearbyObjects(double xRadius, double yRadius, double zRadius) {
-        ArrayList<Object> nearby = new ArrayList<>();
+    public ArrayList<PhysicsObject> getNearbyObjects(double xRadius, double yRadius, double zRadius) {
+        ArrayList<PhysicsObject> nearby = new ArrayList<>();
         if (getScene() == null) return nearby;
         for (Renderable object : getScene().getObjects()) {
             if (object == this) continue;
-            if (object instanceof Object) {
-                Object o = (Object) object;
+            if (object instanceof PhysicsObject) {
+                PhysicsObject o = (PhysicsObject) object;
                 Box area = new Box(xRadius * 2, yRadius * 2, zRadius * 2, getPosition());
                 if (o.getBoundingBox().overlaps(area))
                     nearby.add(o);
@@ -82,6 +83,17 @@ public class Object extends AABBPhysics implements Renderable {
     }
     
     /**
+     * set the scene the object is in
+     *
+     * @param scene scene to place object in
+     */
+    @Override
+    public void setScene(Scene scene) {
+        super.setScene(scene);
+        if (scene != null && !scene.getObjects().contains(this)) scene.addObject(this);
+    }
+    
+    /**
      * check if this object is identical to another
      *
      * @param o object to check
@@ -92,7 +104,7 @@ public class Object extends AABBPhysics implements Renderable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Object object = (Object) o;
-        return Objects.equals(sprite, object.sprite);
+        PhysicsObject physicsObject = (PhysicsObject) o;
+        return Objects.equals(sprite, physicsObject.sprite);
     }
 }

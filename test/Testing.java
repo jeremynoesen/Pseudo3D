@@ -1,7 +1,8 @@
 import jndev.pseudo3d.application.Game;
 import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.loader.Sprite;
-import jndev.pseudo3d.object.Object;
+import jndev.pseudo3d.object.PhysicsObject;
+import jndev.pseudo3d.object.SpriteObject;
 import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
@@ -25,25 +26,30 @@ public class Testing {
     public static void main(String[] args) {
         Sprite.load(new File("res/sprites/"));
         Scene scene = new Scene();
-        Object object = new Object();
-        object.setSprite(Sprite.get("res/sprites/player/front.png"));
-        object.setGravityScale(1);
-        object.getBoundingBox().setWidth(object.getSprite().getWidth(null));
-        object.getBoundingBox().setHeight(object.getSprite().getHeight(null));
-        object.getBoundingBox().setDepth(object.getSprite().getWidth(null));
-        object.setPosition(new Vector(object.getBoundingBox().getWidth() * 10 - 450, 0, -object.getBoundingBox().getWidth()));
-        object.setDrag(new Vector(0.05, 0.05, 0.05));
-        scene.addObject(object);
+        PhysicsObject physicsObject = new PhysicsObject();
+        physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
+        physicsObject.setGravityScale(1);
+        physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getWidth(null));
+        physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getHeight(null));
+        physicsObject.getBoundingBox().setDepth(physicsObject.getSprite().getWidth(null));
+        physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0, -physicsObject.getBoundingBox().getWidth()));
+        physicsObject.setDrag(new Vector(0.05, 0.05, 0.05));
+        scene.addObject(physicsObject);
         
         for (int j = 1; j < 20; j++) {
             for (int i = 1; i <= 10; i++) {
-                Object copy = new Object(object);
-                copy.setPosition(new Vector(object.getBoundingBox().getWidth() * j - 450, -400, -object.getBoundingBox().getWidth() * i));
+                PhysicsObject copy = new PhysicsObject(physicsObject);
+                copy.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * j - 450, -400, -physicsObject.getBoundingBox().getWidth() * i));
                 copy.setGravityScale(0);
                 copy.setFriction(new Vector(0.07, 0.07, 0.07));
                 scene.addObject(copy);
             }
         }
+    
+        SpriteObject spriteObject = new SpriteObject();
+        spriteObject.setSprite(Sprite.get("res/sprites/background.png"));
+        spriteObject.setPosition(new Vector(0, 0, -500));
+        scene.addObject(spriteObject);
         
         Camera camera = new Camera();
         camera.setFieldOfView(90);
@@ -60,13 +66,13 @@ public class Testing {
         Game.getLoop().inject(() -> {
             if (Game.getLoop().getActiveScene().equals(scene)) {
                 if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
-                    object.setVelocity(object.getVelocity().setZ(-1));
-                    object.setSprite(Sprite.get("res/sprites/player/front.png"));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
+                    physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
-                    object.setVelocity(object.getVelocity().setZ(1));
-                    object.setSprite(Sprite.get("res/sprites/player/front.png"));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
+                    physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
                 }
                 
 //                if ((!Keyboard.isPressed(KeyEvent.VK_W) && !Keyboard.isPressed(KeyEvent.VK_S)) ||
@@ -75,13 +81,13 @@ public class Testing {
 //                }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_A)) {
-                    object.setVelocity(object.getVelocity().setX(-1));
-                    object.setSprite(Sprite.get("res/sprites/player/left.png"));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
+                    physicsObject.setSprite(Sprite.get("res/sprites/player/left.png"));
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_D)) {
-                    object.setVelocity(object.getVelocity().setX(1));
-                    object.setSprite(Sprite.get("res/sprites/player/right.png"));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
+                    physicsObject.setSprite(Sprite.get("res/sprites/player/right.png"));
                 }
                 
 //                if (!Keyboard.isPressed(KeyEvent.VK_A) && !Keyboard.isPressed(KeyEvent.VK_D)) {
@@ -89,11 +95,11 @@ public class Testing {
 //                }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_SPACE)) {
-                    object.setVelocity(object.getVelocity().setY(1));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setY(1));
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
-                    object.setVelocity(object.getVelocity().setY(-1));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setY(-1));
                 }
                 
 //                if (!Keyboard.isPressed(KeyEvent.VK_SPACE) && !Keyboard.isPressed(KeyEvent.VK_SHIFT) &&
