@@ -1,7 +1,7 @@
 package jndev.pseudo3d.scene;
 
 import jndev.pseudo3d.physics.AABBPhysics;
-import jndev.pseudo3d.object.Object;
+import jndev.pseudo3d.object.PhysicsObject;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -80,12 +80,12 @@ public class Scene {
     /**
      * remove an object from this scene
      *
-     * @param object object to remove
+     * @param physicsObject object to remove
      */
-    public void removeObject(Object object) {
-        if (objects.contains(object)) {
-            objects.remove(object);
-            object.setScene(null);
+    public void removeObject(PhysicsObject physicsObject) {
+        if (objects.contains(physicsObject)) {
+            objects.remove(physicsObject);
+            physicsObject.setScene(null);
         }
     }
     
