@@ -1,7 +1,5 @@
 package jndev.pseudo3d.util;
 
-import java.util.Objects;
-
 /**
  * 3D vector and related mathematical operators
  *
@@ -34,15 +32,28 @@ public class Vector {
     }
     
     /**
-     * create a new vector with components x, y, and z
+     * create a new 3D vector with components x, y, and z
      *
      * @param x x compnent of vector
      * @param y y component of vector
+     * @param z z component of vector
      */
     public Vector(double x, double y, double z) {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+    
+    /**
+     * create a new 2D vector with components x and y
+     *
+     * @param x x compnent of vector
+     * @param y y component of vector
+     */
+    public Vector(double x, double y) {
+        this.x = x;
+        this.y = y;
+        this.z = 0;
     }
     
     /**
