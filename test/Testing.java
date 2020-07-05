@@ -52,7 +52,7 @@ public class Testing {
         Camera camera = new Camera();
         camera.setFieldOfView(90);
         camera.setSensorSize(1000);
-        camera.setPosition(new Vector(0, 0, -100));
+        camera.setScenePosition(new Vector(0, 0, -100));
         
         scene.setCamera(camera);
         scene.setBackground(Color.WHITE);
