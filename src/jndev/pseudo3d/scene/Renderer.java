@@ -37,7 +37,9 @@ public class Renderer {
         //sort objects by z position so objects can be drawn in front of others
         
         Camera camera = scene.getCamera();
-        Vector camPos = camera.getPosition();
+        Vector camPos = camera.getScenePosition();
+        Vector windowPos = camera.getWindowPosition() != null ?
+                camera.getWindowPosition() : new Vector(gWidth / 2.0, gHeight / 2.0);
         double fov = Math.toRadians(camera.getFieldOfView() / 2.0);
         double sensorSize = camera.getSensorSize();
         double zoom = camera.getZoom();
@@ -63,8 +65,8 @@ public class Renderer {
             Image image = object.getSprite();
             int widthScaled = (int) Math.ceil(image.getWidth(null) * scale);
             int heightScaled = (int) Math.ceil(image.getHeight(null) * scale);
-            double x = ((objPos.getX() - camPos.getX()) * scale) + (gWidth / 2.0);
-            double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight / 2.0);
+            double x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
+            double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY());
             //scale image dimensions and coordinates
             
             Box screen = new Box(gWidth, gHeight, 0,
