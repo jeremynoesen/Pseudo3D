@@ -26,6 +26,11 @@ public class Camera {
     private double sensorSize;
     
     /**
+     * camera zoom, will scale rendered image by this amount
+     */
+    private double zoom;
+    
+    /**
      * position of camera
      */
     private Vector position;
@@ -38,19 +43,24 @@ public class Camera {
         fieldOfView = 90;
         sensorSize = 500;
         viewDistance = 500;
+        zoom = 1;
     }
     
     /**
      * constructs a new camera with set position, sensor res, and field of view
      *
-     * @param position    camera position
-     * @param fieldOfView field of view in degrees
+     * @param position     camera position
+     * @param sensorSize   camera sensor size
+     * @param fieldOfView  field of view in degrees
+     * @param viewDistance z distance camera is able to see
+     * @param zoom         camera zoom, scales render
      */
-    public Camera(Vector position, double sensorSize, double fieldOfView, double viewDistance) {
+    public Camera(Vector position, double sensorSize, double fieldOfView, double viewDistance, double zoom) {
         this.position = position;
         this.fieldOfView = fieldOfView;
         this.sensorSize = sensorSize;
         this.viewDistance = viewDistance;
+        this.zoom = zoom;
     }
     
     /**
@@ -63,6 +73,7 @@ public class Camera {
         fieldOfView = camera.fieldOfView;
         sensorSize = camera.sensorSize;
         viewDistance = camera.viewDistance;
+        zoom = camera.zoom;
     }
     
     /**
@@ -135,6 +146,24 @@ public class Camera {
      */
     public void setViewDistance(double viewDistance) {
         this.viewDistance = viewDistance;
+    }
+    
+    /**
+     * get the zoom for the camera
+     *
+     * @return camera zoom
+     */
+    public double getZoom() {
+        return zoom;
+    }
+    
+    /**
+     * set the zoom for the camera
+     *
+     * @param zoom camera zoom
+     */
+    public void setZoom(double zoom) {
+        this.zoom = zoom;
     }
     
     /**
