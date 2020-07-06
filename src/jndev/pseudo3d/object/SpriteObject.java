@@ -7,6 +7,8 @@ import java.awt.*;
 
 /**
  * sprite placed in 3D space with no physics
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class SpriteObject implements Renderable {
     

@@ -7,6 +7,8 @@ import java.awt.*;
 
 /**
  * main application for any project using Pseudo3D
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Game extends JFrame {
     
