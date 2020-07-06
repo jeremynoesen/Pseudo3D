@@ -1,7 +1,6 @@
 package jndev.pseudo3d.object;
 
 import jndev.pseudo3d.scene.Renderable;
-import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Vector;
 
 import java.awt.*;
@@ -22,17 +21,11 @@ public class SpriteObject implements Renderable {
     private Vector position;
     
     /**
-     * scene object is in
-     */
-    private Scene scene;
-    
-    /**
      * create a new sprite object
      */
     public SpriteObject() {
         sprite = null;
         position = new Vector();
-        scene = null;
     }
     
     /**
@@ -40,12 +33,10 @@ public class SpriteObject implements Renderable {
      *
      * @param sprite sprite image of object
      * @param position position of object
-     * @param scene scene object is in
      */
-    public SpriteObject(Image sprite, Vector position, Scene scene) {
+    public SpriteObject(Image sprite, Vector position) {
         this.sprite = sprite;
         this.position = position;
-        this.scene = scene;
     }
     
     /**
@@ -56,7 +47,6 @@ public class SpriteObject implements Renderable {
     public SpriteObject(SpriteObject spriteObject) {
         sprite = spriteObject.sprite;
         position = spriteObject.position;
-        scene = spriteObject.scene;
     }
     
     /**
@@ -74,7 +64,6 @@ public class SpriteObject implements Renderable {
      *
      * @param sprite image to set as sprite
      */
-    @Override
     public void setSprite(Image sprite) {
         this.sprite = sprite;
     }
@@ -94,7 +83,6 @@ public class SpriteObject implements Renderable {
      *
      * @param position position vector
      */
-    @Override
     public void setPosition(Vector position) {
         this.position = position;
     }
