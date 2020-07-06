@@ -10,6 +10,8 @@ import java.util.Set;
 
 /**
  * game loop to update graphics and physics for the active scene
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class Loop extends JPanel {
     
