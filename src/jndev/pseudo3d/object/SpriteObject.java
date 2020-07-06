@@ -36,6 +36,19 @@ public class SpriteObject implements Renderable {
     }
     
     /**
+     * create as new sprite object with pre-defined sprite, position, and scene
+     *
+     * @param sprite sprite image of object
+     * @param position position of object
+     * @param scene scene object is in
+     */
+    public SpriteObject(Image sprite, Vector position, Scene scene) {
+        this.sprite = sprite;
+        this.position = position;
+        this.scene = scene;
+    }
+    
+    /**
      * copyu constructor for sprite objects
      *
      * @param spriteObject sprite object to copy
