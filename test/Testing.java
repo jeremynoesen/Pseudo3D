@@ -61,7 +61,7 @@ public class Testing {
         scene.setCamera(camera);
         scene.setBackground(Color.WHITE);
         
-        Game.launch(1000, 1000);
+        Game.launch(1000, 1000, false);
         Game.getLoop().setActiveScene(scene);
         Game.getLoop().start();
         
