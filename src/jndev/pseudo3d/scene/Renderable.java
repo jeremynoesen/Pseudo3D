@@ -5,7 +5,7 @@ import jndev.pseudo3d.util.Vector;
 import java.awt.*;
 
 /**
- * renderable object added to a scene
+ * interface used to make an object renderable in a scene
  *
  * @author JNDev (Jeremaster101)
  */
@@ -19,23 +19,9 @@ public interface Renderable {
     Image getSprite();
     
     /**
-     * set the object's sprite
-     *
-     * @param sprite image to set as sprite
-     */
-    void setSprite(Image sprite);
-    
-    /**
      * get the object's position
      *
      * @return position vector
      */
     Vector getPosition();
-    
-    /**
-     * set the object's position
-     *
-     * @param position position vector
-     */
-    void setPosition(Vector position);
 }
