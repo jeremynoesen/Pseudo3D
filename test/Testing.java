@@ -35,10 +35,14 @@ public class Testing {
         physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0, -physicsObject.getBoundingBox().getWidth()));
         scene.addObject(physicsObject);
         
-        for (int j = 1; j < 20; j++) {
-            for (int i = 1; i <= 10; i++) {
+        for (int j = 1; j < 22; j++) {
+            for (int i = 1; i <= 6; i++) {
                 PhysicsObject copy = new PhysicsObject(physicsObject);
-                copy.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * j - 450, -400, -physicsObject.getBoundingBox().getWidth() * i));
+                copy.setSprite(Sprite.get("res/sprites/floor.png"));
+                copy.getBoundingBox().setWidth(copy.getSprite().getWidth(null));
+                copy.getBoundingBox().setHeight(copy.getSprite().getHeight(null));
+                copy.getBoundingBox().setDepth(copy.getSprite().getWidth(null));
+                copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 525, -465, -copy.getBoundingBox().getWidth() * i));
                 copy.setGravityScale(0);
                 scene.addObject(copy);
             }
@@ -46,13 +50,13 @@ public class Testing {
         
         SpriteObject spriteObject = new SpriteObject();
         spriteObject.setSprite(Sprite.get("res/sprites/background.png"));
-        spriteObject.setPosition(new Vector(0, 0, -500));
+        spriteObject.setPosition(new Vector(0, 0, -325));
         scene.addObject(spriteObject);
         
         Camera camera = new Camera();
-        camera.setFieldOfView(90);
-        camera.setSensorSize(1000);
+        camera.setFieldOfView(72);
         camera.setScenePosition(new Vector(0, 0, -100));
+        camera.setSensorSize(1000);
         
         scene.setCamera(camera);
         scene.setBackground(Color.WHITE);
@@ -106,13 +110,11 @@ public class Testing {
 //                }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_UP)) {
-                    camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 178.0));
-                    camera.setZoom(camera.getZoom() + 0.01);
+                    camera.setFieldOfView(Math.min(camera.getFieldOfView() + 1, 72));
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                     camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
-                    camera.setZoom(camera.getZoom() - 0.01);
                 }
             }
         });
