@@ -85,25 +85,4 @@ public class SpriteObject implements Renderable {
     public void setPosition(Vector position) {
         this.position = position;
     }
-    
-    /**
-     * get scene object is in
-     *
-     * @return scene object is in
-     */
-    @Override
-    public Scene getScene() {
-        return scene;
-    }
-    
-    /**
-     * set the scene the object is in
-     *
-     * @param scene scene to place object in
-     */
-    @Override
-    public void setScene(Scene scene) {
-        this.scene = scene;
-        if (scene != null && !scene.getObjects().contains(this)) scene.addObject(this);
-    }
 }
