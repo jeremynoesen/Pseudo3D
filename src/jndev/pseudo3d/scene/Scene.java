@@ -80,12 +80,12 @@ public class Scene {
     /**
      * remove an object from this scene
      *
-     * @param physicsObject object to remove
+     * @param object object to remove
      */
-    public void removeObject(PhysicsObject physicsObject) {
-        if (objects.contains(physicsObject)) {
-            objects.remove(physicsObject);
-            physicsObject.setScene(null);
+    public void removeObject(Renderable object) {
+        if (objects.contains(object)) {
+            objects.remove(object);
+            if (object instanceof PhysicsObject) ((PhysicsObject) object).setScene(null);
         }
     }
     
