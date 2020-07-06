@@ -39,6 +39,19 @@ public class Scene {
     }
     
     /**
+     * create a new scene with pre-defined objects, camera, and background color
+     *
+     * @param objects    objects in scene
+     * @param camera     scene camera
+     * @param background background color
+     */
+    public Scene(ArrayList<Renderable> objects, Camera camera, Color background) {
+        this.objects = objects;
+        this.camera = camera;
+        this.background = background;
+    }
+    
+    /**
      * copy constructor for scene
      *
      * @param scene scene to copy
@@ -53,8 +66,8 @@ public class Scene {
      * tick the scene once and every object in it. also sort all objects by z location from high to low
      */
     public void tick() {
-        for(int i = 0; i < objects.size(); i++) {
-            if(objects.get(i) instanceof AABBPhysics) ((AABBPhysics) objects.get(i)).tick();
+        for (int i = 0; i < objects.size(); i++) {
+            if (objects.get(i) instanceof AABBPhysics) ((AABBPhysics) objects.get(i)).tick();
         }
     }
     
