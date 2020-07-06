@@ -30,9 +30,10 @@ public class Game extends JFrame {
      *
      * @param width window width
      * @param height window height
+     * @param resizable whether the window can be resized
      */
-    public static void launch(int width, int height) {
-        EventQueue.invokeLater(() -> initialize(width, height));
+    public static void launch(int width, int height, boolean resizable) {
+        EventQueue.invokeLater(() -> initialize(width, height, resizable));
     }
     
     /**
@@ -40,14 +41,16 @@ public class Game extends JFrame {
      *
      * @param width window width
      * @param height window height
+     * @param resizable whether the window can be resized
      */
-    private static void initialize(int width, int height) {
+    private static void initialize(int width, int height, boolean resizable) {
         game.addKeyListener(new Keyboard());
         game.add(loop);
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setSize(new Dimension(width, height));
         game.setLocationRelativeTo(null);
         game.setVisible(true);
+        game.setResizable(resizable);
     }
     
     /**
