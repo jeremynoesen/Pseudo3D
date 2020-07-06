@@ -74,7 +74,7 @@ public class Scene {
      */
     public void addObject(Renderable object) {
         objects.add(object);
-        object.setScene(this);
+        if (object instanceof PhysicsObject) ((PhysicsObject) object).setScene(this);
     }
     
     /**
