@@ -77,7 +77,6 @@ public class PhysicsObject extends AABBPhysics implements Renderable {
      *
      * @param sprite new image to set as the sprite
      */
-    @Override
     public void setSprite(Image sprite) {
         this.sprite = sprite;
     }
