@@ -41,19 +41,18 @@ public abstract class AABBPhysics {
     private Vector jerk;
     
     /**
-     * vertical terminal velocity of object (pixels / tick)
+     * +/- terminal velocity of object (pixels / tick)
      */
-    private double terminalVelocity;
+    private Vector terminalVelocity;
     
     /**
-     * drag applied to the object, used to slow down per direction. for simplicity, this is a negative acceleration
-     * vector (pixels / tick ^ 2)
+     * +/- drag applied to the object, used to slow down per direction. for simplicity, this is an acceleration vector
+     * (pixels / tick ^ 2)
      */
     private Vector drag;
     
     /**
-     * friction applied to colliding objects. for simplicity, this is a negative acceleration vector (pixels / tick ^
-     * 2)
+     * +/- friction applied to colliding objects. for simplicity, this is an acceleration vector (pixels / tick ^ 2)
      */
     private Vector friction;
     
@@ -96,7 +95,7 @@ public abstract class AABBPhysics {
         velocity = new Vector();
         acceleration = new Vector();
         jerk = new Vector();
-        terminalVelocity = 10;
+        terminalVelocity = new Vector(10, 10, 10);
         drag = new Vector(0.005, 0.005, 0.005);
         friction = new Vector(0.05, 0.05, 0.05);
         scene = null;
@@ -149,15 +148,18 @@ public abstract class AABBPhysics {
         //update acceleration based on jerk
         
         double vx = velocity.getX() + acceleration.getX();
-        double vy = velocity.getY() + acceleration.getY() - (-gravity.getY() - drag.getY());
+        double vy = velocity.getY() + acceleration.getY();
         double vz = velocity.getZ() + acceleration.getZ();
         //update velocity based on acceleration
         
-        if(Double.compare(0, gravity.getX()) != 0) vx = vx + gravity.getX() + (gravity.getX() < 0 ? drag.getX() : -drag.getX());
-        if(Double.compare(0, gravity.getY()) != 0) vy = vy + gravity.getY() + (gravity.getY() < 0 ? drag.getY() : -drag.getY());
-        if(Double.compare(0, gravity.getZ()) != 0) vz = vz + gravity.getZ() + (gravity.getZ() < 0 ? drag.getZ() : -drag.getZ());
-        //update velocity based on gravity modified by drag
-    
+        vx += ((vx < -terminalVelocity.getX() && gravity.getX() < 0) ||
+                (vx > terminalVelocity.getX() && gravity.getX() > 0)) ? 0 : gravity.getX();
+        vy += ((vy < -terminalVelocity.getY() && gravity.getY() < 0) ||
+                (vy > terminalVelocity.getY() && gravity.getY() > 0)) ? 0 : gravity.getY();
+        vz += ((vz < -terminalVelocity.getZ() && gravity.getZ() < 0) ||
+                (vz > terminalVelocity.getZ() && gravity.getZ() > 0)) ? 0 : gravity.getZ();
+        //apply gravity if not exceeding terminal velocity
+        
         double fx = 0;
         double fy = 0;
         double fz = 0;
@@ -217,16 +219,11 @@ public abstract class AABBPhysics {
         
         if (vx < 0) vx = collidesOn(Side.LEFT) ? 0 : Math.min(vx + drag.getX() + fx, 0);
         if (vx > 0) vx = collidesOn(Side.RIGHT) ? 0 : Math.max(vx - drag.getX() - fx, 0);
-        if (vy < 0) {
-            if (vy < -terminalVelocity)
-                vy = collidesOn(Side.BOTTOM) ? 0 : Math.min(vy + drag.getY() + fy, -terminalVelocity);
-            else
-                vy = collidesOn(Side.BOTTOM) ? 0 : vy + fy;
-        }
+        if (vy < 0) vy = collidesOn(Side.BOTTOM) ? 0 : Math.min(vy + drag.getY() + fy, 0);
         if (vy > 0) vy = collidesOn(Side.TOP) ? 0 : Math.max(vy - drag.getY() - fy, 0);
         if (vz < 0) vz = collidesOn(Side.BACK) ? 0 : Math.min(vz + drag.getZ() + fz, 0);
         if (vz > 0) vz = collidesOn(Side.FRONT) ? 0 : Math.max(vz - drag.getZ() - fz, 0);
-        //modify velocity based on friction, drag, terminal velocity, and collision status
+        //modify velocity based on friction, drag, and collision status
         
         velocity = new Vector(vx, vy, vz);
         //set new velocity
@@ -472,11 +469,11 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * set terminal velocity for this object
+     * get terminal velocity for this object
      *
      * @return terminal velocity
      */
-    public double getTerminalVelocity() {
+    public Vector getTerminalVelocity() {
         return terminalVelocity;
     }
     
@@ -485,8 +482,8 @@ public abstract class AABBPhysics {
      *
      * @param terminalVelocity terminal velocity
      */
-    public void setTerminalVelocity(double terminalVelocity) {
-        this.terminalVelocity = Math.abs(terminalVelocity);
+    public void setTerminalVelocity(Vector terminalVelocity) {
+        this.terminalVelocity = terminalVelocity;
     }
     
     /**
@@ -646,8 +643,7 @@ public abstract class AABBPhysics {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AABBPhysics that = (AABBPhysics) o;
-        return Double.compare(that.terminalVelocity, terminalVelocity) == 0 &&
-                collidable == that.collidable &&
+        return collidable == that.collidable &&
                 colliding == that.colliding &&
                 overlapping == that.overlapping &&
                 Objects.equals(gravity, that.gravity) &&
@@ -659,6 +655,7 @@ public abstract class AABBPhysics {
                 Objects.equals(friction, that.friction) &&
                 Objects.equals(scene, that.scene) &&
                 Objects.equals(collidingObjects, that.collidingObjects) &&
-                Objects.equals(box, that.box);
+                Objects.equals(box, that.box) &&
+                Objects.equals(terminalVelocity, that.terminalVelocity);
     }
 }
