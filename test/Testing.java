@@ -32,6 +32,7 @@ public class Testing {
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getHeight(null));
         physicsObject.getBoundingBox().setDepth(physicsObject.getSprite().getWidth(null));
         physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0, -physicsObject.getBoundingBox().getWidth()));
+        physicsObject.setTerminalVelocity(new Vector(1, 1 ,1));
         scene.addObject(physicsObject);
         
         for (int j = 1; j < 22; j++) {
@@ -66,6 +67,9 @@ public class Testing {
         
         Game.getLoop().inject(() -> {
             if (Game.getLoop().getActiveScene().equals(scene)) {
+                
+                System.out.println(physicsObject.getVelocity());
+                
                 if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
                     physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
@@ -100,7 +104,7 @@ public class Testing {
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
-                    physicsObject.setVelocity(physicsObject.getVelocity().setY(-1));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setY(-2));
                 }
 
                 if (Keyboard.isPressed(KeyEvent.VK_SPACE) && Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
