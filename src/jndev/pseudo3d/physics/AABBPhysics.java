@@ -16,9 +16,9 @@ import java.util.*;
 public abstract class AABBPhysics {
     
     /**
-     * gravity constant used for physics simulation. (pixels / tick ^ 2))
+     * gravity applied to the object (pixels / tick ^ 2))
      */
-    private final double GRAVITY = 0.0981;
+    private Vector gravity;
     
     /**
      * position of object (pixels)
@@ -52,15 +52,10 @@ public abstract class AABBPhysics {
     private Vector drag;
     
     /**
-     * friction applied to colliding objects. for simplicity, this is a negative acceleration vector (pixels / tick
-     * ^ 2)
+     * friction applied to colliding objects. for simplicity, this is a negative acceleration vector (pixels / tick ^
+     * 2)
      */
     private Vector friction;
-    
-    /**
-     * value used to scale gravity constant
-     */
-    private double gravityScale;
     
     /**
      * scene the object is colliding in
@@ -96,6 +91,7 @@ public abstract class AABBPhysics {
      * create a new aabb object with default values
      */
     public AABBPhysics() {
+        gravity = new Vector(0, -0.1, 0);
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
@@ -103,7 +99,6 @@ public abstract class AABBPhysics {
         terminalVelocity = 10;
         drag = new Vector(0.005, 0.005, 0.005);
         friction = new Vector(0.05, 0.05, 0.05);
-        gravityScale = 1.0;
         scene = null;
         collidable = true;
         colliding = false;
@@ -119,6 +114,7 @@ public abstract class AABBPhysics {
      * @param aabbPhysics aabb object to copy
      */
     public AABBPhysics(AABBPhysics aabbPhysics) {
+        gravity = aabbPhysics.gravity;
         position = aabbPhysics.position;
         velocity = aabbPhysics.velocity;
         terminalVelocity = aabbPhysics.terminalVelocity;
@@ -126,7 +122,6 @@ public abstract class AABBPhysics {
         jerk = aabbPhysics.jerk;
         drag = aabbPhysics.drag;
         friction = aabbPhysics.friction;
-        gravityScale = aabbPhysics.gravityScale;
         scene = aabbPhysics.scene;
         collidable = aabbPhysics.collidable;
         colliding = aabbPhysics.colliding;
@@ -154,16 +149,21 @@ public abstract class AABBPhysics {
         //update acceleration based on jerk
         
         double vx = velocity.getX() + acceleration.getX();
-        double vy = velocity.getY() + acceleration.getY() - (GRAVITY * gravityScale - drag.getY());
+        double vy = velocity.getY() + acceleration.getY() - (-gravity.getY() - drag.getY());
         double vz = velocity.getZ() + acceleration.getZ();
-        //update velocity based on acceleration and gravity
+        //update velocity based on acceleration
         
+        if(Double.compare(0, gravity.getX()) != 0) vx = vx + gravity.getX() + (gravity.getX() < 0 ? drag.getX() : -drag.getX());
+        if(Double.compare(0, gravity.getY()) != 0) vy = vy + gravity.getY() + (gravity.getY() < 0 ? drag.getY() : -drag.getY());
+        if(Double.compare(0, gravity.getZ()) != 0) vz = vz + gravity.getZ() + (gravity.getZ() < 0 ? drag.getZ() : -drag.getZ());
+        //update velocity based on gravity modified by drag
+    
         double fx = 0;
         double fy = 0;
         double fz = 0;
         
-        //get friction to apply
-        if((collidesOn(Side.LEFT) && vx < 0) || (collidesOn(Side.RIGHT) && vx > 0)) {
+        //get highest friction value from colliding objects
+        if ((collidesOn(Side.LEFT) && vx < 0) || (collidesOn(Side.RIGHT) && vx > 0)) {
             //check if colliding and moving towards side
             
             collidingObjects.get(Side.LEFT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
@@ -177,39 +177,39 @@ public abstract class AABBPhysics {
             
             collidingObjects.get(Side.LEFT).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
             collidingObjects.get(Side.RIGHT).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
-    
+            
             double fzl = !collidingObjects.get(Side.LEFT).isEmpty() ? collidingObjects.get(Side.LEFT).get(0).getFriction().getZ() : 0;
             double fzr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ() : 0;
             fz = Math.max(fz, Math.max(fzl, fzr));
         }
-    
-        if((collidesOn(Side.BOTTOM) && vy < 0) || (collidesOn(Side.TOP) && vy > 0)) {
+        
+        if ((collidesOn(Side.BOTTOM) && vy < 0) || (collidesOn(Side.TOP) && vy > 0)) {
             collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
             collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
-    
+            
             double fxb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX() : 0;
             double fxt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getX() : 0;
             fx = Math.max(fx, Math.max(fxb, fxt));
-        
+            
             collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
             collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
-    
+            
             double fzb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ() : 0;
             double fzt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getZ() : 0;
             fz = Math.max(fz, Math.max(fzb, fzt));
         }
-    
-        if((collidesOn(Side.BACK) && vz < 0) || (collidesOn(Side.FRONT) && vz > 0)) {
+        
+        if ((collidesOn(Side.BACK) && vz < 0) || (collidesOn(Side.FRONT) && vz > 0)) {
             collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
             collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
-        
+            
             double fxb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getX() : 0;
             double fxf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getX() : 0;
             fx = Math.max(fx, Math.max(fxb, fxf));
-        
+            
             collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
             collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
-        
+            
             double fyb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getY() : 0;
             double fyf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getY() : 0;
             fy = Math.max(fy, Math.max(fyb, fyf));
@@ -423,7 +423,7 @@ public abstract class AABBPhysics {
      * @return acceleration vector of an object
      */
     public Vector getAcceleration() {
-        return acceleration.setY(acceleration.getY() - (GRAVITY * gravityScale));
+        return acceleration;
     }
     
     /**
@@ -454,21 +454,21 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * get the scale gravity. default is 1.0
+     * get the gravity applied to the object
      *
-     * @return gravity scale
+     * @return gravity vector
      */
-    public double getGravityScale() {
-        return gravityScale;
+    public Vector getGravity() {
+        return gravity;
     }
     
     /**
-     * set the gravity scale
+     * set the gravity applied to the object
      *
-     * @param scale gravity scale
+     * @param gravity gravity vector
      */
-    public void setGravityScale(double scale) {
-        gravityScale = scale;
+    public void setGravity(Vector gravity) {
+        this.gravity = gravity;
     }
     
     /**
@@ -647,10 +647,10 @@ public abstract class AABBPhysics {
         if (o == null || getClass() != o.getClass()) return false;
         AABBPhysics that = (AABBPhysics) o;
         return Double.compare(that.terminalVelocity, terminalVelocity) == 0 &&
-                Double.compare(that.gravityScale, gravityScale) == 0 &&
                 collidable == that.collidable &&
                 colliding == that.colliding &&
                 overlapping == that.overlapping &&
+                Objects.equals(gravity, that.gravity) &&
                 Objects.equals(position, that.position) &&
                 Objects.equals(velocity, that.velocity) &&
                 Objects.equals(acceleration, that.acceleration) &&
