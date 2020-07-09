@@ -41,7 +41,7 @@ public abstract class AABBPhysics {
     private Vector jerk;
     
     /**
-     * +/- terminal velocity of object (pixels / tick)
+     * +/- terminal velocity of gravity acceleration of object (pixels / tick)
      */
     private Vector terminalVelocity;
     
@@ -152,19 +152,26 @@ public abstract class AABBPhysics {
         double vz = velocity.getZ() + acceleration.getZ();
         //update velocity based on acceleration
         
-        vx += ((vx < -terminalVelocity.getX() && gravity.getX() < 0) ||
-                (vx > terminalVelocity.getX() && gravity.getX() > 0)) ? 0 : gravity.getX();
-        vy += ((vy < -terminalVelocity.getY() && gravity.getY() < 0) ||
-                (vy > terminalVelocity.getY() && gravity.getY() > 0)) ? 0 : gravity.getY();
-        vz += ((vz < -terminalVelocity.getZ() && gravity.getZ() < 0) ||
-                (vz > terminalVelocity.getZ() && gravity.getZ() > 0)) ? 0 : gravity.getZ();
+        if (vx > -terminalVelocity.getX() && gravity.getX() < 0) {
+            vx = Math.max(vx + gravity.getX(), -terminalVelocity.getX());
+        } else if (vx < terminalVelocity.getX() && gravity.getX() > 0) {
+            vx = Math.min(vx + gravity.getX(), terminalVelocity.getX());
+        }
+        if (vy > -terminalVelocity.getY() && gravity.getY() < 0) {
+            vy = Math.max(vy + gravity.getY(), -terminalVelocity.getY());
+        } else if (vy < terminalVelocity.getY() && gravity.getY() > 0) {
+            vy = Math.min(vy + gravity.getY(), terminalVelocity.getY());
+        }
+        if (vz > -terminalVelocity.getZ() && gravity.getZ() < 0) {
+            vz = Math.max(vz + gravity.getZ(), -terminalVelocity.getZ());
+        } else if (vz < terminalVelocity.getZ() && gravity.getZ() > 0) {
+            vz = Math.min(vz + gravity.getZ(), terminalVelocity.getZ());
+        }
         //apply gravity if not exceeding terminal velocity
-        
+    
         double fx = 0;
         double fy = 0;
         double fz = 0;
-        
-        //get highest friction value from colliding objects
         if ((collidesOn(Side.LEFT) && vx < 0) || (collidesOn(Side.RIGHT) && vx > 0)) {
             //check if colliding and moving towards side
             
@@ -184,7 +191,6 @@ public abstract class AABBPhysics {
             double fzr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ() : 0;
             fz = Math.max(fz, Math.max(fzl, fzr));
         }
-        
         if ((collidesOn(Side.BOTTOM) && vy < 0) || (collidesOn(Side.TOP) && vy > 0)) {
             collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
             collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
@@ -200,7 +206,6 @@ public abstract class AABBPhysics {
             double fzt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getZ() : 0;
             fz = Math.max(fz, Math.max(fzb, fzt));
         }
-        
         if ((collidesOn(Side.BACK) && vz < 0) || (collidesOn(Side.FRONT) && vz > 0)) {
             collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
             collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
@@ -216,7 +221,8 @@ public abstract class AABBPhysics {
             double fyf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getY() : 0;
             fy = Math.max(fy, Math.max(fyb, fyf));
         }
-        
+        //get highest friction value from colliding objects
+    
         if (vx < 0) vx = collidesOn(Side.LEFT) ? 0 : Math.min(vx + drag.getX() + fx, 0);
         if (vx > 0) vx = collidesOn(Side.RIGHT) ? 0 : Math.max(vx - drag.getX() - fx, 0);
         if (vy < 0) vy = collidesOn(Side.BOTTOM) ? 0 : Math.min(vy + drag.getY() + fy, 0);
