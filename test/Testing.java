@@ -28,7 +28,6 @@ public class Testing {
         Scene scene = new Scene();
         PhysicsObject physicsObject = new PhysicsObject();
         physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
-        physicsObject.setGravityScale(1);
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getWidth(null));
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getHeight(null));
         physicsObject.getBoundingBox().setDepth(physicsObject.getSprite().getWidth(null));
@@ -43,7 +42,7 @@ public class Testing {
                 copy.getBoundingBox().setHeight(copy.getSprite().getHeight(null));
                 copy.getBoundingBox().setDepth(copy.getSprite().getWidth(null));
                 copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 525, -465, -copy.getBoundingBox().getWidth() * i));
-                copy.setGravityScale(0);
+                copy.setGravity(new Vector());
                 scene.addObject(copy);
             }
         }
