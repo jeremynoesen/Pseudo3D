@@ -5,4 +5,14 @@ Each physicsObject is represented by an image, or sprite. The camera physicsObje
 
 Creating a scene is very simple with this game engine. See the Testing class in test/test/ to see how simple it is to make a controllable physicsObject that renders with the Pseudo3D renderer, as well as have 3D collisions and motion.
 
+The following are screenshots of a couple rendered frames using this game engine:
+
+![Orthograpgic style rendering](https://i.imgur.com/eyxUMyG.png)
+
+This is what an orthographic, or zero degrees field-of-view, render looks like. This is more of a basic, 2D game style.
+
+![Pseudo3D style rendering](https://i.imgur.com/7UZJGv9.png)
+
+This is what the Pseudo3D rendering looks like for the Testing class. Sprites scale based on distance from the camera plane.
+
 This is my first non-minecraft project, so this is mainly me experimenting with Java in ways I have not done so before.
