@@ -1,7 +1,7 @@
 import jndev.pseudo3d.application.Game;
 import jndev.pseudo3d.listener.Keyboard;
-import jndev.pseudo3d.loader.Sprite;
-import jndev.pseudo3d.object.PhysicsObject;
+import jndev.pseudo3d.sprite.SpriteLoader;
+import jndev.pseudo3d.object.RigidBodyObject;
 import jndev.pseudo3d.object.SpriteObject;
 import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
@@ -24,10 +24,10 @@ public class Testing {
      * @param args program arguments
      */
     public static void main(String[] args) {
-        Sprite.load(new File("res/sprites/"));
+        SpriteLoader.load(new File("res/sprites/"));
         Scene scene = new Scene();
-        PhysicsObject physicsObject = new PhysicsObject();
-        physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
+        RigidBodyObject physicsObject = new RigidBodyObject();
+        physicsObject.setSprite(SpriteLoader.get("res/sprites/player/front.png"));
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getWidth(null));
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getHeight(null));
         physicsObject.getBoundingBox().setDepth(physicsObject.getSprite().getWidth(null));
@@ -37,8 +37,8 @@ public class Testing {
         
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
-                PhysicsObject copy = new PhysicsObject(physicsObject);
-                copy.setSprite(Sprite.get("res/sprites/floor.png"));
+                RigidBodyObject copy = new RigidBodyObject(physicsObject);
+                copy.setSprite(SpriteLoader.get("res/sprites/floor.png"));
                 copy.getBoundingBox().setWidth(copy.getSprite().getWidth(null));
                 copy.getBoundingBox().setHeight(copy.getSprite().getHeight(null));
                 copy.getBoundingBox().setDepth(copy.getSprite().getWidth(null));
@@ -49,7 +49,7 @@ public class Testing {
         }
         
         SpriteObject spriteObject = new SpriteObject();
-        spriteObject.setSprite(Sprite.get("res/sprites/background.png"));
+        spriteObject.setSprite(SpriteLoader.get("res/sprites/background.png"));
         spriteObject.setPosition(new Vector(0, 0, -325));
         scene.addObject(spriteObject);
         
@@ -72,12 +72,12 @@ public class Testing {
                 
                 if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
-                    physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
+                    physicsObject.setSprite(SpriteLoader.get("res/sprites/player/front.png"));
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
-                    physicsObject.setSprite(Sprite.get("res/sprites/player/front.png"));
+                    physicsObject.setSprite(SpriteLoader.get("res/sprites/player/front.png"));
                 }
 
                 if ((Keyboard.isPressed(KeyEvent.VK_W) && Keyboard.isPressed(KeyEvent.VK_S)) ||
@@ -87,12 +87,12 @@ public class Testing {
                 
                 if (Keyboard.isPressed(KeyEvent.VK_A)) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
-                    physicsObject.setSprite(Sprite.get("res/sprites/player/left.png"));
+                    physicsObject.setSprite(SpriteLoader.get("res/sprites/player/left.png"));
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_D)) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
-                    physicsObject.setSprite(Sprite.get("res/sprites/player/right.png"));
+                    physicsObject.setSprite(SpriteLoader.get("res/sprites/player/right.png"));
                 }
 
                 if (Keyboard.isPressed(KeyEvent.VK_A) && Keyboard.isPressed(KeyEvent.VK_D)) {
