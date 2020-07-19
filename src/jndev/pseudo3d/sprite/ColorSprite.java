@@ -5,6 +5,8 @@ import java.awt.image.BufferedImage;
 
 /**
  * sprite consisting of a single color
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class ColorSprite implements Sprite {
     
