@@ -62,7 +62,7 @@ public class Renderer {
             else if (Double.compare(scale, 0) < 0) break;
             //stop render if objects have negative scale (too far in front of camera)
             
-            Image image = object.getSprite();
+            Image image = object.getSprite().getImage();
             int widthScaled = (int) Math.ceil(image.getWidth(null) * scale);
             int heightScaled = (int) Math.ceil(image.getHeight(null) * scale);
             double x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
