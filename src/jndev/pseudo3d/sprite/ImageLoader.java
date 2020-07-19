@@ -1,4 +1,4 @@
-package jndev.pseudo3d.loader;
+package jndev.pseudo3d.sprite;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author JNDev (Jeremaster101)
  */
-public class Sprite {
+public class ImageLoader {
     private static final HashMap<String, Image> sprites = new HashMap<>();
     
     /**

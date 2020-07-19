@@ -3,9 +3,9 @@ package jndev.pseudo3d.object;
 import jndev.pseudo3d.physics.AABBRigidBody;
 import jndev.pseudo3d.scene.Renderable;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Box;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -19,7 +19,7 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
     /**
      * image that represents the object when rendered
      */
-    private Image sprite;
+    private Sprite sprite;
     
     /**
      * constructs a game object
@@ -68,7 +68,7 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
      * @return image sprite of this object
      */
     @Override
-    public Image getSprite() {
+    public Sprite getSprite() {
         return sprite;
     }
     
@@ -77,7 +77,7 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
      *
      * @param sprite new image to set as the sprite
      */
-    public void setSprite(Image sprite) {
+    public void setSprite(Sprite sprite) {
         this.sprite = sprite;
     }
     

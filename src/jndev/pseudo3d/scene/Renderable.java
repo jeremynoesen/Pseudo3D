@@ -1,8 +1,7 @@
 package jndev.pseudo3d.scene;
 
+import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Vector;
-
-import java.awt.*;
 
 /**
  * interface used to make an object renderable in a scene
@@ -16,7 +15,7 @@ public interface Renderable {
      *
      * @return image object sprite
      */
-    Image getSprite();
+    Sprite getSprite();
     
     /**
      * get the object's position
