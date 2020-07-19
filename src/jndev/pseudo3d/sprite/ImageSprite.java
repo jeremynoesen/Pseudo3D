@@ -4,6 +4,8 @@ import java.awt.*;
 
 /**
  * sprite made up of a single image
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class ImageSprite implements Sprite {
     
