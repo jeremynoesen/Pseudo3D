@@ -21,14 +21,14 @@ public class Loop extends JPanel {
     private Scene activeScene;
     
     /**
-     * rate at which the graphics updates
+     * rate at which the graphics render
      */
-    private int graphicsFrequency;
+    private int renderFrequency;
     
     /**
-     * rate at which the physics updates
+     * rate at which physics and other things tick
      */
-    private int physicsFrequency;
+    private int tickFrequency;
     
     /**
      * whether the game is paused or not, default true
@@ -50,8 +50,8 @@ public class Loop extends JPanel {
      */
     Loop() {
         activeScene = null;
-        graphicsFrequency = 60;
-        physicsFrequency = 120;
+        renderFrequency = 60;
+        tickFrequency = 120;
         paused = true;
         stopped = false;
         runnables = new HashSet<>();
@@ -70,20 +70,22 @@ public class Loop extends JPanel {
             while (!stopped) {
                 if (!paused) {
                     long time = System.currentTimeMillis() - startTime;
-                    long graphicsDelta = 1000 / graphicsFrequency;
-                    long physicsDelta = 1000 / physicsFrequency;
+                    long graphicsDelta = 1000 / renderFrequency;
+                    long physicsDelta = 1000 / tickFrequency;
                     //get time intervals
                     if (time > prev) {
                         //only run when time changes
                         if (time % physicsDelta == 0) {
                             runnables.forEach(Runnable::run);
                             //run all runnables
-                            updatePhysics();
-                            //update scene physics
+                            activeScene.tick();
+                            //tick scene objects
                         }
-                        if (time % graphicsDelta == 0)
-                            updateGraphics();
-                        //update scene graphics
+                        if (time % graphicsDelta == 0) {
+                            repaint();
+                            Toolkit.getDefaultToolkit().sync();
+                            //update scene graphics
+                        }
                     }
                     prev = time;
                 }
@@ -123,32 +125,17 @@ public class Loop extends JPanel {
      *
      * @param frequency renders per second (Hertz)
      */
-    public void setGraphicsFrequency(int frequency) {
-        graphicsFrequency = Math.min(frequency, physicsFrequency);
+    public void setRenderFrequency(int frequency) {
+        renderFrequency = frequency;
     }
     
     /**
-     * set the frequency for physics calculations
+     * set the frequency for scene ticking
      *
-     * @param frequency calculations per second (Hertz)
+     * @param frequency ticks per second (Hertz)
      */
-    public void setPhysicsFrequency(int frequency) {
-        physicsFrequency = Math.max(frequency, graphicsFrequency);
-    }
-    
-    /**
-     * tick physics once
-     */
-    private void updatePhysics() {
-        activeScene.tick();
-    }
-    
-    /**
-     * cause a single frame to render
-     */
-    private void updateGraphics() {
-        repaint();
-        Toolkit.getDefaultToolkit().sync();
+    public void setTickFrequency(int frequency) {
+        tickFrequency = frequency;
     }
     
     /**
