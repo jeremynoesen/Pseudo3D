@@ -12,7 +12,7 @@ public class ImageSprite implements Sprite {
     /**
      * image to represent sprite
      */
-    private Image image;
+    private final Image image;
     
     /**
      * create new image sprite

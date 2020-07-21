@@ -13,7 +13,7 @@ public class ColorSprite implements Sprite {
     /**
      * image to represent sprite
      */
-    private Image image;
+    private final Image image;
     
     /**
      * create a new color sprite with specified dimensions and color
