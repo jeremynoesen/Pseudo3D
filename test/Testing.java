@@ -5,6 +5,7 @@ import jndev.pseudo3d.object.RigidBodyObject;
 import jndev.pseudo3d.object.SpriteObject;
 import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.ColorSprite;
 import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
@@ -37,6 +38,7 @@ public class Testing {
         physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0, -physicsObject.getBoundingBox().getWidth()));
         physicsObject.setTerminalVelocity(new Vector(1, 1 ,1));
         scene.addObject(physicsObject);
+        physicsObject.setGravity(new Vector());
         
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
@@ -50,16 +52,17 @@ public class Testing {
                 scene.addObject(copy);
             }
         }
-        
-        SpriteObject spriteObject = new SpriteObject();
-        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-        spriteObject.setPosition(new Vector(0, 0, -325));
-        scene.addObject(spriteObject);
-        
+    
         Camera camera = new Camera();
         camera.setFieldOfView(72);
         camera.setScenePosition(new Vector(0, 0, -100));
         camera.setSensorSize(1000);
+        
+        SpriteObject spriteObject = new SpriteObject();
+//        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
+        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 1000));
+        spriteObject.setPosition(new Vector(0, 0, -325));
+        scene.addObject(spriteObject);
         
         scene.setCamera(camera);
         scene.setBackground(Color.WHITE);
@@ -70,9 +73,6 @@ public class Testing {
         
         Game.getLoop().inject(() -> {
             if (Game.getLoop().getActiveScene().equals(scene)) {
-                
-                System.out.println(physicsObject.getVelocity());
-                
                 if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
                     physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/front.png")));
@@ -107,7 +107,7 @@ public class Testing {
                 }
                 
                 if (Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
-                    physicsObject.setVelocity(physicsObject.getVelocity().setY(-2));
+                    physicsObject.setVelocity(physicsObject.getVelocity().setY(-1));
                 }
 
                 if (Keyboard.isPressed(KeyEvent.VK_SPACE) && Keyboard.isPressed(KeyEvent.VK_SHIFT)) {

@@ -16,13 +16,13 @@ public class Renderer {
     /**
      * render a scene frame to graphics
      *
-     * @param scene    scene to render
-     * @param camera   camera to render with
-     * @param graphics graphics to render to
+     * @param scene      scene to render
+     * @param camera     camera to render with
+     * @param graphics   graphics to render to
      */
     public static void render(Scene scene, Camera camera, Graphics graphics) {
-        if (scene == null) return;
-        //don't attempt rendering a null scene
+        if (scene == null || camera == null || graphics == null) return;
+        //don't attempt rendering if one of the parameters is null
         
         graphics.setColor(scene.getBackground());
         //draw scene background color
@@ -51,7 +51,7 @@ public class Renderer {
             //object data
             
             if (object.getSprite() == null || camPos.getZ() - objPos.getZ() >= camera.getViewDistance()) continue;
-            //don't render objects with no sprite or further than view distance
+            //don't render objects without a sprite, with a camera sprite, or further than view distance
             
             double scale = Math.abs(zoom) * (sensorSize / (sensorSize + (2.0 *
                     (camPos.getZ() - objPos.getZ()) * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)))));
