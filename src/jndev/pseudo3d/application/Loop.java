@@ -2,6 +2,7 @@ package jndev.pseudo3d.application;
 
 import jndev.pseudo3d.scene.Renderer;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sprite.CameraSprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,6 +83,12 @@ public class Loop extends JPanel {
                             //tick scene objects
                         }
                         if (time % graphicsDelta == 0) {
+                            for (int i = 0; i < activeScene.getObjects().size(); i++) {
+                                if(activeScene.getObjects().get(i).getSprite() != null &&
+                                        activeScene.getObjects().get(i).getSprite() instanceof CameraSprite)
+                                    ((CameraSprite) activeScene.getObjects().get(i).getSprite()).tick();
+                            }
+                            //update camera sprites
                             repaint();
                             Toolkit.getDefaultToolkit().sync();
                             //update scene graphics
