@@ -18,9 +18,9 @@ public class ColorSprite implements Sprite {
     /**
      * create a new color sprite with specified dimensions and color
      *
-     * @param width sprite width
+     * @param width  sprite width
      * @param height sprite height
-     * @param color sprite color
+     * @param color  sprite color
      */
     public ColorSprite(int width, int height, Color color) {
         BufferedImage i = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);

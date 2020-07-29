@@ -5,6 +5,7 @@ import jndev.pseudo3d.object.RigidBodyObject;
 import jndev.pseudo3d.object.SpriteObject;
 import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sprite.ColorSprite;
 import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
 
@@ -29,7 +30,7 @@ public class Testing {
         Scene scene = new Scene();
         RigidBodyObject physicsObject = new RigidBodyObject();
         physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/front.png")));
-//        physicsObject.setSprite(new ColorSprite(50, 50, Color.CYAN));
+//        physicsObject.setSprite(new ColorSprite(50, 50, new Color(255, 0, 0, 50)));
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getImage().getWidth(null));
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getImage().getHeight(null));
         physicsObject.getBoundingBox().setDepth(physicsObject.getSprite().getImage().getWidth(null));

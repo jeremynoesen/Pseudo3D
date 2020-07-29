@@ -17,9 +17,10 @@ public class Renderer {
      * render a scene frame to graphics
      *
      * @param scene    scene to render
+     * @param camera   camera to render with
      * @param graphics graphics to render to
      */
-    public static void render(Scene scene, Graphics graphics) {
+    public static void render(Scene scene, Camera camera, Graphics graphics) {
         if (scene == null) return;
         //don't attempt rendering a null scene
         
@@ -36,7 +37,6 @@ public class Renderer {
         scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
         //sort objects by z position so objects can be drawn in front of others
         
-        Camera camera = scene.getCamera();
         Vector camPos = camera.getScenePosition();
         Vector windowPos = camera.getWindowPosition() != null ?
                 camera.getWindowPosition() : new Vector(gWidth / 2.0, gHeight / 2.0);
