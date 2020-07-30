@@ -57,11 +57,12 @@ public class CameraSprite implements Sprite {
      * render the next frame of the sprite
      */
     public void tick() {
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics graphics = image.createGraphics();
         graphics.setClip(0, 0, width, height);
         Renderer.render(scene, camera, graphics);
         Toolkit.getDefaultToolkit().sync();
+        this.image = image;
     }
     
     /**

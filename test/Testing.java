@@ -60,8 +60,8 @@ public class Testing {
         
         SpriteObject spriteObject = new SpriteObject();
 //        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 1000));
-        spriteObject.setPosition(new Vector(0, 0, -325));
+        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
+        spriteObject.setPosition(new Vector(0, 0, -500));
         scene.addObject(spriteObject);
         
         scene.setCamera(camera);
