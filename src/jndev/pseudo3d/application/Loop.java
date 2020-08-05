@@ -95,11 +95,11 @@ public class Loop extends JPanel {
                                     Sprite sprite = activeScene.getObjects().get(i).getSprite();
                                     
                                     if(sprite instanceof AnimatedSprite) {
-                                        ((AnimatedSprite) sprite).tick();
+                                        ((AnimatedSprite) sprite).update();
                                         //update animated sprites
                                         
                                     } else if (sprite instanceof CameraSprite) {
-                                        ((CameraSprite) sprite).tick();
+                                        ((CameraSprite) sprite).update();
                                         //update camera sprites
                                     }
                                 }

@@ -36,9 +36,9 @@ public class AnimatedSprite implements Sprite {
     }
     
     /**
-     * set the current frame to the next available frame
+     * set the current frame to the next available frame based on elapsed time
      */
-    public void tick() {
+    public void update() {
         currentFrame = (currentFrame < images.size()) ? currentFrame + 1 : 0;
     }
     

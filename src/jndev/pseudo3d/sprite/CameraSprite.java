@@ -50,13 +50,13 @@ public class CameraSprite implements Sprite {
         this.camera = camera;
         this.width = width;
         this.height = height;
-        tick();
+        update();
     }
     
     /**
      * render the next frame of the sprite
      */
-    public void tick() {
+    public void update() {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics graphics = image.createGraphics();
         graphics.setClip(0, 0, width, height);
