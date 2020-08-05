@@ -3,6 +3,8 @@ package jndev.pseudo3d.object;
 import jndev.pseudo3d.physics.AABBRigidBody;
 import jndev.pseudo3d.scene.Renderable;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sprite.AnimatedSprite;
+import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Box;
 
@@ -78,7 +80,13 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
      * @param sprite new image to set as the sprite
      */
     public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
+        if (sprite instanceof AnimatedSprite) {
+            this.sprite = new AnimatedSprite((AnimatedSprite) sprite);
+        } else if (sprite instanceof CameraSprite) {
+            this.sprite = new CameraSprite((CameraSprite) sprite);
+        } else {
+            this.sprite = sprite;
+        }
     }
     
     /**

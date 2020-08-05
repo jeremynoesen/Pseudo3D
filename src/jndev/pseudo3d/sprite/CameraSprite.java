@@ -40,9 +40,9 @@ public class CameraSprite implements Sprite {
     /**
      * create a new camera sprite for a specific scene with set dimensions
      *
-     * @param scene scene to render from
+     * @param scene  scene to render from
      * @param camera camera to render with
-     * @param width width of image
+     * @param width  width of image
      * @param height height of image
      */
     public CameraSprite(Scene scene, Camera camera, int width, int height) {
@@ -50,6 +50,19 @@ public class CameraSprite implements Sprite {
         this.camera = camera;
         this.width = width;
         this.height = height;
+        update();
+    }
+    
+    /**
+     * copy constructor for camera sprites
+     *
+     * @param cameraSprite camera sprite to copy
+     */
+    public CameraSprite(CameraSprite cameraSprite) {
+        scene = cameraSprite.scene;
+        camera = cameraSprite.camera;
+        width = cameraSprite.width;
+        height = cameraSprite.height;
         update();
     }
     
