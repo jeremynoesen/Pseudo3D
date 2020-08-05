@@ -5,6 +5,7 @@ import jndev.pseudo3d.object.RigidBodyObject;
 import jndev.pseudo3d.object.SpriteObject;
 import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sprite.AnimatedSprite;
 import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
@@ -12,6 +13,7 @@ import jndev.pseudo3d.util.Vector;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * testing class for testing various bits of this project
@@ -58,10 +60,19 @@ public class Testing {
         camera.setFieldOfView(72);
         camera.setScenePosition(new Vector(0, 0, -100));
         camera.setSensorSize(1000);
+    
+        ArrayList<Image> images = new ArrayList<>();
+        images.add(ImageLoader.get("res/sprites/player/front.png"));
+        images.add(ImageLoader.get("res/sprites/player/left.png"));
+        images.add(ImageLoader.get("res/sprites/player/right.png"));
+        AnimatedSprite as = new AnimatedSprite(images, 1);
+        
+        physicsObject.setSprite(as);
         
         SpriteObject spriteObject = new SpriteObject();
 //        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
+//        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
+        spriteObject.setSprite(as);
         spriteObject.setPosition(new Vector(0, 0, -200));
         scene.addObject(spriteObject);
         
