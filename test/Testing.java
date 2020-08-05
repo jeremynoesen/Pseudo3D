@@ -6,7 +6,6 @@ import jndev.pseudo3d.object.SpriteObject;
 import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.sprite.CameraSprite;
-import jndev.pseudo3d.sprite.ColorSprite;
 import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
 
@@ -35,7 +34,8 @@ public class Testing {
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getImage().getWidth(null));
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getImage().getHeight(null));
         physicsObject.getBoundingBox().setDepth(physicsObject.getSprite().getImage().getWidth(null));
-        physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0, -physicsObject.getBoundingBox().getWidth()));
+        physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0,
+                -physicsObject.getBoundingBox().getWidth()));
         physicsObject.setTerminalVelocity(new Vector(1, 1 ,1));
         scene.addObject(physicsObject);
         physicsObject.setGravity(new Vector());
@@ -47,7 +47,8 @@ public class Testing {
                 copy.getBoundingBox().setWidth(copy.getSprite().getImage().getWidth(null));
                 copy.getBoundingBox().setHeight(copy.getSprite().getImage().getHeight(null));
                 copy.getBoundingBox().setDepth(copy.getSprite().getImage().getWidth(null));
-                copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 525, -465, -copy.getBoundingBox().getWidth() * i));
+                copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 525, -465,
+                        -copy.getBoundingBox().getWidth() * i));
                 copy.setGravity(new Vector());
                 scene.addObject(copy);
             }
@@ -61,7 +62,7 @@ public class Testing {
         SpriteObject spriteObject = new SpriteObject();
 //        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
         spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
-        spriteObject.setPosition(new Vector(0, 0, -500));
+        spriteObject.setPosition(new Vector(0, 0, -200));
         scene.addObject(spriteObject);
         
         scene.setCamera(camera);

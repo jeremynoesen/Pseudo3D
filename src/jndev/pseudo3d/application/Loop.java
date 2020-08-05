@@ -2,7 +2,9 @@ package jndev.pseudo3d.application;
 
 import jndev.pseudo3d.scene.Renderer;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sprite.AnimatedSprite;
 import jndev.pseudo3d.sprite.CameraSprite;
+import jndev.pseudo3d.sprite.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,21 +76,35 @@ public class Loop extends JPanel {
                     long graphicsDelta = 1000 / renderFrequency;
                     long physicsDelta = 1000 / tickFrequency;
                     //get time intervals
+                    
                     if (time > prev) {
                         //only run when time changes
+                        
                         if (time % physicsDelta == 0) {
                             runnables.forEach(Runnable::run);
                             //run all runnables
+                            
                             activeScene.tick();
                             //tick scene objects
                         }
+                        
                         if (time % graphicsDelta == 0) {
+                            
                             for (int i = 0; i < activeScene.getObjects().size(); i++) {
-                                if(activeScene.getObjects().get(i).getSprite() != null &&
-                                        activeScene.getObjects().get(i).getSprite() instanceof CameraSprite)
-                                    ((CameraSprite) activeScene.getObjects().get(i).getSprite()).tick();
+                                if (activeScene.getObjects().get(i).getSprite() != null) {
+                                    Sprite sprite = activeScene.getObjects().get(i).getSprite();
+                                    
+                                    if(sprite instanceof AnimatedSprite) {
+                                        ((AnimatedSprite) sprite).tick();
+                                        //update animated sprites
+                                        
+                                    } else if (sprite instanceof CameraSprite) {
+                                        ((CameraSprite) sprite).tick();
+                                        //update camera sprites
+                                    }
+                                }
                             }
-                            //update camera sprites
+                            
                             repaint();
                             Toolkit.getDefaultToolkit().sync();
                             //update scene graphics
