@@ -153,12 +153,30 @@ public class Loop extends JPanel {
     }
     
     /**
+     * get the frequency of rendering
+     *
+     * @return renders per second
+     */
+    public int getRenderFrequency() {
+        return renderFrequency;
+    }
+    
+    /**
      * set the frequency for scene ticking
      *
      * @param frequency ticks per second (Hertz)
      */
     public void setTickFrequency(int frequency) {
         tickFrequency = frequency;
+    }
+    
+    /**
+     * get ticking frequency
+     *
+     * @return ticks per second
+     */
+    public int getTickFrequency() {
+        return tickFrequency;
     }
     
     /**
