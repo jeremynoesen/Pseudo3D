@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 /**
  * series of images combined to create a single animated sprite
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class AnimatedSprite implements Sprite {
     

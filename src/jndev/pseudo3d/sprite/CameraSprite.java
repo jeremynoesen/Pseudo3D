@@ -9,6 +9,8 @@ import java.awt.image.BufferedImage;
 
 /**
  * sprite whose image is created from a render of a scene
+ *
+ * @author JNDev (Jeremaster101)
  */
 public class CameraSprite implements Sprite {
     
