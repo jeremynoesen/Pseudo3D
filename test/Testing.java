@@ -6,7 +6,6 @@ import jndev.pseudo3d.object.SpriteObject;
 import jndev.pseudo3d.scene.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.sprite.AnimatedSprite;
-import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
 
@@ -65,7 +64,7 @@ public class Testing {
         images.add(ImageLoader.get("res/sprites/player/front.png"));
         images.add(ImageLoader.get("res/sprites/player/left.png"));
         images.add(ImageLoader.get("res/sprites/player/right.png"));
-        AnimatedSprite as = new AnimatedSprite(images, 1);
+        AnimatedSprite as = new AnimatedSprite(images, 3);
         
         physicsObject.setSprite(as);
         
