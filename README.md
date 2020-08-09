@@ -5,6 +5,8 @@ Each physicsObject is represented by an image, or sprite. The camera physicsObje
 
 Creating a scene is very simple with this game engine. See the Testing class in test/test/ to see how simple it is to make a controllable physicsObject that renders with the Pseudo3D renderer, as well as have 3D collisions and motion.
 
+*(Note: this project's release branch is not complete. A release does not exist.)*
+
 The following are screenshots of a couple rendered frames using this game engine:
 
 ![Orthograpgic style rendering](https://i.imgur.com/eyxUMyG.png)
