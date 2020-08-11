@@ -61,7 +61,7 @@ public class AnimatedSprite implements Sprite {
      * set the current frame to the next available frame based on elapsed time
      */
     public void update() {
-        double renderStep = Game.getLoop().getRenderFrequency() / 1000.0;
+        double renderStep = Game.getInstance().getLoop().getRenderFrequency() / 1000.0;
         currentFrame = currentFrame + (frameStep / renderStep) < images.size() ? currentFrame + (frameStep / renderStep) : 0;
         image = images.get((int) Math.floor(currentFrame));
     }

@@ -28,21 +28,24 @@ public class Game extends JFrame {
     private Game() {}
     
     /**
-     * start the application
+     * start the application if it has not been started yet
      *
-     * @param width window width
-     * @param height window height
+     * @param width     window width
+     * @param height    window height
      * @param resizable whether the window can be resized
      */
     public static void launch(int width, int height, boolean resizable) {
-        EventQueue.invokeLater(() -> initialize(width, height, resizable));
+        EventQueue.invokeLater(() -> {
+            if (!game.isVisible())
+                initialize(width, height, resizable);
+        });
     }
     
     /**
      * initialize the listeners and load all necessary files
      *
-     * @param width window width
-     * @param height window height
+     * @param width     window width
+     * @param height    window height
      * @param resizable whether the window can be resized
      */
     private static void initialize(int width, int height, boolean resizable) {
@@ -56,11 +59,20 @@ public class Game extends JFrame {
     }
     
     /**
-     * get the application's game loop
+     * get the game's game loop
      *
-     * @return game loop
+     * @return game's game loop
      */
-    public static Loop getLoop() {
+    public Loop getLoop() {
         return loop;
+    }
+    
+    /**
+     * get the running instance of the game
+     *
+     * @return instance of the game
+     */
+    public static Game getInstance() {
+        return game;
     }
 }

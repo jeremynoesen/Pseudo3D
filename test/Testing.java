@@ -79,11 +79,11 @@ public class Testing {
         scene.setBackground(Color.WHITE);
         
         Game.launch(1000, 1000, false);
-        Game.getLoop().setActiveScene(scene);
-        Game.getLoop().start();
+        Game.getInstance().getLoop().setActiveScene(scene);
+        Game.getInstance().getLoop().start();
         
-        Game.getLoop().inject(() -> {
-            if (Game.getLoop().getActiveScene().equals(scene)) {
+        Game.getInstance().getLoop().inject(() -> {
+            if (Game.getInstance().getLoop().getActiveScene().equals(scene)) {
                 if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
                     physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/front.png")));
