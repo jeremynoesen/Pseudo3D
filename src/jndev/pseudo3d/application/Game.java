@@ -4,6 +4,7 @@ import jndev.pseudo3d.listener.Keyboard;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.logging.Logger;
 
 /**
  * main application for any project using Pseudo3D
@@ -25,7 +26,8 @@ public class Game extends JFrame {
     /**
      * can't create a new instance outside Application class
      */
-    private Game() {}
+    private Game() {
+    }
     
     /**
      * start the application if it has not been started yet
@@ -33,29 +35,21 @@ public class Game extends JFrame {
      * @param width     window width
      * @param height    window height
      * @param resizable whether the window can be resized
+     * @param title     title of window
      */
-    public static void launch(int width, int height, boolean resizable) {
+    public static void launch(int width, int height, boolean resizable, String title) {
         EventQueue.invokeLater(() -> {
-            if (!game.isVisible())
-                initialize(width, height, resizable);
+            if (!game.isVisible()) {
+                game.addKeyListener(new Keyboard());
+                game.add(loop);
+                game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                game.setSize(new Dimension(width, height));
+                game.setLocationRelativeTo(null);
+                game.setVisible(true);
+                game.setResizable(resizable);
+                game.setTitle(title);
+            }
         });
-    }
-    
-    /**
-     * initialize the listeners and load all necessary files
-     *
-     * @param width     window width
-     * @param height    window height
-     * @param resizable whether the window can be resized
-     */
-    private static void initialize(int width, int height, boolean resizable) {
-        game.addKeyListener(new Keyboard());
-        game.add(loop);
-        game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.setSize(new Dimension(width, height));
-        game.setLocationRelativeTo(null);
-        game.setVisible(true);
-        game.setResizable(resizable);
     }
     
     /**
