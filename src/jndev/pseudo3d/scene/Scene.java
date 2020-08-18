@@ -5,10 +5,12 @@ import jndev.pseudo3d.object.RigidBodyObject;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * scene to place objects on as well as a camera to render them
+ * scene to place objects, a camera, and code injections to modify them
  *
  * @author JNDev (Jeremaster101)
  */
@@ -30,12 +32,18 @@ public class Scene {
     private Color background;
     
     /**
+     * runnables to be inserted into the game loop for the scene
+     */
+    private Set<Runnable> runnables;
+    
+    /**
      * create a new scene
      */
     public Scene() {
         objects = new ArrayList<>();
         camera = new Camera();
         background = Color.WHITE;
+        runnables = new HashSet<>();
     }
     
     /**
@@ -44,11 +52,13 @@ public class Scene {
      * @param objects    objects in scene
      * @param camera     scene camera
      * @param background background color
+     * @param runnables  runnables to be injected into game loop
      */
-    public Scene(ArrayList<Renderable> objects, Camera camera, Color background) {
+    public Scene(ArrayList<Renderable> objects, Camera camera, Color background, Set<Runnable> runnables) {
         this.objects = objects;
         this.camera = camera;
         this.background = background;
+        this.runnables = runnables;
     }
     
     /**
@@ -60,6 +70,7 @@ public class Scene {
         objects = new ArrayList<>(scene.objects);
         camera = scene.camera;
         background = scene.background;
+        runnables = scene.runnables;
     }
     
     /**
@@ -145,6 +156,34 @@ public class Scene {
      */
     public void setBackground(Color background) {
         this.background = background;
+    }
+    
+    /**
+     * add a runnable to the game loop to execute code that is not usually in the game loop. these execute at the same
+     * frequency as physics updates and only when the scene is active
+     *
+     * @param runnable runnable
+     */
+    public void addRunnable(Runnable runnable) {
+        runnables.add(runnable);
+    }
+    
+    /**
+     * remove a runnable from the game loop
+     *
+     * @param runnable runnable
+     */
+    public void removeRunnable(Runnable runnable) {
+        runnables.remove(runnable);
+    }
+    
+    /**
+     * get all runnables for the scene to be injected into the game loop
+     *
+     * @return all runnables for the scene
+     */
+    public Set<Runnable> getRunnables() {
+        return runnables;
     }
     
     /**

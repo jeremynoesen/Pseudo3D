@@ -8,8 +8,6 @@ import jndev.pseudo3d.sprite.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * game loop to update graphics and physics for the active scene
@@ -44,11 +42,6 @@ public class Loop extends JPanel {
     private boolean stopped;
     
     /**
-     * runnables to be inserted into the game loop
-     */
-    private Set<Runnable> runnables;
-    
-    /**
      * create a new game loop with default values
      */
     Loop() {
@@ -57,7 +50,6 @@ public class Loop extends JPanel {
         tickFrequency = 120;
         paused = true;
         stopped = false;
-        runnables = new HashSet<>();
     }
     
     /**
@@ -81,8 +73,8 @@ public class Loop extends JPanel {
                         //only run when time changes
                         
                         if (time % physicsDelta == 0) {
-                            runnables.forEach(Runnable::run);
-                            //run all runnables
+                            activeScene.getRunnables().forEach(Runnable::run);
+                            //run all runnables in scene
                             
                             activeScene.tick();
                             //tick scene objects
@@ -205,24 +197,5 @@ public class Loop extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         Renderer.render(activeScene, activeScene.getCamera(), g);
-    }
-    
-    /**
-     * add a runnable to the game loop to execute code that is not usually in the game loop. these execute at the same
-     * frequency as physics updates
-     *
-     * @param runnable runnable
-     */
-    public void inject(Runnable runnable) {
-        runnables.add(runnable);
-    }
-    
-    /**
-     * remove a runnable from the game loop
-     *
-     * @param runnable runnable
-     */
-    public void remove(Runnable runnable) {
-        runnables.remove(runnable);
     }
 }
