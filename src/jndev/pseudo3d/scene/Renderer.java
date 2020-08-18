@@ -1,7 +1,9 @@
 package jndev.pseudo3d.scene;
 
-import jndev.pseudo3d.util.Box;
-import jndev.pseudo3d.util.Vector;
+import jndev.pseudo3d.objects.Camera;
+import jndev.pseudo3d.objects.Renderable;
+import jndev.pseudo3d.utils.Box;
+import jndev.pseudo3d.utils.Vector;
 
 import java.awt.*;
 
@@ -16,9 +18,9 @@ public class Renderer {
     /**
      * render a scene frame to graphics
      *
-     * @param scene      scene to render
-     * @param camera     camera to render with
-     * @param graphics   graphics to render to
+     * @param scene    scene to render
+     * @param camera   camera to render with
+     * @param graphics graphics to render to
      */
     public static void render(Scene scene, Camera camera, Graphics graphics) {
         if (scene == null || camera == null || graphics == null) return;

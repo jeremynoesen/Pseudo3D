@@ -1,4 +1,4 @@
-package jndev.pseudo3d.util;
+package jndev.pseudo3d.utils;
 
 /**
  * sides of a box, object, canvas, etc.
@@ -6,5 +6,5 @@ package jndev.pseudo3d.util;
  * @author JNDev (Jeremaster101)
  */
 public enum Side {
-    TOP, BOTTOM, LEFT, RIGHT, BACK, FRONT;
+    TOP, BOTTOM, LEFT, RIGHT, BACK, FRONT
 }

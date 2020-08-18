@@ -1,7 +1,7 @@
 package jndev.pseudo3d.application;
 
-import jndev.pseudo3d.listener.Keyboard;
-import jndev.pseudo3d.listener.Mouse;
+import jndev.pseudo3d.listeners.Keyboard;
+import jndev.pseudo3d.listeners.Mouse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,17 +16,18 @@ public class Game extends JFrame {
     /**
      * instance of application
      */
-    private static Game game = new Game();
+    private static final Game game = new Game();
     
     /**
      * the main game loop
      */
-    private static Loop loop = new Loop();
+    private static final Loop loop = new Loop();
     
     /**
      * can't create a new instance outside Application class
      */
-    private Game() {}
+    private Game() {
+    }
     
     /**
      * start the application if it has not been started yet
