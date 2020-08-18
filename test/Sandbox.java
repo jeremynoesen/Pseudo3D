@@ -1,13 +1,13 @@
 import jndev.pseudo3d.application.Game;
-import jndev.pseudo3d.listener.Keyboard;
+import jndev.pseudo3d.listeners.Keyboard;
 import jndev.pseudo3d.loader.ImageLoader;
-import jndev.pseudo3d.object.RigidBodyObject;
-import jndev.pseudo3d.object.SpriteObject;
-import jndev.pseudo3d.scene.Camera;
+import jndev.pseudo3d.objects.PhysicsObject;
+import jndev.pseudo3d.objects.SpriteObject;
+import jndev.pseudo3d.objects.Camera;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sprite.AnimatedSprite;
-import jndev.pseudo3d.sprite.ImageSprite;
-import jndev.pseudo3d.util.Vector;
+import jndev.pseudo3d.sprites.AnimatedSprite;
+import jndev.pseudo3d.sprites.ImageSprite;
+import jndev.pseudo3d.utils.Vector;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -15,11 +15,11 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * testing class for testing various bits of this project
+ * sandbox-style testing class for testing various bits of this project
  *
  * @author JNDev (Jeremaster101)
  */
-public class Testing {
+public class Sandbox {
     
     /**
      * run the test scene
@@ -27,10 +27,10 @@ public class Testing {
      * @param args program arguments
      */
     public static void main(String[] args) {
-        ImageLoader.load(new File("res/sprites/"));
+        ImageLoader.load(new File("test/images/"));
         Scene scene = new Scene();
-        RigidBodyObject physicsObject = new RigidBodyObject();
-        physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/front.png")));
+        PhysicsObject physicsObject = new PhysicsObject();
+        physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
 //        physicsObject.setSprite(new ColorSprite(50, 50, new Color(255, 0, 0, 50)));
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getImage().getWidth(null));
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getImage().getHeight(null));
@@ -43,8 +43,8 @@ public class Testing {
         
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
-                RigidBodyObject copy = new RigidBodyObject(physicsObject);
-                copy.setSprite(new ImageSprite(ImageLoader.get("res/sprites/floor.png")));
+                PhysicsObject copy = new PhysicsObject(physicsObject);
+                copy.setSprite(new ImageSprite(ImageLoader.get("test/images/floor.png")));
                 copy.getBoundingBox().setWidth(copy.getSprite().getImage().getWidth(null));
                 copy.getBoundingBox().setHeight(copy.getSprite().getImage().getHeight(null));
                 copy.getBoundingBox().setDepth(copy.getSprite().getImage().getWidth(null));
@@ -61,9 +61,9 @@ public class Testing {
         camera.setSensorSize(1000);
         
         ArrayList<Image> images = new ArrayList<>();
-        images.add(ImageLoader.get("res/sprites/player/front.png"));
-        images.add(ImageLoader.get("res/sprites/player/left.png"));
-        images.add(ImageLoader.get("res/sprites/player/right.png"));
+        images.add(ImageLoader.get("test/images/player/front.png"));
+        images.add(ImageLoader.get("test/images/player/left.png"));
+        images.add(ImageLoader.get("test/images/player/right.png"));
         AnimatedSprite as = new AnimatedSprite(images, 3);
         
         physicsObject.setSprite(as);
@@ -88,12 +88,12 @@ public class Testing {
             
             if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/front.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
             }
             
             if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/front.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
             }
             
             if ((Keyboard.isPressed(KeyEvent.VK_W) && Keyboard.isPressed(KeyEvent.VK_S)) ||
@@ -103,12 +103,12 @@ public class Testing {
             
             if (Keyboard.isPressed(KeyEvent.VK_A)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/left.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/left.png")));
             }
             
             if (Keyboard.isPressed(KeyEvent.VK_D)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/right.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/right.png")));
             }
             
             if (Keyboard.isPressed(KeyEvent.VK_A) && Keyboard.isPressed(KeyEvent.VK_D)) {

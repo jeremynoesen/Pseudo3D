@@ -1,4 +1,4 @@
-package jndev.pseudo3d.util;
+package jndev.pseudo3d.utils;
 
 /**
  * simple 3-dimensional box

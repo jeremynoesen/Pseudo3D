@@ -24,7 +24,7 @@ public class ImageLoader {
      * @param dir directory where images are stored
      */
     public static void load(File dir) {
-        if(dir.isDirectory()) {
+        if (dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 if (file.isFile()) {
                     try {

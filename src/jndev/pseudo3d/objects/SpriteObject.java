@@ -1,8 +1,7 @@
-package jndev.pseudo3d.object;
+package jndev.pseudo3d.objects;
 
-import jndev.pseudo3d.scene.Renderable;
-import jndev.pseudo3d.sprite.Sprite;
-import jndev.pseudo3d.util.Vector;
+import jndev.pseudo3d.sprites.Sprite;
+import jndev.pseudo3d.utils.Vector;
 
 /**
  * sprite placed in 3D space with no physics
@@ -32,7 +31,7 @@ public class SpriteObject implements Renderable {
     /**
      * create as new sprite object with pre-defined sprite, position, and scene
      *
-     * @param sprite sprite image of object
+     * @param sprite   sprite image of object
      * @param position position of object
      */
     public SpriteObject(Sprite sprite, Vector position) {

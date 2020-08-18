@@ -1,12 +1,11 @@
-package jndev.pseudo3d.object;
+package jndev.pseudo3d.objects;
 
-import jndev.pseudo3d.physics.AABBRigidBody;
-import jndev.pseudo3d.scene.Renderable;
+import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sprite.AnimatedSprite;
-import jndev.pseudo3d.sprite.CameraSprite;
-import jndev.pseudo3d.sprite.Sprite;
-import jndev.pseudo3d.util.Box;
+import jndev.pseudo3d.sprites.AnimatedSprite;
+import jndev.pseudo3d.sprites.CameraSprite;
+import jndev.pseudo3d.sprites.Sprite;
+import jndev.pseudo3d.utils.Box;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -16,7 +15,7 @@ import java.util.Objects;
  *
  * @author JNDev (Jeremaster101)
  */
-public class RigidBodyObject extends AABBRigidBody implements Renderable {
+public class PhysicsObject extends AABBPhysics implements Renderable {
     
     /**
      * image that represents the object when rendered
@@ -26,7 +25,7 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
     /**
      * constructs a game object
      */
-    public RigidBodyObject() {
+    public PhysicsObject() {
         super();
         sprite = null;
     }
@@ -36,7 +35,7 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
      *
      * @param physicsObject object to copy
      */
-    public RigidBodyObject(RigidBodyObject physicsObject) {
+    public PhysicsObject(PhysicsObject physicsObject) {
         super(physicsObject);
         sprite = physicsObject.sprite;
     }
@@ -49,13 +48,13 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
      * @param zRadius radius z
      * @return list of objects nearby
      */
-    public ArrayList<RigidBodyObject> getNearbyObjects(double xRadius, double yRadius, double zRadius) {
-        ArrayList<RigidBodyObject> nearby = new ArrayList<>();
+    public ArrayList<PhysicsObject> getNearbyObjects(double xRadius, double yRadius, double zRadius) {
+        ArrayList<PhysicsObject> nearby = new ArrayList<>();
         if (getScene() == null) return nearby;
         for (Renderable object : getScene().getObjects()) {
             if (object == this) continue;
-            if (object instanceof RigidBodyObject) {
-                RigidBodyObject o = (RigidBodyObject) object;
+            if (object instanceof PhysicsObject) {
+                PhysicsObject o = (PhysicsObject) object;
                 Box area = new Box(xRadius * 2, yRadius * 2, zRadius * 2, getPosition());
                 if (o.getBoundingBox().overlaps(area))
                     nearby.add(o);
@@ -111,7 +110,7 @@ public class RigidBodyObject extends AABBRigidBody implements Renderable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        RigidBodyObject physicsObject = (RigidBodyObject) o;
+        PhysicsObject physicsObject = (PhysicsObject) o;
         return Objects.equals(sprite, physicsObject.sprite);
     }
 }

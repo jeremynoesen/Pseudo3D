@@ -1,4 +1,4 @@
-package jndev.pseudo3d.sprite;
+package jndev.pseudo3d.sprites;
 
 import jndev.pseudo3d.application.Game;
 

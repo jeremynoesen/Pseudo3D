@@ -1,7 +1,9 @@
 package jndev.pseudo3d.scene;
 
-import jndev.pseudo3d.physics.AABBRigidBody;
-import jndev.pseudo3d.object.RigidBodyObject;
+import jndev.pseudo3d.objects.Camera;
+import jndev.pseudo3d.objects.PhysicsObject;
+import jndev.pseudo3d.objects.Renderable;
+import jndev.pseudo3d.physics.AABBPhysics;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class Scene {
     /**
      * runnables to be inserted into the game loop for the scene
      */
-    private Set<Runnable> runnables;
+    private final Set<Runnable> runnables;
     
     /**
      * create a new scene
@@ -78,7 +80,7 @@ public class Scene {
      */
     public void tick() {
         for (int i = 0; i < objects.size(); i++) {
-            if (objects.get(i) instanceof AABBRigidBody) ((AABBRigidBody) objects.get(i)).tick();
+            if (objects.get(i) instanceof AABBPhysics) ((AABBPhysics) objects.get(i)).tick();
         }
     }
     
@@ -98,7 +100,7 @@ public class Scene {
      */
     public void addObject(Renderable object) {
         objects.add(object);
-        if (object instanceof RigidBodyObject) ((RigidBodyObject) object).setScene(this);
+        if (object instanceof PhysicsObject) ((PhysicsObject) object).setScene(this);
     }
     
     /**
@@ -109,7 +111,7 @@ public class Scene {
     public void removeObject(Renderable object) {
         if (objects.contains(object)) {
             objects.remove(object);
-            if (object instanceof RigidBodyObject) ((RigidBodyObject) object).setScene(null);
+            if (object instanceof PhysicsObject) ((PhysicsObject) object).setScene(null);
         }
     }
     

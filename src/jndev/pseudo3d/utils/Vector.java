@@ -1,4 +1,4 @@
-package jndev.pseudo3d.util;
+package jndev.pseudo3d.utils;
 
 /**
  * 3D vector and related mathematical operators

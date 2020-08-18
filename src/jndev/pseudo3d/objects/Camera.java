@@ -1,6 +1,6 @@
-package jndev.pseudo3d.scene;
+package jndev.pseudo3d.objects;
 
-import jndev.pseudo3d.util.Vector;
+import jndev.pseudo3d.utils.Vector;
 
 /**
  * camera used to determine where to render a scene. objects in the same z position as the camera will be rendered 1:1
