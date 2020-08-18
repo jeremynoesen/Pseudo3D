@@ -1,6 +1,7 @@
 package jndev.pseudo3d.application;
 
 import jndev.pseudo3d.listener.Keyboard;
+import jndev.pseudo3d.listener.Mouse;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,6 +42,9 @@ public class Game extends JFrame {
         EventQueue.invokeLater(() -> {
             if (!game.isVisible()) {
                 game.addKeyListener(new Keyboard());
+                game.addMouseListener(new Mouse());
+                game.addMouseMotionListener(new Mouse());
+                game.addMouseWheelListener(new Mouse());
                 game.add(loop);
                 game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 game.setSize(new Dimension(width, height));

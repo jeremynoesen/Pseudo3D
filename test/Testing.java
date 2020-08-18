@@ -1,5 +1,6 @@
 import jndev.pseudo3d.application.Game;
 import jndev.pseudo3d.listener.Keyboard;
+import jndev.pseudo3d.listener.Mouse;
 import jndev.pseudo3d.loader.ImageLoader;
 import jndev.pseudo3d.object.RigidBodyObject;
 import jndev.pseudo3d.object.SpriteObject;
@@ -84,6 +85,10 @@ public class Testing {
         
         Game.getInstance().getLoop().inject(() -> {
             if (Game.getInstance().getLoop().getActiveScene().equals(scene)) {
+//                physicsObject.setPosition(Mouse.getPosition().setY(Mouse.getPosition().scale(-1).getY()).subtract(new Vector(1280, -540)));
+//                System.out.println(Mouse.getWheelRotation());
+    
+    
                 if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                     physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
                     physicsObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/player/front.png")));
