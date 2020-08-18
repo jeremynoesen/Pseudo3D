@@ -1,6 +1,5 @@
 import jndev.pseudo3d.application.Game;
 import jndev.pseudo3d.listener.Keyboard;
-import jndev.pseudo3d.listener.Mouse;
 import jndev.pseudo3d.loader.ImageLoader;
 import jndev.pseudo3d.object.RigidBodyObject;
 import jndev.pseudo3d.object.SpriteObject;

@@ -5,7 +5,6 @@ import jndev.pseudo3d.listener.Mouse;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.logging.Logger;
 
 /**
  * main application for any project using Pseudo3D
@@ -27,8 +26,7 @@ public class Game extends JFrame {
     /**
      * can't create a new instance outside Application class
      */
-    private Game() {
-    }
+    private Game() {}
     
     /**
      * start the application if it has not been started yet
