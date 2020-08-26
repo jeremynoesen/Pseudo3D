@@ -28,6 +28,7 @@ public class ColorSprite implements Sprite {
         g2d.setPaint(color);
         g2d.fillRect(0, 0, width, height);
         image = i;
+        g2d.dispose();
     }
     
     /**

@@ -86,5 +86,7 @@ public class Renderer {
                 //draw image to panel
             }
         }
+        graphics.dispose();
+        //free up resources used by graphics processing
     }
 }
