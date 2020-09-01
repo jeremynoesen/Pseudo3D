@@ -154,6 +154,26 @@ public class Vector {
     }
     
     /**
+     * multiply vector components by another vector's components
+     *
+     * @param vector vector to multiply
+     * @return vector from multiplication of two vectors
+     */
+    public Vector multiply(Vector vector) {
+        return new Vector(x * vector.getX(), y * vector.getY(), z * vector.getZ());
+    }
+    
+    /**
+     * scale a vector's magnitude by a scalar, which multiplies each component by the scalar
+     *
+     * @param scale what to scale vector by
+     * @return scaled vector
+     */
+    public Vector multiply(double scale) {
+        return new Vector(x * scale, y * scale, z * scale);
+    }
+    
+    /**
      * calculate the dot product of two vectors
      *
      * @param vector vector to dot product
@@ -177,13 +197,13 @@ public class Vector {
     }
     
     /**
-     * scale a vector by a scalar
+     * divide vector components by another vector's components
      *
-     * @param scalar what to scale vector by
-     * @return scaled vector
+     * @param vector vector to divide
+     * @return vector from division of two vectors
      */
-    public Vector scale(double scalar) {
-        return new Vector(x * scalar, y * scalar, z * scalar);
+    public Vector divide(Vector vector) {
+        return new Vector(x / vector.getX(), y / vector.getY(), z / vector.getZ());
     }
     
     /**
