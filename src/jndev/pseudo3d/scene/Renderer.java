@@ -71,10 +71,8 @@ public class Renderer {
             double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY());
             //scale image dimensions and coordinates
             
-            Box screen = new Box(gWidth, gHeight, 0,
-                    new Vector(gWidth / 2.0, gHeight / 2.0, 0));
-            Box sprite = new Box(widthScaled, heightScaled, 1,
-                    new Vector(x, y, 0));
+            Box screen = new Box(gWidth, gHeight, new Vector(gWidth / 2.0, gHeight / 2.0));
+            Box sprite = new Box(widthScaled, heightScaled, new Vector(x, y));
             //boxes to represent image and panel bounds
             
             if (sprite.overlaps(screen)) {

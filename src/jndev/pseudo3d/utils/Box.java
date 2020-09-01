@@ -50,7 +50,7 @@ public class Box {
     }
     
     /**
-     * create a new box at location with specified width and height
+     * create a new 3D box at location with specified width and height and depth
      *
      * @param width    width of box
      * @param height   height of box
@@ -61,6 +61,22 @@ public class Box {
         this.width = Math.abs(width);
         this.height = Math.abs(height);
         this.depth = Math.abs(depth);
+        this.position = position;
+        min = new Vector(position.getX() - (width / 2.0), position.getY() - (height / 2.0), position.getZ() - (depth / 2.0));
+        max = new Vector(position.getX() + (width / 2.0), position.getY() + (height / 2.0), position.getZ() + (depth / 2.0));
+    }
+    
+    /**
+     * create a new 2D box at location with specified width and height
+     *
+     * @param width    width of box
+     * @param height   height of box
+     * @param position location of the box's center
+     */
+    public Box(double width, double height, Vector position) {
+        this.width = Math.abs(width);
+        this.height = Math.abs(height);
+        this.depth = 0;
         this.position = position;
         min = new Vector(position.getX() - (width / 2.0), position.getY() - (height / 2.0), position.getZ() - (depth / 2.0));
         max = new Vector(position.getX() + (width / 2.0), position.getY() + (height / 2.0), position.getZ() + (depth / 2.0));
