@@ -2,7 +2,7 @@ package jndev.pseudo3d.sprites;
 
 import jndev.pseudo3d.application.Game;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -10,12 +10,7 @@ import java.util.ArrayList;
  *
  * @author JNDev (Jeremaster101)
  */
-public class AnimatedSprite implements Sprite {
-    
-    /**
-     * current image of sprite
-     */
-    private Image image;
+public class AnimatedSprite extends Sprite {
     
     /**
      * current frame number
@@ -25,7 +20,7 @@ public class AnimatedSprite implements Sprite {
     /**
      * all images of the animated sprite
      */
-    private final ArrayList<Image> images;
+    private final ArrayList<BufferedImage> images;
     
     /**
      * time between frames
@@ -38,11 +33,11 @@ public class AnimatedSprite implements Sprite {
      * @param images    all images of the animated sprite
      * @param frameRate frames per second of the sprite
      */
-    public AnimatedSprite(ArrayList<Image> images, double frameRate) {
+    public AnimatedSprite(ArrayList<BufferedImage> images, double frameRate) {
         this.frameStep = frameRate / 1000.0;
         currentFrame = 0;
         this.images = images;
-        image = images.get(0);
+        setImage(images.get(0));
     }
     
     /**
@@ -54,7 +49,7 @@ public class AnimatedSprite implements Sprite {
         frameStep = animatedSprite.frameStep;
         currentFrame = animatedSprite.currentFrame;
         images = animatedSprite.images;
-        image = animatedSprite.image;
+        setImage(animatedSprite.image);
     }
     
     /**
@@ -63,16 +58,6 @@ public class AnimatedSprite implements Sprite {
     public void update() {
         double renderStep = Game.getInstance().getLoop().getRenderFrequency() / 1000.0;
         currentFrame = currentFrame + (frameStep / renderStep) < images.size() ? currentFrame + (frameStep / renderStep) : 0;
-        image = images.get((int) Math.floor(currentFrame));
-    }
-    
-    /**
-     * get the current frame as an image
-     *
-     * @return image of current frame
-     */
-    @Override
-    public Image getImage() {
-        return image;
+        setImage(images.get((int) Math.floor(currentFrame)));
     }
 }

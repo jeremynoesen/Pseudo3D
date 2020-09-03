@@ -65,9 +65,8 @@ public class Renderer {
             else if (Double.compare(scale, 0) < 0) break;
             //stop render if objects have negative scale (too far in front of camera)
             
-            Image image = object.getSprite().getImage();
-            int widthScaled = (int) Math.ceil(image.getWidth(null) * scale);
-            int heightScaled = (int) Math.ceil(image.getHeight(null) * scale);
+            int widthScaled = (int) Math.ceil(object.getSprite().getWidth() * scale);
+            int heightScaled = (int) Math.ceil(object.getSprite().getHeight() * scale);
             double x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
             double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY());
             //scale image dimensions and coordinates
@@ -79,7 +78,7 @@ public class Renderer {
             if (sprite.overlaps(screen)) {
                 //check if any part of image is visible in panel
                 
-                graphics.drawImage(image, (int) (x - (widthScaled / 2.0)),
+                graphics.drawImage(object.getSprite().getImage(), (int) (x - (widthScaled / 2.0)),
                         (int) ((gHeight - y) - (heightScaled / 2.0)),
                         widthScaled, heightScaled, null);
                 //draw image to panel

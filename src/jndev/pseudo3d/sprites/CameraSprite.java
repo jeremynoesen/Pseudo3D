@@ -12,12 +12,7 @@ import java.awt.image.BufferedImage;
  *
  * @author JNDev (Jeremaster101)
  */
-public class CameraSprite implements Sprite {
-    
-    /**
-     * image of sprite
-     */
-    private BufferedImage image;
+public class CameraSprite extends Sprite {
     
     /**
      * scene to render from
@@ -30,16 +25,6 @@ public class CameraSprite implements Sprite {
     private final Camera camera;
     
     /**
-     * sprite width
-     */
-    private final int width;
-    
-    /**
-     * sprite height
-     */
-    private final int height;
-    
-    /**
      * create a new camera sprite for a specific scene with set dimensions
      *
      * @param scene  scene to render from
@@ -48,10 +33,9 @@ public class CameraSprite implements Sprite {
      * @param height height of image
      */
     public CameraSprite(Scene scene, Camera camera, int width, int height) {
+        setImage(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
         this.scene = scene;
         this.camera = camera;
-        this.width = width;
-        this.height = height;
         update();
     }
     
@@ -65,6 +49,7 @@ public class CameraSprite implements Sprite {
         camera = cameraSprite.camera;
         width = cameraSprite.width;
         height = cameraSprite.height;
+        setImage(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
         update();
     }
     
@@ -72,21 +57,12 @@ public class CameraSprite implements Sprite {
      * render the next frame of the sprite
      */
     public void update() {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics graphics = image.createGraphics();
-        graphics.setClip(0, 0, width, height);
+        BufferedImage updated = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics graphics = updated.createGraphics();
+        graphics.setClip(0, 0, image.getWidth(), image.getHeight());
         Renderer.render(scene, camera, graphics);
         Toolkit.getDefaultToolkit().sync();
-        this.image = image;
-    }
-    
-    /**
-     * get the image used for the sprite
-     *
-     * @return image of sprite
-     */
-    @Override
-    public Image getImage() {
-        return image;
+        image = updated;
+        graphics.dispose();
     }
 }
