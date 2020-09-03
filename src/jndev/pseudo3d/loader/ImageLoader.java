@@ -1,7 +1,7 @@
 package jndev.pseudo3d.loader;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class ImageLoader {
     /**
      * hashmap of all loaded images. images are saved to their path to make retrieving the files easier
      */
-    private static final HashMap<String, Image> images = new HashMap<>();
+    private static final HashMap<String, BufferedImage> images = new HashMap<>();
     
     /**
      * this will load all images into a hash map with the file's path as the key
@@ -52,7 +52,7 @@ public class ImageLoader {
      * @param name name of image to retrieve
      * @return image object
      */
-    public static Image get(String name) {
+    public static BufferedImage get(String name) {
         return images.get(name);
     }
 }

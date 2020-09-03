@@ -1,35 +1,20 @@
 package jndev.pseudo3d.sprites;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 
 /**
  * sprite made up of a single image
  *
  * @author JNDev (Jeremaster101)
  */
-public class ImageSprite implements Sprite {
-    
-    /**
-     * image to represent sprite
-     */
-    private final Image image;
+public class ImageSprite extends Sprite {
     
     /**
      * create new image sprite
      *
      * @param image image to represent sprite
      */
-    public ImageSprite(Image image) {
-        this.image = image;
-    }
-    
-    /**
-     * get the sprite image
-     *
-     * @return sprite image
-     */
-    @Override
-    public Image getImage() {
-        return image;
+    public ImageSprite(BufferedImage image) {
+        setImage(image);
     }
 }

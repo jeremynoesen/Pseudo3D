@@ -8,12 +8,7 @@ import java.awt.image.BufferedImage;
  *
  * @author JNDev (Jeremaster101)
  */
-public class ColorSprite implements Sprite {
-    
-    /**
-     * image to represent sprite
-     */
-    private final Image image;
+public class ColorSprite extends Sprite {
     
     /**
      * create a new color sprite with specified dimensions and color
@@ -23,21 +18,12 @@ public class ColorSprite implements Sprite {
      * @param color  sprite color
      */
     public ColorSprite(int width, int height, Color color) {
-        BufferedImage i = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = i.createGraphics();
+        this.image = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        this.width = width;
+        this.height = height;
+        Graphics2D g2d = image.createGraphics();
         g2d.setPaint(color);
-        g2d.fillRect(0, 0, width, height);
-        image = i;
+        g2d.fillRect(0, 0, 1, 1);
         g2d.dispose();
-    }
-    
-    /**
-     * get the sprite image
-     *
-     * @return sprite image
-     */
-    @Override
-    public Image getImage() {
-        return image;
     }
 }

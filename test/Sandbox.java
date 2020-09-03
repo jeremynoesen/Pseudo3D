@@ -7,11 +7,13 @@ import jndev.pseudo3d.objects.SpriteObject;
 import jndev.pseudo3d.objects.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.sprites.AnimatedSprite;
+import jndev.pseudo3d.sprites.CameraSprite;
 import jndev.pseudo3d.sprites.ImageSprite;
 import jndev.pseudo3d.utils.Vector;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -31,7 +33,9 @@ public class Sandbox {
         ImageLoader.load(new File("test/images/"));
         Scene scene = new Scene();
         PhysicsObject physicsObject = new PhysicsObject();
-        physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
+        ImageSprite imageSprite = new ImageSprite(ImageLoader.get("test/images/player/front.png"));
+        imageSprite.setWidth(100);
+        physicsObject.setSprite(imageSprite);
 //        physicsObject.setSprite(new ColorSprite(50, 50, new Color(255, 0, 0, 50)));
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getImage().getWidth(null));
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getImage().getHeight(null));
@@ -61,18 +65,18 @@ public class Sandbox {
         camera.setScenePosition(new Vector(0, 0, -100));
         camera.setSensorSize(1000);
         
-        ArrayList<Image> images = new ArrayList<>();
+        ArrayList<BufferedImage> images = new ArrayList<>();
         images.add(ImageLoader.get("test/images/player/front.png"));
         images.add(ImageLoader.get("test/images/player/left.png"));
         images.add(ImageLoader.get("test/images/player/right.png"));
         AnimatedSprite as = new AnimatedSprite(images, 3);
         
-        physicsObject.setSprite(as);
+//        physicsObject.setSprite(as);
         
         SpriteObject spriteObject = new SpriteObject();
 //        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-//        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
-        spriteObject.setSprite(as);
+        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
+//        spriteObject.setSprite(as);
         spriteObject.setPosition(new Vector(0, 0, -200));
         scene.addObject(spriteObject);
         
@@ -91,12 +95,12 @@ public class Sandbox {
                 
             if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
+//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
             }
 
             if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
+//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
             }
 
             if ((Keyboard.isPressed(KeyEvent.VK_W) && Keyboard.isPressed(KeyEvent.VK_S)) ||
@@ -106,12 +110,12 @@ public class Sandbox {
 
             if (Keyboard.isPressed(KeyEvent.VK_A)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/left.png")));
+//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/left.png")));
             }
 
             if (Keyboard.isPressed(KeyEvent.VK_D)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/right.png")));
+//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/right.png")));
             }
 
             if (Keyboard.isPressed(KeyEvent.VK_A) && Keyboard.isPressed(KeyEvent.VK_D)) {
