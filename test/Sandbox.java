@@ -35,6 +35,7 @@ public class Sandbox {
         PhysicsObject physicsObject = new PhysicsObject();
         ImageSprite imageSprite = new ImageSprite(ImageLoader.get("test/images/player/front.png"));
         imageSprite.setWidth(100);
+        imageSprite.setRotation(45);
         physicsObject.setSprite(imageSprite);
 //        physicsObject.setSprite(new ColorSprite(50, 50, new Color(255, 0, 0, 50)));
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getImage().getWidth(null));
@@ -75,8 +76,8 @@ public class Sandbox {
         
         SpriteObject spriteObject = new SpriteObject();
 //        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
-        spriteObject.getSprite().setRotation(10);
+//        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
+//        spriteObject.getSprite().setRotation(10);
 //        spriteObject.setSprite(as);
         spriteObject.setPosition(new Vector(0, 0, -200));
         scene.addObject(spriteObject);
