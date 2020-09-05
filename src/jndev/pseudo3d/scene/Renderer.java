@@ -27,7 +27,10 @@ public class Renderer {
     public static void render(Scene scene, Camera camera, Graphics graphics) {
         if (scene == null || camera == null || graphics == null) return;
         //don't attempt rendering if one of the parameters is null
-        
+    
+        Graphics2D graphics2D = (Graphics2D) graphics;
+        //get graphics2d instance
+    
         graphics.setColor(scene.getBackground());
         //draw scene background color
         
@@ -80,6 +83,12 @@ public class Renderer {
             
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
+    
+                if(Double.compare(camera.getRotation(), 0) != 0) {
+                    graphics2D.setTransform(AffineTransform.getRotateInstance(
+                            Math.toRadians(-camera.getRotation()), windowPos.getX(), windowPos.getY()));
+                }
+                //rotate canvas if camera is rotated
                 
                 if(Double.compare(sprite.getRotation(), 0) == 0) {
                     //check if image is not rotated
@@ -90,8 +99,8 @@ public class Renderer {
                     //draw image to panel
                     
                 } else {
-                    Graphics2D graphics2D = (Graphics2D) graphics;
-                    AffineTransform rotated = AffineTransform.getRotateInstance(Math.toRadians(sprite.getRotation()), x, y);
+                    AffineTransform rotated = AffineTransform.getRotateInstance(
+                            Math.toRadians(sprite.getRotation()), x, y);
                     AffineTransform original = graphics2D.getTransform();
                     //get transforms
     

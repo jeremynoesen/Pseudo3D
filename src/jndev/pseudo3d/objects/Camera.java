@@ -31,6 +31,11 @@ public class Camera {
     private double zoom;
     
     /**
+     * rotation of the camera in degrees, counter-clock-wise
+     */
+    private double rotation;
+    
+    /**
      * 3D position of camera in scene
      */
     private Vector scenePosition;
@@ -50,6 +55,7 @@ public class Camera {
         viewDistance = 500;
         zoom = 1;
         windowPosition = null;
+        rotation = 0;
     }
     
     /**
@@ -61,13 +67,15 @@ public class Camera {
      * @param viewDistance  z distance camera is able to see
      * @param zoom          camera zoom, scales render
      */
-    public Camera(Vector scenePosition, Vector windowPosition, double sensorSize, double fieldOfView, double viewDistance, double zoom) {
+    public Camera(Vector scenePosition, Vector windowPosition, double sensorSize, double fieldOfView,
+                  double viewDistance, double zoom, double rotation) {
         this.scenePosition = scenePosition;
         this.fieldOfView = fieldOfView;
         this.sensorSize = sensorSize;
         this.viewDistance = viewDistance;
         this.zoom = zoom;
         this.windowPosition = windowPosition;
+        this.rotation = rotation;
     }
     
     /**
@@ -82,6 +90,7 @@ public class Camera {
         viewDistance = camera.viewDistance;
         zoom = camera.zoom;
         windowPosition = camera.windowPosition;
+        rotation = camera.rotation;
     }
     
     /**
@@ -190,6 +199,24 @@ public class Camera {
      */
     public void setZoom(double zoom) {
         this.zoom = zoom;
+    }
+    
+    /**
+     * get the rotation of the camera
+     *
+     * @return rotation of camera in degrees counter-clock-wise
+     */
+    public double getRotation() {
+        return rotation;
+    }
+    
+    /**
+     * set the rotation of the camera
+     *
+     * @param rotation rotation of camera in degrees counter-clock-wise
+     */
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
     }
     
     /**
