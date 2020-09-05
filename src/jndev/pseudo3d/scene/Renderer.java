@@ -27,10 +27,7 @@ public class Renderer {
     public static void render(Scene scene, Camera camera, Graphics graphics) {
         if (scene == null || camera == null || graphics == null) return;
         //don't attempt rendering if one of the parameters is null
-    
-        Graphics2D graphics2D = (Graphics2D) graphics;
-        //get graphics2d instance
-    
+        
         graphics.setColor(scene.getBackground());
         //draw scene background color
         
@@ -56,11 +53,13 @@ public class Renderer {
         for (int i = 0; i < scene.getObjects().size(); i++) {
             Renderable object = scene.getObjects().get(i);
             Vector objPos = object.getPosition();
-            Sprite sprite = object.getSprite();
             //object data
             
             if (object.getSprite() == null || camPos.getZ() - objPos.getZ() >= viewDistance) continue;
             //don't render objects without a sprite, with a camera sprite, or further than view distance
+            
+            Sprite sprite = object.getSprite();
+            //get sprite
             
             double scale = Math.abs(zoom) * (sensorSize / (sensorSize + (2.0 *
                     (camPos.getZ() - objPos.getZ()) * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)))));
@@ -77,40 +76,27 @@ public class Renderer {
             double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY());
             //scale image dimensions and coordinates
             
+            double widthRotated = Math.abs((widthScaled * Math.sin(sprite.getRotation())) +
+                    (heightScaled * Math.cos(sprite.getRotation())));
+            double heightRotated = Math.abs((widthScaled * Math.cos(sprite.getRotation())) +
+                    (heightScaled * Math.sin(sprite.getRotation())));
+            //get dimensions of image based on sprite rotation
+            
             Box screenBox = new Box(gWidth, gHeight, new Vector(gWidth / 2.0, gHeight / 2.0));
-            Box spriteBox = new Box(widthScaled, heightScaled, new Vector(x, y));
+            Box spriteBox = new Box(widthRotated, heightRotated, new Vector(x, y));
             //boxes to represent image and panel bounds
             
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
-    
-                if(Double.compare(camera.getRotation(), 0) != 0) {
-                    graphics2D.setTransform(AffineTransform.getRotateInstance(
-                            Math.toRadians(-camera.getRotation()), windowPos.getX(), windowPos.getY()));
-                }
-                //rotate canvas if camera is rotated
                 
-                if(Double.compare(sprite.getRotation(), 0) == 0) {
-                    //check if image is not rotated
-                    
-                    graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
-                            (int) ((gHeight - y) - (heightScaled / 2.0)),
-                            widthScaled, heightScaled, null);
-                    //draw image to panel
-                    
-                } else {
-                    AffineTransform rotated = AffineTransform.getRotateInstance(
-                            Math.toRadians(sprite.getRotation()), x, y);
-                    AffineTransform original = graphics2D.getTransform();
-                    //get transforms
-    
-                    graphics2D.setTransform(rotated);
-                    graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
-                            (int) ((gHeight - y) - (heightScaled / 2.0)),
-                            widthScaled, heightScaled, null);
-                    graphics2D.setTransform(original);
-                    //draw rotated image to panel
-                }
+                AffineTransform transform = AffineTransform.getRotateInstance(
+                        Math.toRadians(-camera.getRotation()), windowPos.getX(), windowPos.getY());
+                transform.rotate(Math.toRadians(sprite.getRotation()), x, gHeight - y);
+                ((Graphics2D) graphics).setTransform(transform);
+                graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
+                        (int) ((gHeight - y) - (heightScaled / 2.0)),
+                        widthScaled, heightScaled, null);
+                //draw image to panel
             }
         }
         graphics.dispose();
