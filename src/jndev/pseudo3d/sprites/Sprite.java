@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 public abstract class Sprite {
     
     /**
-     * image used for sprite
+     * image used for sprite in pixels
      */
     protected BufferedImage image;
     
@@ -20,9 +20,24 @@ public abstract class Sprite {
     protected int width;
     
     /**
-     * height of the sprite
+     * height of the sprite in pixels
      */
     protected int height;
+    
+    /**
+     * counter-clock-wise rotation of sprite in degrees
+     */
+    protected double rotation;
+    
+    /**
+     * construct new sprite only when subclassed
+     */
+    protected Sprite() {
+        rotation = 0;
+        height = 0;
+        width = 0;
+        image = null;
+    }
     
     /**
      * get the sprite image
@@ -78,5 +93,23 @@ public abstract class Sprite {
      */
     public void setHeight(int height) {
         this.height = height;
+    }
+    
+    /**
+     * set the rotation of the sprite
+     *
+     * @param rotation rotation of sprite in degrees counter-clock-wise
+     */
+    public void setRotation(double rotation) {
+        this.rotation = rotation;
+    }
+    
+    /**
+     * get the rotation of the sprite
+     *
+     * @return rotation of sprite in degrees counter-clock-wise
+     */
+    public double getRotation() {
+        return rotation;
     }
 }

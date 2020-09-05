@@ -2,10 +2,12 @@ package jndev.pseudo3d.scene;
 
 import jndev.pseudo3d.objects.Camera;
 import jndev.pseudo3d.objects.Renderable;
+import jndev.pseudo3d.sprites.Sprite;
 import jndev.pseudo3d.utils.Box;
 import jndev.pseudo3d.utils.Vector;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 /**
  * simple scene renderer, will turn a scene into a jpanel with graphics. depth scaling is uniform based on z distance
@@ -51,6 +53,7 @@ public class Renderer {
         for (int i = 0; i < scene.getObjects().size(); i++) {
             Renderable object = scene.getObjects().get(i);
             Vector objPos = object.getPosition();
+            Sprite sprite = object.getSprite();
             //object data
             
             if (object.getSprite() == null || camPos.getZ() - objPos.getZ() >= viewDistance) continue;
@@ -65,23 +68,40 @@ public class Renderer {
             else if (Double.compare(scale, 0) < 0) break;
             //stop render if objects have negative scale (too far in front of camera)
             
-            int widthScaled = (int) Math.ceil(object.getSprite().getWidth() * scale);
-            int heightScaled = (int) Math.ceil(object.getSprite().getHeight() * scale);
+            int widthScaled = (int) Math.ceil(sprite.getWidth() * scale);
+            int heightScaled = (int) Math.ceil(sprite.getHeight() * scale);
             double x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
             double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY());
             //scale image dimensions and coordinates
             
-            Box screen = new Box(gWidth, gHeight, new Vector(gWidth / 2.0, gHeight / 2.0));
-            Box sprite = new Box(widthScaled, heightScaled, new Vector(x, y));
+            Box screenBox = new Box(gWidth, gHeight, new Vector(gWidth / 2.0, gHeight / 2.0));
+            Box spriteBox = new Box(widthScaled, heightScaled, new Vector(x, y));
             //boxes to represent image and panel bounds
             
-            if (sprite.overlaps(screen)) {
+            if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
                 
-                graphics.drawImage(object.getSprite().getImage(), (int) (x - (widthScaled / 2.0)),
-                        (int) ((gHeight - y) - (heightScaled / 2.0)),
-                        widthScaled, heightScaled, null);
-                //draw image to panel
+                if(Double.compare(sprite.getRotation(), 0) == 0) {
+                    //check if image is not rotated
+                    
+                    graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
+                            (int) ((gHeight - y) - (heightScaled / 2.0)),
+                            widthScaled, heightScaled, null);
+                    //draw image to panel
+                    
+                } else {
+                    Graphics2D graphics2D = (Graphics2D) graphics;
+                    AffineTransform rotated = AffineTransform.getRotateInstance(Math.toRadians(sprite.getRotation()), x, y);
+                    AffineTransform original = graphics2D.getTransform();
+                    //get transforms
+    
+                    graphics2D.setTransform(rotated);
+                    graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
+                            (int) ((gHeight - y) - (heightScaled / 2.0)),
+                            widthScaled, heightScaled, null);
+                    graphics2D.setTransform(original);
+                    //draw rotated image to panel
+                }
             }
         }
         graphics.dispose();
