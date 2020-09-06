@@ -65,36 +65,74 @@ public class Renderer {
                     (camPos.getZ() - objPos.getZ()) * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)))));
             //scale objects based on fov angle and distance from camera using law of sines and camera sensor size
             
-            if (Double.compare(scale, 0) == 0) continue;
-                //do not render objects that are too small
-            else if (Double.compare(scale, 0) < 0) break;
+            if (scale < 0) break;
             //stop render if objects have negative scale (too far in front of camera)
             
             int widthScaled = (int) Math.ceil(sprite.getWidth() * scale);
             int heightScaled = (int) Math.ceil(sprite.getHeight() * scale);
+            //scale image dimensions
+            
+            if (widthScaled == 1 && heightScaled == 1) continue;
+            //don't draw sprites that are too small
+            
             double x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
-            double y = ((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY());
-            //scale image dimensions and coordinates
+            double y = gHeight - (((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY()));
+            //translate object coordinates
             
-            double widthRotated = Math.abs((widthScaled * Math.sin(sprite.getRotation())) +
-                    (heightScaled * Math.cos(sprite.getRotation())));
-            double heightRotated = Math.abs((widthScaled * Math.cos(sprite.getRotation())) +
-                    (heightScaled * Math.sin(sprite.getRotation())));
-            //get dimensions of image based on sprite rotation
+            double spriteRotation = Math.toRadians(sprite.getRotation());
+            double cameraRotation = Math.toRadians(-camera.getRotation());
+            //get rotations
             
-            Box screenBox = new Box(gWidth, gHeight, new Vector(gWidth / 2.0, gHeight / 2.0));
-            Box spriteBox = new Box(widthRotated, heightRotated, new Vector(x, y));
+            Box screenBox = new Box(gWidth, gHeight,
+                    new Vector(gWidth / 2.0, gHeight / 2.0));
+            Box spriteBox;
             //boxes to represent image and panel bounds
+            
+            if (cameraRotation != 0 || spriteRotation != 0) {
+                //check if there is any rotation
+                
+                double sprRotSin = Math.sin(spriteRotation + cameraRotation);
+                double sprRotCos = Math.cos(spriteRotation + cameraRotation);
+                double camRotSin = Math.sin(cameraRotation);
+                double camRotCos = Math.cos(cameraRotation);
+                //calculations done once to reduce total calculations
+                
+                double heightRotated = Math.abs(widthScaled * sprRotSin) + Math.abs(heightScaled * sprRotCos);
+                double widthRotated = Math.abs(widthScaled * sprRotCos) + Math.abs(heightScaled * sprRotSin);
+                //get dimensions of image based on sprite rotation
+                
+                double yRotated = ((x - windowPos.getX()) * camRotSin) +
+                        ((y - windowPos.getY()) * camRotCos) + windowPos.getY();
+                double xRotated = ((x - windowPos.getX()) * camRotCos) -
+                        ((y - windowPos.getY()) * camRotSin) + windowPos.getX();
+                //get position of image based on camera rotation
+                
+                spriteBox = new Box(widthRotated, heightRotated,
+                        new Vector(xRotated, yRotated));
+                //set box data
+            } else {
+                spriteBox = new Box(widthScaled, heightScaled,
+                        new Vector(x, y));
+                //set box data
+            }
             
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
                 
-                AffineTransform transform = AffineTransform.getRotateInstance(
-                        Math.toRadians(-camera.getRotation()), windowPos.getX(), windowPos.getY());
-                transform.rotate(Math.toRadians(sprite.getRotation()), x, gHeight - y);
+                AffineTransform transform = new AffineTransform();
+                //create new transform, resetting old one
+                
+                if (cameraRotation != 0)
+                    transform = AffineTransform.getRotateInstance(
+                            cameraRotation, windowPos.getX(), windowPos.getY());
+                //rotate canvas if camera is rotated
+                
+                if (spriteRotation != 0) transform.rotate(spriteRotation, x, y);
+                //rotate canvas about center of sprite if sprite is rotated
+                
                 ((Graphics2D) graphics).setTransform(transform);
                 graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
-                        (int) ((gHeight - y) - (heightScaled / 2.0)),
+                        (int) (y - (heightScaled / 2.0)),
                         widthScaled, heightScaled, null);
                 //draw image to panel
             }
