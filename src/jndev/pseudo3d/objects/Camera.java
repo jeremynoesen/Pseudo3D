@@ -229,10 +229,10 @@ public class Camera {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Camera camera = (Camera) o;
-        return Double.compare(camera.fieldOfView, fieldOfView) == 0 &&
-                Double.compare(camera.viewDistance, viewDistance) == 0 &&
-                Double.compare(camera.sensorSize, sensorSize) == 0 &&
-                scenePosition.equals(camera.scenePosition);
+        Camera that = (Camera) o;
+        return Double.compare(that.fieldOfView, fieldOfView) == 0 &&
+                Double.compare(that.viewDistance, viewDistance) == 0 &&
+                Double.compare(that.sensorSize, sensorSize) == 0 &&
+                scenePosition.equals(that.scenePosition);
     }
 }

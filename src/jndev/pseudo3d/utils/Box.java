@@ -277,10 +277,10 @@ public class Box {
     public boolean equals(Object box) {
         if (this == box) return true;
         if (box == null || getClass() != box.getClass()) return false;
-        Box b = (Box) box;
-        return Double.compare(b.getWidth(), width) == 0 &&
-                Double.compare(b.getHeight(), height) == 0 &&
-                Double.compare(b.getDepth(), depth) == 0 &&
-                b.getPosition().equals(position);
+        Box that = (Box) box;
+        return Double.compare(that.width, width) == 0 &&
+                Double.compare(that.height, height) == 0 &&
+                Double.compare(that.depth, depth) == 0 &&
+                that.position.equals(position);
     }
 }

@@ -4,6 +4,7 @@ import jndev.pseudo3d.application.Game;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * series of images combined to create a single animated sprite
@@ -59,5 +60,23 @@ public class AnimatedSprite extends Sprite {
         double renderStep = Game.getInstance().getLoop().getRenderFrequency() / 1000.0;
         currentFrame = currentFrame + (frameStep / renderStep) < images.size() ? currentFrame + (frameStep / renderStep) : 0;
         setImage(images.get((int) Math.floor(currentFrame)));
+    }
+    
+    /**
+     * check that the animated sprite in similar to another
+     *
+     * @param o object to check
+     * @return true if sprites are similar
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AnimatedSprite that = (AnimatedSprite) o;
+        return Double.compare(that.currentFrame, currentFrame) == 0 &&
+                Double.compare(that.frameStep, frameStep) == 0 &&
+                Objects.equals(images, that.images) &&
+                super.equals(that);
     }
 }

@@ -110,7 +110,8 @@ public class PhysicsObject extends AABBPhysics implements Renderable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        PhysicsObject physicsObject = (PhysicsObject) o;
-        return Objects.equals(sprite, physicsObject.sprite);
+        PhysicsObject that = (PhysicsObject) o;
+        return Objects.equals(sprite, that.sprite) &&
+                super.equals(that);
     }
 }

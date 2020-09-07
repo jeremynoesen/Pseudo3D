@@ -1,6 +1,7 @@
 package jndev.pseudo3d.sprites;
 
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 /**
  * sprites to be rendered in game
@@ -111,5 +112,22 @@ public abstract class Sprite {
      */
     public double getRotation() {
         return rotation;
+    }
+    
+    /**
+     * check if two sprites are similar to each other
+     *
+     * @param o object to check
+     * @return true if the two sprites are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sprite that = (Sprite) o;
+        return width == that.width &&
+                height == that.height &&
+                Double.compare(that.rotation, rotation) == 0 &&
+                Objects.equals(image, that.image);
     }
 }
