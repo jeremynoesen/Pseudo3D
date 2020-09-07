@@ -6,6 +6,7 @@ import jndev.pseudo3d.scene.Scene;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 
 /**
  * sprite whose image is created from a render of a scene
@@ -64,5 +65,22 @@ public class CameraSprite extends Sprite {
         Toolkit.getDefaultToolkit().sync();
         image = updated;
         graphics.dispose();
+    }
+    
+    /**
+     * check that this camera sprite is similar to another
+     *
+     * @param o object to check
+     * @return true if sprites are similar
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CameraSprite that = (CameraSprite) o;
+        return Objects.equals(scene, that.scene) &&
+                Objects.equals(camera, that.camera) &&
+                super.equals(that);
     }
 }

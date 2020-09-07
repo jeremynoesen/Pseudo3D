@@ -256,9 +256,9 @@ public class Vector {
     public boolean equals(Object vector) {
         if (this == vector) return true;
         if (vector == null || getClass() != vector.getClass()) return false;
-        Vector v = (Vector) vector;
-        return Double.compare(v.getX(), x) == 0 &&
-                Double.compare(v.getY(), y) == 0 &&
-                Double.compare(v.getZ(), z) == 0;
+        Vector that = (Vector) vector;
+        return Double.compare(that.x, x) == 0 &&
+                Double.compare(that.y, y) == 0 &&
+                Double.compare(that.z, z) == 0;
     }
 }

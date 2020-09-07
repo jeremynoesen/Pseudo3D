@@ -3,6 +3,8 @@ package jndev.pseudo3d.objects;
 import jndev.pseudo3d.sprites.Sprite;
 import jndev.pseudo3d.utils.Vector;
 
+import java.util.Objects;
+
 /**
  * sprite placed in 3D space with no physics
  *
@@ -85,5 +87,20 @@ public class SpriteObject implements Renderable {
      */
     public void setPosition(Vector position) {
         this.position = position;
+    }
+    
+    /**
+     * check that this sprite object is similar to another
+     *
+     * @param o object to check
+     * @return true if the objects are equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SpriteObject that = (SpriteObject) o;
+        return Objects.equals(sprite, that.sprite) &&
+                Objects.equals(position, that.position);
     }
 }

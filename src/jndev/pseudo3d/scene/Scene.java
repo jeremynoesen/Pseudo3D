@@ -198,9 +198,9 @@ public class Scene {
     public boolean equals(java.lang.Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Scene scene = (Scene) o;
-        return Objects.equals(objects, scene.objects) &&
-                camera.equals(scene.camera) &&
-                Objects.equals(background, scene.background);
+        Scene that = (Scene) o;
+        return Objects.equals(objects, that.objects) &&
+                camera.equals(that.camera) &&
+                Objects.equals(background, that.background);
     }
 }
