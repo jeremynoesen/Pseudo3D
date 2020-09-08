@@ -37,11 +37,6 @@ public class Loop extends JPanel {
     private boolean paused;
     
     /**
-     * whether the game loop has been stopped or not, default false
-     */
-    private boolean stopped;
-    
-    /**
      * create a new game loop with default values
      */
     Loop() {
@@ -49,7 +44,6 @@ public class Loop extends JPanel {
         renderFrequency = 60;
         tickFrequency = 120;
         paused = true;
-        stopped = false;
     }
     
     /**
@@ -57,68 +51,70 @@ public class Loop extends JPanel {
      */
     public void start() {
         paused = false;
-        long startTime = System.currentTimeMillis();
         
-        //start loop in new thread
-        Thread thread = new Thread(() -> {
-            long prev = 0;
-            while (!stopped) {
+        long renderDelta = 1000 / renderFrequency;
+        long tickDelta = 1000 / tickFrequency;
+        //get delay times in milliseconds
+        
+        //start tick loop in new thread
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(tickDelta);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //delay loop
+                
                 if (!paused) {
-                    long time = System.currentTimeMillis() - startTime;
-                    long graphicsDelta = 1000 / renderFrequency;
-                    long physicsDelta = 1000 / tickFrequency;
-                    //get time intervals
                     
-                    if (time > prev) {
-                        //only run when time changes
-                        
-                        if (time % physicsDelta == 0) {
-                            activeScene.getRunnables().forEach(Runnable::run);
-                            //run all runnables in scene
-                            
-                            activeScene.tick();
-                            //tick scene objects
-                        }
-                        
-                        if (time % graphicsDelta == 0) {
-                            
-                            for (int i = 0; i < activeScene.getObjects().size(); i++) {
-                                if (activeScene.getObjects().get(i).getSprite() != null) {
-                                    Sprite sprite = activeScene.getObjects().get(i).getSprite();
-                                    
-                                    if (sprite instanceof AnimatedSprite) {
-                                        ((AnimatedSprite) sprite).update();
-                                        //update animated sprites
-                                        
-                                    } else if (sprite instanceof CameraSprite) {
-                                        ((CameraSprite) sprite).update();
-                                        //update camera sprites
-                                    }
-                                }
-                            }
-                            
-                            repaint();
-                            Toolkit.getDefaultToolkit().sync();
-                            //update scene graphics
-                        }
-                    }
-                    prev = time;
+                    activeScene.getRunnables().forEach(Runnable::run);
+                    //run all runnables in scene
+                    
+                    activeScene.tick();
+                    //tick scene objects
                 }
             }
-        });
-        thread.start();
+        }).start();
+        //start thread
+        
+        //start graphics loop in new thread
+        new Thread(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(renderDelta);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                //delay loop
+                
+                if (!paused) {
+                    for (int i = 0; i < activeScene.getObjects().size(); i++) {
+                        if (activeScene.getObjects().get(i).getSprite() != null) {
+                            Sprite sprite = activeScene.getObjects().get(i).getSprite();
+                            
+                            if (sprite instanceof AnimatedSprite) {
+                                ((AnimatedSprite) sprite).update();
+                                //update animated sprites
+                                
+                            } else if (sprite instanceof CameraSprite) {
+                                ((CameraSprite) sprite).update();
+                                //update camera sprites
+                            }
+                        }
+                    }
+                    
+                    repaint();
+                    Toolkit.getDefaultToolkit().sync();
+                    //update scene graphics
+                }
+            }
+        }).start();
         //start thread
         
         setVisible(true);
         requestFocus();
         //set panel visible and focused
-    }
-    
-    /**
-     * stop the loop
-     */
-    public void stop() {
-        stopped = true;
     }
     
     /**
