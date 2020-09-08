@@ -24,12 +24,22 @@ public class Loop extends JPanel {
     /**
      * rate at which the graphics render
      */
-    private int renderFrequency;
+    private double renderFrequency;
+    
+    /**
+     * length of time for one render
+     */
+    private int renderDelta;
     
     /**
      * rate at which physics and other things tick
      */
-    private int tickFrequency;
+    private double tickFrequency;
+    
+    /**
+     * length of time for one tick
+     */
+    private int tickDelta;
     
     /**
      * whether the game is paused or not, default true
@@ -41,8 +51,8 @@ public class Loop extends JPanel {
      */
     Loop() {
         activeScene = null;
-        renderFrequency = 60;
-        tickFrequency = 120;
+        setRenderFrequency(60);
+        setTickFrequency(120);
         paused = true;
     }
     
@@ -51,10 +61,6 @@ public class Loop extends JPanel {
      */
     public void start() {
         paused = false;
-        
-        long renderDelta = 1000 / renderFrequency;
-        long tickDelta = 1000 / tickFrequency;
-        //get delay times in milliseconds
         
         //start tick loop in new thread
         new Thread(() -> {
@@ -136,8 +142,9 @@ public class Loop extends JPanel {
      *
      * @param frequency renders per second (Hertz)
      */
-    public void setRenderFrequency(int frequency) {
+    public void setRenderFrequency(double frequency) {
         renderFrequency = frequency;
+        renderDelta = (int) Math.floor(1000 / renderFrequency);
     }
     
     /**
@@ -145,7 +152,7 @@ public class Loop extends JPanel {
      *
      * @return renders per second
      */
-    public int getRenderFrequency() {
+    public double getRenderFrequency() {
         return renderFrequency;
     }
     
@@ -154,8 +161,9 @@ public class Loop extends JPanel {
      *
      * @param frequency ticks per second (Hertz)
      */
-    public void setTickFrequency(int frequency) {
+    public void setTickFrequency(double frequency) {
         tickFrequency = frequency;
+        tickDelta = (int) Math.floor(1000 / tickFrequency);
     }
     
     /**
@@ -163,7 +171,7 @@ public class Loop extends JPanel {
      *
      * @return ticks per second
      */
-    public int getTickFrequency() {
+    public double getTickFrequency() {
         return tickFrequency;
     }
     
