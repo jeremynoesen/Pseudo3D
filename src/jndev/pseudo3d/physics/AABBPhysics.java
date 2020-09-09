@@ -183,7 +183,7 @@ public abstract class AABBPhysics {
             
             double fyl = !collidingObjects.get(Side.LEFT).isEmpty() ? collidingObjects.get(Side.LEFT).get(0).getFriction().getY() : 0;
             double fyr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getY() : 0;
-            fy = Math.max(fy, Math.max(fyl, fyr));
+            fy = Math.max(Math.max(fy, friction.getY()), Math.max(fyl, fyr));
             //get max friction
             
             collidingObjects.get(Side.LEFT).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
@@ -191,7 +191,7 @@ public abstract class AABBPhysics {
             
             double fzl = !collidingObjects.get(Side.LEFT).isEmpty() ? collidingObjects.get(Side.LEFT).get(0).getFriction().getZ() : 0;
             double fzr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ() : 0;
-            fz = Math.max(fz, Math.max(fzl, fzr));
+            fz = Math.max(Math.max(fz, friction.getZ()), Math.max(fzl, fzr));
         }
         if ((collidesOn(Side.BOTTOM) && vy < 0) || (collidesOn(Side.TOP) && vy > 0)) {
             collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
@@ -199,14 +199,14 @@ public abstract class AABBPhysics {
             
             double fxb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX() : 0;
             double fxt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getX() : 0;
-            fx = Math.max(fx, Math.max(fxb, fxt));
+            fx = Math.max(Math.max(fx, friction.getX()), Math.max(fxb, fxt));
             
             collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
             collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
             
             double fzb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ() : 0;
             double fzt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getZ() : 0;
-            fz = Math.max(fz, Math.max(fzb, fzt));
+            fz = Math.max(Math.max(fz, friction.getZ()), Math.max(fzb, fzt));
         }
         if ((collidesOn(Side.BACK) && vz < 0) || (collidesOn(Side.FRONT) && vz > 0)) {
             collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
@@ -214,14 +214,14 @@ public abstract class AABBPhysics {
             
             double fxb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getX() : 0;
             double fxf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getX() : 0;
-            fx = Math.max(fx, Math.max(fxb, fxf));
+            fx = Math.max(Math.max(fx, friction.getX()), Math.max(fxb, fxf));
             
             collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
             collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
             
             double fyb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getY() : 0;
             double fyf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getY() : 0;
-            fy = Math.max(fy, Math.max(fyb, fyf));
+            fy = Math.max(Math.max(fy, friction.getY()), Math.max(fyb, fyf));
         }
         //get highest friction value from colliding objects
         
