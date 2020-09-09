@@ -79,13 +79,7 @@ public class PhysicsObject extends AABBPhysics implements Renderable {
      * @param sprite new image to set as the sprite
      */
     public void setSprite(Sprite sprite) {
-        if (sprite instanceof AnimatedSprite) {
-            this.sprite = new AnimatedSprite((AnimatedSprite) sprite);
-        } else if (sprite instanceof CameraSprite) {
-            this.sprite = new CameraSprite((CameraSprite) sprite);
-        } else {
-            this.sprite = sprite;
-        }
+        this.sprite = sprite;
     }
     
     /**
