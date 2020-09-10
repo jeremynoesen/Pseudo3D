@@ -33,11 +33,23 @@ public abstract class Sprite {
     /**
      * construct new sprite only when subclassed
      */
-    protected Sprite() {
-        rotation = 0;
-        height = 0;
-        width = 0;
-        image = null;
+    protected Sprite(BufferedImage image) {
+        this.image = image;
+        this.width = image.getWidth();
+        this.height = image.getHeight();
+        this.rotation = 0;
+    }
+    
+    /**
+     * copy constructor for sprites
+     *
+     * @param sprite sprite to copy
+     */
+    protected Sprite(Sprite sprite) {
+        image = sprite.image;
+        width = sprite.getWidth();
+        height = sprite.getHeight();
+        rotation = sprite.getRotation();
     }
     
     /**
@@ -47,17 +59,6 @@ public abstract class Sprite {
      */
     public BufferedImage getImage() {
         return image;
-    }
-    
-    /**
-     * set the image used for the sprite, helper method that also sets the image width and height
-     *
-     * @param image image to set
-     */
-    protected void setImage(BufferedImage image) {
-        this.image = image;
-        this.width = image.getWidth();
-        this.height = image.getHeight();
     }
     
     /**

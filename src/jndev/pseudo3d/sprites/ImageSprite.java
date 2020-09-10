@@ -15,6 +15,15 @@ public class ImageSprite extends Sprite {
      * @param image image to represent sprite
      */
     public ImageSprite(BufferedImage image) {
-        setImage(image);
+        super(image);
+    }
+    
+    /**
+     * copy constructor for image sprite
+     *
+     * @param sprite image sprite to copy
+     */
+    public ImageSprite(ImageSprite sprite) {
+        super(sprite);
     }
 }

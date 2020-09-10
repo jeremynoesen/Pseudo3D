@@ -35,10 +35,10 @@ public class AnimatedSprite extends Sprite {
      * @param frameRate frames per second of the sprite
      */
     public AnimatedSprite(ArrayList<BufferedImage> images, double frameRate) {
+        super(images.get(0));
         this.frameStep = frameRate / 1000.0;
         currentFrame = 0;
         this.images = images;
-        setImage(images.get(0));
     }
     
     /**
@@ -47,10 +47,10 @@ public class AnimatedSprite extends Sprite {
      * @param animatedSprite animated sprite to copy
      */
     public AnimatedSprite(AnimatedSprite animatedSprite) {
+        super(animatedSprite);
         frameStep = animatedSprite.frameStep;
         currentFrame = animatedSprite.currentFrame;
         images = animatedSprite.images;
-        setImage(animatedSprite.image);
     }
     
     /**
@@ -58,8 +58,9 @@ public class AnimatedSprite extends Sprite {
      */
     public void update() {
         double renderStep = Game.getInstance().getLoop().getRenderFrequency() / 1000.0;
-        currentFrame = currentFrame + (frameStep / renderStep) < images.size() ? currentFrame + (frameStep / renderStep) : 0;
-        setImage(images.get((int) Math.floor(currentFrame)));
+        currentFrame = currentFrame + (frameStep / renderStep) <
+                images.size() ? currentFrame + (frameStep / renderStep) : 0;
+        image = images.get((int) Math.floor(currentFrame));
     }
     
     /**
