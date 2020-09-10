@@ -34,7 +34,7 @@ public class CameraSprite extends Sprite {
      * @param height height of image
      */
     public CameraSprite(Scene scene, Camera camera, int width, int height) {
-        setImage(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
+        super(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
         this.scene = scene;
         this.camera = camera;
         update();
@@ -46,11 +46,9 @@ public class CameraSprite extends Sprite {
      * @param cameraSprite camera sprite to copy
      */
     public CameraSprite(CameraSprite cameraSprite) {
+        super(cameraSprite);
         scene = cameraSprite.scene;
         camera = cameraSprite.camera;
-        width = cameraSprite.width;
-        height = cameraSprite.height;
-        setImage(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
         update();
     }
     
@@ -58,7 +56,8 @@ public class CameraSprite extends Sprite {
      * render the next frame of the sprite
      */
     public void update() {
-        BufferedImage updated = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage updated = new BufferedImage(image.getWidth(), image.getHeight(),
+                BufferedImage.TYPE_INT_RGB);
         Graphics graphics = updated.createGraphics();
         graphics.setClip(0, 0, image.getWidth(), image.getHeight());
         Renderer.render(scene, camera, graphics);

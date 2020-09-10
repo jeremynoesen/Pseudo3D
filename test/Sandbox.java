@@ -67,17 +67,17 @@ public class Sandbox {
         camera.setSensorSize(1000);
 //        camera.setWindowPosition(new Vector());
         
-        ArrayList<BufferedImage> images = new ArrayList<>();
-        images.add(ImageLoader.get("test/images/player/front.png"));
-        images.add(ImageLoader.get("test/images/player/left.png"));
-        images.add(ImageLoader.get("test/images/player/right.png"));
-        AnimatedSprite as = new AnimatedSprite(images, 3);
+//        ArrayList<BufferedImage> images = new ArrayList<>();
+//        images.add(ImageLoader.get("test/images/player/front.png"));
+//        images.add(ImageLoader.get("test/images/player/left.png"));
+//        images.add(ImageLoader.get("test/images/player/right.png"));
+//        AnimatedSprite as = new AnimatedSprite(images, 3);
         
 //        physicsObject.setSprite(as);
         
         SpriteObject spriteObject = new SpriteObject();
 //        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-//        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
+        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
 //        spriteObject.getSprite().setRotation(10);
 //        spriteObject.setSprite(as);
         spriteObject.setPosition(new Vector(0, 0, -200));
@@ -88,6 +88,7 @@ public class Sandbox {
         
         Game.launch(1000, 1000, false, "Testing");
         Game.getInstance().getLoop().setActiveScene(scene);
+        Game.getInstance().getLoop().setRenderFrequency(75);
         Game.getInstance().getLoop().start();
         
         scene.addRunnable(() -> {
@@ -146,11 +147,11 @@ public class Sandbox {
             }
     
             if (Keyboard.isPressed(KeyEvent.VK_LEFT)) {
-                camera.setRotation(camera.getRotation() + 1);
+                camera.setRotation(camera.getRotation() + 0.1);
             }
     
             if (Keyboard.isPressed(KeyEvent.VK_RIGHT)) {
-                camera.setRotation(camera.getRotation() - 1);
+                camera.setRotation(camera.getRotation() - 0.1);
             }
         });
     }
