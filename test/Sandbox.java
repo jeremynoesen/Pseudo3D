@@ -75,13 +75,13 @@ public class Sandbox {
         
 //        physicsObject.setSprite(as);
         
-        SpriteObject spriteObject = new SpriteObject();
+//        SpriteObject spriteObject = new SpriteObject();
 //        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
+//        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
 //        spriteObject.getSprite().setRotation(10);
 //        spriteObject.setSprite(as);
-        spriteObject.setPosition(new Vector(0, 0, -200));
-        scene.addObject(spriteObject);
+//        spriteObject.setPosition(new Vector(0, 0, -200));
+//        scene.addObject(spriteObject);
         
         scene.setCamera(camera);
         scene.setBackground(Color.WHITE);
