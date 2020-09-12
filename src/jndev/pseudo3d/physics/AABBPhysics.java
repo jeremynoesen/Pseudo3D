@@ -7,6 +7,7 @@ import jndev.pseudo3d.utils.Side;
 import jndev.pseudo3d.utils.Vector;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -171,66 +172,111 @@ public abstract class AABBPhysics {
         }
         //apply gravity if not exceeding terminal velocity
         
+        Comparator<AABBPhysics> xFriction = (o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX());
+        Comparator<AABBPhysics> yFriction = (o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY());
+        Comparator<AABBPhysics> zFriction = (o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ());
+        //friction comparators
+        
         double fx = 0;
         double fy = 0;
         double fz = 0;
-        if ((collidesOn(Side.LEFT) && vx < 0) || (collidesOn(Side.RIGHT) && vx > 0)) {
+        
+        if (vx < 0 && collidesOn(Side.LEFT)) {
             //check if colliding and moving towards side
             
-            collidingObjects.get(Side.LEFT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
-            collidingObjects.get(Side.RIGHT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
+            vx = 0;
+            //cancel motion in this direction
+            
+            collidingObjects.get(Side.LEFT).sort(yFriction);
             //sort objects per side by friction for specific axis
             
-            double fyl = !collidingObjects.get(Side.LEFT).isEmpty() ? collidingObjects.get(Side.LEFT).get(0).getFriction().getY() : 0;
-            double fyr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getY() : 0;
-            fy = Math.max(Math.max(fy, friction.getY()), Math.max(fyl, fyr));
+            double fyl = collidingObjects.get(Side.LEFT).get(0).getFriction().getY();
+            fy = Math.max(Math.max(fy, friction.getY()), fyl);
             //get max friction
             
-            collidingObjects.get(Side.LEFT).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
-            collidingObjects.get(Side.RIGHT).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
+            collidingObjects.get(Side.LEFT).sort(zFriction);
             
-            double fzl = !collidingObjects.get(Side.LEFT).isEmpty() ? collidingObjects.get(Side.LEFT).get(0).getFriction().getZ() : 0;
-            double fzr = !collidingObjects.get(Side.RIGHT).isEmpty() ? collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ() : 0;
-            fz = Math.max(Math.max(fz, friction.getZ()), Math.max(fzl, fzr));
+            double fzl = collidingObjects.get(Side.LEFT).get(0).getFriction().getZ();
+            fz = Math.max(Math.max(fz, friction.getZ()), fzl);
+            
+        } else if (vx > 0 && collidesOn(Side.RIGHT)) {
+            
+            collidingObjects.get(Side.RIGHT).sort(yFriction);
+            
+            vx = 0;
+            
+            double fyr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getY();
+            fy = Math.max(Math.max(fy, friction.getY()), fyr);
+            
+            collidingObjects.get(Side.RIGHT).sort(zFriction);
+            
+            double fzr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ();
+            fz = Math.max(Math.max(fz, friction.getZ()), fzr);
         }
-        if ((collidesOn(Side.BOTTOM) && vy < 0) || (collidesOn(Side.TOP) && vy > 0)) {
-            collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
-            collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
+        
+        if (vy < 0 && collidesOn(Side.BOTTOM)) {
+            collidingObjects.get(Side.BOTTOM).sort(xFriction);
             
-            double fxb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX() : 0;
-            double fxt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getX() : 0;
-            fx = Math.max(Math.max(fx, friction.getX()), Math.max(fxb, fxt));
+            vy = 0;
             
-            collidingObjects.get(Side.BOTTOM).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
-            collidingObjects.get(Side.TOP).sort((o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ()));
+            double fxb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX();
+            fx = Math.max(Math.max(fx, friction.getX()), fxb);
             
-            double fzb = !collidingObjects.get(Side.BOTTOM).isEmpty() ? collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ() : 0;
-            double fzt = !collidingObjects.get(Side.TOP).isEmpty() ? collidingObjects.get(Side.TOP).get(0).getFriction().getZ() : 0;
-            fz = Math.max(Math.max(fz, friction.getZ()), Math.max(fzb, fzt));
+            collidingObjects.get(Side.BOTTOM).sort(zFriction);
+            
+            double fzb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ();
+            fz = Math.max(Math.max(fz, friction.getZ()), fzb);
+            
+        } else if (vy > 0 && collidesOn(Side.TOP)) {
+            
+            collidingObjects.get(Side.TOP).sort(xFriction);
+            
+            vy = 0;
+            
+            double fxt = collidingObjects.get(Side.TOP).get(0).getFriction().getX();
+            fx = Math.max(Math.max(fx, friction.getX()), fxt);
+            
+            collidingObjects.get(Side.TOP).sort(zFriction);
+            
+            double fzt = collidingObjects.get(Side.TOP).get(0).getFriction().getZ();
+            fz = Math.max(Math.max(fz, friction.getZ()), fzt);
         }
-        if ((collidesOn(Side.BACK) && vz < 0) || (collidesOn(Side.FRONT) && vz > 0)) {
-            collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
-            collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX()));
+        
+        if (vz < 0 && collidesOn(Side.BACK)) {
+            collidingObjects.get(Side.BACK).sort(xFriction);
             
-            double fxb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getX() : 0;
-            double fxf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getX() : 0;
-            fx = Math.max(Math.max(fx, friction.getX()), Math.max(fxb, fxf));
+            vz = 0;
             
-            collidingObjects.get(Side.BACK).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
-            collidingObjects.get(Side.FRONT).sort((o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY()));
+            double fxb = collidingObjects.get(Side.BACK).get(0).getFriction().getX();
+            fx = Math.max(Math.max(fx, friction.getX()), fxb);
             
-            double fyb = !collidingObjects.get(Side.BACK).isEmpty() ? collidingObjects.get(Side.BACK).get(0).getFriction().getY() : 0;
-            double fyf = !collidingObjects.get(Side.FRONT).isEmpty() ? collidingObjects.get(Side.FRONT).get(0).getFriction().getY() : 0;
-            fy = Math.max(Math.max(fy, friction.getY()), Math.max(fyb, fyf));
+            collidingObjects.get(Side.BACK).sort(yFriction);
+            
+            double fyb = collidingObjects.get(Side.BACK).get(0).getFriction().getY();
+            fy = Math.max(Math.max(fy, friction.getY()), fyb);
+            
+        } else if (vz > 0 && collidesOn(Side.FRONT)) {
+            
+            collidingObjects.get(Side.FRONT).sort(xFriction);
+            
+            vz = 0;
+            
+            double fxf = collidingObjects.get(Side.FRONT).get(0).getFriction().getX();
+            fx = Math.max(Math.max(fx, friction.getX()), fxf);
+            
+            collidingObjects.get(Side.FRONT).sort(yFriction);
+            
+            double fyf = collidingObjects.get(Side.FRONT).get(0).getFriction().getY();
+            fy = Math.max(Math.max(fy, friction.getY()), fyf);
         }
         //get highest friction value from colliding objects
         
-        if (vx < 0) vx = collidesOn(Side.LEFT) ? 0 : Math.min(vx + drag.getX() + fx, 0);
-        if (vx > 0) vx = collidesOn(Side.RIGHT) ? 0 : Math.max(vx - drag.getX() - fx, 0);
-        if (vy < 0) vy = collidesOn(Side.BOTTOM) ? 0 : Math.min(vy + drag.getY() + fy, 0);
-        if (vy > 0) vy = collidesOn(Side.TOP) ? 0 : Math.max(vy - drag.getY() - fy, 0);
-        if (vz < 0) vz = collidesOn(Side.BACK) ? 0 : Math.min(vz + drag.getZ() + fz, 0);
-        if (vz > 0) vz = collidesOn(Side.FRONT) ? 0 : Math.max(vz - drag.getZ() - fz, 0);
+        if (vx < 0) vx = Math.min(vx + drag.getX() + fx, 0);
+        if (vx > 0) vx = Math.max(vx - drag.getX() - fx, 0);
+        if (vy < 0) vy = Math.min(vy + drag.getY() + fy, 0);
+        if (vy > 0) vy = Math.max(vy - drag.getY() - fy, 0);
+        if (vz < 0) vz = Math.min(vz + drag.getZ() + fz, 0);
+        if (vz > 0) vz = Math.max(vz - drag.getZ() - fz, 0);
         //modify velocity based on friction, drag, and collision status
         
         velocity = new Vector(vx, vy, vz);
@@ -604,7 +650,7 @@ public abstract class AABBPhysics {
      * check if an object collides with this one on a specific side
      *
      * @param aabbPhysics object to check if colliding with
-     * @param side          side of object
+     * @param side        side of object
      * @return true if the object is colliding with the other object on the soecified side
      */
     public boolean collidesWithOn(AABBPhysics aabbPhysics, Side side) {
