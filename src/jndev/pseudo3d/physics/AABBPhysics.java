@@ -346,10 +346,14 @@ public abstract class AABBPhysics {
         //set object to colliding
         
         if (distance == overlaps[0]) {
-            // check if this object is moving in the direction of the collising side
+            //check if the min overlap distance corresponds to this side
+            
             if (velocity.getX() < 0) {
-                // check if the object is faster
+                // check if this object is moving in the direction of the colliding side
+    
                 if (Math.abs(velocity.getX()) >= Math.abs(aabbPhysics.getVelocity().getX())) {
+                    // check if the object is faster
+    
                     setPosition(position.setX(position.getX() + distance));
                     //fix object position so it is not overlapping
                 } else {
