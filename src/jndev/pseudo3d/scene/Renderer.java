@@ -133,11 +133,11 @@ public class Renderer {
                 //create new transform, resetting old one
                 
                 if (cameraRotation != 0)
-                    transform = AffineTransform.getRotateInstance(
-                            cameraRotation, windowPos.getX(), windowPos.getY());
+                    transform.rotate(cameraRotation, windowPos.getX(), windowPos.getY());
                 //rotate canvas if camera is rotated
                 
-                if (spriteRotation != 0) transform.rotate(spriteRotation, x, y);
+                if (spriteRotation != 0)
+                    transform.rotate(spriteRotation, x, y);
                 //rotate canvas about center of sprite if sprite is rotated
                 
                 g2d.setTransform(transform);
