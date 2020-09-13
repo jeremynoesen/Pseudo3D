@@ -80,7 +80,7 @@ public class Scene {
      */
     public void tick() {
         for (int i = 0; i < objects.size(); i++) {
-            if (objects.get(i) instanceof AABBPhysics) ((AABBPhysics) objects.get(i)).tick();
+            if (objects.get(i) instanceof AABBPhysics aabbPhysics) aabbPhysics.tick();
         }
     }
     
@@ -100,7 +100,7 @@ public class Scene {
      */
     public void addObject(Renderable object) {
         objects.add(object);
-        if (object instanceof PhysicsObject) ((PhysicsObject) object).setScene(this);
+        if (object instanceof PhysicsObject physicsObject) physicsObject.setScene(this);
     }
     
     /**
@@ -111,7 +111,7 @@ public class Scene {
     public void removeObject(Renderable object) {
         if (objects.contains(object)) {
             objects.remove(object);
-            if (object instanceof PhysicsObject) ((PhysicsObject) object).setScene(null);
+            if (object instanceof PhysicsObject physicsObject) physicsObject.setScene(null);
         }
     }
     
