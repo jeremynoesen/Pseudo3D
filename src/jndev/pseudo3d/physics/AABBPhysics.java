@@ -294,8 +294,7 @@ public abstract class AABBPhysics {
             Renderable object = scene.getObjects().get(i);
             //loop through all renderable objects in scene
             
-            if (object instanceof AABBPhysics) {
-                AABBPhysics aabbPhysics = (AABBPhysics) object;
+            if (object instanceof AABBPhysics aabbPhysics) {
                 //check for AABBPhysics objects
                 
                 if (aabbPhysics == this) continue;
@@ -350,10 +349,10 @@ public abstract class AABBPhysics {
             
             if (velocity.getX() < 0) {
                 // check if this object is moving in the direction of the colliding side
-    
+                
                 if (Math.abs(velocity.getX()) >= Math.abs(aabbPhysics.getVelocity().getX())) {
                     // check if the object is faster
-    
+                    
                     setPosition(position.setX(position.getX() + distance));
                     //fix object position so it is not overlapping
                 } else {

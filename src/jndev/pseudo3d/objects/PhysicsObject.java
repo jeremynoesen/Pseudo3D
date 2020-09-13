@@ -53,11 +53,10 @@ public class PhysicsObject extends AABBPhysics implements Renderable {
         if (getScene() == null) return nearby;
         for (Renderable object : getScene().getObjects()) {
             if (object == this) continue;
-            if (object instanceof PhysicsObject) {
-                PhysicsObject o = (PhysicsObject) object;
+            if (object instanceof PhysicsObject physicsObject) {
                 Box area = new Box(xRadius * 2, yRadius * 2, zRadius * 2, getPosition());
-                if (o.getBoundingBox().overlaps(area))
-                    nearby.add(o);
+                if (physicsObject.getBoundingBox().overlaps(area))
+                    nearby.add(physicsObject);
             }
         }
         return nearby;
