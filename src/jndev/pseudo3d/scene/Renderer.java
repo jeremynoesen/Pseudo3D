@@ -28,6 +28,16 @@ public class Renderer {
         if (scene == null || camera == null || graphics == null) return;
         //don't attempt rendering if one of the parameters is null
         
+        Graphics2D g2d = (Graphics2D) graphics;
+        
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+                RenderingHints.VALUE_RENDER_SPEED);
+        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
+                RenderingHints.VALUE_COLOR_RENDER_SPEED);
+        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+                RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
+        //set rendering settings for speed
+        
         graphics.setColor(scene.getBackground());
         //draw scene background color
         
@@ -35,7 +45,7 @@ public class Renderer {
         double gHeight = graphics.getClipBounds().getHeight();
         //graphics dimensions
         
-        graphics.fillRect(0, 0, (int) Math.ceil(gWidth), (int) Math.ceil(gHeight));
+        graphics.fillRect(0, 0, (int) gWidth, (int) gHeight);
         //clear out last drawn frame
         
         scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
@@ -53,20 +63,21 @@ public class Renderer {
         for (int i = 0; i < scene.getObjects().size(); i++) {
             Renderable object = scene.getObjects().get(i);
             Vector objPos = object.getPosition();
+            double camDist = camPos.getZ() - objPos.getZ();
             //object data
             
-            if (object.getSprite() == null || camPos.getZ() - objPos.getZ() >= viewDistance) continue;
+            if (camDist >= viewDistance || object.getSprite() == null) continue;
             //don't render objects without a sprite, with a camera sprite, or further than view distance
             
-            Sprite sprite = object.getSprite();
-            //get sprite
-            
             double scale = Math.abs(zoom) * (sensorSize / (sensorSize + (2.0 *
-                    (camPos.getZ() - objPos.getZ()) * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)))));
+                    camDist * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)))));
             //scale objects based on fov angle and distance from camera using law of sines and camera sensor size
             
             if (scale < 0) break;
             //stop render if objects have negative scale (too far in front of camera)
+            
+            Sprite sprite = object.getSprite();
+            //get sprite
             
             int widthScaled = (int) Math.ceil(sprite.getWidth() * scale);
             int heightScaled = (int) Math.ceil(sprite.getHeight() * scale);
@@ -95,24 +106,23 @@ public class Renderer {
                 double sprRotCos = Math.cos(spriteRotation + cameraRotation);
                 double camRotSin = Math.sin(cameraRotation);
                 double camRotCos = Math.cos(cameraRotation);
+                double relX = x - windowPos.getX();
+                double relY = y - windowPos.getY();
                 //calculations done once to reduce total calculations
                 
                 double heightRotated = Math.abs(widthScaled * sprRotSin) + Math.abs(heightScaled * sprRotCos);
                 double widthRotated = Math.abs(widthScaled * sprRotCos) + Math.abs(heightScaled * sprRotSin);
                 //get dimensions of image based on sprite rotation
                 
-                double yRotated = ((x - windowPos.getX()) * camRotSin) +
-                        ((y - windowPos.getY()) * camRotCos) + windowPos.getY();
-                double xRotated = ((x - windowPos.getX()) * camRotCos) -
-                        ((y - windowPos.getY()) * camRotSin) + windowPos.getX();
+                double yRotated = (relX * camRotSin) + (relY * camRotCos) + windowPos.getY();
+                double xRotated = (relX * camRotCos) - (relY * camRotSin) + windowPos.getX();
                 //get position of image based on camera rotation
                 
                 spriteBox = new Box(widthRotated, heightRotated,
                         new Vector(xRotated, yRotated));
                 //set box data
             } else {
-                spriteBox = new Box(widthScaled, heightScaled,
-                        new Vector(x, y));
+                spriteBox = new Box(widthScaled, heightScaled, new Vector(x, y));
                 //set box data
             }
             
@@ -130,14 +140,14 @@ public class Renderer {
                 if (spriteRotation != 0) transform.rotate(spriteRotation, x, y);
                 //rotate canvas about center of sprite if sprite is rotated
                 
-                ((Graphics2D) graphics).setTransform(transform);
+                g2d.setTransform(transform);
                 graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
-                        (int) (y - (heightScaled / 2.0)),
-                        widthScaled, heightScaled, null);
+                        (int) (y - (heightScaled / 2.0)), widthScaled, heightScaled, null);
                 //draw image to panel
             }
         }
         graphics.dispose();
+        g2d.dispose();
         //free up resources used by graphics processing
     }
 }
