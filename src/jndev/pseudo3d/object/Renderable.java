@@ -1,7 +1,7 @@
-package jndev.pseudo3d.objects;
+package jndev.pseudo3d.object;
 
-import jndev.pseudo3d.sprites.Sprite;
-import jndev.pseudo3d.utils.Vector;
+import jndev.pseudo3d.sprite.Sprite;
+import jndev.pseudo3d.util.Vector;
 
 /**
  * interface used to make an object renderable in a scene

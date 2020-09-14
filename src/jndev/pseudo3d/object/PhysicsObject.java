@@ -1,11 +1,9 @@
-package jndev.pseudo3d.objects;
+package jndev.pseudo3d.object;
 
 import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sprites.AnimatedSprite;
-import jndev.pseudo3d.sprites.CameraSprite;
-import jndev.pseudo3d.sprites.Sprite;
-import jndev.pseudo3d.utils.Box;
+import jndev.pseudo3d.sprite.Sprite;
+import jndev.pseudo3d.util.Box;
 
 import java.util.ArrayList;
 import java.util.Objects;

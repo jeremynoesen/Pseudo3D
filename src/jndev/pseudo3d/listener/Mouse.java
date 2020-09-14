@@ -1,6 +1,6 @@
-package jndev.pseudo3d.listeners;
+package jndev.pseudo3d.listener;
 
-import jndev.pseudo3d.utils.Vector;
+import jndev.pseudo3d.util.Vector;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

@@ -1,10 +1,10 @@
 package jndev.pseudo3d.physics;
 
-import jndev.pseudo3d.objects.Renderable;
+import jndev.pseudo3d.object.Renderable;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.utils.Box;
-import jndev.pseudo3d.utils.Side;
-import jndev.pseudo3d.utils.Vector;
+import jndev.pseudo3d.util.Box;
+import jndev.pseudo3d.util.Side;
+import jndev.pseudo3d.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Comparator;

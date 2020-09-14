@@ -1,10 +1,10 @@
 package jndev.pseudo3d.scene;
 
-import jndev.pseudo3d.objects.Camera;
-import jndev.pseudo3d.objects.Renderable;
-import jndev.pseudo3d.sprites.Sprite;
-import jndev.pseudo3d.utils.Box;
-import jndev.pseudo3d.utils.Vector;
+import jndev.pseudo3d.object.Camera;
+import jndev.pseudo3d.object.Renderable;
+import jndev.pseudo3d.sprite.Sprite;
+import jndev.pseudo3d.util.Box;
+import jndev.pseudo3d.util.Vector;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -15,7 +15,7 @@ import java.awt.geom.AffineTransform;
  *
  * @author JNDev (Jeremaster101)
  */
-public class Renderer {
+public class SceneRenderer {
     
     /**
      * render a scene frame to graphics

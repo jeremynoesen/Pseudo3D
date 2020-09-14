@@ -1,10 +1,10 @@
 package jndev.pseudo3d.application;
 
-import jndev.pseudo3d.scene.Renderer;
+import jndev.pseudo3d.scene.SceneRenderer;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sprites.AnimatedSprite;
-import jndev.pseudo3d.sprites.CameraSprite;
-import jndev.pseudo3d.sprites.Sprite;
+import jndev.pseudo3d.sprite.AnimatedSprite;
+import jndev.pseudo3d.sprite.CameraSprite;
+import jndev.pseudo3d.sprite.Sprite;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +14,7 @@ import java.awt.*;
  *
  * @author JNDev (Jeremaster101)
  */
-public class Loop extends JPanel {
+public class GameLoop extends JPanel {
     
     /**
      * active scene to render and tick
@@ -49,7 +49,7 @@ public class Loop extends JPanel {
     /**
      * create a new game loop with default values
      */
-    Loop() {
+    GameLoop() {
         activeScene = null;
         setRenderFrequency(60);
         setTickFrequency(120);
@@ -200,6 +200,6 @@ public class Loop extends JPanel {
      */
     @Override
     public void paintComponent(Graphics g) {
-        Renderer.render(activeScene, activeScene.getCamera(), g);
+        SceneRenderer.render(activeScene, activeScene.getCamera(), g);
     }
 }

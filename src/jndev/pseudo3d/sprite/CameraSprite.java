@@ -1,7 +1,7 @@
-package jndev.pseudo3d.sprites;
+package jndev.pseudo3d.sprite;
 
-import jndev.pseudo3d.objects.Camera;
-import jndev.pseudo3d.scene.Renderer;
+import jndev.pseudo3d.object.Camera;
+import jndev.pseudo3d.scene.SceneRenderer;
 import jndev.pseudo3d.scene.Scene;
 
 import java.awt.*;
@@ -60,7 +60,7 @@ public class CameraSprite extends Sprite {
                 BufferedImage.TYPE_INT_RGB);
         Graphics graphics = updated.createGraphics();
         graphics.setClip(0, 0, image.getWidth(), image.getHeight());
-        Renderer.render(scene, camera, graphics);
+        SceneRenderer.render(scene, camera, graphics);
         Toolkit.getDefaultToolkit().sync();
         image = updated;
         graphics.dispose();
