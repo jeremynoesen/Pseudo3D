@@ -1,6 +1,6 @@
-package jndev.pseudo3d.sprites;
+package jndev.pseudo3d.sprite;
 
-import jndev.pseudo3d.application.Game;
+import jndev.pseudo3d.application.Pseudo3D;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class AnimatedSprite extends Sprite {
      * set the current frame to the next available frame based on elapsed time
      */
     public void update() {
-        double renderStep = Game.getInstance().getLoop().getRenderFrequency() / 1000.0;
+        double renderStep = Pseudo3D.getInstance().getGameLoop().getRenderFrequency() / 1000.0;
         currentFrame = currentFrame + (frameStep / renderStep) <
                 images.size() ? currentFrame + (frameStep / renderStep) : 0;
         image = images.get((int) Math.floor(currentFrame));

@@ -1,4 +1,4 @@
-package jndev.pseudo3d.sprites;
+package jndev.pseudo3d.sprite;
 
 import java.awt.image.BufferedImage;
 import java.util.Objects;

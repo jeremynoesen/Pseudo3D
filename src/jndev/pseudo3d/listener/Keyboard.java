@@ -1,4 +1,4 @@
-package jndev.pseudo3d.listeners;
+package jndev.pseudo3d.listener;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

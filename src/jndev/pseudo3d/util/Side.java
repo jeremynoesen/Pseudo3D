@@ -1,4 +1,4 @@
-package jndev.pseudo3d.utils;
+package jndev.pseudo3d.util;
 
 /**
  * sides of a box, object, canvas, etc.

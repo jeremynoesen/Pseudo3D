@@ -1,21 +1,15 @@
-import jndev.pseudo3d.application.Game;
-import jndev.pseudo3d.listeners.Keyboard;
-import jndev.pseudo3d.listeners.Mouse;
+import jndev.pseudo3d.application.Pseudo3D;
+import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.loader.ImageLoader;
-import jndev.pseudo3d.objects.PhysicsObject;
-import jndev.pseudo3d.objects.SpriteObject;
-import jndev.pseudo3d.objects.Camera;
+import jndev.pseudo3d.object.PhysicsObject;
+import jndev.pseudo3d.object.Camera;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sprites.AnimatedSprite;
-import jndev.pseudo3d.sprites.CameraSprite;
-import jndev.pseudo3d.sprites.ImageSprite;
-import jndev.pseudo3d.utils.Vector;
+import jndev.pseudo3d.sprite.ImageSprite;
+import jndev.pseudo3d.util.Vector;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * sandbox-style testing class for testing various bits of this project
@@ -86,10 +80,10 @@ public class Sandbox {
         scene.setCamera(camera);
         scene.setBackground(Color.WHITE);
         
-        Game.launch(1000, 1000, false, "Testing");
-        Game.getInstance().getLoop().setActiveScene(scene);
-        Game.getInstance().getLoop().setRenderFrequency(75);
-        Game.getInstance().getLoop().start();
+        Pseudo3D.launch(1000, 1000, false, "Testing");
+        Pseudo3D.getInstance().getGameLoop().setActiveScene(scene);
+        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(75);
+        Pseudo3D.getInstance().getGameLoop().start();
         
         scene.addRunnable(() -> {
 //                physicsObject.setVelocity(
