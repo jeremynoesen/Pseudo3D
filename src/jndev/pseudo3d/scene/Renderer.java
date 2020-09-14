@@ -25,9 +25,6 @@ public class Renderer {
      * @param graphics graphics to render to
      */
     public static void render(Scene scene, Camera camera, Graphics graphics) {
-        if (scene == null || camera == null || graphics == null) return;
-        //don't attempt rendering if one of the parameters is null
-        
         Graphics2D g2d = (Graphics2D) graphics;
         
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
@@ -69,7 +66,7 @@ public class Renderer {
             if (camDist >= viewDistance || object.getSprite() == null) continue;
             //don't render objects without a sprite, with a camera sprite, or further than view distance
             
-            double scale = Math.abs(zoom) * (sensorSize / (sensorSize + (2.0 *
+            double scale = zoom * (sensorSize / (sensorSize + (2.0 *
                     camDist * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov)))));
             //scale objects based on fov angle and distance from camera using law of sines and camera sensor size
             
@@ -83,24 +80,28 @@ public class Renderer {
             int heightScaled = (int) Math.ceil(sprite.getHeight() * scale);
             //scale image dimensions
             
-            if (widthScaled == 1 && heightScaled == 1) continue;
-            //don't draw sprites that are too small
-            
             double x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
             double y = gHeight - (((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY()));
             //translate object coordinates
-            
-            double spriteRotation = Math.toRadians(sprite.getRotation());
-            double cameraRotation = Math.toRadians(-camera.getRotation());
-            //get rotations
             
             Box screenBox = new Box(gWidth, gHeight,
                     new Vector(gWidth / 2.0, gHeight / 2.0));
             Box spriteBox;
             //boxes to represent image and panel bounds
             
-            if (cameraRotation != 0 || spriteRotation != 0) {
+            AffineTransform transform = new AffineTransform();
+            //create new transform, resetting old one
+            
+            if (camera.getRotation() != 0 || sprite.getRotation() != 0) {
                 //check if there is any rotation
+                
+                double spriteRotation = Math.toRadians(sprite.getRotation());
+                double cameraRotation = Math.toRadians(-camera.getRotation());
+                //convert to radians
+                
+                transform.rotate(cameraRotation, windowPos.getX(), windowPos.getY());
+                transform.rotate(spriteRotation, x, y);
+                //rotate canvas
                 
                 double sprRotSin = Math.sin(spriteRotation + cameraRotation);
                 double sprRotCos = Math.cos(spriteRotation + cameraRotation);
@@ -128,17 +129,6 @@ public class Renderer {
             
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
-                
-                AffineTransform transform = new AffineTransform();
-                //create new transform, resetting old one
-                
-                if (cameraRotation != 0)
-                    transform.rotate(cameraRotation, windowPos.getX(), windowPos.getY());
-                //rotate canvas if camera is rotated
-                
-                if (spriteRotation != 0)
-                    transform.rotate(spriteRotation, x, y);
-                //rotate canvas about center of sprite if sprite is rotated
                 
                 g2d.setTransform(transform);
                 graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
