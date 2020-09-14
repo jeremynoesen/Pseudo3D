@@ -34,7 +34,7 @@ public class Sandbox {
         Scene scene = new Scene();
         PhysicsObject physicsObject = new PhysicsObject();
         ImageSprite imageSprite = new ImageSprite(ImageLoader.get("test/images/player/front.png"));
-        imageSprite.setWidth(100);
+//        imageSprite.setWidth(100);
 //        imageSprite.setRotation(45);
         physicsObject.setSprite(imageSprite);
 //        physicsObject.setSprite(new ColorSprite(50, 50, new Color(255, 0, 0, 50)));
@@ -99,12 +99,12 @@ public class Sandbox {
                 
             if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
-//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/back.png")));
             }
 
             if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
-//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
             }
 
             if ((Keyboard.isPressed(KeyEvent.VK_W) && Keyboard.isPressed(KeyEvent.VK_S)) ||
@@ -114,12 +114,12 @@ public class Sandbox {
 
             if (Keyboard.isPressed(KeyEvent.VK_A)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
-//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/left.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/left.png")));
             }
 
             if (Keyboard.isPressed(KeyEvent.VK_D)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
-//                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/right.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/right.png")));
             }
 
             if (Keyboard.isPressed(KeyEvent.VK_A) && Keyboard.isPressed(KeyEvent.VK_D)) {
