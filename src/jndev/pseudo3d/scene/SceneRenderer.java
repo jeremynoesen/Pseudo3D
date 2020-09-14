@@ -4,6 +4,7 @@ import jndev.pseudo3d.object.Camera;
 import jndev.pseudo3d.object.Renderable;
 import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Box;
+import jndev.pseudo3d.util.QuickMath;
 import jndev.pseudo3d.util.Vector;
 
 import java.awt.*;
@@ -76,8 +77,8 @@ public class SceneRenderer {
             Sprite sprite = object.getSprite();
             //get sprite
             
-            int widthScaled = (int) Math.ceil(sprite.getWidth() * scale);
-            int heightScaled = (int) Math.ceil(sprite.getHeight() * scale);
+            int widthScaled = (int) QuickMath.ceil(sprite.getWidth() * scale);
+            int heightScaled = (int) QuickMath.ceil(sprite.getHeight() * scale);
             //scale image dimensions
             
             double x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
