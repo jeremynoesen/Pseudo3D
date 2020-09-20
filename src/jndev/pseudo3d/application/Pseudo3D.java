@@ -38,18 +38,16 @@ public class Pseudo3D extends JFrame {
      * @param title     title of window
      */
     public static void initialize(int width, int height, boolean resizable, String title) {
-        EventQueue.invokeLater(() -> {
-            pseudo3d.addKeyListener(new Keyboard());
-            pseudo3d.addMouseListener(new Mouse());
-            pseudo3d.addMouseMotionListener(new Mouse());
-            pseudo3d.addMouseWheelListener(new Mouse());
-            pseudo3d.add(gameLoop);
-            pseudo3d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            pseudo3d.setSize(new Dimension(width, height));
-            pseudo3d.setLocationRelativeTo(null);
-            pseudo3d.setResizable(resizable);
-            pseudo3d.setTitle(title);
-        });
+        pseudo3d.addKeyListener(new Keyboard());
+        pseudo3d.addMouseListener(new Mouse());
+        pseudo3d.addMouseMotionListener(new Mouse());
+        pseudo3d.addMouseWheelListener(new Mouse());
+        pseudo3d.add(gameLoop);
+        pseudo3d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pseudo3d.setSize(new Dimension(width, height));
+        pseudo3d.setLocationRelativeTo(null);
+        pseudo3d.setResizable(resizable);
+        pseudo3d.setTitle(title);
     }
     
     /**
@@ -58,6 +56,7 @@ public class Pseudo3D extends JFrame {
     public static void launch() {
         pseudo3d.setVisible(true);
         gameLoop.start();
+        pseudo3d.requestFocus();
     }
     
     /**

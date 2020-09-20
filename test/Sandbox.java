@@ -140,14 +140,14 @@ public class Sandbox {
             if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                 camera.setFieldOfView(Math.max(camera.getFieldOfView() - 1, 0));
             }
-//
-//            if (Keyboard.isPressed(KeyEvent.VK_LEFT)) {
-//                camera.setRotation(camera.getRotation() + 0.1);
-//            }
-//
-//            if (Keyboard.isPressed(KeyEvent.VK_RIGHT)) {
-//                camera.setRotation(camera.getRotation() - 0.1);
-//            }
+
+            if (Keyboard.isPressed(KeyEvent.VK_LEFT)) {
+                camera.setRotation(camera.getRotation() + 0.1);
+            }
+
+            if (Keyboard.isPressed(KeyEvent.VK_RIGHT)) {
+                camera.setRotation(camera.getRotation() - 0.1);
+            }
         });
     }
 }
