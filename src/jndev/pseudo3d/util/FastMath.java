@@ -7,7 +7,7 @@ package jndev.pseudo3d.util;
  *
  * @author JNDev (Jeremaster101)
  */
-public class QuickMath {
+public class FastMath {
     
     /**
      * get the maximum of two doubles. this method cuts out checks for NaN for a minor speed improvement

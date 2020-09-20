@@ -3,7 +3,7 @@ package jndev.pseudo3d.physics;
 import jndev.pseudo3d.object.Renderable;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Box;
-import jndev.pseudo3d.util.QuickMath;
+import jndev.pseudo3d.util.FastMath;
 import jndev.pseudo3d.util.Side;
 import jndev.pseudo3d.util.Vector;
 
@@ -157,19 +157,19 @@ public abstract class AABBPhysics {
         //update velocity based on acceleration
         
         if (vx > -terminalVelocity.getX() && gravity.getX() < 0)
-            vx = QuickMath.max(vx + gravity.getX(), -terminalVelocity.getX());
+            vx = FastMath.max(vx + gravity.getX(), -terminalVelocity.getX());
         else if (vx < terminalVelocity.getX() && gravity.getX() > 0)
-            vx = QuickMath.min(vx + gravity.getX(), terminalVelocity.getX());
+            vx = FastMath.min(vx + gravity.getX(), terminalVelocity.getX());
         
         if (vy > -terminalVelocity.getY() && gravity.getY() < 0)
-            vy = QuickMath.max(vy + gravity.getY(), -terminalVelocity.getY());
+            vy = FastMath.max(vy + gravity.getY(), -terminalVelocity.getY());
         else if (vy < terminalVelocity.getY() && gravity.getY() > 0)
-            vy = QuickMath.min(vy + gravity.getY(), terminalVelocity.getY());
+            vy = FastMath.min(vy + gravity.getY(), terminalVelocity.getY());
         
         if (vz > -terminalVelocity.getZ() && gravity.getZ() < 0)
-            vz = QuickMath.max(vz + gravity.getZ(), -terminalVelocity.getZ());
+            vz = FastMath.max(vz + gravity.getZ(), -terminalVelocity.getZ());
         else if (vz < terminalVelocity.getZ() && gravity.getZ() > 0)
-            vz = QuickMath.min(vz + gravity.getZ(), terminalVelocity.getZ());
+            vz = FastMath.min(vz + gravity.getZ(), terminalVelocity.getZ());
         
         //apply gravity if not exceeding terminal velocity
         
@@ -192,22 +192,22 @@ public abstract class AABBPhysics {
             //sort objects per side by friction for specific axis
             
             double fyl = collidingObjects.get(Side.LEFT).get(0).getFriction().getY();
-            fy = QuickMath.max(fy, fyl);
+            fy = FastMath.max(fy, fyl);
             //get max friction
             
             collidingObjects.get(Side.LEFT).sort(zFriction);
             double fzl = collidingObjects.get(Side.LEFT).get(0).getFriction().getZ();
-            fz = QuickMath.max(fz, fzl);
+            fz = FastMath.max(fz, fzl);
         } else if (vx > 0 && collidesOn(Side.RIGHT)) {
             vx = 0;
             
             collidingObjects.get(Side.RIGHT).sort(yFriction);
             double fyr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getY();
-            fy = QuickMath.max(fy, fyr);
+            fy = FastMath.max(fy, fyr);
             
             collidingObjects.get(Side.RIGHT).sort(zFriction);
             double fzr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ();
-            fz = QuickMath.max(fz, fzr);
+            fz = FastMath.max(fz, fzr);
         }
         
         if (vy < 0 && collidesOn(Side.BOTTOM)) {
@@ -215,21 +215,21 @@ public abstract class AABBPhysics {
             
             collidingObjects.get(Side.BOTTOM).sort(xFriction);
             double fxb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX();
-            fx = QuickMath.max(fx, fxb);
+            fx = FastMath.max(fx, fxb);
             
             collidingObjects.get(Side.BOTTOM).sort(zFriction);
             double fzb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ();
-            fz = QuickMath.max(fz, fzb);
+            fz = FastMath.max(fz, fzb);
         } else if (vy > 0 && collidesOn(Side.TOP)) {
             vy = 0;
             
             collidingObjects.get(Side.TOP).sort(xFriction);
             double fxt = collidingObjects.get(Side.TOP).get(0).getFriction().getX();
-            fx = QuickMath.max(fx, fxt);
+            fx = FastMath.max(fx, fxt);
             
             collidingObjects.get(Side.TOP).sort(zFriction);
             double fzt = collidingObjects.get(Side.TOP).get(0).getFriction().getZ();
-            fz = QuickMath.max(fz, fzt);
+            fz = FastMath.max(fz, fzt);
         }
         
         if (vz < 0 && collidesOn(Side.BACK)) {
@@ -237,35 +237,35 @@ public abstract class AABBPhysics {
             
             collidingObjects.get(Side.BACK).sort(xFriction);
             double fxb = collidingObjects.get(Side.BACK).get(0).getFriction().getX();
-            fx = QuickMath.max(fx, fxb);
+            fx = FastMath.max(fx, fxb);
             
             collidingObjects.get(Side.BACK).sort(yFriction);
             double fyb = collidingObjects.get(Side.BACK).get(0).getFriction().getY();
-            fy = QuickMath.max(fy, fyb);
+            fy = FastMath.max(fy, fyb);
         } else if (vz > 0 && collidesOn(Side.FRONT)) {
             vz = 0;
             
             collidingObjects.get(Side.FRONT).sort(xFriction);
             double fxf = collidingObjects.get(Side.FRONT).get(0).getFriction().getX();
-            fx = QuickMath.max(fx, fxf);
+            fx = FastMath.max(fx, fxf);
             
             collidingObjects.get(Side.FRONT).sort(yFriction);
             double fyf = collidingObjects.get(Side.FRONT).get(0).getFriction().getY();
-            fy = QuickMath.max(fy, fyf);
+            fy = FastMath.max(fy, fyf);
         }
         //get highest friction value from colliding objects
         
-        if (fx != 0) fx = QuickMath.max(fx, friction.getX());
-        if (fy != 0) fy = QuickMath.max(fy, friction.getY());
-        if (fz != 0) fz = QuickMath.max(fz, friction.getZ());
+        if (fx != 0) fx = FastMath.max(fx, friction.getX());
+        if (fy != 0) fy = FastMath.max(fy, friction.getY());
+        if (fz != 0) fz = FastMath.max(fz, friction.getZ());
         //get highest friction from previous calculation and object's own friction
         
-        if (vx < 0) vx = QuickMath.min(vx + drag.getX() + fx, 0);
-        else if (vx > 0) vx = QuickMath.max(vx - drag.getX() - fx, 0);
-        if (vy < 0) vy = QuickMath.min(vy + drag.getY() + fy, 0);
-        else if (vy > 0) vy = QuickMath.max(vy - drag.getY() - fy, 0);
-        if (vz < 0) vz = QuickMath.min(vz + drag.getZ() + fz, 0);
-        else if (vz > 0) vz = QuickMath.max(vz - drag.getZ() - fz, 0);
+        if (vx < 0) vx = FastMath.min(vx + drag.getX() + fx, 0);
+        else if (vx > 0) vx = FastMath.max(vx - drag.getX() - fx, 0);
+        if (vy < 0) vy = FastMath.min(vy + drag.getY() + fy, 0);
+        else if (vy > 0) vy = FastMath.max(vy - drag.getY() - fy, 0);
+        if (vz < 0) vz = FastMath.min(vz + drag.getZ() + fz, 0);
+        else if (vz > 0) vz = FastMath.max(vz - drag.getZ() - fz, 0);
         //modify velocity based on friction, drag, and collision status
         
         velocity = new Vector(vx, vy, vz);

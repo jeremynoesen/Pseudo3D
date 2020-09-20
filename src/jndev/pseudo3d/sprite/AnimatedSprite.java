@@ -1,7 +1,7 @@
 package jndev.pseudo3d.sprite;
 
 import jndev.pseudo3d.application.Pseudo3D;
-import jndev.pseudo3d.util.QuickMath;
+import jndev.pseudo3d.util.FastMath;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class AnimatedSprite extends Sprite {
         double renderStep = Pseudo3D.getInstance().getGameLoop().getRenderFrequency() / 1000.0;
         currentFrame = currentFrame + (frameStep / renderStep) <
                 images.size() ? currentFrame + (frameStep / renderStep) : 0;
-        image = images.get((int) QuickMath.floor(currentFrame));
+        image = images.get((int) FastMath.floor(currentFrame));
     }
     
     /**
