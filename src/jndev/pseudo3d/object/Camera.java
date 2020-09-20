@@ -56,7 +56,7 @@ public class Camera {
         viewDistance = 500;
         zoom = 1;
         rotation = 0;
-        setWindowPosition(null);
+        windowPosition = null;
     }
     
     /**
@@ -127,7 +127,7 @@ public class Camera {
      * @param scenePosition new position in scene
      */
     public void setScenePosition(Vector scenePosition) {
-        if (scenePosition != null) this.scenePosition = scenePosition;
+        this.scenePosition = scenePosition;
     }
     
     /**
