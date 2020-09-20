@@ -25,6 +25,7 @@ public class Sandbox {
      * @param args program arguments
      */
     public static void main(String[] args) {
+        Pseudo3D.initialize(1000, 1000, false, "Testing");
         ImageLoader.load(new File("test/images/"));
         Scene scene = new Scene();
         PhysicsObject physicsObject = new PhysicsObject();
@@ -81,15 +82,14 @@ public class Sandbox {
         scene.setCamera(camera);
         scene.setBackground(Color.WHITE);
         
-        Pseudo3D.launch(1000, 1000, false, "Testing");
         Pseudo3D.getInstance().getGameLoop().setActiveScene(scene);
         Pseudo3D.getInstance().getGameLoop().setRenderFrequency(75);
-        Pseudo3D.getInstance().getGameLoop().start();
+        Pseudo3D.launch();
         
         scene.addRunnable(() -> {
                 physicsObject.setVelocity(
                         Mouse.getPosition().setY(Mouse.getPosition().multiply(-1).getY())
-                                .subtract(new Vector(500, -500))
+                                .subtract(camera.getWindowPosition().multiply(new Vector(1, -1)))
                                 .subtract(physicsObject.getPosition().setZ(0)).multiply(0.1));
                 
 //            if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
