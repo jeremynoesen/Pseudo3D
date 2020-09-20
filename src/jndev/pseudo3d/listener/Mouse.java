@@ -1,5 +1,6 @@
 package jndev.pseudo3d.listener;
 
+import jndev.pseudo3d.application.Pseudo3D;
 import jndev.pseudo3d.util.Vector;
 
 import java.awt.event.MouseAdapter;
@@ -105,6 +106,7 @@ public class Mouse extends MouseAdapter {
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        position = new Vector(e.getXOnScreen(), e.getY());
+        position = new Vector(e.getXOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getX(),
+                e.getYOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getY());
     }
 }
