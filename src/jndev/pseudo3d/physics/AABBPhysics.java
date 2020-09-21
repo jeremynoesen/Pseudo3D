@@ -1,6 +1,6 @@
 package jndev.pseudo3d.physics;
 
-import jndev.pseudo3d.object.Renderable;
+import jndev.pseudo3d.sceneobject.Renderable;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.FastMath;

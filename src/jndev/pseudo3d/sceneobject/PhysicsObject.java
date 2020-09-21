@@ -1,4 +1,4 @@
-package jndev.pseudo3d.object;
+package jndev.pseudo3d.sceneobject;
 
 import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.scene.Scene;

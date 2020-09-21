@@ -1,7 +1,7 @@
 package jndev.pseudo3d.scene;
 
-import jndev.pseudo3d.object.Camera;
-import jndev.pseudo3d.object.Renderable;
+import jndev.pseudo3d.sceneobject.Camera;
+import jndev.pseudo3d.sceneobject.Renderable;
 import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.FastMath;
