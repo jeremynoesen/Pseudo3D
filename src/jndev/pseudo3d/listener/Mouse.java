@@ -3,7 +3,6 @@ package jndev.pseudo3d.listener;
 import jndev.pseudo3d.application.Pseudo3D;
 import jndev.pseudo3d.util.Vector;
 
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -107,10 +106,7 @@ public class Mouse extends MouseAdapter {
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        try {
-            position = new Vector(e.getXOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getX(),
-                    e.getYOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getY());
-        } catch (IllegalComponentStateException ignored) {
-        }
+        position = new Vector(e.getXOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getX(),
+                e.getYOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getY());
     }
 }
