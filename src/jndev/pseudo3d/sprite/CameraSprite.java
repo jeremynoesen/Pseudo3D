@@ -1,6 +1,6 @@
 package jndev.pseudo3d.sprite;
 
-import jndev.pseudo3d.object.Camera;
+import jndev.pseudo3d.sceneobject.Camera;
 import jndev.pseudo3d.scene.SceneRenderer;
 import jndev.pseudo3d.scene.Scene;
 

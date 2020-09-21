@@ -1,4 +1,4 @@
-package jndev.pseudo3d.object;
+package jndev.pseudo3d.sceneobject;
 
 import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Vector;
