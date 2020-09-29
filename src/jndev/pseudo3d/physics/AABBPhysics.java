@@ -350,7 +350,7 @@ public abstract class AABBPhysics {
             if (velocity.getX() < 0) {
                 // check if this object is moving in the direction of the colliding side
                 
-                if (Math.abs(velocity.getX()) >= Math.abs(aabbPhysics.getVelocity().getX())) {
+                if (velocity.getX() <= -Math.abs(aabbPhysics.getVelocity().getX())) {
                     // check if the object is faster
                     
                     setPosition(position.setX(position.getX() + distance));
@@ -367,7 +367,7 @@ public abstract class AABBPhysics {
             
         } else if (distance == overlaps[1]) {
             if (velocity.getX() > 0) {
-                if (Math.abs(velocity.getX()) >= Math.abs(aabbPhysics.getVelocity().getX())) {
+                if (velocity.getX() >= Math.abs(aabbPhysics.getVelocity().getX())) {
                     setPosition(position.setX(position.getX() - distance));
                 } else {
                     setPosition(position.setX(position.getX() - velocity.getX()));
@@ -378,7 +378,7 @@ public abstract class AABBPhysics {
             
         } else if (distance == overlaps[2]) {
             if (velocity.getY() < 0) {
-                if (Math.abs(velocity.getY()) >= Math.abs(aabbPhysics.getVelocity().getY())) {
+                if (velocity.getY() <= -Math.abs(aabbPhysics.getVelocity().getY())) {
                     setPosition(position.setY(position.getY() + distance));
                 } else {
                     setPosition(position.setY(position.getY() - velocity.getY()));
@@ -389,7 +389,7 @@ public abstract class AABBPhysics {
             
         } else if (distance == overlaps[3]) {
             if (velocity.getY() > 0) {
-                if (Math.abs(velocity.getY()) >= Math.abs(aabbPhysics.getVelocity().getY())) {
+                if (velocity.getY() >= Math.abs(aabbPhysics.getVelocity().getY())) {
                     setPosition(position.setY(position.getY() - distance));
                 } else {
                     setPosition(position.setY(position.getY() - velocity.getY()));
@@ -400,7 +400,7 @@ public abstract class AABBPhysics {
             
         } else if (distance == overlaps[4]) {
             if (velocity.getZ() < 0) {
-                if (Math.abs(velocity.getZ()) >= Math.abs(aabbPhysics.getVelocity().getZ())) {
+                if (velocity.getZ() <= -Math.abs(aabbPhysics.getVelocity().getZ())) {
                     setPosition(position.setZ(position.getZ() + distance));
                 } else {
                     setPosition(position.setZ(position.getZ() - velocity.getZ()));
@@ -411,7 +411,7 @@ public abstract class AABBPhysics {
             
         } else if (distance == overlaps[5]) {
             if (velocity.getZ() > 0) {
-                if (Math.abs(velocity.getZ()) >= Math.abs(aabbPhysics.getVelocity().getZ())) {
+                if (velocity.getZ() >= Math.abs(aabbPhysics.getVelocity().getZ())) {
                     setPosition(position.setZ(position.getZ() - distance));
                 } else {
                     setPosition(position.setZ(position.getZ() - velocity.getZ()));
