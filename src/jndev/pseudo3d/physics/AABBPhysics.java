@@ -1,7 +1,7 @@
 package jndev.pseudo3d.physics;
 
-import jndev.pseudo3d.sceneobject.Renderable;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.sceneobject.Renderable;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.FastMath;
 import jndev.pseudo3d.util.Side;
@@ -291,8 +291,7 @@ public abstract class AABBPhysics {
         }
         //reset all collision data
         
-        for (int i = 0; i < scene.getObjects().size(); i++) {
-            Renderable object = scene.getObjects().get(i);
+        for (Renderable object : scene.getObjects()) {
             //loop through all renderable objects in scene
             
             if (object instanceof AABBPhysics aabbPhysics) {

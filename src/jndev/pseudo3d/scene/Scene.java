@@ -1,15 +1,15 @@
 package jndev.pseudo3d.scene;
 
+import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.sceneobject.Camera;
 import jndev.pseudo3d.sceneobject.PhysicsObject;
 import jndev.pseudo3d.sceneobject.Renderable;
-import jndev.pseudo3d.physics.AABBPhysics;
 
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * scene to place objects, a camera, and code injections to modify them
@@ -21,7 +21,7 @@ public class Scene {
     /**
      * all objects in the scene
      */
-    private ArrayList<Renderable> objects;
+    private CopyOnWriteArrayList<Renderable> objects;
     
     /**
      * camera for the scene to determine where to render from
@@ -42,7 +42,7 @@ public class Scene {
      * create a new scene
      */
     public Scene() {
-        objects = new ArrayList<>();
+        objects = new CopyOnWriteArrayList<>();
         camera = new Camera();
         background = Color.WHITE;
         runnables = new HashSet<>();
@@ -56,7 +56,7 @@ public class Scene {
      * @param background background color
      * @param runnables  runnables to be injected into game loop
      */
-    public Scene(ArrayList<Renderable> objects, Camera camera, Color background, Set<Runnable> runnables) {
+    public Scene(CopyOnWriteArrayList<Renderable> objects, Camera camera, Color background, Set<Runnable> runnables) {
         this.objects = objects;
         this.camera = camera;
         this.background = background;
@@ -69,7 +69,7 @@ public class Scene {
      * @param scene scene to copy
      */
     public Scene(Scene scene) {
-        objects = new ArrayList<>(scene.objects);
+        objects = new CopyOnWriteArrayList<>(scene.objects);
         camera = scene.camera;
         background = scene.background;
         runnables = scene.runnables;
@@ -79,17 +79,17 @@ public class Scene {
      * tick the scene once and every object in it. also sort all objects by z location from high to low
      */
     public void tick() {
-        for (int i = 0; i < objects.size(); i++) {
-            if (objects.get(i) instanceof AABBPhysics aabbPhysics) aabbPhysics.tick();
+        for (Renderable object : objects) {
+            if (object instanceof AABBPhysics aabbPhysics) aabbPhysics.tick();
         }
     }
     
     /**
      * get all the objects in this scene
      *
-     * @return ArrayList of all objects in this scene
+     * @return Vector of all objects in this scene
      */
-    public ArrayList<Renderable> getObjects() {
+    public CopyOnWriteArrayList<Renderable> getObjects() {
         return objects;
     }
     
@@ -118,9 +118,9 @@ public class Scene {
     /**
      * set the objects in this scene
      *
-     * @param objects ArrayList of objects
+     * @param objects Vector of objects
      */
-    public void setObjects(ArrayList<Renderable> objects) {
+    public void setObjects(CopyOnWriteArrayList<Renderable> objects) {
         this.objects = objects;
     }
     
