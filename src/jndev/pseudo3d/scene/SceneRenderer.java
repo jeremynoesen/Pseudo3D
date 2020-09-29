@@ -57,8 +57,7 @@ public class SceneRenderer {
         double viewDistance = camera.getViewDistance();
         //camera data
         
-        for (int i = 0; i < scene.getObjects().size(); i++) {
-            Renderable object = scene.getObjects().get(i);
+        for (Renderable object : scene.getObjects()) {
             Vector objPos = object.getPosition();
             double camDist = camPos.getZ() - objPos.getZ();
             //object data

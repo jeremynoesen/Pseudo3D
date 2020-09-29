@@ -1,7 +1,8 @@
 package jndev.pseudo3d.application;
 
-import jndev.pseudo3d.scene.SceneRenderer;
 import jndev.pseudo3d.scene.Scene;
+import jndev.pseudo3d.scene.SceneRenderer;
+import jndev.pseudo3d.sceneobject.Renderable;
 import jndev.pseudo3d.sprite.AnimatedSprite;
 import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.Sprite;
@@ -95,9 +96,9 @@ public class GameLoop extends JPanel {
                 //delay loop
                 
                 if (!paused) {
-                    for (int i = 0; i < activeScene.getObjects().size(); i++) {
-                        if (activeScene.getObjects().get(i).getSprite() != null) {
-                            Sprite sprite = activeScene.getObjects().get(i).getSprite();
+                    for (Renderable object : activeScene.getObjects()) {
+                        if (object.getSprite() != null) {
+                            Sprite sprite = object.getSprite();
                             
                             if (sprite instanceof AnimatedSprite animatedSprite) {
                                 animatedSprite.update();
