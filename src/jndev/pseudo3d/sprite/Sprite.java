@@ -26,7 +26,7 @@ public abstract class Sprite {
     protected int height;
     
     /**
-     * counter-clock-wise rotation of sprite in degrees
+     * counter-clock-wise rotation of sprite in radians
      */
     protected float rotation;
     
@@ -100,7 +100,7 @@ public abstract class Sprite {
     /**
      * set the rotation of the sprite
      *
-     * @param rotation rotation of sprite in degrees counter-clock-wise
+     * @param rotation rotation of sprite in radians counter-clock-wise
      */
     public void setRotation(float rotation) {
         this.rotation = rotation;
@@ -109,7 +109,7 @@ public abstract class Sprite {
     /**
      * get the rotation of the sprite
      *
-     * @return rotation of sprite in degrees counter-clock-wise
+     * @return rotation of sprite in radians counter-clock-wise
      */
     public float getRotation() {
         return rotation;
