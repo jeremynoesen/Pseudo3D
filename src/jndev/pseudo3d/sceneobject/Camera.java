@@ -12,7 +12,7 @@ import jndev.pseudo3d.util.Vector;
 public class Camera {
     
     /**
-     * field of view in degrees, how wide the camera can see
+     * field of view in radians, how wide the camera can see
      */
     private float fieldOfView;
     
@@ -32,7 +32,7 @@ public class Camera {
     private float zoom;
     
     /**
-     * rotation of the camera in degrees, counter-clock-wise
+     * rotation of the camera in radians, counter-clock-wise
      */
     private float rotation;
     
@@ -62,11 +62,13 @@ public class Camera {
     /**
      * constructs a new camera with set position, sensor res, and field of view
      *
-     * @param scenePosition camera position in scene
-     * @param sensorSize    camera sensor size
-     * @param fieldOfView   field of view in degrees
-     * @param viewDistance  z distance camera is able to see
-     * @param zoom          camera zoom, scales render
+     * @param scenePosition  camera position in scene
+     * @param sensorSize     camera sensor size
+     * @param fieldOfView    field of view in radians
+     * @param viewDistance   z distance camera is able to see
+     * @param zoom           camera zoom, scales render
+     * @param rotation       rotation of camera in radians
+     * @param windowPosition position of camera in window
      */
     public Camera(Vector scenePosition, Vector windowPosition, float sensorSize, float fieldOfView,
                   float viewDistance, float zoom, float rotation) {
@@ -95,9 +97,9 @@ public class Camera {
     }
     
     /**
-     * get field of view in degrees
+     * get field of view in radians
      *
-     * @return field of view in degrees
+     * @return field of view in radians
      */
     public float getFieldOfView() {
         return fieldOfView;
@@ -106,7 +108,7 @@ public class Camera {
     /**
      * set the camera's field of view
      *
-     * @param fieldOfView field of view in degrees
+     * @param fieldOfView field of view in radians
      */
     public void setFieldOfView(float fieldOfView) {
         this.fieldOfView = fieldOfView;
@@ -206,7 +208,7 @@ public class Camera {
     /**
      * get the rotation of the camera
      *
-     * @return rotation of camera in degrees counter-clock-wise
+     * @return rotation of camera in radians counter-clock-wise
      */
     public float getRotation() {
         return rotation;
@@ -215,7 +217,7 @@ public class Camera {
     /**
      * set the rotation of the camera
      *
-     * @param rotation rotation of camera in degrees counter-clock-wise
+     * @param rotation rotation of camera in radians counter-clock-wise
      */
     public void setRotation(float rotation) {
         this.rotation = rotation;

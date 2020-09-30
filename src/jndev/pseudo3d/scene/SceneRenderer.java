@@ -51,7 +51,7 @@ public class SceneRenderer {
         
         Vector camPos = camera.getScenePosition();
         Vector windowPos = camera.getWindowPosition();
-        float fov = (float) Math.toRadians(camera.getFieldOfView() / 2.0f);
+        float fov = camera.getFieldOfView() / 2.0f;
         float sensorSize = camera.getSensorSize();
         float zoom = camera.getZoom();
         float viewDistance = camera.getViewDistance();
@@ -94,8 +94,8 @@ public class SceneRenderer {
             if (camera.getRotation() != 0 || sprite.getRotation() != 0) {
                 //check if there is any rotation
                 
-                float spriteRotation = (float) Math.toRadians(sprite.getRotation());
-                float cameraRotation = (float) Math.toRadians(-camera.getRotation());
+                float spriteRotation = sprite.getRotation();
+                float cameraRotation = -camera.getRotation();
                 //convert to radians
                 
                 transform.rotate(cameraRotation, windowPos.getX(), windowPos.getY());
