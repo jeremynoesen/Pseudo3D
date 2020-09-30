@@ -28,7 +28,7 @@ public abstract class Sprite {
     /**
      * counter-clock-wise rotation of sprite in degrees
      */
-    protected double rotation;
+    protected float rotation;
     
     /**
      * construct new sprite only when subclassed
@@ -102,7 +102,7 @@ public abstract class Sprite {
      *
      * @param rotation rotation of sprite in degrees counter-clock-wise
      */
-    public void setRotation(double rotation) {
+    public void setRotation(float rotation) {
         this.rotation = rotation;
     }
     
@@ -111,7 +111,7 @@ public abstract class Sprite {
      *
      * @return rotation of sprite in degrees counter-clock-wise
      */
-    public double getRotation() {
+    public float getRotation() {
         return rotation;
     }
     
@@ -128,7 +128,7 @@ public abstract class Sprite {
         Sprite that = (Sprite) o;
         return width == that.width &&
                 height == that.height &&
-                Double.compare(that.rotation, rotation) == 0 &&
+                Float.compare(that.rotation, rotation) == 0 &&
                 Objects.equals(image, that.image);
     }
 }

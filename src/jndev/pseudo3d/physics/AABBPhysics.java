@@ -94,14 +94,14 @@ public abstract class AABBPhysics {
      * create a new aabb object with default values
      */
     public AABBPhysics() {
-        gravity = new Vector(0, -0.1, 0);
+        gravity = new Vector(0, -0.1f, 0);
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
         jerk = new Vector();
         terminalVelocity = new Vector(10, 10, 10);
-        drag = new Vector(0.005, 0.005, 0.005);
-        friction = new Vector(0.05, 0.05, 0.05);
+        drag = new Vector(0.005f, 0.005f, 0.005f);
+        friction = new Vector(0.05f, 0.05f, 0.05f);
         scene = null;
         collidable = true;
         colliding = false;
@@ -151,9 +151,9 @@ public abstract class AABBPhysics {
                 acceleration.getZ() + jerk.getZ());
         //update acceleration based on jerk
         
-        double vx = velocity.getX() + acceleration.getX();
-        double vy = velocity.getY() + acceleration.getY();
-        double vz = velocity.getZ() + acceleration.getZ();
+        float vx = velocity.getX() + acceleration.getX();
+        float vy = velocity.getY() + acceleration.getY();
+        float vz = velocity.getZ() + acceleration.getZ();
         //update velocity based on acceleration
         
         if (vx > -terminalVelocity.getX() && gravity.getX() < 0)
@@ -178,9 +178,9 @@ public abstract class AABBPhysics {
         Comparator<AABBPhysics> zFriction = (o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ());
         //friction comparators
         
-        double fx = 0;
-        double fy = 0;
-        double fz = 0;
+        float fx = 0;
+        float fy = 0;
+        float fz = 0;
         
         if (vx < 0 && collidesOn(Side.LEFT)) {
             //check if colliding and moving towards side
@@ -191,22 +191,22 @@ public abstract class AABBPhysics {
             collidingObjects.get(Side.LEFT).sort(yFriction);
             //sort objects per side by friction for specific axis
             
-            double fyl = collidingObjects.get(Side.LEFT).get(0).getFriction().getY();
+            float fyl = collidingObjects.get(Side.LEFT).get(0).getFriction().getY();
             fy = FastMath.max(fy, fyl);
             //get max friction
             
             collidingObjects.get(Side.LEFT).sort(zFriction);
-            double fzl = collidingObjects.get(Side.LEFT).get(0).getFriction().getZ();
+            float fzl = collidingObjects.get(Side.LEFT).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzl);
         } else if (vx > 0 && collidesOn(Side.RIGHT)) {
             vx = 0;
             
             collidingObjects.get(Side.RIGHT).sort(yFriction);
-            double fyr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getY();
+            float fyr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getY();
             fy = FastMath.max(fy, fyr);
             
             collidingObjects.get(Side.RIGHT).sort(zFriction);
-            double fzr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ();
+            float fzr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzr);
         }
         
@@ -214,21 +214,21 @@ public abstract class AABBPhysics {
             vy = 0;
             
             collidingObjects.get(Side.BOTTOM).sort(xFriction);
-            double fxb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX();
+            float fxb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX();
             fx = FastMath.max(fx, fxb);
             
             collidingObjects.get(Side.BOTTOM).sort(zFriction);
-            double fzb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ();
+            float fzb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzb);
         } else if (vy > 0 && collidesOn(Side.TOP)) {
             vy = 0;
             
             collidingObjects.get(Side.TOP).sort(xFriction);
-            double fxt = collidingObjects.get(Side.TOP).get(0).getFriction().getX();
+            float fxt = collidingObjects.get(Side.TOP).get(0).getFriction().getX();
             fx = FastMath.max(fx, fxt);
             
             collidingObjects.get(Side.TOP).sort(zFriction);
-            double fzt = collidingObjects.get(Side.TOP).get(0).getFriction().getZ();
+            float fzt = collidingObjects.get(Side.TOP).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzt);
         }
         
@@ -236,21 +236,21 @@ public abstract class AABBPhysics {
             vz = 0;
             
             collidingObjects.get(Side.BACK).sort(xFriction);
-            double fxb = collidingObjects.get(Side.BACK).get(0).getFriction().getX();
+            float fxb = collidingObjects.get(Side.BACK).get(0).getFriction().getX();
             fx = FastMath.max(fx, fxb);
             
             collidingObjects.get(Side.BACK).sort(yFriction);
-            double fyb = collidingObjects.get(Side.BACK).get(0).getFriction().getY();
+            float fyb = collidingObjects.get(Side.BACK).get(0).getFriction().getY();
             fy = FastMath.max(fy, fyb);
         } else if (vz > 0 && collidesOn(Side.FRONT)) {
             vz = 0;
             
             collidingObjects.get(Side.FRONT).sort(xFriction);
-            double fxf = collidingObjects.get(Side.FRONT).get(0).getFriction().getX();
+            float fxf = collidingObjects.get(Side.FRONT).get(0).getFriction().getX();
             fx = FastMath.max(fx, fxf);
             
             collidingObjects.get(Side.FRONT).sort(yFriction);
-            double fyf = collidingObjects.get(Side.FRONT).get(0).getFriction().getY();
+            float fyf = collidingObjects.get(Side.FRONT).get(0).getFriction().getY();
             fy = FastMath.max(fy, fyf);
         }
         //get highest friction value from colliding objects
@@ -321,7 +321,7 @@ public abstract class AABBPhysics {
      * @param aabbPhysics object colliding with this object
      */
     private void doCollision(AABBPhysics aabbPhysics) {
-        double[] overlaps = new double[6];
+        float[] overlaps = new float[6];
         overlaps[0] = Math.abs(box.getMinimum().getX() - aabbPhysics.getBoundingBox().getMaximum().getX()); //left
         overlaps[1] = Math.abs(box.getMaximum().getX() - aabbPhysics.getBoundingBox().getMinimum().getX()); //right
         overlaps[2] = Math.abs(box.getMinimum().getY() - aabbPhysics.getBoundingBox().getMaximum().getY()); //bottom
@@ -331,10 +331,10 @@ public abstract class AABBPhysics {
         //get overlap distances
         
         int zeros = 0;
-        double distance = overlaps[0];
+        float distance = overlaps[0];
         for (int i = 0; i < 6; i++) {
             if (overlaps[i] < distance) distance = overlaps[i];
-            if (Double.compare(overlaps[i], 0) == 0) zeros++;
+            if (Float.compare(overlaps[i], 0) == 0) zeros++;
         }
         //find min overlap and amount of 0 overlaps
         
@@ -381,6 +381,7 @@ public abstract class AABBPhysics {
                 if (velocity.getY() <= -Math.abs(aabbPhysics.getVelocity().getY())) {
                     setPosition(position.setY(position.getY() + distance));
                 } else {
+                    //todo fix this not working
                     setPosition(position.setY(position.getY() - velocity.getY()));
                 }
                 velocity = velocity.setY(0);

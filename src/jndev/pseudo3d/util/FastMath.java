@@ -10,46 +10,46 @@ package jndev.pseudo3d.util;
 public class FastMath {
     
     /**
-     * get the maximum of two doubles. this method cuts out checks for NaN for a minor speed improvement
+     * get the maximum of two floats. this method cuts out checks for NaN for a minor speed improvement
      *
-     * @param a a double
-     * @param b another double
-     * @return maximum of two doubles
+     * @param a a float
+     * @param b another float
+     * @return maximum of two floats
      */
-    public static double max(double a, double b) {
+    public static float max(float a, float b) {
         return a >= b ? a : b;
     }
     
     /**
-     * get the minimum of two doubles. this method cuts out checks for NaN for a minor speed improvement
+     * get the minimum of two floats. this method cuts out checks for NaN for a minor speed improvement
      *
-     * @param a a double
-     * @param b another double
-     * @return minimum of two doubles
+     * @param a a float
+     * @param b another float
+     * @return minimum of two floats
      */
-    public static double min(double a, double b) {
+    public static float min(float a, float b) {
         return a <= b ? a : b;
     }
     
     /**
-     * round a double up to the nearest integer. this method cuts out many operations dealing with exponent and
-     * converting the double to bits
+     * round a float up to the nearest integer. this method cuts out many operations dealing with exponent and
+     * converting the float to bits
      *
-     * @param a a double
-     * @return double rounded up to nearest integer
+     * @param a a float
+     * @return float rounded up to nearest integer
      */
-    public static double ceil(double a) {
+    public static float ceil(float a) {
         return a - ((int) a) == 0 ? a : ((int) a) + 1;
     }
     
     /**
-     * round a double down to the nearest integer. this method cuts out many operations dealing with exponent and
-     * converting the double to bits
+     * round a float down to the nearest integer. this method cuts out many operations dealing with exponent and
+     * converting the float to bits
      *
-     * @param a a double
-     * @return double rounded down to nearest integer
+     * @param a a float
+     * @return float rounded down to nearest integer
      */
-    public static double floor(double a) {
+    public static float floor(float a) {
         return (int) a;
     }
 }

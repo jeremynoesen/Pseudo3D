@@ -10,17 +10,17 @@ public class Box {
     /**
      * width of the box
      */
-    private double width;
+    private float width;
     
     /**
      * height of the box
      */
-    private double height;
+    private float height;
     
     /**
      * depth of the box
      */
-    private double depth;
+    private float depth;
     
     /**
      * minimum point of box
@@ -57,13 +57,15 @@ public class Box {
      * @param depth    depth of box
      * @param position location of the box's center
      */
-    public Box(double width, double height, double depth, Vector position) {
+    public Box(float width, float height, float depth, Vector position) {
         this.width = Math.abs(width);
         this.height = Math.abs(height);
         this.depth = Math.abs(depth);
         this.position = position;
-        min = new Vector(position.getX() - (width / 2.0), position.getY() - (height / 2.0), position.getZ() - (depth / 2.0));
-        max = new Vector(position.getX() + (width / 2.0), position.getY() + (height / 2.0), position.getZ() + (depth / 2.0));
+        min = new Vector(position.getX() - (width / 2.0f),
+                position.getY() - (height / 2.0f), position.getZ() - (depth / 2.0f));
+        max = new Vector(position.getX() + (width / 2.0f),
+                position.getY() + (height / 2.0f), position.getZ() + (depth / 2.0f));
     }
     
     /**
@@ -73,13 +75,15 @@ public class Box {
      * @param height   height of box
      * @param position location of the box's center
      */
-    public Box(double width, double height, Vector position) {
+    public Box(float width, float height, Vector position) {
         this.width = Math.abs(width);
         this.height = Math.abs(height);
         this.depth = 0;
         this.position = position;
-        min = new Vector(position.getX() - (width / 2.0), position.getY() - (height / 2.0), position.getZ() - (depth / 2.0));
-        max = new Vector(position.getX() + (width / 2.0), position.getY() + (height / 2.0), position.getZ() + (depth / 2.0));
+        min = new Vector(position.getX() - (width / 2.0f),
+                position.getY() - (height / 2.0f), position.getZ() - (depth / 2.0f));
+        max = new Vector(position.getX() + (width / 2.0f),
+                position.getY() + (height / 2.0f), position.getZ() + (depth / 2.0f));
     }
     
     /**
@@ -101,7 +105,7 @@ public class Box {
      *
      * @return heigh of box
      */
-    public double getHeight() {
+    public float getHeight() {
         return height;
     }
     
@@ -110,10 +114,10 @@ public class Box {
      *
      * @param height height of box
      */
-    public void setHeight(double height) {
+    public void setHeight(float height) {
         this.height = Math.abs(height);
-        max = max.setY(position.getY() + (height / 2.0));
-        min = min.setY(position.getY() - (height / 2.0));
+        max = max.setY(position.getY() + (height / 2.0f));
+        min = min.setY(position.getY() - (height / 2.0f));
     }
     
     /**
@@ -121,7 +125,7 @@ public class Box {
      *
      * @return width ofbox
      */
-    public double getWidth() {
+    public float getWidth() {
         return width;
     }
     
@@ -130,10 +134,10 @@ public class Box {
      *
      * @param width width of box
      */
-    public void setWidth(double width) {
+    public void setWidth(float width) {
         this.width = Math.abs(width);
-        max = max.setX(position.getX() + (width / 2.0));
-        min = min.setX(position.getX() - (width / 2.0));
+        max = max.setX(position.getX() + (width / 2.0f));
+        min = min.setX(position.getX() - (width / 2.0f));
     }
     
     /**
@@ -141,7 +145,7 @@ public class Box {
      *
      * @return depth ofbox
      */
-    public double getDepth() {
+    public float getDepth() {
         return depth;
     }
     
@@ -150,10 +154,10 @@ public class Box {
      *
      * @param depth depth of box
      */
-    public void setDepth(double depth) {
+    public void setDepth(float depth) {
         this.depth = depth;
-        max = max.setZ(position.getZ() + (depth / 2.0));
-        min = min.setZ(position.getZ() - (depth / 2.0));
+        max = max.setZ(position.getZ() + (depth / 2.0f));
+        min = min.setZ(position.getZ() - (depth / 2.0f));
     }
     
     /**
@@ -172,8 +176,10 @@ public class Box {
      */
     public void setPosition(Vector position) {
         this.position = position;
-        max = new Vector(position.getX() + (width / 2.0), position.getY() + (height / 2.0), position.getZ() + (depth / 2.0));
-        min = new Vector(position.getX() - (width / 2.0), position.getY() - (height / 2.0), position.getZ() - (depth / 2.0));
+        max = new Vector(position.getX() + (width / 2.0f),
+                position.getY() + (height / 2.0f), position.getZ() + (depth / 2.0f));
+        min = new Vector(position.getX() - (width / 2.0f),
+                position.getY() - (height / 2.0f), position.getZ() - (depth / 2.0f));
     }
     
     /**
@@ -235,7 +241,7 @@ public class Box {
      *
      * @return volume of the box
      */
-    public double getVolume() {
+    public float getVolume() {
         return width * height * depth;
     }
     
@@ -244,7 +250,7 @@ public class Box {
      *
      * @return surface area of box
      */
-    public double getSurfaceArea() {
+    public float getSurfaceArea() {
         return (2 * width * height) + (2 * height * depth) + (2 * width * depth);
     }
     
@@ -253,7 +259,7 @@ public class Box {
      *
      * @return length of diagonal in box
      */
-    public double getDiagonal() {
+    public float getDiagonal() {
         return min.distance(max);
     }
     
@@ -278,9 +284,9 @@ public class Box {
         if (this == box) return true;
         if (box == null || getClass() != box.getClass()) return false;
         Box that = (Box) box;
-        return Double.compare(that.width, width) == 0 &&
-                Double.compare(that.height, height) == 0 &&
-                Double.compare(that.depth, depth) == 0 &&
+        return Float.compare(that.width, width) == 0 &&
+                Float.compare(that.height, height) == 0 &&
+                Float.compare(that.depth, depth) == 0 &&
                 that.position.equals(position);
     }
 }

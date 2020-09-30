@@ -25,7 +25,7 @@ public class GameLoop extends JPanel {
     /**
      * rate at which the graphics render
      */
-    private double renderFrequency;
+    private float renderFrequency;
     
     /**
      * length of time for one render
@@ -35,7 +35,7 @@ public class GameLoop extends JPanel {
     /**
      * rate at which physics and other things tick
      */
-    private double tickFrequency;
+    private float tickFrequency;
     
     /**
      * length of time for one tick
@@ -143,7 +143,7 @@ public class GameLoop extends JPanel {
      *
      * @param frequency renders per second (Hertz)
      */
-    public void setRenderFrequency(double frequency) {
+    public void setRenderFrequency(float frequency) {
         renderFrequency = frequency;
         renderDelta = (int) Math.floor(1000 / renderFrequency);
     }
@@ -153,7 +153,7 @@ public class GameLoop extends JPanel {
      *
      * @return renders per second
      */
-    public double getRenderFrequency() {
+    public float getRenderFrequency() {
         return renderFrequency;
     }
     
@@ -162,7 +162,7 @@ public class GameLoop extends JPanel {
      *
      * @param frequency ticks per second (Hertz)
      */
-    public void setTickFrequency(double frequency) {
+    public void setTickFrequency(float frequency) {
         tickFrequency = frequency;
         tickDelta = (int) Math.floor(1000 / tickFrequency);
     }
@@ -172,7 +172,7 @@ public class GameLoop extends JPanel {
      *
      * @return ticks per second
      */
-    public double getTickFrequency() {
+    public float getTickFrequency() {
         return tickFrequency;
     }
     
