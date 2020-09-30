@@ -46,7 +46,7 @@ public class PhysicsObject extends AABBPhysics implements Renderable {
      * @param zRadius radius z
      * @return list of objects nearby
      */
-    public ArrayList<PhysicsObject> getNearbyObjects(double xRadius, double yRadius, double zRadius) {
+    public ArrayList<PhysicsObject> getNearbyObjects(float xRadius, float yRadius, float zRadius) {
         ArrayList<PhysicsObject> nearby = new ArrayList<>();
         if (getScene() == null) return nearby;
         for (Renderable object : getScene().getObjects()) {

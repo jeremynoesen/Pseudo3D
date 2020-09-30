@@ -10,17 +10,17 @@ public class Vector {
     /**
      * x component of vector
      */
-    private final double x;
+    private final float x;
     
     /**
      * y component of vector
      */
-    private final double y;
+    private final float y;
     
     /**
      * z component of vector
      */
-    private final double z;
+    private final float z;
     
     /**
      * create a new zero vector
@@ -38,7 +38,7 @@ public class Vector {
      * @param y y component of vector
      * @param z z component of vector
      */
-    public Vector(double x, double y, double z) {
+    public Vector(float x, float y, float z) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -50,7 +50,7 @@ public class Vector {
      * @param x x compnent of vector
      * @param y y component of vector
      */
-    public Vector(double x, double y) {
+    public Vector(float x, float y) {
         this.x = x;
         this.y = y;
         this.z = 0;
@@ -72,7 +72,7 @@ public class Vector {
      *
      * @return x component
      */
-    public double getX() {
+    public float getX() {
         return x;
     }
     
@@ -82,7 +82,7 @@ public class Vector {
      * @param x x component
      * @return vector with modified x component
      */
-    public Vector setX(double x) {
+    public Vector setX(float x) {
         return new Vector(x, y, z);
     }
     
@@ -91,7 +91,7 @@ public class Vector {
      *
      * @return y component
      */
-    public double getY() {
+    public float getY() {
         return y;
     }
     
@@ -101,7 +101,7 @@ public class Vector {
      * @param y y component
      * @return vector with modified y component
      */
-    public Vector setY(double y) {
+    public Vector setY(float y) {
         return new Vector(x, y, z);
     }
     
@@ -110,7 +110,7 @@ public class Vector {
      *
      * @return z component
      */
-    public double getZ() {
+    public float getZ() {
         return z;
     }
     
@@ -120,7 +120,7 @@ public class Vector {
      * @param z z component
      * @return vector with modified y component
      */
-    public Vector setZ(double z) {
+    public Vector setZ(float z) {
         return new Vector(x, y, z);
     }
     
@@ -129,8 +129,8 @@ public class Vector {
      *
      * @return magnitude of vector
      */
-    public double getMagnitude() {
-        return Math.sqrt((x * x) + (y * y) + (z * z));
+    public float getMagnitude() {
+        return (float) Math.sqrt((x * x) + (y * y) + (z * z));
     }
     
     /**
@@ -169,7 +169,7 @@ public class Vector {
      * @param scale what to scale vector by
      * @return scaled vector
      */
-    public Vector multiply(double scale) {
+    public Vector multiply(float scale) {
         return new Vector(x * scale, y * scale, z * scale);
     }
     
@@ -179,7 +179,7 @@ public class Vector {
      * @param vector vector to dot product
      * @return value of the dot product
      */
-    public double dot(Vector vector) {
+    public float dot(Vector vector) {
         return (x * vector.getX()) + (y * vector.getY()) + (z * vector.getZ());
     }
     
@@ -190,9 +190,9 @@ public class Vector {
      * @return vector calculated from cross multiplication
      */
     public Vector cross(Vector vector) {
-        double i = (y * vector.getZ()) - (z * vector.getY());
-        double j = -((x * vector.getZ()) - (z * vector.getX()));
-        double k = (x * vector.getY()) - (y * vector.getX());
+        float i = (y * vector.getZ()) - (z * vector.getY());
+        float j = -((x * vector.getZ()) - (z * vector.getX()));
+        float k = (x * vector.getY()) - (y * vector.getX());
         return new Vector(i, j, k);
     }
     
@@ -212,8 +212,8 @@ public class Vector {
      * @param vector vector to calulcate distance to
      * @return distance to location
      */
-    public double distance(Vector vector) {
-        return Math.sqrt(Math.pow(x - vector.getX(), 2) + Math.pow(y - vector.getY(), 2) + Math.pow(z - vector.getZ(), 2));
+    public float distance(Vector vector) {
+        return (float) Math.sqrt(Math.pow(x - vector.getX(), 2) + Math.pow(y - vector.getY(), 2) + Math.pow(z - vector.getZ(), 2));
     }
     
     /**
@@ -222,7 +222,7 @@ public class Vector {
      * @return normalized vector
      */
     public Vector normalize() {
-        double mag = getMagnitude();
+        float mag = getMagnitude();
         return new Vector(x / mag, y / mag, z / mag);
     }
     
@@ -232,8 +232,8 @@ public class Vector {
      * @param vector vector to get angle between
      * @return angle between two vectors
      */
-    public double angleBetween(Vector vector) {
-        return Math.acos(dot(vector) / (getMagnitude() * vector.getMagnitude())) * (180 / Math.PI);
+    public float angleBetween(Vector vector) {
+        return (float) (Math.acos(dot(vector) / (getMagnitude() * vector.getMagnitude())) * (180 / Math.PI));
     }
     
     /**
@@ -257,8 +257,8 @@ public class Vector {
         if (this == vector) return true;
         if (vector == null || getClass() != vector.getClass()) return false;
         Vector that = (Vector) vector;
-        return Double.compare(that.x, x) == 0 &&
-                Double.compare(that.y, y) == 0 &&
-                Double.compare(that.z, z) == 0;
+        return Float.compare(that.x, x) == 0 &&
+                Float.compare(that.y, y) == 0 &&
+                Float.compare(that.z, z) == 0;
     }
 }

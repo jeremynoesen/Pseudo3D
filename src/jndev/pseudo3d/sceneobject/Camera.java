@@ -14,27 +14,27 @@ public class Camera {
     /**
      * field of view in degrees, how wide the camera can see
      */
-    private double fieldOfView;
+    private float fieldOfView;
     
     /**
      * how far away the camera is able to render
      */
-    private double viewDistance;
+    private float viewDistance;
     
     /**
      * camera sensor size. rendered scenes will scale to fit a square with side length of sensorSize pixels
      */
-    private double sensorSize;
+    private float sensorSize;
     
     /**
      * camera zoom, will scale rendered image by this amount
      */
-    private double zoom;
+    private float zoom;
     
     /**
      * rotation of the camera in degrees, counter-clock-wise
      */
-    private double rotation;
+    private float rotation;
     
     /**
      * 3D position of camera in scene
@@ -68,8 +68,8 @@ public class Camera {
      * @param viewDistance  z distance camera is able to see
      * @param zoom          camera zoom, scales render
      */
-    public Camera(Vector scenePosition, Vector windowPosition, double sensorSize, double fieldOfView,
-                  double viewDistance, double zoom, double rotation) {
+    public Camera(Vector scenePosition, Vector windowPosition, float sensorSize, float fieldOfView,
+                  float viewDistance, float zoom, float rotation) {
         this.scenePosition = scenePosition;
         this.fieldOfView = fieldOfView;
         this.sensorSize = sensorSize;
@@ -99,7 +99,7 @@ public class Camera {
      *
      * @return field of view in degrees
      */
-    public double getFieldOfView() {
+    public float getFieldOfView() {
         return fieldOfView;
     }
     
@@ -108,7 +108,7 @@ public class Camera {
      *
      * @param fieldOfView field of view in degrees
      */
-    public void setFieldOfView(double fieldOfView) {
+    public void setFieldOfView(float fieldOfView) {
         this.fieldOfView = fieldOfView;
     }
     
@@ -136,8 +136,8 @@ public class Camera {
      * @return vector window position of camera
      */
     public Vector getWindowPosition() {
-        return windowPosition != null ? windowPosition : new Vector(Pseudo3D.getInstance().getWidth() / 2.0,
-                Pseudo3D.getInstance().getHeight() / 2.0);
+        return windowPosition != null ? windowPosition : new Vector(Pseudo3D.getInstance().getWidth() / 2.0f,
+                Pseudo3D.getInstance().getHeight() / 2.0f);
     }
     
     /**
@@ -154,7 +154,7 @@ public class Camera {
      *
      * @return sensor size
      */
-    public double getSensorSize() {
+    public float getSensorSize() {
         return sensorSize;
     }
     
@@ -163,7 +163,7 @@ public class Camera {
      *
      * @param sensorSize new sensor size
      */
-    public void setSensorSize(double sensorSize) {
+    public void setSensorSize(float sensorSize) {
         this.sensorSize = sensorSize;
     }
     
@@ -172,7 +172,7 @@ public class Camera {
      *
      * @return camera view distance
      */
-    public double getViewDistance() {
+    public float getViewDistance() {
         return viewDistance;
     }
     
@@ -181,7 +181,7 @@ public class Camera {
      *
      * @param viewDistance new view distance for camera
      */
-    public void setViewDistance(double viewDistance) {
+    public void setViewDistance(float viewDistance) {
         this.viewDistance = viewDistance;
     }
     
@@ -190,7 +190,7 @@ public class Camera {
      *
      * @return camera zoom
      */
-    public double getZoom() {
+    public float getZoom() {
         return zoom;
     }
     
@@ -199,7 +199,7 @@ public class Camera {
      *
      * @param zoom camera zoom
      */
-    public void setZoom(double zoom) {
+    public void setZoom(float zoom) {
         this.zoom = zoom;
     }
     
@@ -208,7 +208,7 @@ public class Camera {
      *
      * @return rotation of camera in degrees counter-clock-wise
      */
-    public double getRotation() {
+    public float getRotation() {
         return rotation;
     }
     
@@ -217,7 +217,7 @@ public class Camera {
      *
      * @param rotation rotation of camera in degrees counter-clock-wise
      */
-    public void setRotation(double rotation) {
+    public void setRotation(float rotation) {
         this.rotation = rotation;
     }
     
@@ -232,9 +232,9 @@ public class Camera {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Camera that = (Camera) o;
-        return Double.compare(that.fieldOfView, fieldOfView) == 0 &&
-                Double.compare(that.viewDistance, viewDistance) == 0 &&
-                Double.compare(that.sensorSize, sensorSize) == 0 &&
+        return Float.compare(that.fieldOfView, fieldOfView) == 0 &&
+                Float.compare(that.viewDistance, viewDistance) == 0 &&
+                Float.compare(that.sensorSize, sensorSize) == 0 &&
                 scenePosition.equals(that.scenePosition);
     }
 }

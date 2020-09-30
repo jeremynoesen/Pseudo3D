@@ -30,7 +30,7 @@ public class Mouse extends MouseAdapter {
      * get the motion of the scroll wheel. positive values indicate scrolling towards user, while negative values
      * indicate scrolling away
      */
-    private static double wheelRotation = 0;
+    private static float wheelRotation = 0;
     
     /**
      * get a list of all buttons pressed with their button codes
@@ -56,7 +56,7 @@ public class Mouse extends MouseAdapter {
      *
      * @return motion of the scroll wheel
      */
-    public static double getWheelRotation() {
+    public static float getWheelRotation() {
         return wheelRotation;
     }
     
@@ -96,7 +96,7 @@ public class Mouse extends MouseAdapter {
      */
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        wheelRotation = e.getPreciseWheelRotation();
+        wheelRotation = (float) e.getPreciseWheelRotation();
     }
     
     /**
@@ -106,7 +106,7 @@ public class Mouse extends MouseAdapter {
      */
     @Override
     public void mouseMoved(MouseEvent e) {
-        position = new Vector(e.getXOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getX(),
-                e.getYOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getY());
+        position = new Vector((float) (e.getXOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getX()),
+                (float) (e.getYOnScreen() - Pseudo3D.getInstance().getLocationOnScreen().getY()));
     }
 }
