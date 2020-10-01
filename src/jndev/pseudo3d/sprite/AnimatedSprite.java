@@ -61,7 +61,7 @@ public class AnimatedSprite extends Sprite {
         float renderStep = Pseudo3D.getInstance().getGameLoop().getRenderFrequency() / 1000.0f;
         currentFrame = currentFrame + (frameStep / renderStep) <
                 images.size() ? currentFrame + (frameStep / renderStep) : 0;
-        image = images.get((int) FastMath.floor(currentFrame));
+        image = images.get(FastMath.floor(currentFrame));
     }
     
     /**

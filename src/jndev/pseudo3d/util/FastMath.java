@@ -38,8 +38,8 @@ public class FastMath {
      * @param a a float
      * @return float rounded up to nearest integer
      */
-    public static float ceil(float a) {
-        return a - ((int) a) == 0 ? a : ((int) a) + 1;
+    public static int ceil(float a) {
+        return a - ((int) a) == 0 ? (int) a : ((int) a) + 1;
     }
     
     /**
@@ -49,7 +49,18 @@ public class FastMath {
      * @param a a float
      * @return float rounded down to nearest integer
      */
-    public static float floor(float a) {
+    public static int floor(float a) {
         return (int) a;
+    }
+    
+    /**
+     * round a float to the nearest integer. this method cuts out many operations dealing with exponent and
+     * converting the float to bits
+     *
+     * @param a a float
+     * @return float rounded to nearest integer
+     */
+    public static int round(float a) {
+        return a - ((int) a) < 0.5f ? (int) a : ((int) a) + 1;
     }
 }
