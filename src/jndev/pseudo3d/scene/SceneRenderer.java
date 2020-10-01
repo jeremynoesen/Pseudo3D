@@ -46,7 +46,10 @@ public class SceneRenderer {
         graphics.fillRect(0, 0, (int) gWidth, (int) gHeight);
         //clear out last drawn frame
         
-        scene.getObjects().sort((o1, o2) -> (int) (o1.getPosition().getZ() - o2.getPosition().getZ()));
+        scene.getObjects().sort((o1, o2) ->
+                FastMath.round((o1.getPosition().getZ() - o2.getPosition().getZ()) /
+                        Math.abs((o1.getPosition().getZ() - o2.getPosition().getZ() == 0 ?
+                                1 : o1.getPosition().getZ() - o2.getPosition().getZ()))));
         //sort objects by z position so objects can be drawn in front of others
         
         Vector camPos = camera.getScenePosition();
@@ -66,7 +69,7 @@ public class SceneRenderer {
             //don't render objects without a sprite, with a camera sprite, or further than view distance
             
             float scale = (float) (zoom * (sensorSize / (sensorSize + (2.0 *
-                                camDist * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))))));
+                    camDist * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))))));
             //scale objects based on fov angle and distance from camera using law of sines and camera sensor size
             
             if (scale < 0) break;
@@ -75,8 +78,8 @@ public class SceneRenderer {
             Sprite sprite = object.getSprite();
             //get sprite
             
-            int widthScaled = (int) FastMath.ceil(sprite.getWidth() * scale);
-            int heightScaled = (int) FastMath.ceil(sprite.getHeight() * scale);
+            int widthScaled = FastMath.ceil(sprite.getWidth() * scale);
+            int heightScaled = FastMath.ceil(sprite.getHeight() * scale);
             //scale image dimensions
             
             float x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();

@@ -42,14 +42,15 @@ public class Sandbox {
         physicsObject1.setGravity(physicsObject.getGravity().multiply(-4));
         physicsObject1.setPosition(physicsObject1.getPosition().subtract(new Vector(0, 400, -1)));
         scene.addObject(physicsObject1);
-        
+    
+        PhysicsObject copy;
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
-                PhysicsObject copy = new PhysicsObject(physicsObject);
+                copy = new PhysicsObject(physicsObject);
                 copy.setSprite(new ImageSprite(ImageLoader.get("test/images/floor.png")));
-                copy.getBoundingBox().setWidth(copy.getSprite().getImage().getWidth(null));
-                copy.getBoundingBox().setHeight(copy.getSprite().getImage().getHeight(null));
-                copy.getBoundingBox().setDepth(copy.getSprite().getImage().getWidth(null));
+                copy.getBoundingBox().setWidth(copy.getSprite().getImage().getWidth());
+                copy.getBoundingBox().setHeight(copy.getSprite().getImage().getHeight());
+                copy.getBoundingBox().setDepth(copy.getSprite().getImage().getWidth());
                 copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 525, -465,
                         -copy.getBoundingBox().getWidth() * i));
                 copy.setGravity(new Vector());
@@ -83,8 +84,8 @@ public class Sandbox {
         scene.setBackground(Color.WHITE);
         
         Pseudo3D.getInstance().getGameLoop().setActiveScene(scene);
-        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(10);
-        Pseudo3D.getInstance().getGameLoop().setTickFrequency(10);
+        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(60);
+        Pseudo3D.getInstance().getGameLoop().setTickFrequency(60);
         Pseudo3D.launch();
         
         scene.addRunnable(() -> {
