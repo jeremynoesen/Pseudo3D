@@ -44,9 +44,9 @@ public class Box {
         width = 0;
         height = 0;
         depth = 0;
-        position = new Vector(0, 0, 0);
-        min = new Vector(0, 0, 0);
-        max = new Vector(0, 0, 0);
+        position = new Vector();
+        min = new Vector();
+        max = new Vector();
     }
     
     /**

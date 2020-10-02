@@ -9,6 +9,7 @@ import jndev.pseudo3d.util.Vector;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.util.Comparator;
 
 /**
  * simple scene renderer, will turn a scene into a jpanel with graphics. depth scaling is uniform based on z distance
@@ -17,6 +18,14 @@ import java.awt.geom.AffineTransform;
  * @author JNDev (Jeremaster101)
  */
 public class SceneRenderer {
+    
+    /**
+     * comparator used to sort scene objects from lowest to highest z position. this allows the renderer to draw objects
+     * in front of others if their position is as such
+     */
+    private static final Comparator<Renderable> zComparator = (o1, o2) -> FastMath.round(
+            (o1.getPosition().getZ() - o2.getPosition().getZ()) / Math.abs((o1.getPosition().getZ() -
+                    o2.getPosition().getZ() == 0 ? 1 : o1.getPosition().getZ() - o2.getPosition().getZ())));
     
     /**
      * render a scene frame to graphics
@@ -46,10 +55,7 @@ public class SceneRenderer {
         graphics.fillRect(0, 0, (int) gWidth, (int) gHeight);
         //clear out last drawn frame
         
-        scene.getObjects().sort((o1, o2) ->
-                FastMath.round((o1.getPosition().getZ() - o2.getPosition().getZ()) /
-                        Math.abs((o1.getPosition().getZ() - o2.getPosition().getZ() == 0 ?
-                                1 : o1.getPosition().getZ() - o2.getPosition().getZ()))));
+        scene.getObjects().sort(zComparator);
         //sort objects by z position so objects can be drawn in front of others
         
         Vector camPos = camera.getScenePosition();

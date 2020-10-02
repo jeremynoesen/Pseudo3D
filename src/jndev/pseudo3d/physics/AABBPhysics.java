@@ -91,6 +91,24 @@ public abstract class AABBPhysics {
     private Box box;
     
     /**
+     * comparator used to sort objects by highest to lowest friction in the x axis
+     */
+    private static final Comparator<AABBPhysics> xFriction = (o1, o2) ->
+            (int) (o2.getFriction().getX() - o1.getFriction().getX());
+    
+    /**
+     * comparator used to sort objects by highest to lowest friction in the y axis
+     */
+    private static final Comparator<AABBPhysics> yFriction = (o1, o2) ->
+            (int) (o2.getFriction().getY() - o1.getFriction().getY());
+    
+    /**
+     * comparator used to sort objects by highest to lowest friction in the z axis
+     */
+    private static final Comparator<AABBPhysics> zFriction = (o1, o2) ->
+            (int) (o2.getFriction().getZ() - o1.getFriction().getZ());
+    
+    /**
      * create a new aabb object with default values
      */
     public AABBPhysics() {
@@ -146,15 +164,15 @@ public abstract class AABBPhysics {
      * update the motion of the object in 3D space using jerk, acceleration, velocity, and position
      */
     private void calculateMotion() {
-        acceleration = new Vector(acceleration.getX() + jerk.getX(),
-                acceleration.getY() + jerk.getY(),
-                acceleration.getZ() + jerk.getZ());
+        acceleration = acceleration.add(jerk);
         //update acceleration based on jerk
         
-        float vx = velocity.getX() + acceleration.getX();
-        float vy = velocity.getY() + acceleration.getY();
-        float vz = velocity.getZ() + acceleration.getZ();
+        velocity = velocity.add(acceleration);
         //update velocity based on acceleration
+        
+        float vx = velocity.getX();
+        float vy = velocity.getY();
+        float vz = velocity.getZ();
         
         if (vx > -terminalVelocity.getX() && gravity.getX() < 0)
             vx = FastMath.max(vx + gravity.getX(), -terminalVelocity.getX());
@@ -170,13 +188,7 @@ public abstract class AABBPhysics {
             vz = FastMath.max(vz + gravity.getZ(), -terminalVelocity.getZ());
         else if (vz < terminalVelocity.getZ() && gravity.getZ() > 0)
             vz = FastMath.min(vz + gravity.getZ(), terminalVelocity.getZ());
-        
         //apply gravity if not exceeding terminal velocity
-        
-        Comparator<AABBPhysics> xFriction = (o1, o2) -> (int) (o2.getFriction().getX() - o1.getFriction().getX());
-        Comparator<AABBPhysics> yFriction = (o1, o2) -> (int) (o2.getFriction().getY() - o1.getFriction().getY());
-        Comparator<AABBPhysics> zFriction = (o1, o2) -> (int) (o2.getFriction().getZ() - o1.getFriction().getZ());
-        //friction comparators
         
         float fx = 0;
         float fy = 0;
@@ -271,9 +283,7 @@ public abstract class AABBPhysics {
         velocity = new Vector(vx, vy, vz);
         //set new velocity
         
-        position = new Vector(position.getX() + velocity.getX(),
-                position.getY() + velocity.getY(),
-                position.getZ() + velocity.getZ());
+        position = position.add(velocity);
         //update position based on velocity
         
         box.setPosition(position);
