@@ -50,7 +50,7 @@ public class Camera {
      * creates a new camera centered at (0, 0, 0) with a fov of 100 degrees
      */
     public Camera() {
-        scenePosition = new Vector(0, 0, 0);
+        scenePosition = new Vector();
         fieldOfView = 90;
         sensorSize = 500;
         viewDistance = 500;
