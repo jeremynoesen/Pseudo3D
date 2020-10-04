@@ -98,55 +98,55 @@ public class Sandbox {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
                 physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/back.png")));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
                 physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
             }
-            
+
             if ((Keyboard.isPressed(KeyEvent.VK_W) && Keyboard.isPressed(KeyEvent.VK_S)) ||
                     camera.getFieldOfView() == 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(0));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_A)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
                 physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/left.png")));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_D)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
                 physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/right.png")));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_A) && Keyboard.isPressed(KeyEvent.VK_D)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(0));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_SPACE)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setY(1));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setY(-1));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_SPACE) && Keyboard.isPressed(KeyEvent.VK_SHIFT)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setY(0));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_UP)) {
                 camera.setFieldOfView(camera.getFieldOfView() + 0.1f);
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_DOWN)) {
                 camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.1f, 0));
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_LEFT)) {
                 camera.setRotation(camera.getRotation() + 0.01f);
             }
-            
+
             if (Keyboard.isPressed(KeyEvent.VK_RIGHT)) {
                 camera.setRotation(camera.getRotation() - 0.01f);
             }

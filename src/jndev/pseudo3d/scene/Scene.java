@@ -76,18 +76,21 @@ public class Scene {
     }
     
     /**
-     * tick the scene once and every object in it. also sort all objects by z location from high to low
+     * tick all physics objects in the scene, updating all motion first, and then all collisions take place
      */
     public void tick() {
         for (Renderable object : objects) {
-            if (object instanceof AABBPhysics aabbPhysics) aabbPhysics.tick();
+            if (object instanceof AABBPhysics aabbPhysics) aabbPhysics.calculateMotion();
+        }
+        for (Renderable object : objects) {
+            if (object instanceof AABBPhysics aabbPhysics) aabbPhysics.checkCollisions();
         }
     }
     
     /**
      * get all the objects in this scene
      *
-     * @return Vector of all objects in this scene
+     * @return list of all objects in this scene
      */
     public CopyOnWriteArrayList<Renderable> getObjects() {
         return objects;
@@ -118,7 +121,7 @@ public class Scene {
     /**
      * set the objects in this scene
      *
-     * @param objects Vector of objects
+     * @param objects list of objects
      */
     public void setObjects(CopyOnWriteArrayList<Renderable> objects) {
         this.objects = objects;
