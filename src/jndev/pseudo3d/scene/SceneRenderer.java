@@ -23,9 +23,10 @@ public class SceneRenderer {
      * comparator used to sort scene objects from lowest to highest z position. this allows the renderer to draw objects
      * in front of others if their position is as such
      */
-    private static final Comparator<Renderable> zComparator = (o1, o2) -> FastMath.round(
-            (o1.getPosition().getZ() - o2.getPosition().getZ()) / Math.abs((o1.getPosition().getZ() -
-                    o2.getPosition().getZ() == 0 ? 1 : o1.getPosition().getZ() - o2.getPosition().getZ())));
+    private static final Comparator<Renderable> zComparator = (o1, o2) -> {
+        float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
+        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
+    };
     
     /**
      * render a scene frame to graphics
