@@ -93,20 +93,26 @@ public abstract class AABBPhysics {
     /**
      * comparator used to sort objects by highest to lowest friction in the x axis
      */
-    private static final Comparator<AABBPhysics> xFriction = (o1, o2) ->
-            (int) (o2.getFriction().getX() - o1.getFriction().getX());
+    private static final Comparator<AABBPhysics> xFriction = (o1, o2) -> {
+        float diff = o2.getFriction().getX() - o1.getFriction().getX();
+        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
+    };
     
     /**
      * comparator used to sort objects by highest to lowest friction in the y axis
      */
-    private static final Comparator<AABBPhysics> yFriction = (o1, o2) ->
-            (int) (o2.getFriction().getY() - o1.getFriction().getY());
+    private static final Comparator<AABBPhysics> yFriction = (o1, o2) -> {
+        float diff = o2.getFriction().getY() - o1.getFriction().getY();
+        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
+    };
     
     /**
      * comparator used to sort objects by highest to lowest friction in the z axis
      */
-    private static final Comparator<AABBPhysics> zFriction = (o1, o2) ->
-            (int) (o2.getFriction().getZ() - o1.getFriction().getZ());
+    private static final Comparator<AABBPhysics> zFriction = (o1, o2) -> {
+        float diff = o2.getFriction().getZ() - o1.getFriction().getZ();
+        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
+    };
     
     /**
      * create a new aabb object with default values
