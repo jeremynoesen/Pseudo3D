@@ -159,17 +159,9 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * calculates the next frame of motion in the x, y, and z axes
-     */
-    public void tick() {
-        calculateMotion();
-        checkCollisions();
-    }
-    
-    /**
      * update the motion of the object in 3D space using jerk, acceleration, velocity, and position
      */
-    public void calculateMotion() {
+    public void tickMotion() {
         acceleration = acceleration.add(jerk);
         //update acceleration based on jerk
         
@@ -296,7 +288,7 @@ public abstract class AABBPhysics {
     /**
      * check if a object has collided with this object
      */
-    public void checkCollisions() {
+    public void tickCollisions() {
         colliding = false;
         overlapping = false;
         for (ArrayList<AABBPhysics> list : collidingObjects.values()) {
