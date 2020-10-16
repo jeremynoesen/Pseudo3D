@@ -86,6 +86,13 @@ public abstract class AABBPhysics {
     private boolean overlapping;
     
     /**
+     * whether this object can move or not and feel motion of other objects. this is best used for ground objects.
+     * setting this to false will disallow this object from having any updates to motion or collisions, which can
+     * prevent you from getting the data from its collisions. these objects can remain collidable.
+     */
+    private boolean kinematic;
+    
+    /**
      * bounding box for collisions
      */
     private Box box;
@@ -130,6 +137,7 @@ public abstract class AABBPhysics {
         collidable = true;
         colliding = false;
         overlapping = false;
+        kinematic = true;
         box = new Box();
         collidingObjects = new HashMap<>();
         for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
@@ -154,6 +162,7 @@ public abstract class AABBPhysics {
         colliding = aabbPhysics.colliding;
         overlapping = aabbPhysics.overlapping;
         box = new Box(aabbPhysics.box);
+        kinematic = aabbPhysics.kinematic;
         collidingObjects = new HashMap<>();
         for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
@@ -662,6 +671,24 @@ public abstract class AABBPhysics {
         Box newBox = new Box(box);
         newBox.setPosition(position);
         this.box = newBox;
+    }
+    
+    /**
+     * check if the object is kinematic
+     *
+     * @return true if object is kinematic
+     */
+    public boolean isKinematic() {
+        return kinematic;
+    }
+    
+    /**
+     * set an object to be kinematic or not
+     *
+     * @param kinematic true to allow object motion self collision checks
+     */
+    public void setKinematic(boolean kinematic) {
+        this.kinematic = kinematic;
     }
     
     /**

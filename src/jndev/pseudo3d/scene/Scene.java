@@ -80,10 +80,10 @@ public class Scene {
      */
     public void tick() {
         for (Renderable object : objects) {
-            if (object instanceof AABBPhysics aabbPhysics) aabbPhysics.tickMotion();
+            if (object instanceof AABBPhysics aabbPhysics && aabbPhysics.isKinematic()) aabbPhysics.tickMotion();
         }
         for (Renderable object : objects) {
-            if (object instanceof AABBPhysics aabbPhysics) aabbPhysics.tickCollisions();
+            if (object instanceof AABBPhysics aabbPhysics && aabbPhysics.isKinematic()) aabbPhysics.tickCollisions();
         }
     }
     
