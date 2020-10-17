@@ -36,7 +36,7 @@ public class Sandbox {
         physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0,
                 -physicsObject.getBoundingBox().getWidth()));
         physicsObject.setTerminalVelocity(new Vector(100, 100, 100));
-        physicsObject.setKinematic(false);
+        physicsObject.setKinematic(true);
         scene.addObject(physicsObject);
 
 //        PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
@@ -85,8 +85,8 @@ public class Sandbox {
         scene.setBackground(Color.WHITE);
         
         Pseudo3D.getInstance().getGameLoop().setActiveScene(scene);
-        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(30);
-        Pseudo3D.getInstance().getGameLoop().setTickFrequency(30);
+        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(10);
+        Pseudo3D.getInstance().getGameLoop().setTickFrequency(120);
         Pseudo3D.launch();
         
         scene.addRunnable(() -> {

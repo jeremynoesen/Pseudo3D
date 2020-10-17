@@ -207,69 +207,74 @@ public abstract class AABBPhysics {
             vx = 0;
             //cancel motion in this direction
             
-            collidingObjects.get(Side.LEFT).sort(yFriction);
-            //sort objects per side by friction for specific axis
-            
-            float fyl = collidingObjects.get(Side.LEFT).get(0).getFriction().getY();
+            float fyl = 0;
+            float fzl = 0;
+            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.LEFT)) {
+                if (aabbPhysics.getFriction().getY() > fyl) fyl = aabbPhysics.getFriction().getY();
+                if (aabbPhysics.getFriction().getZ() > fzl) fzl = aabbPhysics.getFriction().getZ();
+            }
             fy = FastMath.max(fy, fyl);
-            //get max friction
-            
-            collidingObjects.get(Side.LEFT).sort(zFriction);
-            float fzl = collidingObjects.get(Side.LEFT).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzl);
+            //get max friction in the parallel directions for the side
+            
         } else if (vx > 0 && collidesOn(Side.RIGHT)) {
             vx = 0;
             
-            collidingObjects.get(Side.RIGHT).sort(yFriction);
-            float fyr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getY();
+            float fyr = 0;
+            float fzr = 0;
+            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.RIGHT)) {
+                if (aabbPhysics.getFriction().getY() > fyr) fyr = aabbPhysics.getFriction().getY();
+                if (aabbPhysics.getFriction().getZ() > fzr) fzr = aabbPhysics.getFriction().getZ();
+            }
             fy = FastMath.max(fy, fyr);
-            
-            collidingObjects.get(Side.RIGHT).sort(zFriction);
-            float fzr = collidingObjects.get(Side.RIGHT).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzr);
         }
         
         if (vy < 0 && collidesOn(Side.BOTTOM)) {
             vy = 0;
             
-            collidingObjects.get(Side.BOTTOM).sort(xFriction);
-            float fxb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getX();
+            float fxb = 0;
+            float fzb = 0;
+            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.BOTTOM)) {
+                if (aabbPhysics.getFriction().getX() > fxb) fxb = aabbPhysics.getFriction().getX();
+                if (aabbPhysics.getFriction().getZ() > fzb) fzb = aabbPhysics.getFriction().getZ();
+            }
             fx = FastMath.max(fx, fxb);
-            
-            collidingObjects.get(Side.BOTTOM).sort(zFriction);
-            float fzb = collidingObjects.get(Side.BOTTOM).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzb);
         } else if (vy > 0 && collidesOn(Side.TOP)) {
             vy = 0;
             
-            collidingObjects.get(Side.TOP).sort(xFriction);
-            float fxt = collidingObjects.get(Side.TOP).get(0).getFriction().getX();
+            float fxt = 0;
+            float fzt = 0;
+            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.TOP)) {
+                if (aabbPhysics.getFriction().getX() > fxt) fxt = aabbPhysics.getFriction().getX();
+                if (aabbPhysics.getFriction().getZ() > fzt) fzt = aabbPhysics.getFriction().getZ();
+            }
             fx = FastMath.max(fx, fxt);
-            
-            collidingObjects.get(Side.TOP).sort(zFriction);
-            float fzt = collidingObjects.get(Side.TOP).get(0).getFriction().getZ();
             fz = FastMath.max(fz, fzt);
         }
         
         if (vz < 0 && collidesOn(Side.BACK)) {
             vz = 0;
             
-            collidingObjects.get(Side.BACK).sort(xFriction);
-            float fxb = collidingObjects.get(Side.BACK).get(0).getFriction().getX();
+            float fxb = 0;
+            float fyb = 0;
+            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.BACK)) {
+                if (aabbPhysics.getFriction().getX() > fxb) fxb = aabbPhysics.getFriction().getX();
+                if (aabbPhysics.getFriction().getY() > fyb) fyb = aabbPhysics.getFriction().getY();
+            }
             fx = FastMath.max(fx, fxb);
-            
-            collidingObjects.get(Side.BACK).sort(yFriction);
-            float fyb = collidingObjects.get(Side.BACK).get(0).getFriction().getY();
             fy = FastMath.max(fy, fyb);
         } else if (vz > 0 && collidesOn(Side.FRONT)) {
             vz = 0;
             
-            collidingObjects.get(Side.FRONT).sort(xFriction);
-            float fxf = collidingObjects.get(Side.FRONT).get(0).getFriction().getX();
+            float fxf = 0;
+            float fyf = 0;
+            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.FRONT)) {
+                if (aabbPhysics.getFriction().getX() > fxf) fxf = aabbPhysics.getFriction().getX();
+                if (aabbPhysics.getFriction().getY() > fyf) fyf = aabbPhysics.getFriction().getY();
+            }
             fx = FastMath.max(fx, fxf);
-            
-            collidingObjects.get(Side.FRONT).sort(yFriction);
-            float fyf = collidingObjects.get(Side.FRONT).get(0).getFriction().getY();
             fy = FastMath.max(fy, fyf);
         }
         //get highest friction value from colliding objects
