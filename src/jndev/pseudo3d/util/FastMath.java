@@ -54,13 +54,28 @@ public class FastMath {
     }
     
     /**
-     * round a float to the nearest integer. this method cuts out many operations dealing with exponent and
-     * converting the float to bits
+     * round a float to the nearest integer. this method cuts out many operations dealing with exponent and converting
+     * the float to bits
      *
      * @param a a float
      * @return float rounded to nearest integer
      */
     public static int round(float a) {
         return a - ((int) a) < 0.5f ? (int) a : ((int) a) + 1;
+    }
+    
+    /**
+     * take base integer a to the integer power of b, same as multiplying a by itself b times
+     *
+     * @param a base
+     * @param b exponent
+     * @return a to the power of b
+     */
+    public static int pow(int a, int b) {
+        int c = a;
+        for (int i = 1; i < b; i++) {
+            c *= a;
+        }
+        return c;
     }
 }
