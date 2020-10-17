@@ -8,7 +8,6 @@ import jndev.pseudo3d.util.Side;
 import jndev.pseudo3d.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -96,30 +95,6 @@ public abstract class AABBPhysics {
      * bounding box for collisions
      */
     private Box box;
-    
-    /**
-     * comparator used to sort objects by highest to lowest friction in the x axis
-     */
-    private static final Comparator<AABBPhysics> xFriction = (o1, o2) -> {
-        float diff = o2.getFriction().getX() - o1.getFriction().getX();
-        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
-    };
-    
-    /**
-     * comparator used to sort objects by highest to lowest friction in the y axis
-     */
-    private static final Comparator<AABBPhysics> yFriction = (o1, o2) -> {
-        float diff = o2.getFriction().getY() - o1.getFriction().getY();
-        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
-    };
-    
-    /**
-     * comparator used to sort objects by highest to lowest friction in the z axis
-     */
-    private static final Comparator<AABBPhysics> zFriction = (o1, o2) -> {
-        float diff = o2.getFriction().getZ() - o1.getFriction().getZ();
-        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
-    };
     
     /**
      * create a new aabb object with default values
@@ -360,12 +335,13 @@ public abstract class AABBPhysics {
                     axis = 3;
                 }
             }
+            //find min overlap, direction, and axis of collision
+            
             if (Float.compare(overlaps[i], 0) == 0) zeros++;
+            //check for 0 distance overlaps
+            if (zeros > 1) return;
+            //if object has more than one 0 overlaps, it is technically not touching, so stop collision
         }
-        //find min overlap and amount of 0 overlaps
-        
-        if (zeros > 1) return;
-        //if object has more than 1 0 overlaps, it is technically not touching, so stop collision
         
         colliding = true;
         //set object to colliding
