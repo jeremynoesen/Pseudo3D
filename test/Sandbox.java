@@ -85,7 +85,7 @@ public class Sandbox {
         scene.setBackground(Color.WHITE);
         
         Pseudo3D.getInstance().getGameLoop().setActiveScene(scene);
-        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(10);
+        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(75);
         Pseudo3D.getInstance().getGameLoop().setTickFrequency(120);
         Pseudo3D.launch();
         
