@@ -37,6 +37,7 @@ public class Sandbox {
                 -physicsObject.getBoundingBox().getWidth()));
         physicsObject.setTerminalVelocity(new Vector(100, 100, 100));
         physicsObject.setKinematic(true);
+        physicsObject.setGravity(new Vector());
         scene.addObject(physicsObject);
 
 //        PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
