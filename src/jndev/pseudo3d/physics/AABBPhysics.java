@@ -152,9 +152,7 @@ public abstract class AABBPhysics {
         velocity = velocity.add(acceleration);
         //update velocity based on acceleration
         
-        float vx = velocity.getX();
-        float vy = velocity.getY();
-        float vz = velocity.getZ();
+        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         
         if (vx > -terminalVelocity.getX() && gravity.getX() < 0)
             vx = FastMath.max(vx + gravity.getX(), -terminalVelocity.getX());
@@ -172,92 +170,39 @@ public abstract class AABBPhysics {
             vz = FastMath.min(vz + gravity.getZ(), terminalVelocity.getZ());
         //apply gravity if not exceeding terminal velocity
         
-        float fx = 0;
-        float fy = 0;
-        float fz = 0;
-        
-        if (vx < 0 && collidesOn(Side.LEFT)) {
-            //check if colliding and moving towards side
-            
-            vx = 0;
-            //cancel motion in this direction
-            
-            float fyl = 0;
-            float fzl = 0;
-            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.LEFT)) {
-                if (aabbPhysics.getFriction().getY() > fyl) fyl = aabbPhysics.getFriction().getY();
-                if (aabbPhysics.getFriction().getZ() > fzl) fzl = aabbPhysics.getFriction().getZ();
+        float fx = 0, fy = 0, fz = 0;
+        if (colliding) {
+            int xCount = 0, yCount = 0, zCount = 0;
+            for (Side side : Side.values()) {
+                for (AABBPhysics aabbPhysics : collidingObjects.get(side)) {
+                    if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
+                        vx = 0;
+                        fy += aabbPhysics.friction.getY();
+                        yCount++;
+                        fz += aabbPhysics.friction.getZ();
+                        zCount++;
+                    }
+                    if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
+                        vy = 0;
+                        fx += aabbPhysics.friction.getX();
+                        xCount++;
+                        fz += aabbPhysics.friction.getZ();
+                        zCount++;
+                    }
+                    if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
+                        vz = 0;
+                        fx += aabbPhysics.friction.getX();
+                        xCount++;
+                        fy += aabbPhysics.friction.getY();
+                        yCount++;
+                    }
+                }
             }
-            fy = FastMath.max(fy, fyl);
-            fz = FastMath.max(fz, fzl);
-            //get max friction in the parallel directions for the side
-            
-        } else if (vx > 0 && collidesOn(Side.RIGHT)) {
-            vx = 0;
-            
-            float fyr = 0;
-            float fzr = 0;
-            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.RIGHT)) {
-                if (aabbPhysics.getFriction().getY() > fyr) fyr = aabbPhysics.getFriction().getY();
-                if (aabbPhysics.getFriction().getZ() > fzr) fzr = aabbPhysics.getFriction().getZ();
-            }
-            fy = FastMath.max(fy, fyr);
-            fz = FastMath.max(fz, fzr);
+            fx = (xCount > 0) ? (fx + friction.getX()) / (xCount + 1) : 0;
+            fy = (yCount > 0) ? (fy + friction.getY()) / (yCount + 1) : 0;
+            fz = (zCount > 0) ? (fz + friction.getZ()) / (zCount + 1) : 0;
         }
-        
-        if (vy < 0 && collidesOn(Side.BOTTOM)) {
-            vy = 0;
-            
-            float fxb = 0;
-            float fzb = 0;
-            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.BOTTOM)) {
-                if (aabbPhysics.getFriction().getX() > fxb) fxb = aabbPhysics.getFriction().getX();
-                if (aabbPhysics.getFriction().getZ() > fzb) fzb = aabbPhysics.getFriction().getZ();
-            }
-            fx = FastMath.max(fx, fxb);
-            fz = FastMath.max(fz, fzb);
-        } else if (vy > 0 && collidesOn(Side.TOP)) {
-            vy = 0;
-            
-            float fxt = 0;
-            float fzt = 0;
-            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.TOP)) {
-                if (aabbPhysics.getFriction().getX() > fxt) fxt = aabbPhysics.getFriction().getX();
-                if (aabbPhysics.getFriction().getZ() > fzt) fzt = aabbPhysics.getFriction().getZ();
-            }
-            fx = FastMath.max(fx, fxt);
-            fz = FastMath.max(fz, fzt);
-        }
-        
-        if (vz < 0 && collidesOn(Side.BACK)) {
-            vz = 0;
-            
-            float fxb = 0;
-            float fyb = 0;
-            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.BACK)) {
-                if (aabbPhysics.getFriction().getX() > fxb) fxb = aabbPhysics.getFriction().getX();
-                if (aabbPhysics.getFriction().getY() > fyb) fyb = aabbPhysics.getFriction().getY();
-            }
-            fx = FastMath.max(fx, fxb);
-            fy = FastMath.max(fy, fyb);
-        } else if (vz > 0 && collidesOn(Side.FRONT)) {
-            vz = 0;
-            
-            float fxf = 0;
-            float fyf = 0;
-            for (AABBPhysics aabbPhysics : collidingObjects.get(Side.FRONT)) {
-                if (aabbPhysics.getFriction().getX() > fxf) fxf = aabbPhysics.getFriction().getX();
-                if (aabbPhysics.getFriction().getY() > fyf) fyf = aabbPhysics.getFriction().getY();
-            }
-            fx = FastMath.max(fx, fxf);
-            fy = FastMath.max(fy, fyf);
-        }
-        //get highest friction value from colliding objects
-        
-        if (fx != 0) fx = FastMath.max(fx, friction.getX());
-        if (fy != 0) fy = FastMath.max(fy, friction.getY());
-        if (fz != 0) fz = FastMath.max(fz, friction.getZ());
-        //get highest friction from previous calculation and object's own friction
+        //get average frictions for each axis
         
         if (vx < 0) vx = FastMath.min(vx + drag.getX() + fx, 0);
         else if (vx > 0) vx = FastMath.max(vx - drag.getX() - fx, 0);
