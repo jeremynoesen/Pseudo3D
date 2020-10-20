@@ -37,7 +37,6 @@ public class Sandbox {
                 -physicsObject.getBoundingBox().getWidth()));
         physicsObject.setTerminalVelocity(new Vector(100, 100, 100));
         physicsObject.setKinematic(true);
-        physicsObject.setGravity(new Vector());
         scene.addObject(physicsObject);
 
 //        PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
@@ -83,7 +82,7 @@ public class Sandbox {
 //        scene.addObject(spriteObject);
         
         scene.setCamera(camera);
-        scene.setBackground(Color.WHITE);
+        scene.setBackground(Color.DARK_GRAY);
         
         Pseudo3D.getInstance().getGameLoop().setActiveScene(scene);
         Pseudo3D.getInstance().getGameLoop().setRenderFrequency(75);
