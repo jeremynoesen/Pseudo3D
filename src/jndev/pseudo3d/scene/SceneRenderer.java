@@ -25,7 +25,7 @@ public class SceneRenderer {
      */
     private static final Comparator<Renderable> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
-        return FastMath.round(diff / Math.abs(diff == 0 ? 1 : diff));
+        return FastMath.round(diff / (diff == 0 ? 1 : Math.abs(diff)));
     };
     
     /**
@@ -46,14 +46,14 @@ public class SceneRenderer {
                 RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
         //set rendering settings for speed
         
-        graphics.setColor(scene.getBackground());
+        g2d.setColor(scene.getBackground());
         //draw scene background color
         
-        float gWidth = (float) graphics.getClipBounds().getWidth();
-        float gHeight = (float) graphics.getClipBounds().getHeight();
+        float gWidth = (float) g2d.getClipBounds().getWidth();
+        float gHeight = (float) g2d.getClipBounds().getHeight();
         //graphics dimensions
         
-        graphics.fillRect(0, 0, (int) gWidth, (int) gHeight);
+        g2d.fillRect(0, 0, (int) gWidth, (int) gHeight);
         //clear out last drawn frame
         
         scene.getObjects().sort(zComparator);
@@ -140,12 +140,11 @@ public class SceneRenderer {
                 //check if any part of image is visible in panel
                 
                 g2d.setTransform(transform);
-                graphics.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
+                g2d.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
                         (int) (y - (heightScaled / 2.0)), widthScaled, heightScaled, null);
                 //draw image to panel
             }
         }
-        graphics.dispose();
         g2d.dispose();
         //free up resources used by graphics processing
     }
