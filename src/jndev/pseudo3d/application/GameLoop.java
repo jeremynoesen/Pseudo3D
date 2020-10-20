@@ -73,14 +73,8 @@ public class GameLoop extends JPanel {
                 }
                 //delay loop
                 
-                if (!paused) {
-                    
-                    activeScene.getRunnables().forEach(Runnable::run);
-                    //run all runnables in scene
-                    
-                    activeScene.tick();
-                    //tick scene objects
-                }
+                if (!paused) activeScene.tick();
+                //tick scene
             }
         }).start();
         //start thread

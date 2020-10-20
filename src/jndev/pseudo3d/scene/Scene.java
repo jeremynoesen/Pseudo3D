@@ -34,7 +34,7 @@ public class Scene {
     private Color background;
     
     /**
-     * runnables to be inserted into the game loop for the scene
+     * runnable code fragments to run every time the scene ticks
      */
     private final Set<Runnable> runnables;
     
@@ -76,9 +76,11 @@ public class Scene {
     }
     
     /**
-     * tick all physics objects in the scene, updating all motion first, and then all collisions take place
+     * tick all physics objects in the scene, updating all motion first, and then all collisions take place. also run
+     * any runnables added to the scene
      */
     public void tick() {
+        runnables.forEach(Runnable::run);
         for (Renderable object : objects) {
             if (object instanceof AABBPhysics aabbPhysics && aabbPhysics.isKinematic()) aabbPhysics.tickMotion();
         }

@@ -44,7 +44,7 @@ public class Camera {
     /**
      * 2D position of camera in window
      */
-    private Vector windowPosition;
+    private Vector renderPosition;
     
     /**
      * creates a new camera centered at (0, 0, 0) with a fov of 100 degrees
@@ -56,7 +56,7 @@ public class Camera {
         viewDistance = 500;
         zoom = 1;
         rotation = 0;
-        windowPosition = null;
+        renderPosition = null;
     }
     
     /**
@@ -68,16 +68,16 @@ public class Camera {
      * @param viewDistance   z distance camera is able to see
      * @param zoom           camera zoom, scales render
      * @param rotation       rotation of camera in radians
-     * @param windowPosition position of camera in window
+     * @param renderPosition position of camera in window
      */
-    public Camera(Vector scenePosition, Vector windowPosition, float sensorSize, float fieldOfView,
+    public Camera(Vector scenePosition, Vector renderPosition, float sensorSize, float fieldOfView,
                   float viewDistance, float zoom, float rotation) {
         this.scenePosition = scenePosition;
         this.fieldOfView = fieldOfView;
         this.sensorSize = sensorSize;
         this.viewDistance = viewDistance;
         this.zoom = zoom;
-        this.windowPosition = windowPosition;
+        this.renderPosition = renderPosition;
         this.rotation = rotation;
     }
     
@@ -92,7 +92,7 @@ public class Camera {
         sensorSize = camera.sensorSize;
         viewDistance = camera.viewDistance;
         zoom = camera.zoom;
-        windowPosition = camera.windowPosition;
+        renderPosition = camera.renderPosition;
         rotation = camera.rotation;
     }
     
@@ -133,22 +133,22 @@ public class Camera {
     }
     
     /**
-     * get position of camera in window
+     * get position of camera in the render
      *
-     * @return vector window position of camera
+     * @return vector render position of camera
      */
-    public Vector getWindowPosition() {
-        return windowPosition != null ? windowPosition : new Vector(Pseudo3D.getInstance().getWidth() / 2.0f,
+    public Vector getRenderPosition() {
+        return renderPosition != null ? renderPosition : new Vector(Pseudo3D.getInstance().getWidth() / 2.0f,
                 Pseudo3D.getInstance().getHeight() / 2.0f);
     }
     
     /**
-     * set the position of the camera in the window. set to null to use the center of the window
+     * set the position of the camera in the render. set to null to use the center of the render bounds
      *
-     * @param windowPosition 2D position vector
+     * @param renderPosition 2D position vector
      */
-    public void setWindowPosition(Vector windowPosition) {
-        this.windowPosition = windowPosition;
+    public void setRenderPosition(Vector renderPosition) {
+        this.renderPosition = renderPosition;
     }
     
     /**
