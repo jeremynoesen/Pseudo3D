@@ -181,15 +181,13 @@ public abstract class AABBPhysics {
                         yCount++;
                         fz += aabbPhysics.friction.getZ();
                         zCount++;
-                    }
-                    if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
+                    } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
                         vy = 0;
                         fx += aabbPhysics.friction.getX();
                         xCount++;
                         fz += aabbPhysics.friction.getZ();
                         zCount++;
-                    }
-                    if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
+                    } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
                         vz = 0;
                         fx += aabbPhysics.friction.getX();
                         xCount++;
@@ -198,11 +196,14 @@ public abstract class AABBPhysics {
                     }
                 }
             }
-            fx = (xCount > 0) ? (fx + friction.getX()) / (xCount + 1) : 0;
-            fy = (yCount > 0) ? (fy + friction.getY()) / (yCount + 1) : 0;
-            fz = (zCount > 0) ? (fz + friction.getZ()) / (zCount + 1) : 0;
+            //get sum of frictions for each axis
+            
+            if (xCount > 0) fx = (fx + friction.getX()) / (xCount + 1);
+            if (yCount > 0) fy = (fy + friction.getY()) / (yCount + 1);
+            if (zCount > 0) fz = (fz + friction.getZ()) / (zCount + 1);
+            //calculate average friction per axis that has friction applied
         }
-        //get average frictions for each axis
+        //apply friction from colliding objects
         
         if (vx < 0) vx = FastMath.min(vx + drag.getX() + fx, 0);
         else if (vx > 0) vx = FastMath.max(vx - drag.getX() - fx, 0);
@@ -210,7 +211,7 @@ public abstract class AABBPhysics {
         else if (vy > 0) vy = FastMath.max(vy - drag.getY() - fy, 0);
         if (vz < 0) vz = FastMath.min(vz + drag.getZ() + fz, 0);
         else if (vz > 0) vz = FastMath.max(vz - drag.getZ() - fz, 0);
-        //modify velocity based on friction, drag, and collision status
+        //modify velocity based on friction and drag
         
         velocity = new Vector(vx, vy, vz);
         //set new velocity
@@ -282,11 +283,12 @@ public abstract class AABBPhysics {
             }
             //find min overlap, direction, and axis of collision
             
-            if (Float.compare(overlaps[i], 0) == 0) zeros++;
+            if (overlaps[i] == 0) zeros++;
             //check for 0 distance overlaps
-            if (zeros > 1) return;
-            //if object has more than one 0 overlaps, it is technically not touching, so stop collision
         }
+        
+        if (zeros > 1) return;
+        //if object has more than one 0 overlaps, it is technically not touching, so stop collision
         
         colliding = true;
         //set object to colliding

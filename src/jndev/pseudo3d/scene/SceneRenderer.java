@@ -60,7 +60,7 @@ public class SceneRenderer {
         //sort objects by z position so objects can be drawn in front of others
         
         Vector camPos = camera.getScenePosition();
-        Vector windowPos = camera.getWindowPosition();
+        Vector windowPos = camera.getRenderPosition();
         float fov = camera.getFieldOfView() / 2.0f;
         float sensorSize = camera.getSensorSize();
         float zoom = camera.getZoom();
