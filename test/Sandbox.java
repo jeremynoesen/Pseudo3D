@@ -4,6 +4,8 @@ import jndev.pseudo3d.loader.ImageLoader;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.sceneobject.Camera;
 import jndev.pseudo3d.sceneobject.PhysicsObject;
+import jndev.pseudo3d.sceneobject.SpriteObject;
+import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
 
@@ -24,7 +26,7 @@ public class Sandbox {
      * @param args program arguments
      */
     public static void main(String[] args) {
-        Pseudo3D.initialize(1000, 1000, false, "Testing");
+        Pseudo3D.initialize(1000, 1000, true, "Testing");
         ImageLoader.load(new File("test/images/"));
         Scene scene = new Scene();
         PhysicsObject physicsObject = new PhysicsObject();
@@ -65,6 +67,12 @@ public class Sandbox {
         camera.setScenePosition(new Vector(0, 0, -100));
         camera.setSensorSize(1000);
 //        camera.setWindowPosition(new Vector());
+    
+    
+        Camera second = new Camera(camera);
+        second.setRenderPosition(new Vector(250, 250));
+        SpriteObject spriteObject = new SpriteObject(new CameraSprite(scene, second, 500, 500), new Vector(0, 0, -300));
+        scene.addObject(spriteObject);
 
 //        ArrayList<BufferedImage> images = new ArrayList<>();
 //        images.add(ImageLoader.get("test/images/player/front.png"));
@@ -91,6 +99,7 @@ public class Sandbox {
         Pseudo3D.launch();
         
         scene.addRunnable(() -> {
+            camera.setRenderPosition(new Vector(Pseudo3D.getInstance().getWidth() / 2.0f, Pseudo3D.getInstance().getHeight() / 2.0f));
 //            physicsObject.setVelocity(
 //                    Mouse.getPosition().setY(Mouse.getPosition().multiply(-1).getY())
 //                            .subtract(camera.getWindowPosition().multiply(new Vector(1, -1)))
