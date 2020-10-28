@@ -1,6 +1,5 @@
 package jndev.pseudo3d.sceneobject;
 
-import jndev.pseudo3d.application.Pseudo3D;
 import jndev.pseudo3d.util.Vector;
 
 /**
@@ -56,7 +55,7 @@ public class Camera {
         viewDistance = 500;
         zoom = 1;
         rotation = 0;
-        renderPosition = null;
+        renderPosition = new Vector();
     }
     
     /**
@@ -138,8 +137,7 @@ public class Camera {
      * @return vector render position of camera
      */
     public Vector getRenderPosition() {
-        return renderPosition != null ? renderPosition : new Vector(Pseudo3D.getInstance().getWidth() / 2.0f,
-                Pseudo3D.getInstance().getHeight() / 2.0f);
+        return renderPosition;
     }
     
     /**

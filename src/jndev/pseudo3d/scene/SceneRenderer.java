@@ -60,7 +60,7 @@ public class SceneRenderer {
         //sort objects by z position so objects can be drawn in front of others
         
         Vector camPos = camera.getScenePosition();
-        Vector windowPos = camera.getRenderPosition();
+        Vector renderPos = camera.getRenderPosition();
         float fov = camera.getFieldOfView() / 2.0f;
         float sensorSize = camera.getSensorSize();
         float zoom = camera.getZoom();
@@ -89,8 +89,8 @@ public class SceneRenderer {
             int heightScaled = FastMath.ceil(sprite.getHeight() * scale);
             //scale image dimensions
             
-            float x = ((objPos.getX() - camPos.getX()) * scale) + windowPos.getX();
-            float y = gHeight - (((objPos.getY() - camPos.getY()) * scale) + (gHeight - windowPos.getY()));
+            float x = ((objPos.getX() - camPos.getX()) * scale) + renderPos.getX();
+            float y = gHeight - (((objPos.getY() - camPos.getY()) * scale) + (gHeight - renderPos.getY()));
             //translate object coordinates
             
             Box screenBox = new Box(gWidth, gHeight,
@@ -108,7 +108,7 @@ public class SceneRenderer {
                 float cameraRotation = -camera.getRotation();
                 //convert to radians
                 
-                transform.rotate(cameraRotation, windowPos.getX(), windowPos.getY());
+                transform.rotate(cameraRotation, renderPos.getX(), renderPos.getY());
                 transform.rotate(spriteRotation, x, y);
                 //rotate canvas
                 
@@ -116,16 +116,16 @@ public class SceneRenderer {
                 float sprRotCos = (float) Math.cos(spriteRotation + cameraRotation);
                 float camRotSin = (float) Math.sin(cameraRotation);
                 float camRotCos = (float) Math.cos(cameraRotation);
-                float relX = x - windowPos.getX();
-                float relY = y - windowPos.getY();
+                float relX = x - renderPos.getX();
+                float relY = y - renderPos.getY();
                 //calculations done once to reduce total calculations
                 
                 float heightRotated = Math.abs(widthScaled * sprRotSin) + Math.abs(heightScaled * sprRotCos);
                 float widthRotated = Math.abs(widthScaled * sprRotCos) + Math.abs(heightScaled * sprRotSin);
                 //get dimensions of image based on sprite rotation
                 
-                float yRotated = (relX * camRotSin) + (relY * camRotCos) + windowPos.getY();
-                float xRotated = (relX * camRotCos) - (relY * camRotSin) + windowPos.getX();
+                float yRotated = (relX * camRotSin) + (relY * camRotCos) + renderPos.getY();
+                float xRotated = (relX * camRotCos) - (relY * camRotSin) + renderPos.getX();
                 //get position of image based on camera rotation
                 
                 spriteBox = new Box(widthRotated, heightRotated,
