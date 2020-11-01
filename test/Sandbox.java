@@ -41,6 +41,7 @@ public class Sandbox {
         physicsObject.setKinematic(true);
         physicsObject.setGravity(new Vector());
         scene.addObject(physicsObject);
+        scene.addObject(new PhysicsObject(physicsObject));
 
 //        PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
 //        physicsObject1.setGravity(physicsObject.getGravity().multiply(-4));
