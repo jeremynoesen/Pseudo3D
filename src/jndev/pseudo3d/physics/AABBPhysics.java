@@ -301,8 +301,6 @@ public abstract class AABBPhysics {
                 // scale distance based on object velocities to improve collision accuracy
                 setPosition(position.setX(position.getX() - (distance * dir)));
                 // fix object position so it is not overlapping
-                velocity = velocity.setX(0);
-                // set object velocity to 0 in axis
             }
             collidingObjects.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(aabbPhysics);
             //add to colliding objects for the colliding side
@@ -310,14 +308,12 @@ public abstract class AABBPhysics {
             if (velocity.getY() * dir > 0) {
                 distance *= Math.abs(velocity.getY()) / (Math.abs(velocity.getY()) + Math.abs(aabbPhysics.velocity.getY()));
                 setPosition(position.setY(position.getY() - (distance * dir)));
-                velocity = velocity.setY(0);
             }
             collidingObjects.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(aabbPhysics);
         } else {
             if (velocity.getZ() * dir > 0) {
                 distance *= Math.abs(velocity.getZ()) / (Math.abs(velocity.getZ()) + Math.abs(aabbPhysics.velocity.getZ()));
                 setPosition(position.setZ(position.getZ() - (distance * dir)));
-                velocity = velocity.setZ(0);
             }
             collidingObjects.get(dir == -1 ? Side.BACK : Side.FRONT).add(aabbPhysics);
         }
