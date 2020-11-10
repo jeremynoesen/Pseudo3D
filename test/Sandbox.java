@@ -41,12 +41,11 @@ public class Sandbox {
         physicsObject.setKinematic(true);
         physicsObject.setGravity(new Vector());
         scene.addObject(physicsObject);
-        scene.addObject(new PhysicsObject(physicsObject));
 
-//        PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
-//        physicsObject1.setGravity(physicsObject.getGravity().multiply(-4));
-//        physicsObject1.setPosition(physicsObject1.getPosition().subtract(new Vector(0, 400, -1)));
-//        scene.addObject(physicsObject1);
+        PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
+        physicsObject1.setPushable(true);
+        physicsObject.setPushable(true);
+        scene.addObject(physicsObject1);
         
         PhysicsObject copy;
         for (int j = 1; j < 22; j++) {

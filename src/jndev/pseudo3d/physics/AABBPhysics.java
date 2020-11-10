@@ -92,6 +92,11 @@ public abstract class AABBPhysics {
     private boolean kinematic;
     
     /**
+     * whether this object can be pushed by other objects
+     */
+    private boolean pushable;
+    
+    /**
      * bounding box for collisions
      */
     private Box box;
@@ -113,6 +118,7 @@ public abstract class AABBPhysics {
         colliding = false;
         overlapping = false;
         kinematic = true;
+        pushable = false;
         box = new Box();
         collidingObjects = new HashMap<>();
         for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
@@ -138,6 +144,7 @@ public abstract class AABBPhysics {
         overlapping = aabbPhysics.overlapping;
         box = new Box(aabbPhysics.box);
         kinematic = aabbPhysics.kinematic;
+        pushable = aabbPhysics.pushable;
         collidingObjects = new HashMap<>();
         for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
@@ -176,19 +183,25 @@ public abstract class AABBPhysics {
             for (Side side : Side.values()) {
                 for (AABBPhysics aabbPhysics : collidingObjects.get(side)) {
                     if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
-                        vx = 0;
+                        if (aabbPhysics.pushable && aabbPhysics.kinematic)
+                            aabbPhysics.velocity = aabbPhysics.velocity.setX(vx);
+                        else vx = 0;
                         fy += aabbPhysics.friction.getY();
                         yCount++;
                         fz += aabbPhysics.friction.getZ();
                         zCount++;
                     } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
-                        vy = 0;
+                        if (aabbPhysics.pushable && aabbPhysics.kinematic)
+                            aabbPhysics.velocity = aabbPhysics.velocity.setY(vy);
+                        else vy = 0;
                         fx += aabbPhysics.friction.getX();
                         xCount++;
                         fz += aabbPhysics.friction.getZ();
                         zCount++;
                     } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
-                        vz = 0;
+                        if (aabbPhysics.pushable && aabbPhysics.kinematic)
+                            aabbPhysics.velocity = aabbPhysics.velocity.setZ(vz);
+                        else vz = 0;
                         fx += aabbPhysics.friction.getX();
                         xCount++;
                         fy += aabbPhysics.friction.getY();
@@ -590,6 +603,24 @@ public abstract class AABBPhysics {
      */
     public void setKinematic(boolean kinematic) {
         this.kinematic = kinematic;
+    }
+    
+    /**
+     * check if the object is pushable
+     *
+     * @return true if an object is pushable
+     */
+    public boolean isPushable() {
+        return pushable;
+    }
+    
+    /**
+     * set the pushablility status of the object
+     *
+     * @param pushable true to allow pushing
+     */
+    public void setPushable(boolean pushable) {
+        this.pushable = pushable;
     }
     
     /**
