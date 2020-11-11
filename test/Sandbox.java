@@ -45,6 +45,7 @@ public class Sandbox {
         PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
         physicsObject1.setPushable(true);
         physicsObject.setPushable(true);
+        physicsObject1.setMass(4f);
         scene.addObject(physicsObject1);
         
         PhysicsObject copy;
@@ -69,10 +70,10 @@ public class Sandbox {
 //        camera.setWindowPosition(new Vector());
     
     
-        Camera second = new Camera(camera);
-        second.setRenderPosition(new Vector(250, 250));
-        SpriteObject spriteObject = new SpriteObject(new CameraSprite(scene, second, 500, 500), new Vector(0, 0, -300));
-        scene.addObject(spriteObject);
+//        Camera second = new Camera(camera);
+//        second.setRenderPosition(new Vector(250, 250));
+//        SpriteObject spriteObject = new SpriteObject(new CameraSprite(scene, second, 500, 500), new Vector(0, 0, -300));
+//        scene.addObject(spriteObject);
 
 //        ArrayList<BufferedImage> images = new ArrayList<>();
 //        images.add(ImageLoader.get("test/images/player/front.png"));

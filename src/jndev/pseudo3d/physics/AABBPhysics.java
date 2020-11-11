@@ -97,6 +97,11 @@ public abstract class AABBPhysics {
     private boolean pushable;
     
     /**
+     * mass of an object used for calculations, such as momentum conservation
+     */
+    private float mass;
+    
+    /**
      * bounding box for collisions
      */
     private Box box;
@@ -119,6 +124,7 @@ public abstract class AABBPhysics {
         overlapping = false;
         kinematic = true;
         pushable = false;
+        mass = 1.0f;
         box = new Box();
         collidingObjects = new HashMap<>();
         for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
@@ -143,6 +149,7 @@ public abstract class AABBPhysics {
         colliding = aabbPhysics.colliding;
         overlapping = aabbPhysics.overlapping;
         box = new Box(aabbPhysics.box);
+        mass = aabbPhysics.mass;
         kinematic = aabbPhysics.kinematic;
         pushable = aabbPhysics.pushable;
         collidingObjects = new HashMap<>();
@@ -183,25 +190,40 @@ public abstract class AABBPhysics {
             for (Side side : Side.values()) {
                 for (AABBPhysics aabbPhysics : collidingObjects.get(side)) {
                     if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
-                        if (aabbPhysics.pushable && aabbPhysics.kinematic)
-                            aabbPhysics.velocity = aabbPhysics.velocity.setX(vx);
-                        else vx = 0;
+                        if (aabbPhysics.pushable && aabbPhysics.kinematic) {
+                            float sum = mass + aabbPhysics.mass;
+                            float diff = mass - aabbPhysics.mass;
+                            float v1 = vx;
+                            float v2 = aabbPhysics.velocity.getX();
+                            vx = ((diff / sum) * v1) + ((2 * aabbPhysics.mass / sum) * v2);
+                            aabbPhysics.velocity = aabbPhysics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        } else vx = 0;
                         fy += aabbPhysics.friction.getY();
                         yCount++;
                         fz += aabbPhysics.friction.getZ();
                         zCount++;
                     } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
-                        if (aabbPhysics.pushable && aabbPhysics.kinematic)
-                            aabbPhysics.velocity = aabbPhysics.velocity.setY(vy);
-                        else vy = 0;
+                        if (aabbPhysics.pushable && aabbPhysics.kinematic) {
+                            float sum = mass + aabbPhysics.mass;
+                            float diff = mass - aabbPhysics.mass;
+                            float v1 = vy;
+                            float v2 = aabbPhysics.velocity.getY();
+                            vy = ((diff / sum) * v1) + ((2 * aabbPhysics.mass / sum) * v2);
+                            aabbPhysics.velocity = aabbPhysics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        } else vy = 0;
                         fx += aabbPhysics.friction.getX();
                         xCount++;
                         fz += aabbPhysics.friction.getZ();
                         zCount++;
                     } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
-                        if (aabbPhysics.pushable && aabbPhysics.kinematic)
-                            aabbPhysics.velocity = aabbPhysics.velocity.setZ(vz);
-                        else vz = 0;
+                        if (aabbPhysics.pushable && aabbPhysics.kinematic) {
+                            float sum = mass + aabbPhysics.mass;
+                            float diff = mass - aabbPhysics.mass;
+                            float v1 = vz;
+                            float v2 = aabbPhysics.velocity.getZ();
+                            vz = ((diff / sum) * v1) + ((2 * aabbPhysics.mass / sum) * v2);
+                            aabbPhysics.velocity = aabbPhysics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        } else vz = 0;
                         fx += aabbPhysics.friction.getX();
                         xCount++;
                         fy += aabbPhysics.friction.getY();
@@ -621,6 +643,24 @@ public abstract class AABBPhysics {
      */
     public void setPushable(boolean pushable) {
         this.pushable = pushable;
+    }
+    
+    /**
+     * get the mass of the object
+     *
+     * @return mass of the object
+     */
+    public float getMass() {
+        return mass;
+    }
+    
+    /**
+     * set the mass of the object
+     *
+     * @param mass new mass for object
+     */
+    public void setMass(float mass) {
+        this.mass = mass;
     }
     
     /**
