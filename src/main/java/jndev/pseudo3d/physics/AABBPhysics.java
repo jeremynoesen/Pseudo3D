@@ -267,8 +267,10 @@ public abstract class AABBPhysics {
         for (Renderable object : scene.getObjects()) {
             //loop through all renderable objects in scene
             
-            if (object instanceof AABBPhysics aabbPhysics && aabbPhysics != this) {
+            if (object instanceof AABBPhysics && object != this) {
                 //check for AABBPhysics objects
+                
+                AABBPhysics aabbPhysics = (AABBPhysics) object;
                 
                 if (box.overlaps(aabbPhysics.getBoundingBox())) {
                     //check for an overlap
