@@ -94,12 +94,12 @@ public class GameLoop extends JPanel {
                         if (object.getSprite() != null) {
                             Sprite sprite = object.getSprite();
                             
-                            if (sprite instanceof AnimatedSprite animatedSprite) {
-                                animatedSprite.update();
+                            if (sprite instanceof AnimatedSprite) {
+                                ((AnimatedSprite) sprite).update();
                                 //update animated sprites
                                 
-                            } else if (sprite instanceof CameraSprite cameraSprite) {
-                                cameraSprite.update();
+                            } else if (sprite instanceof CameraSprite) {
+                                ((CameraSprite) sprite).update();
                                 //update camera sprites
                             }
                         }

@@ -82,10 +82,10 @@ public class Scene {
     public void tick() {
         runnables.forEach(Runnable::run);
         for (Renderable object : objects) {
-            if (object instanceof AABBPhysics aabbPhysics && aabbPhysics.isKinematic()) aabbPhysics.tickMotion();
+            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic()) ((AABBPhysics) object).tickMotion();
         }
         for (Renderable object : objects) {
-            if (object instanceof AABBPhysics aabbPhysics && aabbPhysics.isKinematic()) aabbPhysics.tickCollisions();
+            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic()) ((AABBPhysics) object).tickCollisions();
         }
     }
     
@@ -105,7 +105,7 @@ public class Scene {
      */
     public void addObject(Renderable object) {
         objects.add(object);
-        if (object instanceof PhysicsObject physicsObject) physicsObject.setScene(this);
+        if (object instanceof PhysicsObject) ((AABBPhysics) object).setScene(this);
     }
     
     /**
@@ -116,7 +116,7 @@ public class Scene {
     public void removeObject(Renderable object) {
         if (objects.contains(object)) {
             objects.remove(object);
-            if (object instanceof PhysicsObject physicsObject) physicsObject.setScene(null);
+            if (object instanceof PhysicsObject) ((AABBPhysics) object).setScene(null);
         }
     }
     
