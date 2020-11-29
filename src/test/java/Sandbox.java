@@ -27,10 +27,10 @@ public class Sandbox {
      */
     public static void main(String[] args) {
         Pseudo3D.initialize(1000, 1000, true, "Testing");
-        ImageLoader.load(new File("test/images/"));
+        ImageLoader.load(new File("src/test/resources/images/"));
         Scene scene = new Scene();
         PhysicsObject physicsObject = new PhysicsObject();
-        ImageSprite imageSprite = new ImageSprite(ImageLoader.get("test/images/player/front.png"));
+        ImageSprite imageSprite = new ImageSprite(ImageLoader.get("src/test/resources/images/player/front.png"));
         physicsObject.setSprite(imageSprite);
         physicsObject.getBoundingBox().setWidth(physicsObject.getSprite().getImage().getWidth(null));
         physicsObject.getBoundingBox().setHeight(physicsObject.getSprite().getImage().getHeight(null));
@@ -52,7 +52,7 @@ public class Sandbox {
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
                 copy = new PhysicsObject(physicsObject);
-                copy.setSprite(new ImageSprite(ImageLoader.get("test/images/floor.png")));
+                copy.setSprite(new ImageSprite(ImageLoader.get("src/test/resources/images/floor.png")));
                 copy.getBoundingBox().setWidth(copy.getSprite().getImage().getWidth());
                 copy.getBoundingBox().setHeight(copy.getSprite().getImage().getHeight());
                 copy.getBoundingBox().setDepth(copy.getSprite().getImage().getWidth());
@@ -108,12 +108,12 @@ public class Sandbox {
 //
             if (Keyboard.isPressed(KeyEvent.VK_W) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/back.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("src/test/resources/images/player/back.png")));
             }
             
             if (Keyboard.isPressed(KeyEvent.VK_S) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/front.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("src/test/resources/images/player/front.png")));
             }
             
             if ((Keyboard.isPressed(KeyEvent.VK_W) && Keyboard.isPressed(KeyEvent.VK_S)) ||
@@ -123,12 +123,12 @@ public class Sandbox {
             
             if (Keyboard.isPressed(KeyEvent.VK_A)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/left.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("src/test/resources/images/player/left.png")));
             }
             
             if (Keyboard.isPressed(KeyEvent.VK_D)) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
-                physicsObject.setSprite(new ImageSprite(ImageLoader.get("test/images/player/right.png")));
+                physicsObject.setSprite(new ImageSprite(ImageLoader.get("src/test/resources/images/player/right.png")));
             }
             
             if (Keyboard.isPressed(KeyEvent.VK_A) && Keyboard.isPressed(KeyEvent.VK_D)) {
