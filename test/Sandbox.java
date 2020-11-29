@@ -162,6 +162,14 @@ public class Sandbox {
             if (Keyboard.isPressed(KeyEvent.VK_RIGHT)) {
                 camera.setRotation(camera.getRotation() - 0.01f);
             }
+    
+            if (Keyboard.isPressed(KeyEvent.VK_NUMPAD1)) {
+                physicsObject.setGravity(new Vector(0, -0.1f, 0));
+            }
+    
+            if (Keyboard.isPressed(KeyEvent.VK_NUMPAD0)) {
+                physicsObject.setGravity(new Vector());
+            }
         });
     }
 }
