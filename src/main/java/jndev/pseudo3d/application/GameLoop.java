@@ -97,7 +97,7 @@ public class GameLoop {
                             Sprite sprite = object.getSprite();
                             
                             if (sprite instanceof AnimatedSprite) {
-                                ((AnimatedSprite) sprite).update();
+                                ((AnimatedSprite) sprite).update(this);
                                 //update animated sprites
                                 
                             } else if (sprite instanceof CameraSprite) {
