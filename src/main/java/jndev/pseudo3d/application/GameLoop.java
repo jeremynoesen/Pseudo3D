@@ -7,15 +7,12 @@ import jndev.pseudo3d.sprite.AnimatedSprite;
 import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.Sprite;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * game loop to update graphics and physics for the active scene
  *
  * @author JNDev (Jeremaster101)
  */
-public class GameLoop extends JPanel {
+public class GameLoop {
     
     /**
      * active scene to render and tick
@@ -47,14 +44,19 @@ public class GameLoop extends JPanel {
      */
     private boolean paused;
     
+    private Pseudo3D pseudo3D;
+    
     /**
      * create a new game loop with default values
+     *
+     * @param pseudo3D main class used for referencing
      */
-    GameLoop() {
+    GameLoop(Pseudo3D pseudo3D) {
         activeScene = null;
         setRenderFrequency(60);
         setTickFrequency(120);
         paused = true;
+        this.pseudo3D = pseudo3D;
     }
     
     /**
@@ -105,17 +107,12 @@ public class GameLoop extends JPanel {
                         }
                     }
                     
-                    repaint();
-                    Toolkit.getDefaultToolkit().sync();
+                    SceneRenderer.render(activeScene, activeScene.getCamera(), pseudo3D.getCanvas().getGraphicsContext2D());
                     //update scene graphics
                 }
             }
         }).start();
         //start thread
-        
-        setVisible(true);
-        requestFocus();
-        //set panel visible and focused
     }
     
     /**
@@ -186,15 +183,5 @@ public class GameLoop extends JPanel {
      */
     public Scene getActiveScene() {
         return activeScene;
-    }
-    
-    /**
-     * render the active scene
-     *
-     * @param g graphics
-     */
-    @Override
-    public void paintComponent(Graphics g) {
-        SceneRenderer.render(activeScene, activeScene.getCamera(), g);
     }
 }
