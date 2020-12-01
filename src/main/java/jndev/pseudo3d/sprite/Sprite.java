@@ -19,12 +19,12 @@ public abstract class Sprite {
     /**
      * width of the sprite
      */
-    protected double width;
+    protected float width;
     
     /**
      * height of the sprite in pixels
      */
-    protected double height;
+    protected float height;
     
     /**
      * counter-clock-wise rotation of sprite in radians
@@ -36,8 +36,8 @@ public abstract class Sprite {
      */
     protected Sprite(Image image) {
         this.image = image;
-        this.width = image.getWidth();
-        this.height = image.getHeight();
+        this.width = (float) image.getWidth();
+        this.height = (float) image.getHeight();
         this.rotation = 0;
     }
     
@@ -67,7 +67,7 @@ public abstract class Sprite {
      *
      * @return width of sprite
      */
-    public double getWidth() {
+    public float getWidth() {
         return width;
     }
     
@@ -76,7 +76,7 @@ public abstract class Sprite {
      *
      * @return height of sprite
      */
-    public double getHeight() {
+    public float getHeight() {
         return height;
     }
     
@@ -85,7 +85,7 @@ public abstract class Sprite {
      *
      * @param width new sprite width
      */
-    public void setWidth(double width) {
+    public void setWidth(float width) {
         this.width = width;
     }
     
@@ -94,7 +94,7 @@ public abstract class Sprite {
      *
      * @param height new sprite height
      */
-    public void setHeight(double height) {
+    public void setHeight(float height) {
         this.height = height;
     }
     

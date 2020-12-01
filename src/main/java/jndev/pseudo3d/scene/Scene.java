@@ -1,11 +1,11 @@
 package jndev.pseudo3d.scene;
 
+import javafx.scene.paint.Color;
 import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.sceneobject.Camera;
 import jndev.pseudo3d.sceneobject.PhysicsObject;
 import jndev.pseudo3d.sceneobject.Renderable;
 
-import java.awt.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -82,10 +82,12 @@ public class Scene {
     public void tick() {
         runnables.forEach(Runnable::run);
         for (Renderable object : objects) {
-            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic()) ((AABBPhysics) object).tickMotion();
+            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic())
+                ((AABBPhysics) object).tickMotion();
         }
         for (Renderable object : objects) {
-            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic()) ((AABBPhysics) object).tickCollisions();
+            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic())
+                ((AABBPhysics) object).tickCollisions();
         }
     }
     

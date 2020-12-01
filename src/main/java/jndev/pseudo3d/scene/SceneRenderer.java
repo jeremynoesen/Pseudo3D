@@ -1,5 +1,7 @@
 package jndev.pseudo3d.scene;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.transform.Affine;
 import jndev.pseudo3d.sceneobject.Camera;
 import jndev.pseudo3d.sceneobject.Renderable;
 import jndev.pseudo3d.sprite.Sprite;
@@ -7,8 +9,6 @@ import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.FastMath;
 import jndev.pseudo3d.util.Vector;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.util.Comparator;
 
 /**
@@ -35,25 +35,19 @@ public class SceneRenderer {
      * @param camera   camera to render with
      * @param graphics graphics to render to
      */
-    public static void render(Scene scene, Camera camera, Graphics graphics) {
-        Graphics2D g2d = (Graphics2D) graphics;
+    public static void render(Scene scene, Camera camera, GraphicsContext graphics) {
         
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-                RenderingHints.VALUE_RENDER_SPEED);
-        g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
-                RenderingHints.VALUE_COLOR_RENDER_SPEED);
-        g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
-                RenderingHints.VALUE_ALPHA_INTERPOLATION_SPEED);
+        graphics.setImageSmoothing(false);
         //set rendering settings for speed
         
-        g2d.setColor(scene.getBackground());
+        graphics.setFill(scene.getBackground());
         //draw scene background color
         
-        float gWidth = (float) g2d.getClipBounds().getWidth();
-        float gHeight = (float) g2d.getClipBounds().getHeight();
+        float gWidth = (float) graphics.getCanvas().getWidth();
+        float gHeight = (float) graphics.getCanvas().getHeight();
         //graphics dimensions
         
-        g2d.fillRect(0, 0, (int) gWidth, (int) gHeight);
+        graphics.fillRect(0, 0, (int) gWidth, (int) gHeight);
         //clear out last drawn frame
         
         scene.getObjects().sort(zComparator);
@@ -98,7 +92,7 @@ public class SceneRenderer {
             Box spriteBox;
             //boxes to represent image and panel bounds
             
-            AffineTransform transform = new AffineTransform();
+            Affine transform = new Affine();
             //create new transform, resetting old one
             
             if (camera.getRotation() != 0 || sprite.getRotation() != 0) {
@@ -108,8 +102,8 @@ public class SceneRenderer {
                 float cameraRotation = -camera.getRotation();
                 //convert to radians
                 
-                transform.rotate(cameraRotation, renderPos.getX(), renderPos.getY());
-                transform.rotate(spriteRotation, x, y);
+                transform.appendRotation(cameraRotation, renderPos.getX(), renderPos.getY());
+                transform.appendRotation(spriteRotation, x, y);
                 //rotate canvas
                 
                 float sprRotSin = (float) Math.sin(spriteRotation + cameraRotation);
@@ -139,13 +133,11 @@ public class SceneRenderer {
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
                 
-                g2d.setTransform(transform);
-                g2d.drawImage(sprite.getImage(), (int) (x - (widthScaled / 2.0)),
-                        (int) (y - (heightScaled / 2.0)), widthScaled, heightScaled, null);
+                graphics.setTransform(transform);
+                graphics.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
+                        y - (heightScaled / 2.0), widthScaled, heightScaled);
                 //draw image to panel
             }
         }
-        g2d.dispose();
-        //free up resources used by graphics processing
     }
 }
