@@ -3,6 +3,8 @@ package jndev.pseudo3d.loader;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 /**
@@ -26,14 +28,22 @@ public class ImageLoader {
         if (dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 if (file.isFile()) {
-                    images.put(file.getPath(), new Image(file.getPath()));
+                    try {
+                        images.put(file.getPath(), new Image(new FileInputStream(file.getPath())));
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     if (file.isDirectory())
                         load(file);
                 }
             }
         } else {
-            images.put(dir.getPath(), new Image(dir.getPath()));
+            try {
+                images.put(dir.getPath(), new Image(new FileInputStream(dir.getPath())));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
     

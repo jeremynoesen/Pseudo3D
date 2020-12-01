@@ -21,7 +21,7 @@ public class ColorSprite extends Sprite {
         super(new WritableImage(1, 1));
         this.width = width;
         this.height = height;
-        ((WritableImage) image).getPixelWriter().setColor(1, 1, color);
+        ((WritableImage) image).getPixelWriter().setColor(0, 0, color);
     }
     
     /**
