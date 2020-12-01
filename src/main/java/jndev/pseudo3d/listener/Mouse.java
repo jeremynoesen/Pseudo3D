@@ -86,8 +86,7 @@ public class Mouse {
             wheelRotation = e.getDeltaY();
         });
         pane.addEventFilter(MouseEvent.MOUSE_MOVED, e -> {
-            position = new Vector((float) (e.getScreenX() - Pseudo3D.getInstance().getLocationOnScreen().getX()),
-                    (float) (e.getSceneY() - Pseudo3D.getInstance().getLocationOnScreen().getY()));
+            position = new Vector((float) e.getSceneX(), (float) e.getSceneY());
         });
     }
 }
