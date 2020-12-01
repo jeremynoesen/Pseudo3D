@@ -8,15 +8,17 @@ import javafx.stage.Stage;
 import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.listener.Mouse;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * main application for any project using Pseudo3D
  *
  * @author JNDev (Jeremaster101)
  */
 public class Pseudo3D extends Application {
+    
+    /**
+     * main instance of this class
+     */
+    public static Pseudo3D instance;
     
     /**
      * main game loop
@@ -32,6 +34,11 @@ public class Pseudo3D extends Application {
      * canvas for root pane
      */
     private Canvas canvas;
+    
+    /**
+     * primary stage in application
+     */
+    private Stage primaryStage;
     
     /**
      * width of main window
@@ -54,24 +61,12 @@ public class Pseudo3D extends Application {
     private String title;
     
     /**
-     * create a new instance of the Pseudo3D engine with initial configuration
+     * get the main instance of Pseudo3D as instantiated by launching the JavaFX application
      *
-     * @param width     width of window
-     * @param height    height of window
-     * @param resizable whether window can be resized
-     * @param title     title of window
+     * @return main instance
      */
-    public Pseudo3D(double width, double height, boolean resizable, String title) {
-        gameLoop = new GameLoop(this);
-        root = new Pane();
-        canvas = new Canvas(width, height);
-        root.getChildren().add(canvas);
-        Mouse.initialize(root);
-        Keyboard.initialize(root);
-        this.width = width;
-        this.height = height;
-        this.resizable = resizable;
-        this.title = title;
+    public static Pseudo3D getInstance() {
+        return instance;
     }
     
     /**
@@ -81,10 +76,18 @@ public class Pseudo3D extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
+        instance = this;
+        this.primaryStage = primaryStage;
+        gameLoop = new GameLoop(this);
+        root = new Pane();
+        canvas = new Canvas(1000, 1000);
+        root.getChildren().add(canvas);
         primaryStage.setTitle(title);
         primaryStage.setResizable(resizable);
-        primaryStage.setScene(new Scene(root, width, height));
+        primaryStage.setScene(new Scene(root, 1000, 1000));
         primaryStage.show();
+        Mouse.initialize(root);
+        Keyboard.initialize(root);
     }
     
     /**
@@ -130,6 +133,7 @@ public class Pseudo3D extends Application {
      */
     public void setWidth(double width) {
         this.width = width;
+        primaryStage.setWidth(width);
     }
     
     /**
@@ -148,6 +152,7 @@ public class Pseudo3D extends Application {
      */
     public void setHeight(double height) {
         this.height = height;
+        primaryStage.setHeight(height);
     }
     
     /**
@@ -166,6 +171,7 @@ public class Pseudo3D extends Application {
      */
     public void setResizable(boolean resizable) {
         this.resizable = resizable;
+        primaryStage.setResizable(resizable);
     }
     
     /**
@@ -184,6 +190,7 @@ public class Pseudo3D extends Application {
      */
     public void setTitle(String title) {
         this.title = title;
+        primaryStage.setTitle(title);
     }
     
     /**
