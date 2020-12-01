@@ -1,11 +1,9 @@
 package jndev.pseudo3d.sprite;
 
+import javafx.scene.image.WritableImage;
 import jndev.pseudo3d.sceneobject.Camera;
-import jndev.pseudo3d.scene.SceneRenderer;
 import jndev.pseudo3d.scene.Scene;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 /**
@@ -34,7 +32,7 @@ public class CameraSprite extends Sprite {
      * @param height height of image
      */
     public CameraSprite(Scene scene, Camera camera, int width, int height) {
-        super(new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB));
+        super(new WritableImage(width, height));
         this.scene = scene;
         this.camera = camera;
         update();
@@ -56,14 +54,10 @@ public class CameraSprite extends Sprite {
      * render the next frame of the sprite
      */
     public void update() {
-        BufferedImage updated = new BufferedImage(image.getWidth(), image.getHeight(),
-                BufferedImage.TYPE_INT_RGB);
-        Graphics graphics = updated.createGraphics();
-        graphics.setClip(0, 0, image.getWidth(), image.getHeight());
-        SceneRenderer.render(scene, camera, graphics);
-        Toolkit.getDefaultToolkit().sync();
+        WritableImage updated = new WritableImage((int) image.getWidth(), (int) image.getHeight());
+//        SceneRenderer.render(scene, camera, updated.getGraphics());
+        //todo fix once rendere is updated
         image = updated;
-        graphics.dispose();
     }
     
     /**

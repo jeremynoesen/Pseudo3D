@@ -1,6 +1,6 @@
 package jndev.pseudo3d.sprite;
 
-import java.awt.image.BufferedImage;
+import javafx.scene.image.Image;
 
 /**
  * sprite made up of a single image
@@ -14,7 +14,7 @@ public class ImageSprite extends Sprite {
      *
      * @param image image to represent sprite
      */
-    public ImageSprite(BufferedImage image) {
+    public ImageSprite(Image image) {
         super(image);
     }
     

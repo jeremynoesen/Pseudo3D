@@ -1,7 +1,7 @@
 package jndev.pseudo3d.sprite;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
 
 /**
  * sprite consisting of a single color
@@ -18,13 +18,10 @@ public class ColorSprite extends Sprite {
      * @param color  sprite color
      */
     public ColorSprite(int width, int height, Color color) {
-        super(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+        super(new WritableImage(1, 1));
         this.width = width;
         this.height = height;
-        Graphics2D g2d = image.createGraphics();
-        g2d.setPaint(color);
-        g2d.fillRect(0, 0, 1, 1);
-        g2d.dispose();
+        ((WritableImage) image).getPixelWriter().setColor(1, 1, color);
     }
     
     /**
