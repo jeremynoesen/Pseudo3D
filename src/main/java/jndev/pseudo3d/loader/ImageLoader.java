@@ -1,9 +1,8 @@
 package jndev.pseudo3d.loader;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+import javafx.scene.image.Image;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -16,7 +15,7 @@ public class ImageLoader {
     /**
      * hashmap of all loaded images. images are saved to their path to make retrieving the files easier
      */
-    private static final HashMap<String, BufferedImage> images = new HashMap<>();
+    private static final HashMap<String, Image> images = new HashMap<>();
     
     /**
      * this will load all images into a hash map with the file's path as the key
@@ -27,22 +26,14 @@ public class ImageLoader {
         if (dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 if (file.isFile()) {
-                    try {
-                        images.put(file.getPath(), ImageIO.read(file));
-                    } catch (IOException e) {
-                        System.out.println("Failed to load image " + file.getPath());
-                    }
+                    images.put(file.getPath(), new Image(file.getPath()));
                 } else {
                     if (file.isDirectory())
                         load(file);
                 }
             }
         } else {
-            try {
-                images.put(dir.getPath(), ImageIO.read(dir));
-            } catch (IOException e) {
-                System.out.println("Failed to load image " + dir.getPath());
-            }
+            images.put(dir.getPath(), new Image(dir.getPath()));
         }
     }
     
@@ -52,7 +43,7 @@ public class ImageLoader {
      * @param name name of image to retrieve
      * @return image object
      */
-    public static BufferedImage get(String name) {
+    public static Image get(String name) {
         return images.get(name);
     }
 }
