@@ -1,6 +1,8 @@
 package jndev.pseudo3d.sprite;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.image.WritableImage;
+import jndev.pseudo3d.scene.SceneRenderer;
 import jndev.pseudo3d.sceneobject.Camera;
 import jndev.pseudo3d.scene.Scene;
 
@@ -54,9 +56,10 @@ public class CameraSprite extends Sprite {
      * render the next frame of the sprite
      */
     public void update() {
+        Canvas canvas = new Canvas((int) image.getWidth(), (int) image.getHeight());
         WritableImage updated = new WritableImage((int) image.getWidth(), (int) image.getHeight());
-//        SceneRenderer.render(scene, camera, updated.getGraphics());
-        //todo fix once rendere is updated
+        SceneRenderer.render(scene, camera, canvas.getGraphicsContext2D());
+        canvas.snapshot(null, updated);
         image = updated;
     }
     
