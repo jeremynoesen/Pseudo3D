@@ -1,6 +1,7 @@
 package jndev.pseudo3d.sprite;
 
-import java.awt.image.BufferedImage;
+import javafx.scene.image.Image;
+
 import java.util.Objects;
 
 /**
@@ -13,17 +14,17 @@ public abstract class Sprite {
     /**
      * image used for sprite in pixels
      */
-    protected BufferedImage image;
+    protected Image image;
     
     /**
      * width of the sprite
      */
-    protected int width;
+    protected double width;
     
     /**
      * height of the sprite in pixels
      */
-    protected int height;
+    protected double height;
     
     /**
      * counter-clock-wise rotation of sprite in radians
@@ -33,7 +34,7 @@ public abstract class Sprite {
     /**
      * construct new sprite only when subclassed
      */
-    protected Sprite(BufferedImage image) {
+    protected Sprite(Image image) {
         this.image = image;
         this.width = image.getWidth();
         this.height = image.getHeight();
@@ -57,7 +58,7 @@ public abstract class Sprite {
      *
      * @return sprite image
      */
-    public BufferedImage getImage() {
+    public Image getImage() {
         return image;
     }
     
@@ -66,7 +67,7 @@ public abstract class Sprite {
      *
      * @return width of sprite
      */
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
     
@@ -75,7 +76,7 @@ public abstract class Sprite {
      *
      * @return height of sprite
      */
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
     
@@ -84,7 +85,7 @@ public abstract class Sprite {
      *
      * @param width new sprite width
      */
-    public void setWidth(int width) {
+    public void setWidth(double width) {
         this.width = width;
     }
     
@@ -93,7 +94,7 @@ public abstract class Sprite {
      *
      * @param height new sprite height
      */
-    public void setHeight(int height) {
+    public void setHeight(double height) {
         this.height = height;
     }
     

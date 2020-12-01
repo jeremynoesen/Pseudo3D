@@ -1,9 +1,9 @@
 package jndev.pseudo3d.sprite;
 
+import javafx.scene.image.Image;
 import jndev.pseudo3d.application.Pseudo3D;
 import jndev.pseudo3d.util.FastMath;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -22,7 +22,7 @@ public class AnimatedSprite extends Sprite {
     /**
      * all images of the animated sprite
      */
-    private final ArrayList<BufferedImage> images;
+    private final ArrayList<Image> images;
     
     /**
      * time between frames
@@ -35,7 +35,7 @@ public class AnimatedSprite extends Sprite {
      * @param images    all images of the animated sprite
      * @param frameRate frames per second of the sprite
      */
-    public AnimatedSprite(ArrayList<BufferedImage> images, float frameRate) {
+    public AnimatedSprite(ArrayList<Image> images, float frameRate) {
         super(images.get(0));
         this.frameStep = frameRate / 1000.0f;
         currentFrame = 0;
