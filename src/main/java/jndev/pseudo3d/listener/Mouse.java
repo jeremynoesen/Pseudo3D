@@ -1,10 +1,7 @@
 package jndev.pseudo3d.listener;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.layout.Pane;
-import jndev.pseudo3d.application.Pseudo3D;
 import jndev.pseudo3d.util.Vector;
 
 import java.util.HashSet;
@@ -73,20 +70,12 @@ public class Mouse {
     /**
      * add the event listeners to the main pane of the program to allow this class to work
      *
-     * @param pane main pane for the program
+     * @param canvas main pane for the program
      */
-    public static void initialize(Pane pane) {
-        pane.addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
-            pressed.add(e.getButton());
-        });
-        pane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> {
-            pressed.remove(e.getButton());
-        });
-        pane.addEventFilter(ScrollEvent.SCROLL, e -> {
-            wheelRotation = e.getDeltaY();
-        });
-        pane.addEventFilter(MouseEvent.MOUSE_MOVED, e -> {
-            position = new Vector((float) e.getSceneX(), (float) e.getSceneY());
-        });
+    public static void initialize(Canvas canvas) {
+        canvas.setOnMouseClicked(e -> pressed.add(e.getButton()));
+        canvas.setOnMouseReleased(e -> pressed.remove(e.getButton()));
+        canvas.setOnScroll(e -> wheelRotation = e.getDeltaY());
+        canvas.setOnMouseMoved(e -> position = new Vector((float) e.getSceneX(), (float) e.getSceneY()));
     }
 }

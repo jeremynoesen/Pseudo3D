@@ -1,7 +1,7 @@
 package jndev.pseudo3d.listener;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -40,14 +40,10 @@ public class Keyboard {
     /**
      * add the event listeners to the main pane of the program to allow this class to work
      *
-     * @param pane main pane for the program
+     * @param canvas main pane for the program
      */
-    public static void initialize(Pane pane) {
-        pane.addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, e -> {
-            pressed.add(e.getCode());
-        });
-        pane.addEventFilter(javafx.scene.input.KeyEvent.KEY_RELEASED, e -> {
-            pressed.remove(e.getCode());
-        });
+    public static void initialize(Canvas canvas) {
+        canvas.setOnKeyPressed(e -> pressed.add(e.getCode()));
+        canvas.setOnKeyReleased(e -> pressed.remove(e.getCode()));
     }
 }

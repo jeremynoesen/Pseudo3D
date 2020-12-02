@@ -3,6 +3,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import jndev.pseudo3d.application.Pseudo3D;
 import jndev.pseudo3d.listener.Keyboard;
+import jndev.pseudo3d.listener.Mouse;
 import jndev.pseudo3d.loader.ImageLoader;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.sceneobject.Camera;
@@ -11,6 +12,7 @@ import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
 
 import java.io.File;
+import java.security.Key;
 
 /**
  * sandbox-style testing class for testing various bits of this project
@@ -25,7 +27,6 @@ public class Sandbox {
      * @param args program arguments
      */
     public static void main(String[] args) {
-        Application.launch(Pseudo3D.class, args);
         ImageLoader.load(new File("src/test/resources/images/"));
         Scene scene = new Scene();
         PhysicsObject physicsObject = new PhysicsObject();
@@ -36,9 +37,9 @@ public class Sandbox {
         physicsObject.getBoundingBox().setDepth((float) physicsObject.getSprite().getImage().getWidth());
         physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0,
                 -physicsObject.getBoundingBox().getWidth()));
-        physicsObject.setTerminalVelocity(new Vector(100, 100, 100));
+//        physicsObject.setTerminalVelocity(new Vector(100, 100, 100));
         physicsObject.setKinematic(true);
-        physicsObject.setGravity(new Vector());
+//        physicsObject.setGravity(new Vector());
         scene.addObject(physicsObject);
         
         PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
@@ -92,23 +93,26 @@ public class Sandbox {
         
         scene.setCamera(camera);
         scene.setBackground(Color.DARKGRAY);
-    
-        Pseudo3D.getInstance().setWidth(1000);
-        Pseudo3D.getInstance().setHeight(1000);
-        Pseudo3D.getInstance().setTitle("Sandbox");
-        Pseudo3D.getInstance().getGameLoop().setActiveScene(scene);
-        Pseudo3D.getInstance().getGameLoop().setRenderFrequency(75);
-        Pseudo3D.getInstance().getGameLoop().setTickFrequency(120);
-        Pseudo3D.getInstance().getGameLoop().start();
-    
+        
+//        Pseudo3D.getStage().setWidth(1000);
+//        Pseudo3D.getCanvas().setWidth(1000);
+//        Pseudo3D.getStage().setHeight(1000);
+//        Pseudo3D.getCanvas().setHeight(1000);
+//        Pseudo3D.getStage().setTitle("Sandbox");
+        Pseudo3D.getGameLoop().setActiveScene(scene);
+        Pseudo3D.getGameLoop().setRenderFrequency(60);
+        Pseudo3D.getGameLoop().setTickFrequency(120);
+        Pseudo3D.getGameLoop().start();
+        Pseudo3D.launch();
+        
         scene.addRunnable(() -> {
-            camera.setRenderPosition(new Vector((float) Pseudo3D.getInstance().getWidth() / 2.0f,
-                    (float) Pseudo3D.getInstance().getHeight() / 2.0f));
+            camera.setRenderPosition(new Vector((float) Pseudo3D.getCanvas().getWidth() / 2.0f,
+                    (float) Pseudo3D.getCanvas().getHeight() / 2.0f));
 //            physicsObject.setVelocity(
 //                    Mouse.getPosition().setY(Mouse.getPosition().multiply(-1).getY())
-//                            .subtract(camera.getWindowPosition().multiply(new Vector(1, -1)))
-//                            .subtract(physicsObject.getPosition().setZ(0)).multiply(0.1));
-//
+//                            .subtract(camera.getRenderPosition().multiply(new Vector(1, -1)))
+//                            .subtract(physicsObject.getPosition().setZ(0)).multiply(0.1f));
+
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
                 physicsObject.setSprite(new ImageSprite(ImageLoader.get("src/test/resources/images/player/back.png")));
