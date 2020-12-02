@@ -58,10 +58,10 @@ public class AnimatedSprite extends Sprite {
      * set the current frame to the next available frame based on elapsed time
      */
     public void update() {
-        float renderStep = Pseudo3D.getGameLoop().getRenderFrequency() / 1000.0f;
-        currentFrame = currentFrame + (frameStep / renderStep) <
-                images.size() ? currentFrame + (frameStep / renderStep) : 0;
-        image = images.get(FastMath.floor(currentFrame));
+//        float renderStep = Pseudo3D.getGameLoop().getRenderFrequency() / 1000.0f;
+//        currentFrame = currentFrame + (frameStep / renderStep) <
+//                images.size() ? currentFrame + (frameStep / renderStep) : 0;
+//        image = images.get(FastMath.floor(currentFrame));
     }
     
     /**
