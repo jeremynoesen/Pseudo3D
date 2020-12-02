@@ -30,6 +30,11 @@ public class Pseudo3D extends Application {
     private static final Canvas canvas = new Canvas(1000, 1000);
     
     /**
+     * javafx scene for the stage
+     */
+    private static Scene scene;
+    
+    /**
      * active scene to render and tick
      */
     private static jndev.pseudo3d.scene.Scene activeScene;
@@ -45,6 +50,8 @@ public class Pseudo3D extends Application {
      */
     private static final Timeline renderLoop = new Timeline(new KeyFrame(Duration.millis(1),
             ae -> {
+                canvas.setWidth(scene.getWidth());
+                canvas.setHeight(scene.getHeight());
                 for (Renderable object : activeScene.getObjects()) {
                     if (object.getSprite() != null) {
                         Sprite sprite = object.getSprite();
@@ -74,9 +81,10 @@ public class Pseudo3D extends Application {
         Mouse.initialize(canvas);
         Keyboard.initialize(canvas);
         root.getChildren().add(canvas);
+        scene = new Scene(root);
         primaryStage.setTitle("Untitled");
         primaryStage.setResizable(true);
-        primaryStage.setScene(new Scene(root, 1000, 1000));
+        primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> System.exit(0));
         canvas.requestFocus();
