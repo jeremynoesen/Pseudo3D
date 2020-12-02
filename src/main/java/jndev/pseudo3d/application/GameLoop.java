@@ -44,19 +44,14 @@ public class GameLoop {
      */
     private boolean paused;
     
-    private Pseudo3D pseudo3D;
-    
     /**
      * create a new game loop with default values
-     *
-     * @param pseudo3D main class used for referencing
      */
-    GameLoop(Pseudo3D pseudo3D) {
+    GameLoop() {
         activeScene = null;
         setRenderFrequency(60);
         setTickFrequency(120);
         paused = true;
-        this.pseudo3D = pseudo3D;
     }
     
     /**
@@ -97,7 +92,7 @@ public class GameLoop {
                             Sprite sprite = object.getSprite();
                             
                             if (sprite instanceof AnimatedSprite) {
-                                ((AnimatedSprite) sprite).update(this);
+                                ((AnimatedSprite) sprite).update();
                                 //update animated sprites
                                 
                             } else if (sprite instanceof CameraSprite) {
@@ -107,7 +102,8 @@ public class GameLoop {
                         }
                     }
                     
-                    SceneRenderer.render(activeScene, activeScene.getCamera(), pseudo3D.getCanvas().getGraphicsContext2D());
+                    SceneRenderer.render(activeScene, activeScene.getCamera(),
+                            Pseudo3D.getCanvas().getGraphicsContext2D());
                     //update scene graphics
                 }
             }

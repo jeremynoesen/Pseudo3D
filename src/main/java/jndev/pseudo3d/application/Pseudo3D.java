@@ -16,58 +16,14 @@ import jndev.pseudo3d.listener.Mouse;
 public class Pseudo3D extends Application {
     
     /**
-     * main instance of this class
-     */
-    public static Pseudo3D instance;
-    
-    /**
      * main game loop
      */
-    private GameLoop gameLoop;
-    
-    /**
-     * root pane of app
-     */
-    private Pane root;
+    private static GameLoop gameLoop = new GameLoop();
     
     /**
      * canvas for root pane
      */
-    private Canvas canvas;
-    
-    /**
-     * primary stage in application
-     */
-    private Stage primaryStage;
-    
-    /**
-     * width of main window
-     */
-    private double width;
-    
-    /**
-     * height of main window
-     */
-    private double height;
-    
-    /**
-     * whether the window can be resized
-     */
-    private boolean resizable;
-    
-    /**
-     * title of window
-     */
-    private String title;
-    
-    /**
-     * get the main instance of Pseudo3D as instantiated by launching the JavaFX application
-     *
-     * @return main instance
-     */
-    public static Pseudo3D getInstance() {
-        return instance;
-    }
+    private static Canvas canvas = new Canvas(1000, 1000);
     
     /**
      * start the application
@@ -76,18 +32,22 @@ public class Pseudo3D extends Application {
      */
     @Override
     public void start(Stage primaryStage) {
-        instance = this;
-        this.primaryStage = primaryStage;
-        gameLoop = new GameLoop(this);
-        root = new Pane();
-        canvas = new Canvas(1000, 1000);
+        Pane root = new Pane();
+        Mouse.initialize(canvas);
+        Keyboard.initialize(canvas);
         root.getChildren().add(canvas);
-        primaryStage.setTitle(title);
-        primaryStage.setResizable(resizable);
+        primaryStage.setTitle("Untitled");
+        primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, 1000, 1000));
         primaryStage.show();
-        Mouse.initialize(root);
-        Keyboard.initialize(root);
+        canvas.requestFocus();
+    }
+    
+    /**
+     * launch the application
+     */
+    public static void launch() {
+        new Thread(Application::launch).start();
     }
     
     /**
@@ -95,17 +55,8 @@ public class Pseudo3D extends Application {
      *
      * @return game loop
      */
-    public GameLoop getGameLoop() {
+    public static GameLoop getGameLoop() {
         return gameLoop;
-    }
-    
-    /**
-     * change the game loop used for the engine
-     *
-     * @param gameLoop gameloop to set as game loop
-     */
-    public void setGameLoop(GameLoop gameLoop) {
-        this.gameLoop = gameLoop;
     }
     
     /**
@@ -113,92 +64,7 @@ public class Pseudo3D extends Application {
      *
      * @return main canvas
      */
-    public Canvas getCanvas() {
+    public static Canvas getCanvas() {
         return canvas;
-    }
-    
-    /**
-     * get root pane
-     *
-     * @return root pane
-     */
-    public Pane getRoot() {
-        return root;
-    }
-    
-    /**
-     * set the width of the main window
-     *
-     * @param width width of main window
-     */
-    public void setWidth(double width) {
-        this.width = width;
-        primaryStage.setWidth(width);
-    }
-    
-    /**
-     * get the width of the main window
-     *
-     * @return width of main window
-     */
-    public double getWidth() {
-        return width;
-    }
-    
-    /**
-     * set the height of the main window
-     *
-     * @param height height of main window
-     */
-    public void setHeight(double height) {
-        this.height = height;
-        primaryStage.setHeight(height);
-    }
-    
-    /**
-     * get the height of the main window
-     *
-     * @return height of main window
-     */
-    public double getHeight() {
-        return height;
-    }
-    
-    /**
-     * allow or disallow resizing the window
-     *
-     * @param resizable true to allow resizing
-     */
-    public void setResizable(boolean resizable) {
-        this.resizable = resizable;
-        primaryStage.setResizable(resizable);
-    }
-    
-    /**
-     * check if the window is resizable
-     *
-     * @return true if resizable
-     */
-    public boolean isResizable() {
-        return resizable;
-    }
-    
-    /**
-     * set the title of the window
-     *
-     * @param title window title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-        primaryStage.setTitle(title);
-    }
-    
-    /**
-     * get the title of the window
-     *
-     * @return window title
-     */
-    public String getTitle() {
-        return title;
     }
 }
