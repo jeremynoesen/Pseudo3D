@@ -17,7 +17,7 @@ public class AnimatedSprite extends Sprite {
     /**
      * current frame number
      */
-    private float currentFrame;
+    private double currentFrame;
     
     /**
      * all images of the animated sprite
@@ -27,7 +27,7 @@ public class AnimatedSprite extends Sprite {
     /**
      * time between frames
      */
-    private final float frameStep;
+    private final double frameStep;
     
     /**
      * create a new animated sprite with a list of images and frame rate
@@ -58,10 +58,10 @@ public class AnimatedSprite extends Sprite {
      * set the current frame to the next available frame based on elapsed time
      */
     public void update() {
-//        float renderStep = Pseudo3D.getGameLoop().getRenderFrequency() / 1000.0f;
-//        currentFrame = currentFrame + (frameStep / renderStep) <
-//                images.size() ? currentFrame + (frameStep / renderStep) : 0;
-//        image = images.get(FastMath.floor(currentFrame));
+        double renderStep = Pseudo3D.getRenderFrequency() / 1000.0;
+        currentFrame = currentFrame + (frameStep / renderStep) <
+                images.size() ? currentFrame + (frameStep / renderStep) : 0;
+        image = images.get(FastMath.floor((float) currentFrame));
     }
     
     /**
@@ -76,8 +76,8 @@ public class AnimatedSprite extends Sprite {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         AnimatedSprite that = (AnimatedSprite) o;
-        return Float.compare(that.currentFrame, currentFrame) == 0 &&
-                Float.compare(that.frameStep, frameStep) == 0 &&
+        return Double.compare(that.currentFrame, currentFrame) == 0 &&
+                Double.compare(that.frameStep, frameStep) == 0 &&
                 Objects.equals(images, that.images) &&
                 super.equals(that);
     }
