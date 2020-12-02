@@ -98,9 +98,6 @@ public class Sandbox {
 //        Pseudo3D.getCanvas().setHeight(1000);
 //        Pseudo3D.getStage().setTitle("Sandbox");
         Pseudo3D.setActiveScene(scene);
-//        Pseudo3D.getGameLoop().setRenderFrequency(75);
-//        Pseudo3D.getGameLoop().setTickFrequency(120);
-//        Pseudo3D.getGameLoop().start();
         Pseudo3D.launch();
         
         scene.addRunnable(() -> {

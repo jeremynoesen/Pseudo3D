@@ -27,17 +27,23 @@ public class Pseudo3D extends Application {
     /**
      * canvas for root pane
      */
-    private static Canvas canvas = new Canvas(1000, 1000);
+    private static final Canvas canvas = new Canvas(1000, 1000);
     
     /**
      * active scene to render and tick
      */
     private static jndev.pseudo3d.scene.Scene activeScene;
     
-    private static Timeline tickLoop = new Timeline(new KeyFrame(Duration.millis(8.3333333),
+    /**
+     * timeline loop for ticking operations
+     */
+    private static final Timeline tickLoop = new Timeline(new KeyFrame(Duration.millis(1),
             ae -> activeScene.tick()));
     
-    private static Timeline renderLoop = new Timeline(new KeyFrame(Duration.millis(16.666667),
+    /**
+     * timeline loop for rendering
+     */
+    private static final Timeline renderLoop = new Timeline(new KeyFrame(Duration.millis(1),
             ae -> {
                 for (Renderable object : activeScene.getObjects()) {
                     if (object.getSprite() != null) {
@@ -77,6 +83,20 @@ public class Pseudo3D extends Application {
         tickLoop.setCycleCount(Animation.INDEFINITE);
         renderLoop.setCycleCount(Animation.INDEFINITE);
         unpause();
+        setRenderFrequency(60);
+        setTickFrequency(120);
+    }
+    
+    /**
+     * stop the application
+     *
+     * @throws Exception
+     */
+    @Override
+    public void stop() throws Exception {
+        renderLoop.stop();
+        tickLoop.stop();
+        super.stop();
     }
     
     /**
@@ -86,11 +106,17 @@ public class Pseudo3D extends Application {
         new Thread(Application::launch).start();
     }
     
+    /**
+     * pause ticking and rendering
+     */
     public static void pause() {
         renderLoop.pause();
         tickLoop.pause();
     }
     
+    /**
+     * unpause ticking and rendering
+     */
     public static void unpause() {
         renderLoop.play();
         tickLoop.play();
@@ -105,11 +131,57 @@ public class Pseudo3D extends Application {
         return canvas;
     }
     
+    /**
+     * get the active scene
+     *
+     * @return active scene
+     */
     public static jndev.pseudo3d.scene.Scene getActiveScene() {
         return activeScene;
     }
     
+    /**
+     * set a new scene to be active
+     *
+     * @param activeScene pseudo3d scene
+     */
     public static void setActiveScene(jndev.pseudo3d.scene.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
+    }
+    
+    /**
+     * set the tick frequency for the tick loop
+     *
+     * @param hertz ticks per second
+     */
+    public static void setTickFrequency(double hertz) {
+        tickLoop.setRate(1 / (1000 / hertz));
+    }
+    
+    /**
+     * get the tick frequency
+     *
+     * @return tick frequency
+     */
+    public static double getTickFrequency() {
+        return 1000 / (1 / tickLoop.getRate());
+    }
+    
+    /**
+     * set the render frequency for the render loop
+     *
+     * @param hertz frames per second
+     */
+    public static void setRenderFrequency(double hertz) {
+        renderLoop.setRate(1 / (1000 / hertz));
+    }
+    
+    /**
+     * get the render frequency
+     *
+     * @return render frequency
+     */
+    public static double getRenderFrequency() {
+        return 1000 / (1 / renderLoop.getRate());
     }
 }
