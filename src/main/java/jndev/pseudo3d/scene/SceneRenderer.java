@@ -102,8 +102,8 @@ public class SceneRenderer {
                 float cameraRotation = -camera.getRotation();
                 //convert to radians
                 
-                transform.appendRotation(cameraRotation, renderPos.getX(), renderPos.getY());
-                transform.appendRotation(spriteRotation, x, y);
+                transform.appendRotation(Math.toDegrees(cameraRotation), renderPos.getX(), renderPos.getY());
+                transform.appendRotation(Math.toDegrees(spriteRotation), x, y);
                 //rotate canvas
                 
                 float sprRotSin = (float) Math.sin(spriteRotation + cameraRotation);
@@ -133,9 +133,11 @@ public class SceneRenderer {
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
                 
+                Affine original = graphics.getTransform();
                 graphics.setTransform(transform);
                 graphics.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
                         y - (heightScaled / 2.0), widthScaled, heightScaled);
+                graphics.setTransform(original);
                 //draw image to panel
             }
         }
