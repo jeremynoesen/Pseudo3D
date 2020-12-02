@@ -40,6 +40,7 @@ public class Pseudo3D extends Application {
         primaryStage.setResizable(true);
         primaryStage.setScene(new Scene(root, 1000, 1000));
         primaryStage.show();
+        primaryStage.setOnCloseRequest(e -> System.exit(0));
         canvas.requestFocus();
     }
     

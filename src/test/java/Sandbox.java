@@ -1,4 +1,3 @@
-import javafx.application.Application;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import jndev.pseudo3d.application.Pseudo3D;
@@ -12,7 +11,6 @@ import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
 
 import java.io.File;
-import java.security.Key;
 
 /**
  * sandbox-style testing class for testing various bits of this project
@@ -93,14 +91,14 @@ public class Sandbox {
         
         scene.setCamera(camera);
         scene.setBackground(Color.DARKGRAY);
-        
-//        Pseudo3D.getStage().setWidth(1000);
+
+//        Pseudo3D.getStage().setWidth(1000); //todo reimplement
 //        Pseudo3D.getCanvas().setWidth(1000);
 //        Pseudo3D.getStage().setHeight(1000);
 //        Pseudo3D.getCanvas().setHeight(1000);
 //        Pseudo3D.getStage().setTitle("Sandbox");
         Pseudo3D.getGameLoop().setActiveScene(scene);
-        Pseudo3D.getGameLoop().setRenderFrequency(60);
+        Pseudo3D.getGameLoop().setRenderFrequency(75);
         Pseudo3D.getGameLoop().setTickFrequency(120);
         Pseudo3D.getGameLoop().start();
         Pseudo3D.launch();
@@ -112,7 +110,7 @@ public class Sandbox {
 //                    Mouse.getPosition().setY(Mouse.getPosition().multiply(-1).getY())
 //                            .subtract(camera.getRenderPosition().multiply(new Vector(1, -1)))
 //                            .subtract(physicsObject.getPosition().setZ(0)).multiply(0.1f));
-
+            
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
                 physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
                 physicsObject.setSprite(new ImageSprite(ImageLoader.get("src/test/resources/images/player/back.png")));
