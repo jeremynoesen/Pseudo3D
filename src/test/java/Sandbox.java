@@ -161,11 +161,11 @@ public class Sandbox {
             }
             
             if (Keyboard.isPressed(KeyCode.LEFT)) {
-                camera.setRotation(camera.getRotation() + 0.01f);
+                camera.setRotation(camera.getRotation() + 1f);
             }
             
-            if (Keyboard.isPressed(KeyCode.LEFT)) {
-                camera.setRotation(camera.getRotation() - 0.01f);
+            if (Keyboard.isPressed(KeyCode.RIGHT)) {
+                camera.setRotation(camera.getRotation() - 1f);
             }
         });
     }
