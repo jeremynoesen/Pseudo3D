@@ -27,7 +27,7 @@ public class Pseudo3D extends Application {
     /**
      * canvas for root pane
      */
-    private static final Canvas canvas = new Canvas(1000, 1000);
+    private static Canvas canvas;
     
     /**
      * javafx scene for the stage
@@ -38,6 +38,26 @@ public class Pseudo3D extends Application {
      * active scene to render and tick
      */
     private static jndev.pseudo3d.scene.Scene activeScene;
+    
+    /**
+     * width of the window
+     */
+    private static int width = 842;
+    
+    /**
+     * height of the window
+     */
+    private static int height = 480;
+    
+    /**
+     * whether the window can be resized
+     */
+    private static boolean resizable = true;
+    
+    /**
+     * title of window
+     */
+    private static String title = "Pseudo3D";
     
     /**
      * timeline loop for ticking operations
@@ -78,12 +98,13 @@ public class Pseudo3D extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();
+        canvas = new Canvas(width, height);
         Mouse.initialize(canvas);
         Keyboard.initialize(canvas);
         root.getChildren().add(canvas);
         scene = new Scene(root);
-        primaryStage.setTitle("Untitled");
-        primaryStage.setResizable(true);
+        primaryStage.setTitle(title);
+        primaryStage.setResizable(resizable);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> System.exit(0));
@@ -140,6 +161,15 @@ public class Pseudo3D extends Application {
     }
     
     /**
+     * get the scene on the stage
+     *
+     * @return scene on stage
+     */
+    public static Scene getScene() {
+        return scene;
+    }
+    
+    /**
      * get the active scene
      *
      * @return active scene
@@ -191,5 +221,20 @@ public class Pseudo3D extends Application {
      */
     public static double getRenderFrequency() {
         return 1000 / (1 / renderLoop.getRate());
+    }
+    
+    /**
+     * initialize parameters of the main window. this must be run before launch(), otherwise it will have no effect
+     *
+     * @param width     width of window
+     * @param height    height of window
+     * @param resizable resizable status
+     * @param title     window title
+     */
+    public static void init(int width, int height, boolean resizable, String title) {
+        Pseudo3D.width = width;
+        Pseudo3D.height = height;
+        Pseudo3D.resizable = resizable;
+        Pseudo3D.title = title;
     }
 }
