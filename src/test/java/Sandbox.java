@@ -2,11 +2,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import jndev.pseudo3d.application.Pseudo3D;
 import jndev.pseudo3d.listener.Keyboard;
-import jndev.pseudo3d.listener.Mouse;
 import jndev.pseudo3d.loader.ImageLoader;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.sceneobject.Camera;
 import jndev.pseudo3d.sceneobject.PhysicsObject;
+import jndev.pseudo3d.sceneobject.SpriteObject;
+import jndev.pseudo3d.sprite.CameraSprite;
 import jndev.pseudo3d.sprite.ImageSprite;
 import jndev.pseudo3d.util.Vector;
 
@@ -35,9 +36,7 @@ public class Sandbox {
         physicsObject.getBoundingBox().setDepth((float) physicsObject.getSprite().getImage().getWidth());
         physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0,
                 -physicsObject.getBoundingBox().getWidth()));
-//        physicsObject.setTerminalVelocity(new Vector(100, 100, 100));
         physicsObject.setKinematic(true);
-//        physicsObject.setGravity(new Vector());
         scene.addObject(physicsObject);
         
         PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
@@ -65,38 +64,17 @@ public class Sandbox {
         camera.setFieldOfView((float) Math.toRadians(72));
         camera.setScenePosition(new Vector(0, 0, -100));
         camera.setSensorSize(1000);
-//        camera.setWindowPosition(new Vector());
-
-
-//        Camera second = new Camera(camera);
-//        second.setRenderPosition(new Vector(250, 250));
-//        SpriteObject spriteObject = new SpriteObject(new CameraSprite(scene, second, 500, 500), new Vector(0, 0, -300));
-//        scene.addObject(spriteObject);
-
-//        ArrayList<BufferedImage> images = new ArrayList<>();
-//        images.add(ImageLoader.get("test/images/player/front.png"));
-//        images.add(ImageLoader.get("test/images/player/left.png"));
-//        images.add(ImageLoader.get("test/images/player/right.png"));
-//        AnimatedSprite as = new AnimatedSprite(images, 3);
-
-//        physicsObject.setSprite(as);
-
-//        SpriteObject spriteObject = new SpriteObject();
-//        spriteObject.setSprite(new ImageSprite(ImageLoader.get("res/sprites/background.png")));
-//        spriteObject.setSprite(new CameraSprite(scene, camera, 500, 500));
-//        spriteObject.getSprite().setRotation(10);
-//        spriteObject.setSprite(as);
-//        spriteObject.setPosition(new Vector(0, 0, -200));
-//        scene.addObject(spriteObject);
+        
+        Camera second = new Camera(camera);
+        second.setRenderPosition(new Vector(250, 250));
+        SpriteObject spriteObject = new SpriteObject(new CameraSprite(
+                scene, second, 500, 500), new Vector(0, 0, -300));
+        scene.addObject(spriteObject);
         
         scene.setCamera(camera);
         scene.setBackground(Color.DARKGRAY);
-
-//        Pseudo3D.getStage().setWidth(1000); //todo reimplement
-//        Pseudo3D.getCanvas().setWidth(1000);
-//        Pseudo3D.getStage().setHeight(1000);
-//        Pseudo3D.getCanvas().setHeight(1000);
-//        Pseudo3D.getStage().setTitle("Sandbox");
+        
+        Pseudo3D.init(1000, 1000, false, "Sandbox");
         Pseudo3D.setActiveScene(scene);
         Pseudo3D.launch();
         
