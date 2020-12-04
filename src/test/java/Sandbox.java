@@ -41,6 +41,7 @@ public class Sandbox {
         entity.getBoundingBox().setDepth((float) entity.getSprite().getImage().getWidth());
         entity.setPosition(new Vector(entity.getBoundingBox().getWidth() * 10 - 450, 0,
                 -entity.getBoundingBox().getWidth()));
+        entity.setMass(1f);
         scene.addEntity(entity);
         
         Entity entity1 = new Entity(entity);
