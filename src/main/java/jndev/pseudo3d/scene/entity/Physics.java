@@ -641,7 +641,7 @@ public abstract class Physics {
      * @return true if aabbphysics data is equivalent to this
      */
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Physics that = (Physics) o;
