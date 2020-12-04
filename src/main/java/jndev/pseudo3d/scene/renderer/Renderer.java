@@ -1,8 +1,9 @@
-package jndev.pseudo3d.scene;
+package jndev.pseudo3d.scene.renderer;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import jndev.pseudo3d.Pseudo3D;
+import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.scene.entity.Entity;
 import jndev.pseudo3d.scene.entity.Sprite;
 import jndev.pseudo3d.scene.util.Box;

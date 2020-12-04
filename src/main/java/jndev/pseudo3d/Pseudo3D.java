@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import jndev.pseudo3d.input.Keyboard;
 import jndev.pseudo3d.input.Mouse;
-import jndev.pseudo3d.scene.Renderer;
+import jndev.pseudo3d.scene.renderer.Renderer;
 
 /**
  * main application for any project using Pseudo3D
