@@ -35,19 +35,15 @@ public class Sandbox {
         entity.getBoundingBox().setDepth((float) entity.getSprite().getImage().getWidth());
         entity.setPosition(new Vector(entity.getBoundingBox().getWidth() * 10 - 450, 0,
                 -entity.getBoundingBox().getWidth()));
-        entity.setKinematic(true);
         scene.addEntity(entity);
         
         Entity entity1 = new Entity(entity);
-        entity1.setPushable(true);
-        entity.setPushable(true);
         entity1.setMass(4f);
         scene.addEntity(entity1);
         
-        Entity copy;
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
-                copy = new Entity(entity);
+                Entity copy = new Entity();
                 copy.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/floor.png")));
                 copy.getBoundingBox().setWidth((float) copy.getSprite().getImage().getWidth());
                 copy.getBoundingBox().setHeight((float) copy.getSprite().getImage().getHeight());
