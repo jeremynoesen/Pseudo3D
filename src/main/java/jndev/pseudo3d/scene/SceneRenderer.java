@@ -32,10 +32,9 @@ public class SceneRenderer {
      * render a scene frame to graphics
      *
      * @param scene    scene to render
-     * @param camera   camera to render with
      * @param graphics graphics to render to
      */
-    public static void render(Scene scene, Camera camera, GraphicsContext graphics) {
+    public static void render(Scene scene, GraphicsContext graphics) {
         
         graphics.setImageSmoothing(false);
         //set rendering settings for speed
@@ -53,6 +52,7 @@ public class SceneRenderer {
         scene.getObjects().sort(zComparator);
         //sort objects by z position so objects can be drawn in front of others
         
+        Camera camera = scene.getCamera();
         Vector camPos = camera.getScenePosition();
         Vector renderPos = camera.getRenderPosition();
         float fov = camera.getFieldOfView() / 2.0f;
@@ -138,6 +138,7 @@ public class SceneRenderer {
                 graphics.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
                         y - (heightScaled / 2.0), widthScaled, heightScaled);
                 graphics.setTransform(original);
+                sprite.update();
                 //draw image to panel
             }
         }

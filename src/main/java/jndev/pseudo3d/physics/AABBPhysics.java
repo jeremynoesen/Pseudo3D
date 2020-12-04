@@ -39,11 +39,6 @@ public abstract class AABBPhysics {
     private Vector acceleration;
     
     /**
-     * jerk of object, or rate of change of acceleration (pixels / tick ^ 3)
-     */
-    private Vector jerk;
-    
-    /**
      * +/- terminal velocity of gravity acceleration of object (pixels / tick)
      */
     private Vector terminalVelocity;
@@ -114,7 +109,6 @@ public abstract class AABBPhysics {
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
-        jerk = new Vector();
         terminalVelocity = new Vector(10, 10, 10);
         drag = new Vector(0.005f, 0.005f, 0.005f);
         friction = new Vector(0.05f, 0.05f, 0.05f);
@@ -141,7 +135,6 @@ public abstract class AABBPhysics {
         velocity = aabbPhysics.velocity;
         terminalVelocity = aabbPhysics.terminalVelocity;
         acceleration = aabbPhysics.acceleration;
-        jerk = aabbPhysics.jerk;
         drag = aabbPhysics.drag;
         friction = aabbPhysics.friction;
         scene = aabbPhysics.scene;
@@ -160,9 +153,6 @@ public abstract class AABBPhysics {
      * update the motion of the object in 3D space using jerk, acceleration, velocity, and position
      */
     public void tickMotion() {
-        acceleration = acceleration.add(jerk);
-        //update acceleration based on jerk
-        
         velocity = velocity.add(acceleration);
         //update velocity based on acceleration
         
@@ -409,24 +399,6 @@ public abstract class AABBPhysics {
      */
     public void setAcceleration(Vector acceleration) {
         this.acceleration = acceleration;
-    }
-    
-    /**
-     * get the jerk vector of the object
-     *
-     * @return jerk of the object
-     */
-    public Vector getJerk() {
-        return jerk;
-    }
-    
-    /**
-     * set the jerk of the object
-     *
-     * @param jerk jerk vector
-     */
-    public void setJerk(Vector jerk) {
-        this.jerk = jerk;
     }
     
     /**
@@ -684,7 +656,6 @@ public abstract class AABBPhysics {
                 Objects.equals(position, that.position) &&
                 Objects.equals(velocity, that.velocity) &&
                 Objects.equals(acceleration, that.acceleration) &&
-                Objects.equals(jerk, that.jerk) &&
                 Objects.equals(drag, that.drag) &&
                 Objects.equals(friction, that.friction) &&
                 Objects.equals(scene, that.scene) &&
