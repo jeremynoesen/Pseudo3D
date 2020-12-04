@@ -1,9 +1,7 @@
-package jndev.pseudo3d.sceneobject;
+package jndev.pseudo3d.scene.entity;
 
-import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sprite.Sprite;
-import jndev.pseudo3d.util.Box;
+import jndev.pseudo3d.scene.util.Box;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -13,7 +11,7 @@ import java.util.Objects;
  *
  * @author JNDev (Jeremaster101)
  */
-public class Entity extends AABBPhysics {
+public class Entity extends Physics {
     
     /**
      * image that represents the entity when rendered

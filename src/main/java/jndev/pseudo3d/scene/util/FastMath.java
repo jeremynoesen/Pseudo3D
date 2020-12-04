@@ -1,4 +1,4 @@
-package jndev.pseudo3d.util;
+package jndev.pseudo3d.scene.util;
 
 /**
  * this class is for adding faster implementations of java's math class methods. these are especially useful for the

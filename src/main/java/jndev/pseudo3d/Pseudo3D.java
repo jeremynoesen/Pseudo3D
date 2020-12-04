@@ -1,4 +1,4 @@
-package jndev.pseudo3d.application;
+package jndev.pseudo3d;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,9 +9,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jndev.pseudo3d.listener.Keyboard;
-import jndev.pseudo3d.listener.Mouse;
-import jndev.pseudo3d.scene.SceneRenderer;
+import jndev.pseudo3d.input.Keyboard;
+import jndev.pseudo3d.input.Mouse;
+import jndev.pseudo3d.scene.Renderer;
 
 /**
  * main application for any project using Pseudo3D
@@ -68,7 +68,7 @@ public class Pseudo3D extends Application {
             ae -> {
                 canvas.setWidth(scene.getWidth());
                 canvas.setHeight(scene.getHeight());
-                SceneRenderer.render(activeScene, Pseudo3D.getCanvas().getGraphicsContext2D());
+                Renderer.render(activeScene, Pseudo3D.getCanvas().getGraphicsContext2D());
             }));
     
     /**

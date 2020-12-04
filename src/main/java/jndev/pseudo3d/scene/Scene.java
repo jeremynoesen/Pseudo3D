@@ -1,8 +1,7 @@
 package jndev.pseudo3d.scene;
 
 import javafx.scene.paint.Color;
-import jndev.pseudo3d.sceneobject.Camera;
-import jndev.pseudo3d.sceneobject.Entity;
+import jndev.pseudo3d.scene.entity.Entity;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -10,7 +9,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * scene to place objects, a camera, and code injections to modify them
+ * scene to place entities, a camera, and code injections to modify them
  *
  * @author JNDev (Jeremaster101)
  */
@@ -47,9 +46,9 @@ public class Scene {
     }
     
     /**
-     * create a new scene with pre-defined objects, camera, and background color
+     * create a new scene with pre-defined entities, camera, and background color
      *
-     * @param entities   objects in scene
+     * @param entities   entities in scene
      * @param camera     scene camera
      * @param background background color
      * @param runnables  runnables to be injected into game loop
@@ -194,7 +193,7 @@ public class Scene {
     /**
      * check if a scene is identical to this scene
      *
-     * @param o object to check
+     * @param o entity to check
      * @return true if the scene is equal to this scene
      */
     @Override

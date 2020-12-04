@@ -1,8 +1,8 @@
-package jndev.pseudo3d.listener;
+package jndev.pseudo3d.input;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
-import jndev.pseudo3d.util.Vector;
+import jndev.pseudo3d.scene.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;

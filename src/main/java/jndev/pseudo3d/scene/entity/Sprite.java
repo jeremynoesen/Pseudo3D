@@ -1,10 +1,10 @@
-package jndev.pseudo3d.sprite;
+package jndev.pseudo3d.scene.entity;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import jndev.pseudo3d.application.Pseudo3D;
-import jndev.pseudo3d.util.FastMath;
+import jndev.pseudo3d.Pseudo3D;
+import jndev.pseudo3d.scene.util.FastMath;
 
 import java.util.ArrayList;
 import java.util.Objects;
