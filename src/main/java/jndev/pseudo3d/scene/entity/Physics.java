@@ -152,26 +152,25 @@ public abstract class Physics {
      * update the motion of the entity in 3D space using jerk, acceleration, velocity, and position
      */
     public void tickMotion() {
-        velocity = velocity.add(acceleration);
-        //update velocity based on acceleration
-        
+        float ax = acceleration.getX() + gravity.getX(), ay = acceleration.getY() + gravity.getY(),
+                az = acceleration.getZ() + gravity.getZ();
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         
-        if (vx > -terminalVelocity.getX() && gravity.getX() < 0)
-            vx = FastMath.max(vx + gravity.getX(), -terminalVelocity.getX());
-        else if (vx < terminalVelocity.getX() && gravity.getX() > 0)
-            vx = FastMath.min(vx + gravity.getX(), terminalVelocity.getX());
+        if (vx > -terminalVelocity.getX() && ax < 0)
+            vx = FastMath.max(vx + ax, -terminalVelocity.getX());
+        else if (vx < terminalVelocity.getX() && ax > 0)
+            vx = FastMath.min(vx + ax, terminalVelocity.getX());
         
-        if (vy > -terminalVelocity.getY() && gravity.getY() < 0)
-            vy = FastMath.max(vy + gravity.getY(), -terminalVelocity.getY());
-        else if (vy < terminalVelocity.getY() && gravity.getY() > 0)
-            vy = FastMath.min(vy + gravity.getY(), terminalVelocity.getY());
+        if (vy > -terminalVelocity.getY() && ay < 0)
+            vy = FastMath.max(vy + ay, -terminalVelocity.getY());
+        else if (vy < terminalVelocity.getY() && ay > 0)
+            vy = FastMath.min(vy + ay, terminalVelocity.getY());
         
-        if (vz > -terminalVelocity.getZ() && gravity.getZ() < 0)
-            vz = FastMath.max(vz + gravity.getZ(), -terminalVelocity.getZ());
-        else if (vz < terminalVelocity.getZ() && gravity.getZ() > 0)
-            vz = FastMath.min(vz + gravity.getZ(), terminalVelocity.getZ());
-        //apply gravity if not exceeding terminal velocity
+        if (vz > -terminalVelocity.getZ() && az < 0)
+            vz = FastMath.max(vz + az, -terminalVelocity.getZ());
+        else if (vz < terminalVelocity.getZ() && az > 0)
+            vz = FastMath.min(vz + az, terminalVelocity.getZ());
+        //apply acceleration and gravity if not exceeding terminal velocity
         
         float fx = 0, fy = 0, fz = 0;
         if (colliding) {
