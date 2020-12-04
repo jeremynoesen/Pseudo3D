@@ -1,15 +1,16 @@
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import jndev.pseudo3d.Pseudo3D;
 import jndev.pseudo3d.input.Keyboard;
-import jndev.pseudo3d.loader.ImageLoader;
-import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.scene.Camera;
+import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.scene.entity.Entity;
 import jndev.pseudo3d.scene.entity.Sprite;
 import jndev.pseudo3d.scene.util.Vector;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 /**
@@ -24,12 +25,17 @@ public class Sandbox {
      *
      * @param args program arguments
      */
-    public static void main(String[] args) {
-        ImageLoader.load(new File("src/test/resources/images/"));
+    public static void main(String[] args) throws FileNotFoundException {
+        Sprite playerFront = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/front.png")));
+        Sprite playerBack = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/back.png")));
+        Sprite playerLeft = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/left.png")));
+        Sprite playerRight = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/right.png")));
+        Sprite floor = new Sprite(new Image(new FileInputStream("src/test/resources/images/floor.png")));
+        Sprite background = new Sprite(new Image(new FileInputStream("src/test/resources/images/background.png")));
+        
         Scene scene = new Scene();
         Entity entity = new Entity();
-        Sprite imageSprite = new Sprite(ImageLoader.get("src/test/resources/images/player/front.png"));
-        entity.setSprite(imageSprite);
+        entity.setSprite(playerFront);
         entity.getBoundingBox().setWidth((float) entity.getSprite().getImage().getWidth());
         entity.getBoundingBox().setHeight((float) entity.getSprite().getImage().getHeight());
         entity.getBoundingBox().setDepth((float) entity.getSprite().getImage().getWidth());
@@ -44,7 +50,7 @@ public class Sandbox {
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
                 Entity copy = new Entity();
-                copy.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/floor.png")));
+                copy.setSprite(floor);
                 copy.getBoundingBox().setWidth((float) copy.getSprite().getImage().getWidth());
                 copy.getBoundingBox().setHeight((float) copy.getSprite().getImage().getHeight());
                 copy.getBoundingBox().setDepth((float) copy.getSprite().getImage().getWidth());
@@ -58,8 +64,8 @@ public class Sandbox {
         Entity backdrop = new Entity();
         backdrop.setKinematic(false);
         backdrop.setCollidable(false);
-        backdrop.setPosition(new Vector(0,0, -300));
-        backdrop.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/background.png")));
+        backdrop.setPosition(new Vector(0, 0, -300));
+        backdrop.setSprite(background);
         scene.addEntity(backdrop);
         
         Camera camera = new Camera();
@@ -82,12 +88,12 @@ public class Sandbox {
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
                 entity.setVelocity(entity.getVelocity().setZ(-1));
-                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/back.png")));
+                entity.setSprite(playerBack);
             }
             
             if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
                 entity.setVelocity(entity.getVelocity().setZ(1));
-                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/front.png")));
+                entity.setSprite(playerFront);
             }
             
             if ((Keyboard.isPressed(KeyCode.W) && Keyboard.isPressed(KeyCode.S)) ||
@@ -97,12 +103,12 @@ public class Sandbox {
             
             if (Keyboard.isPressed(KeyCode.A)) {
                 entity.setVelocity(entity.getVelocity().setX(-1));
-                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/left.png")));
+                entity.setSprite(playerLeft);
             }
             
             if (Keyboard.isPressed(KeyCode.D)) {
                 entity.setVelocity(entity.getVelocity().setX(1));
-                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/right.png")));
+                entity.setSprite(playerRight);
             }
             
             if (Keyboard.isPressed(KeyCode.A) && Keyboard.isPressed(KeyCode.D)) {
