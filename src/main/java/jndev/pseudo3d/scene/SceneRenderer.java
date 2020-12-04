@@ -3,7 +3,7 @@ package jndev.pseudo3d.scene;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import jndev.pseudo3d.sceneobject.Camera;
-import jndev.pseudo3d.sceneobject.Renderable;
+import jndev.pseudo3d.sceneobject.Entity;
 import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.FastMath;
@@ -23,7 +23,7 @@ public class SceneRenderer {
      * comparator used to sort scene objects from lowest to highest z position. this allows the renderer to draw objects
      * in front of others if their position is as such
      */
-    private static final Comparator<Renderable> zComparator = (o1, o2) -> {
+    private static final Comparator<Entity> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
         return FastMath.round(diff / (diff == 0 ? 1 : Math.abs(diff)));
     };
@@ -49,7 +49,7 @@ public class SceneRenderer {
         graphics.fillRect(0, 0, (int) gWidth, (int) gHeight);
         //clear out last drawn frame
         
-        scene.getObjects().sort(zComparator);
+        scene.getEntities().sort(zComparator);
         //sort objects by z position so objects can be drawn in front of others
         
         Camera camera = scene.getCamera();
@@ -61,12 +61,12 @@ public class SceneRenderer {
         float viewDistance = camera.getViewDistance();
         //camera data
         
-        for (Renderable object : scene.getObjects()) {
-            Vector objPos = object.getPosition();
+        for (Entity entity : scene.getEntities()) {
+            Vector objPos = entity.getPosition();
             float camDist = camPos.getZ() - objPos.getZ();
             //object data
             
-            if (camDist >= viewDistance || object.getSprite() == null) continue;
+            if (camDist >= viewDistance || entity.getSprite() == null) continue;
             //don't render objects without a sprite, with a camera sprite, or further than view distance
             
             float scale = (float) (zoom * (sensorSize / (sensorSize + (2.0 *
@@ -76,7 +76,7 @@ public class SceneRenderer {
             if (scale < 0) break;
             //stop render if objects have negative scale (too far in front of camera)
             
-            Sprite sprite = object.getSprite();
+            Sprite sprite = entity.getSprite();
             //get sprite
             
             int widthScaled = FastMath.ceil(sprite.getWidth() * scale);
