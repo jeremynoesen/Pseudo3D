@@ -109,7 +109,7 @@ public abstract class Physics {
         velocity = new Vector();
         acceleration = new Vector();
         terminalVelocity = new Vector(10, 10, 10);
-        drag = new Vector(0.005f, 0.005f, 0.005f);
+        drag = new Vector(0.0000001f, 0.0000001f, 0.0000001f);
         friction = new Vector(0.05f, 0.05f, 0.05f);
         scene = null;
         collidable = true;
@@ -228,13 +228,13 @@ public abstract class Physics {
         }
         //apply friction from colliding entities
         
-        if (vx < 0) vx = FastMath.min(vx + drag.getX() + (fx * mass), 0);
-        else if (vx > 0) vx = FastMath.max(vx - drag.getX() - (fx * mass), 0);
-        if (vy < 0) vy = FastMath.min(vy + drag.getY() + (fy * mass), 0);
-        else if (vy > 0) vy = FastMath.max(vy - drag.getY() - (fy * mass), 0);
-        if (vz < 0) vz = FastMath.min(vz + drag.getZ() + (fz * mass), 0);
-        else if (vz > 0) vz = FastMath.max(vz - drag.getZ() - (fz * mass), 0);
-        //modify velocity based on friction and drag
+        if (vx < 0) vx = FastMath.min(vx + (drag.getX() * box.getSurfaceArea()) + (fx * mass), 0);
+        else if (vx > 0) vx = FastMath.max(vx - (drag.getX() * box.getSurfaceArea()) - (fx * mass), 0);
+        if (vy < 0) vy = FastMath.min(vy + (drag.getY() * box.getSurfaceArea()) + (fy * mass), 0);
+        else if (vy > 0) vy = FastMath.max(vy - (drag.getY() * box.getSurfaceArea()) - (fy * mass), 0);
+        if (vz < 0) vz = FastMath.min(vz + (drag.getZ() * box.getSurfaceArea()) + (fz * mass), 0);
+        else if (vz > 0) vz = FastMath.max(vz - (drag.getZ() * box.getSurfaceArea()) - (fz * mass), 0);
+        //modify velocity based on friction and mass, and drag and surface area
         
         velocity = new Vector(vx, vy, vz);
         //set new velocity
@@ -543,7 +543,7 @@ public abstract class Physics {
      * check if an entity collides with this one on a specific side
      *
      * @param physics object to check if colliding with
-     * @param side        side of object
+     * @param side    side of object
      * @return true if the object is colliding with the other object on the soecified side
      */
     public boolean collidesWithOn(Physics physics, Side side) {
