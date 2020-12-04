@@ -228,12 +228,12 @@ public abstract class Physics {
         }
         //apply friction from colliding entities
         
-        if (vx < 0) vx = FastMath.min(vx + drag.getX() + fx, 0);
-        else if (vx > 0) vx = FastMath.max(vx - drag.getX() - fx, 0);
-        if (vy < 0) vy = FastMath.min(vy + drag.getY() + fy, 0);
-        else if (vy > 0) vy = FastMath.max(vy - drag.getY() - fy, 0);
-        if (vz < 0) vz = FastMath.min(vz + drag.getZ() + fz, 0);
-        else if (vz > 0) vz = FastMath.max(vz - drag.getZ() - fz, 0);
+        if (vx < 0) vx = FastMath.min(vx + drag.getX() + (fx * mass), 0);
+        else if (vx > 0) vx = FastMath.max(vx - drag.getX() - (fx * mass), 0);
+        if (vy < 0) vy = FastMath.min(vy + drag.getY() + (fy * mass), 0);
+        else if (vy > 0) vy = FastMath.max(vy - drag.getY() - (fy * mass), 0);
+        if (vz < 0) vz = FastMath.min(vz + drag.getZ() + (fz * mass), 0);
+        else if (vz > 0) vz = FastMath.max(vz - drag.getZ() - (fz * mass), 0);
         //modify velocity based on friction and drag
         
         velocity = new Vector(vx, vy, vz);
