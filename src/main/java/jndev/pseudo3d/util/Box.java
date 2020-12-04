@@ -255,15 +255,6 @@ public class Box {
     }
     
     /**
-     * calculate the length of a segment from one corner of the box to the opposite corner
-     *
-     * @return length of diagonal in box
-     */
-    public float getDiagonal() {
-        return min.distance(max);
-    }
-    
-    /**
      * put the box width, height, depth, and position into a string
      *
      * @return box in string format

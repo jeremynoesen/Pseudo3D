@@ -12,10 +12,6 @@ import javafx.util.Duration;
 import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.listener.Mouse;
 import jndev.pseudo3d.scene.SceneRenderer;
-import jndev.pseudo3d.sceneobject.Renderable;
-import jndev.pseudo3d.sprite.AnimatedSprite;
-import jndev.pseudo3d.sprite.CameraSprite;
-import jndev.pseudo3d.sprite.Sprite;
 
 /**
  * main application for any project using Pseudo3D
@@ -72,22 +68,7 @@ public class Pseudo3D extends Application {
             ae -> {
                 canvas.setWidth(scene.getWidth());
                 canvas.setHeight(scene.getHeight());
-                for (Renderable object : activeScene.getObjects()) {
-                    if (object.getSprite() != null) {
-                        Sprite sprite = object.getSprite();
-                        
-                        if (sprite instanceof AnimatedSprite) {
-                            ((AnimatedSprite) sprite).update();
-                            //update animated sprites
-                            
-                        } else if (sprite instanceof CameraSprite) {
-                            ((CameraSprite) sprite).update();
-                            //update camera sprites
-                        }
-                    }
-                }
-                SceneRenderer.render(activeScene, activeScene.getCamera(),
-                        Pseudo3D.getCanvas().getGraphicsContext2D());
+                SceneRenderer.render(activeScene, Pseudo3D.getCanvas().getGraphicsContext2D());
             }));
     
     /**
