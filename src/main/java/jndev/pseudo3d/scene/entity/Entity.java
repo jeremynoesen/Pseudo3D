@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * entity to be placed in a scene
+ * entity to be placed in a scene, includes physics and a sprite
  *
  * @author JNDev (Jeremaster101)
  */

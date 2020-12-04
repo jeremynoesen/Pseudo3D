@@ -21,7 +21,7 @@ import java.util.Random;
 public class Sandbox {
     
     /**
-     * run the test scene
+     * run the sandbox test scene
      *
      * @param args program arguments
      */

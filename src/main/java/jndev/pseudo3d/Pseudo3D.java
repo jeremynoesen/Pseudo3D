@@ -68,7 +68,7 @@ public class Pseudo3D extends Application {
             ae -> {
                 canvas.setWidth(scene.getWidth());
                 canvas.setHeight(scene.getHeight());
-                Renderer.render(activeScene, Pseudo3D.getCanvas().getGraphicsContext2D());
+                Renderer.render(activeScene, canvas);
             }));
     
     /**

@@ -1,7 +1,7 @@
 package jndev.pseudo3d.scene.util;
 
 /**
- * 3D vector and related mathematical operators
+ * immutable vector with vector mathematical operators
  *
  * @author JNDev (Jeremaster101)
  */

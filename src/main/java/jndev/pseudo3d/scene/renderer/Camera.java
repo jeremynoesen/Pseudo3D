@@ -3,8 +3,7 @@ package jndev.pseudo3d.scene.renderer;
 import jndev.pseudo3d.scene.util.Vector;
 
 /**
- * camera used to determine where to render a scene. entities in the same z position as the camera will be rendered 1:1
- * scale, entities behind the camera will be larger, and entities in front of the camera will be smaller
+ * camera used to determine where to render a scene
  *
  * @author JNDev (Jeremaster101)
  */
