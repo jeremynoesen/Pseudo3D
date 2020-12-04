@@ -1,98 +1,97 @@
-package jndev.pseudo3d.physics;
+package jndev.pseudo3d.scene.entity;
 
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sceneobject.Entity;
-import jndev.pseudo3d.util.Box;
-import jndev.pseudo3d.util.FastMath;
-import jndev.pseudo3d.util.Side;
-import jndev.pseudo3d.util.Vector;
+import jndev.pseudo3d.scene.util.Box;
+import jndev.pseudo3d.scene.util.FastMath;
+import jndev.pseudo3d.scene.util.Side;
+import jndev.pseudo3d.scene.util.Vector;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * axis-aligned bounding box object physics
+ * axis-aligned bounding box entity physics
  *
  * @author JNDev (Jeremaster101)
  */
-public abstract class AABBPhysics {
+public abstract class Physics {
     
     /**
-     * gravity applied to the object (pixels / tick ^ 2))
+     * gravity applied to the entity (pixels / tick ^ 2))
      */
     private Vector gravity;
     
     /**
-     * position of object (pixels)
+     * position of entity (pixels)
      */
     private Vector position;
     
     /**
-     * velocity of object, or rate of change of position (pixels / tick)
+     * velocity of entity, or rate of change of position (pixels / tick)
      */
     private Vector velocity;
     
     /**
-     * acceleration of object, or rate of change of velocity (pixels / tick ^ 2)
+     * acceleration of entity, or rate of change of velocity (pixels / tick ^ 2)
      */
     private Vector acceleration;
     
     /**
-     * +/- terminal velocity of gravity acceleration of object (pixels / tick)
+     * +/- terminal velocity of gravity acceleration of entity (pixels / tick)
      */
     private Vector terminalVelocity;
     
     /**
-     * +/- drag applied to the object, used to slow down per direction. for simplicity, this is an acceleration vector
+     * +/- drag applied to the entity, used to slow down per direction. for simplicity, this is an acceleration vector
      * (pixels / tick ^ 2)
      */
     private Vector drag;
     
     /**
-     * +/- friction applied to colliding objects. for simplicity, this is an acceleration vector (pixels / tick ^ 2)
+     * +/- friction applied to colliding entities. for simplicity, this is an acceleration vector (pixels / tick ^ 2)
      */
     private Vector friction;
     
     /**
-     * scene the object is colliding in
+     * scene the entity is colliding in
      */
     private Scene scene;
     
     /**
-     * if an object can collide with others
+     * if an entity can collide with others
      */
     private boolean collidable;
     
     /**
-     * list of objects this one is colliding with per side
+     * list of entities this one is colliding with per side
      */
-    private final HashMap<Side, ArrayList<AABBPhysics>> collidingObjects;
+    private final HashMap<Side, ArrayList<Physics>> collidingObjects;
     
     /**
-     * object's collision status
+     * entity's collision status
      */
     private boolean colliding;
     
     /**
-     * object's overlapping status
+     * entity's overlapping status
      */
     private boolean overlapping;
     
     /**
-     * whether this object can move or not and feel motion of other objects. this is best used for ground objects.
-     * setting this to false will disallow this object from having any updates to motion or collisions, which can
-     * prevent you from getting the data from its collisions. these objects can remain collidable.
+     * whether this entity can move or not and feel motion of other entitys. this is best used for ground entitys.
+     * setting this to false will disallow this entity from having any updates to motion or collisions, which can
+     * prevent you from getting the data from its collisions. these entities can remain collidable.
      */
     private boolean kinematic;
     
     /**
-     * whether this object can be pushed by other objects
+     * whether this entity can be pushed by other entities
      */
     private boolean pushable;
     
     /**
-     * mass of an object used for calculations, such as momentum conservation
+     * mass of an entity used for calculations, such as momentum conservation
      */
     private float mass;
     
@@ -102,9 +101,9 @@ public abstract class AABBPhysics {
     private Box box;
     
     /**
-     * create a new aabb object with default values
+     * create a new aabb entity with default values
      */
-    public AABBPhysics() {
+    public Physics() {
         gravity = new Vector(0, -0.1f, 0);
         position = new Vector();
         velocity = new Vector();
@@ -125,32 +124,32 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * copy constructor for aabb objects
+     * copy constructor for aabb entities
      *
-     * @param aabbPhysics aabb object to copy
+     * @param physics aabb entity to copy
      */
-    public AABBPhysics(AABBPhysics aabbPhysics) {
-        gravity = aabbPhysics.gravity;
-        position = aabbPhysics.position;
-        velocity = aabbPhysics.velocity;
-        terminalVelocity = aabbPhysics.terminalVelocity;
-        acceleration = aabbPhysics.acceleration;
-        drag = aabbPhysics.drag;
-        friction = aabbPhysics.friction;
-        scene = aabbPhysics.scene;
-        collidable = aabbPhysics.collidable;
-        colliding = aabbPhysics.colliding;
-        overlapping = aabbPhysics.overlapping;
-        box = new Box(aabbPhysics.box);
-        mass = aabbPhysics.mass;
-        kinematic = aabbPhysics.kinematic;
-        pushable = aabbPhysics.pushable;
+    public Physics(Physics physics) {
+        gravity = physics.gravity;
+        position = physics.position;
+        velocity = physics.velocity;
+        terminalVelocity = physics.terminalVelocity;
+        acceleration = physics.acceleration;
+        drag = physics.drag;
+        friction = physics.friction;
+        scene = physics.scene;
+        collidable = physics.collidable;
+        colliding = physics.colliding;
+        overlapping = physics.overlapping;
+        box = new Box(physics.box);
+        mass = physics.mass;
+        kinematic = physics.kinematic;
+        pushable = physics.pushable;
         collidingObjects = new HashMap<>();
         for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
     
     /**
-     * update the motion of the object in 3D space using jerk, acceleration, velocity, and position
+     * update the motion of the entity in 3D space using jerk, acceleration, velocity, and position
      */
     public void tickMotion() {
         velocity = velocity.add(acceleration);
@@ -178,45 +177,45 @@ public abstract class AABBPhysics {
         if (colliding) {
             int xCount = 0, yCount = 0, zCount = 0;
             for (Side side : Side.values()) {
-                for (AABBPhysics aabbPhysics : collidingObjects.get(side)) {
+                for (Physics physics : collidingObjects.get(side)) {
                     if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
-                        if (aabbPhysics.pushable && aabbPhysics.kinematic) {
-                            float sum = mass + aabbPhysics.mass;
-                            float diff = mass - aabbPhysics.mass;
+                        if (physics.pushable && physics.kinematic) {
+                            float sum = mass + physics.mass;
+                            float diff = mass - physics.mass;
                             float v1 = vx;
-                            float v2 = aabbPhysics.velocity.getX();
-                            vx = ((diff / sum) * v1) + ((2 * aabbPhysics.mass / sum) * v2);
-                            aabbPhysics.velocity = aabbPhysics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            float v2 = physics.velocity.getX();
+                            vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                            physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vx = 0;
-                        fy += aabbPhysics.friction.getY();
+                        fy += physics.friction.getY();
                         yCount++;
-                        fz += aabbPhysics.friction.getZ();
+                        fz += physics.friction.getZ();
                         zCount++;
                     } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
-                        if (aabbPhysics.pushable && aabbPhysics.kinematic) {
-                            float sum = mass + aabbPhysics.mass;
-                            float diff = mass - aabbPhysics.mass;
+                        if (physics.pushable && physics.kinematic) {
+                            float sum = mass + physics.mass;
+                            float diff = mass - physics.mass;
                             float v1 = vy;
-                            float v2 = aabbPhysics.velocity.getY();
-                            vy = ((diff / sum) * v1) + ((2 * aabbPhysics.mass / sum) * v2);
-                            aabbPhysics.velocity = aabbPhysics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            float v2 = physics.velocity.getY();
+                            vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                            physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vy = 0;
-                        fx += aabbPhysics.friction.getX();
+                        fx += physics.friction.getX();
                         xCount++;
-                        fz += aabbPhysics.friction.getZ();
+                        fz += physics.friction.getZ();
                         zCount++;
                     } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
-                        if (aabbPhysics.pushable && aabbPhysics.kinematic) {
-                            float sum = mass + aabbPhysics.mass;
-                            float diff = mass - aabbPhysics.mass;
+                        if (physics.pushable && physics.kinematic) {
+                            float sum = mass + physics.mass;
+                            float diff = mass - physics.mass;
                             float v1 = vz;
-                            float v2 = aabbPhysics.velocity.getZ();
-                            vz = ((diff / sum) * v1) + ((2 * aabbPhysics.mass / sum) * v2);
-                            aabbPhysics.velocity = aabbPhysics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            float v2 = physics.velocity.getZ();
+                            vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                            physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vz = 0;
-                        fx += aabbPhysics.friction.getX();
+                        fx += physics.friction.getX();
                         xCount++;
-                        fy += aabbPhysics.friction.getY();
+                        fy += physics.friction.getY();
                         yCount++;
                     }
                 }
@@ -228,7 +227,7 @@ public abstract class AABBPhysics {
             if (zCount > 0) fz = (fz + friction.getZ()) / (zCount + 1);
             //calculate average friction per axis that has friction applied
         }
-        //apply friction from colliding objects
+        //apply friction from colliding entities
         
         if (vx < 0) vx = FastMath.min(vx + drag.getX() + fx, 0);
         else if (vx > 0) vx = FastMath.max(vx - drag.getX() - fx, 0);
@@ -246,7 +245,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * check if a object has collided with this object
+     * check if a entity has collided with this entity
      */
     public void tickCollisions() {
         colliding = false;
@@ -255,7 +254,7 @@ public abstract class AABBPhysics {
         //reset all collision data
         
         for (Entity entity : scene.getEntities()) {
-            //loop through all renderable objects in scene
+            //loop through all renderable entitys in scene
             
             if (entity != this) {
                 //check that this is not itself
@@ -263,7 +262,7 @@ public abstract class AABBPhysics {
                 if (box.overlaps(entity.getBoundingBox())) {
                     //check for an overlap
                     if (entity.isCollidable() && collidable) {
-                        //if this and other object can collide
+                        //if this and other entity can collide
                         collideWith(entity);
                         //do the collision calculations
                     } else {
@@ -276,18 +275,18 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * fix the position of this object to make a collision occur
+     * fix the position of this entity to make a collision occur
      *
-     * @param aabbPhysics object colliding with this object
+     * @param physics entity colliding with this entity
      */
-    private void collideWith(AABBPhysics aabbPhysics) {
+    private void collideWith(Physics physics) {
         float[] overlaps = new float[6];
-        overlaps[0] = Math.abs(box.getMinimum().getX() - aabbPhysics.getBoundingBox().getMaximum().getX()); //left
-        overlaps[1] = Math.abs(box.getMaximum().getX() - aabbPhysics.getBoundingBox().getMinimum().getX()); //right
-        overlaps[2] = Math.abs(box.getMinimum().getY() - aabbPhysics.getBoundingBox().getMaximum().getY()); //bottom
-        overlaps[3] = Math.abs(box.getMaximum().getY() - aabbPhysics.getBoundingBox().getMinimum().getY()); //top
-        overlaps[4] = Math.abs(box.getMinimum().getZ() - aabbPhysics.getBoundingBox().getMaximum().getZ()); //back
-        overlaps[5] = Math.abs(box.getMaximum().getZ() - aabbPhysics.getBoundingBox().getMinimum().getZ()); //front
+        overlaps[0] = Math.abs(box.getMinimum().getX() - physics.getBoundingBox().getMaximum().getX()); //left
+        overlaps[1] = Math.abs(box.getMaximum().getX() - physics.getBoundingBox().getMinimum().getX()); //right
+        overlaps[2] = Math.abs(box.getMinimum().getY() - physics.getBoundingBox().getMaximum().getY()); //bottom
+        overlaps[3] = Math.abs(box.getMaximum().getY() - physics.getBoundingBox().getMinimum().getY()); //top
+        overlaps[4] = Math.abs(box.getMinimum().getZ() - physics.getBoundingBox().getMaximum().getZ()); //back
+        overlaps[5] = Math.abs(box.getMaximum().getZ() - physics.getBoundingBox().getMinimum().getZ()); //front
         //get overlap distances
         
         int zeros = 0;
@@ -313,48 +312,48 @@ public abstract class AABBPhysics {
         }
         
         if (zeros > 1) return;
-        //if object has more than one 0 overlaps, it is technically not touching, so stop collision
+        //if entity has more than one 0 overlaps, it is technically not touching, so stop collision
         
         colliding = true;
-        //set object to colliding
+        //set entity to colliding
         
         if (axis == 1) {
             // check if collision is on this axis (1 = x, 2 = y, 3 = z)
             if (velocity.getX() * dir > 0) {
-                // check if object is moving in proper direction on the axis
-                distance *= Math.abs(velocity.getX()) / (Math.abs(velocity.getX()) + Math.abs(aabbPhysics.velocity.getX()));
-                // scale distance based on object velocities to improve collision accuracy
+                // check if entity is moving in proper direction on the axis
+                distance *= Math.abs(velocity.getX()) / (Math.abs(velocity.getX()) + Math.abs(physics.velocity.getX()));
+                // scale distance based on entity velocities to improve collision accuracy
                 setPosition(position.setX(position.getX() - (distance * dir)));
-                // fix object position so it is not overlapping
+                // fix entity position so it is not overlapping
             }
-            collidingObjects.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(aabbPhysics);
-            //add to colliding objects for the colliding side
+            collidingObjects.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
+            //add to colliding entities for the colliding side
         } else if (axis == 2) {
             if (velocity.getY() * dir > 0) {
-                distance *= Math.abs(velocity.getY()) / (Math.abs(velocity.getY()) + Math.abs(aabbPhysics.velocity.getY()));
+                distance *= Math.abs(velocity.getY()) / (Math.abs(velocity.getY()) + Math.abs(physics.velocity.getY()));
                 setPosition(position.setY(position.getY() - (distance * dir)));
             }
-            collidingObjects.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(aabbPhysics);
+            collidingObjects.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
         } else {
             if (velocity.getZ() * dir > 0) {
-                distance *= Math.abs(velocity.getZ()) / (Math.abs(velocity.getZ()) + Math.abs(aabbPhysics.velocity.getZ()));
+                distance *= Math.abs(velocity.getZ()) / (Math.abs(velocity.getZ()) + Math.abs(physics.velocity.getZ()));
                 setPosition(position.setZ(position.getZ() - (distance * dir)));
             }
-            collidingObjects.get(dir == -1 ? Side.BACK : Side.FRONT).add(aabbPhysics);
+            collidingObjects.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
         }
     }
     
     /**
-     * get the position vector of the object
+     * get the position vector of the entity
      *
-     * @return position vector of object
+     * @return position vector of entity
      */
     public Vector getPosition() {
         return position;
     }
     
     /**
-     * set the position of the object
+     * set the position of the entity
      *
      * @param position position vector
      */
@@ -364,16 +363,16 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * get the velocity vector of the object
+     * get the velocity vector of the entity
      *
-     * @return velocity vector of an object
+     * @return velocity vector of an entity
      */
     public Vector getVelocity() {
         return velocity;
     }
     
     /**
-     * set the velocity of the object
+     * set the velocity of the entity
      *
      * @param velocity velocity vector
      */
@@ -382,16 +381,16 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * get the acceleration vector of the object
+     * get the acceleration vector of the entity
      *
-     * @return acceleration vector of an object
+     * @return acceleration vector of an entity
      */
     public Vector getAcceleration() {
         return acceleration;
     }
     
     /**
-     * set the acceleration of the object
+     * set the acceleration of the entity
      *
      * @param acceleration acceleration vector
      */
@@ -400,7 +399,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * get the gravity applied to the object
+     * get the gravity applied to the entity
      *
      * @return gravity vector
      */
@@ -409,7 +408,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * set the gravity applied to the object
+     * set the gravity applied to the entity
      *
      * @param gravity gravity vector
      */
@@ -418,7 +417,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * get terminal velocity for this object
+     * get terminal velocity for this entity
      *
      * @return terminal velocity
      */
@@ -427,7 +426,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * set the terminal velocity for this object
+     * set the terminal velocity for this entity
      *
      * @param terminalVelocity terminal velocity
      */
@@ -436,25 +435,25 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * get the drag of the object
+     * get the drag of the entity
      *
-     * @return drag vector of an object
+     * @return drag vector of an entity
      */
     public Vector getDrag() {
         return drag;
     }
     
     /**
-     * set the drag for the object
+     * set the drag for the entity
      *
-     * @param drag drag of object
+     * @param drag drag of entity
      */
     public void setDrag(Vector drag) {
         this.drag = drag;
     }
     
     /**
-     * get the friction of the object
+     * get the friction of the entity
      *
      * @return friction vector
      */
@@ -463,7 +462,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * set the friction of the object
+     * set the friction of the entity
      *
      * @param friction friction vector
      */
@@ -472,7 +471,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * set the scene this object is in
+     * set the scene this entity is in
      *
      * @param scene scene for collisions
      */
@@ -490,7 +489,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * check if an object can be collided with
+     * check if an entity can be collided with
      *
      * @return true if collidable
      */
@@ -499,7 +498,7 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * enable or disable collisions for the object
+     * enable or disable collisions for the entity
      *
      * @param collidable true to allow collisions
      */
@@ -508,48 +507,48 @@ public abstract class AABBPhysics {
     }
     
     /**
-     * check if the object is currently colliding with another object
+     * check if the entity is currently colliding with another entity
      *
-     * @return true if the object is colliding with another object
+     * @return true if the entity is colliding with another entity
      */
     public boolean isColliding() {
         return colliding;
     }
     
     /**
-     * check if an= object collides with this object
+     * check if an entity collides with this entity
      *
-     * @param aabbPhysics object to check if colliding with
-     * @return true if this object collides with the other object
+     * @param physics entity to check if colliding with
+     * @return true if this entity collides with the other entity
      */
-    public boolean collidesWith(AABBPhysics aabbPhysics) {
+    public boolean collidesWith(Physics physics) {
         
-        for (ArrayList<AABBPhysics> list : collidingObjects.values()) {
-            if (list.contains(aabbPhysics)) return true;
+        for (ArrayList<Physics> list : collidingObjects.values()) {
+            if (list.contains(physics)) return true;
         }
         
         return false;
     }
     
     /**
-     * check if this object is colliding on the specified side
+     * check if this entity is colliding on the specified side
      *
-     * @param side side of the object
-     * @return true if the object is colliding on the side
+     * @param side side of the entity
+     * @return true if the entity is colliding on the side
      */
     public boolean collidesOn(Side side) {
         return !collidingObjects.get(side).isEmpty();
     }
     
     /**
-     * check if an object collides with this one on a specific side
+     * check if an entity collides with this one on a specific side
      *
-     * @param aabbPhysics object to check if colliding with
+     * @param physics object to check if colliding with
      * @param side        side of object
      * @return true if the object is colliding with the other object on the soecified side
      */
-    public boolean collidesWithOn(AABBPhysics aabbPhysics, Side side) {
-        return collidingObjects.get(side).contains(aabbPhysics);
+    public boolean collidesWithOn(Physics physics, Side side) {
+        return collidingObjects.get(side).contains(physics);
     }
     
     /**
@@ -639,13 +638,13 @@ public abstract class AABBPhysics {
      * check if another set of aabbphysics data is equal to this one
      *
      * @param o object to check for equality
-     * @return aabbphysics data is equivalent to this
+     * @return true if aabbphysics data is equivalent to this
      */
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AABBPhysics that = (AABBPhysics) o;
+        Physics that = (Physics) o;
         return collidable == that.collidable &&
                 colliding == that.colliding &&
                 overlapping == that.overlapping &&

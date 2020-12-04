@@ -1,13 +1,13 @@
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import jndev.pseudo3d.application.Pseudo3D;
-import jndev.pseudo3d.listener.Keyboard;
+import jndev.pseudo3d.Pseudo3D;
+import jndev.pseudo3d.input.Keyboard;
 import jndev.pseudo3d.loader.ImageLoader;
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sceneobject.Camera;
-import jndev.pseudo3d.sceneobject.Entity;
-import jndev.pseudo3d.sprite.Sprite;
-import jndev.pseudo3d.util.Vector;
+import jndev.pseudo3d.scene.Camera;
+import jndev.pseudo3d.scene.entity.Entity;
+import jndev.pseudo3d.scene.entity.Sprite;
+import jndev.pseudo3d.scene.util.Vector;
 
 import java.io.File;
 
