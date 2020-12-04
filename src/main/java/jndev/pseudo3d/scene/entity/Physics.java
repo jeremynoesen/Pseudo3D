@@ -116,7 +116,7 @@ public abstract class Physics {
         colliding = false;
         overlapping = false;
         kinematic = true;
-        pushable = false;
+        pushable = true;
         mass = 1.0f;
         box = new Box();
         collidingObjects = new HashMap<>();
