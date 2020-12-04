@@ -1,7 +1,7 @@
 package jndev.pseudo3d.scene.util;
 
 /**
- * simple 3-dimensional box
+ * simple box with some checks and mathematical operators
  *
  * @author JNDev (Jeremaster101)
  */

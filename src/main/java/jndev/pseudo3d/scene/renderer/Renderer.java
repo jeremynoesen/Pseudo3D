@@ -1,5 +1,6 @@
 package jndev.pseudo3d.scene.renderer;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import jndev.pseudo3d.Pseudo3D;
@@ -13,16 +14,14 @@ import jndev.pseudo3d.scene.util.Vector;
 import java.util.Comparator;
 
 /**
- * simple scene renderer, will turn a scene into a jpanel with graphics. depth scaling is uniform based on z distance
- * from camera
+ * Pseudo3D scene renderer, will turn a scene into a render on a javafx canvas
  *
  * @author JNDev (Jeremaster101)
  */
 public class Renderer {
     
     /**
-     * comparator used to sort scene entities from lowest to highest z position. this allows the renderer to draw
-     * entities in front of others if their position is as such
+     * comparator used to sort scene entities from lowest to highest z position for draw order
      */
     private static final Comparator<Entity> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
@@ -30,24 +29,27 @@ public class Renderer {
     };
     
     /**
-     * render a scene frame to graphics
+     * render a scene frame to canvas graphics context
      *
-     * @param scene    scene to render
-     * @param graphics graphics to render to
+     * @param scene  scene to render
+     * @param canvas canvas to render to
      */
-    public static void render(Scene scene, GraphicsContext graphics) {
+    public static void render(Scene scene, Canvas canvas) {
         
-        graphics.setImageSmoothing(false);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        //get canvas graphics context
+        
+        gc.setImageSmoothing(false);
         //set rendering settings for speed
         
-        graphics.setFill(scene.getBackground());
+        gc.setFill(scene.getBackground());
         //draw scene background color
         
-        float gWidth = (float) graphics.getCanvas().getWidth();
-        float gHeight = (float) graphics.getCanvas().getHeight();
+        float gWidth = (float) gc.getCanvas().getWidth();
+        float gHeight = (float) gc.getCanvas().getHeight();
         //graphics dimensions
         
-        graphics.fillRect(0, 0, (int) gWidth, (int) gHeight);
+        gc.fillRect(0, 0, (int) gWidth, (int) gHeight);
         //clear out last drawn frame
         
         scene.getEntities().sort(zComparator);
@@ -135,11 +137,11 @@ public class Renderer {
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
                 
-                Affine original = graphics.getTransform();
-                graphics.setTransform(transform);
-                graphics.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
+                Affine original = gc.getTransform();
+                gc.setTransform(transform);
+                gc.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
                         y - (heightScaled / 2.0), widthScaled, heightScaled);
-                graphics.setTransform(original);
+                gc.setTransform(original);
                 sprite.update();
                 //draw image to panel
             }
