@@ -5,7 +5,7 @@ import jndev.pseudo3d.listener.Keyboard;
 import jndev.pseudo3d.loader.ImageLoader;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.sceneobject.Camera;
-import jndev.pseudo3d.sceneobject.PhysicsObject;
+import jndev.pseudo3d.sceneobject.Entity;
 import jndev.pseudo3d.sprite.Sprite;
 import jndev.pseudo3d.util.Vector;
 
@@ -26,27 +26,27 @@ public class Sandbox {
     public static void main(String[] args) {
         ImageLoader.load(new File("src/test/resources/images/"));
         Scene scene = new Scene();
-        PhysicsObject physicsObject = new PhysicsObject();
+        Entity entity = new Entity();
         Sprite imageSprite = new Sprite(ImageLoader.get("src/test/resources/images/player/front.png"));
-        physicsObject.setSprite(imageSprite);
-        physicsObject.getBoundingBox().setWidth((float) physicsObject.getSprite().getImage().getWidth());
-        physicsObject.getBoundingBox().setHeight((float) physicsObject.getSprite().getImage().getHeight());
-        physicsObject.getBoundingBox().setDepth((float) physicsObject.getSprite().getImage().getWidth());
-        physicsObject.setPosition(new Vector(physicsObject.getBoundingBox().getWidth() * 10 - 450, 0,
-                -physicsObject.getBoundingBox().getWidth()));
-        physicsObject.setKinematic(true);
-        scene.addObject(physicsObject);
+        entity.setSprite(imageSprite);
+        entity.getBoundingBox().setWidth((float) entity.getSprite().getImage().getWidth());
+        entity.getBoundingBox().setHeight((float) entity.getSprite().getImage().getHeight());
+        entity.getBoundingBox().setDepth((float) entity.getSprite().getImage().getWidth());
+        entity.setPosition(new Vector(entity.getBoundingBox().getWidth() * 10 - 450, 0,
+                -entity.getBoundingBox().getWidth()));
+        entity.setKinematic(true);
+        scene.addEntity(entity);
         
-        PhysicsObject physicsObject1 = new PhysicsObject(physicsObject);
-        physicsObject1.setPushable(true);
-        physicsObject.setPushable(true);
-        physicsObject1.setMass(4f);
-        scene.addObject(physicsObject1);
+        Entity entity1 = new Entity(entity);
+        entity1.setPushable(true);
+        entity.setPushable(true);
+        entity1.setMass(4f);
+        scene.addEntity(entity1);
         
-        PhysicsObject copy;
+        Entity copy;
         for (int j = 1; j < 22; j++) {
             for (int i = 1; i <= 6; i++) {
-                copy = new PhysicsObject(physicsObject);
+                copy = new Entity(entity);
                 copy.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/floor.png")));
                 copy.getBoundingBox().setWidth((float) copy.getSprite().getImage().getWidth());
                 copy.getBoundingBox().setHeight((float) copy.getSprite().getImage().getHeight());
@@ -54,9 +54,16 @@ public class Sandbox {
                 copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 525, -465,
                         -copy.getBoundingBox().getWidth() * i));
                 copy.setKinematic(false);
-                scene.addObject(copy);
+                scene.addEntity(copy);
             }
         }
+        
+        Entity backdrop = new Entity();
+        backdrop.setKinematic(false);
+        backdrop.setCollidable(false);
+        backdrop.setPosition(new Vector(0,0, -300));
+        backdrop.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/background.png")));
+        scene.addEntity(backdrop);
         
         Camera camera = new Camera();
         camera.setFieldOfView((float) Math.toRadians(72));
@@ -79,44 +86,44 @@ public class Sandbox {
 //                            .subtract(physicsObject.getPosition().setZ(0)).multiply(0.1f));
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setZ(-1));
-                physicsObject.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/back.png")));
+                entity.setVelocity(entity.getVelocity().setZ(-1));
+                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/back.png")));
             }
             
             if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setZ(1));
-                physicsObject.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/front.png")));
+                entity.setVelocity(entity.getVelocity().setZ(1));
+                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/front.png")));
             }
             
             if ((Keyboard.isPressed(KeyCode.W) && Keyboard.isPressed(KeyCode.S)) ||
                     camera.getFieldOfView() == 0) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setZ(0));
+                entity.setVelocity(entity.getVelocity().setZ(0));
             }
             
             if (Keyboard.isPressed(KeyCode.A)) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setX(-1));
-                physicsObject.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/left.png")));
+                entity.setVelocity(entity.getVelocity().setX(-1));
+                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/left.png")));
             }
             
             if (Keyboard.isPressed(KeyCode.D)) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setX(1));
-                physicsObject.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/right.png")));
+                entity.setVelocity(entity.getVelocity().setX(1));
+                entity.setSprite(new Sprite(ImageLoader.get("src/test/resources/images/player/right.png")));
             }
             
             if (Keyboard.isPressed(KeyCode.A) && Keyboard.isPressed(KeyCode.D)) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setX(0));
+                entity.setVelocity(entity.getVelocity().setX(0));
             }
             
             if (Keyboard.isPressed(KeyCode.SPACE)) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setY(1));
+                entity.setVelocity(entity.getVelocity().setY(1));
             }
             
             if (Keyboard.isPressed(KeyCode.SHIFT)) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setY(-1));
+                entity.setVelocity(entity.getVelocity().setY(-1));
             }
             
             if (Keyboard.isPressed(KeyCode.SPACE) && Keyboard.isPressed(KeyCode.SHIFT)) {
-                physicsObject.setVelocity(physicsObject.getVelocity().setY(0));
+                entity.setVelocity(entity.getVelocity().setY(0));
             }
             
             if (Keyboard.isPressed(KeyCode.UP)) {

@@ -1,10 +1,8 @@
 package jndev.pseudo3d.scene;
 
 import javafx.scene.paint.Color;
-import jndev.pseudo3d.physics.AABBPhysics;
 import jndev.pseudo3d.sceneobject.Camera;
-import jndev.pseudo3d.sceneobject.PhysicsObject;
-import jndev.pseudo3d.sceneobject.Renderable;
+import jndev.pseudo3d.sceneobject.Entity;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -19,9 +17,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Scene {
     
     /**
-     * all objects in the scene
+     * all entities in the scene
      */
-    private CopyOnWriteArrayList<Renderable> objects;
+    private CopyOnWriteArrayList<Entity> entities;
     
     /**
      * camera for the scene to determine where to render from
@@ -42,7 +40,7 @@ public class Scene {
      * create a new scene
      */
     public Scene() {
-        objects = new CopyOnWriteArrayList<>();
+        entities = new CopyOnWriteArrayList<>();
         camera = new Camera();
         background = Color.WHITE;
         runnables = new HashSet<>();
@@ -51,13 +49,13 @@ public class Scene {
     /**
      * create a new scene with pre-defined objects, camera, and background color
      *
-     * @param objects    objects in scene
+     * @param entities   objects in scene
      * @param camera     scene camera
      * @param background background color
      * @param runnables  runnables to be injected into game loop
      */
-    public Scene(CopyOnWriteArrayList<Renderable> objects, Camera camera, Color background, Set<Runnable> runnables) {
-        this.objects = objects;
+    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Color background, Set<Runnable> runnables) {
+        this.entities = entities;
         this.camera = camera;
         this.background = background;
         this.runnables = runnables;
@@ -69,66 +67,64 @@ public class Scene {
      * @param scene scene to copy
      */
     public Scene(Scene scene) {
-        objects = new CopyOnWriteArrayList<>(scene.objects);
+        entities = new CopyOnWriteArrayList<>(scene.entities);
         camera = scene.camera;
         background = scene.background;
         runnables = scene.runnables;
     }
     
     /**
-     * tick all physics objects in the scene, updating all motion first, and then all collisions take place. also run
-     * any runnables added to the scene
+     * tick all entities in the scene, updating all motion first, and then all collisions take place. also run any
+     * runnables added to the scene
      */
     public void tick() {
         runnables.forEach(Runnable::run);
-        for (Renderable object : objects) {
-            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic())
-                ((AABBPhysics) object).tickMotion();
+        for (Entity entity : entities) {
+            if (entity.isKinematic()) entity.tickMotion();
         }
-        for (Renderable object : objects) {
-            if (object instanceof AABBPhysics && ((AABBPhysics) object).isKinematic())
-                ((AABBPhysics) object).tickCollisions();
+        for (Entity entity : entities) {
+            if (entity.isKinematic()) entity.tickCollisions();
         }
     }
     
     /**
-     * get all the objects in this scene
+     * get all the entities in this scene
      *
-     * @return list of all objects in this scene
+     * @return list of all entities in this scene
      */
-    public CopyOnWriteArrayList<Renderable> getObjects() {
-        return objects;
+    public CopyOnWriteArrayList<Entity> getEntities() {
+        return entities;
     }
     
     /**
-     * add an object to this scene
+     * add an entity to this scene
      *
-     * @param object object to add
+     * @param entity entity to add
      */
-    public void addObject(Renderable object) {
-        objects.add(object);
-        if (object instanceof PhysicsObject) ((AABBPhysics) object).setScene(this);
+    public void addEntity(Entity entity) {
+        entities.add(entity);
+        entity.setScene(this);
     }
     
     /**
-     * remove an object from this scene
+     * remove an entity from this scene
      *
-     * @param object object to remove
+     * @param entity entity to remove
      */
-    public void removeObject(Renderable object) {
-        if (objects.contains(object)) {
-            objects.remove(object);
-            if (object instanceof PhysicsObject) ((AABBPhysics) object).setScene(null);
+    public void removeEntity(Entity entity) {
+        if (entities.contains(entity)) {
+            entities.remove(entity);
+            entity.setScene(null);
         }
     }
     
     /**
-     * set the objects in this scene
+     * set the entities in this scene
      *
-     * @param objects list of objects
+     * @param entities list of entities
      */
-    public void setObjects(CopyOnWriteArrayList<Renderable> objects) {
-        this.objects = objects;
+    public void setEntities(CopyOnWriteArrayList<Entity> entities) {
+        this.entities = entities;
     }
     
     /**
@@ -206,7 +202,7 @@ public class Scene {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scene that = (Scene) o;
-        return Objects.equals(objects, that.objects) &&
+        return Objects.equals(entities, that.entities) &&
                 camera.equals(that.camera) &&
                 Objects.equals(background, that.background);
     }

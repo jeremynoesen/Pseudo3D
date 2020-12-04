@@ -3,8 +3,8 @@ package jndev.pseudo3d.sceneobject;
 import jndev.pseudo3d.util.Vector;
 
 /**
- * camera used to determine where to render a scene. objects in the same z position as the camera will be rendered 1:1
- * scale, objects behind the camera will be larger, and objects in front of the camera will be smaller
+ * camera used to determine where to render a scene. entities in the same z position as the camera will be rendered 1:1
+ * scale, entities behind the camera will be larger, and entities in front of the camera will be smaller
  *
  * @author JNDev (Jeremaster101)
  */
@@ -177,7 +177,7 @@ public class Camera {
     }
     
     /**
-     * set how far away the camera is able to view objects
+     * set how far away the camera is able to view entities
      *
      * @param viewDistance new view distance for camera
      */

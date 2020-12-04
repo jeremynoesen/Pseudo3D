@@ -1,7 +1,7 @@
 package jndev.pseudo3d.physics;
 
 import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.sceneobject.Renderable;
+import jndev.pseudo3d.sceneobject.Entity;
 import jndev.pseudo3d.util.Box;
 import jndev.pseudo3d.util.FastMath;
 import jndev.pseudo3d.util.Side;
@@ -254,19 +254,17 @@ public abstract class AABBPhysics {
         collidingObjects.values().forEach(ArrayList::clear);
         //reset all collision data
         
-        for (Renderable object : scene.getObjects()) {
+        for (Entity entity : scene.getEntities()) {
             //loop through all renderable objects in scene
             
-            if (object instanceof AABBPhysics && object != this) {
-                //check for AABBPhysics objects
+            if (entity != this) {
+                //check that this is not itself
                 
-                AABBPhysics aabbPhysics = (AABBPhysics) object;
-                
-                if (box.overlaps(aabbPhysics.getBoundingBox())) {
+                if (box.overlaps(entity.getBoundingBox())) {
                     //check for an overlap
-                    if (aabbPhysics.isCollidable() && collidable) {
+                    if (entity.isCollidable() && collidable) {
                         //if this and other object can collide
-                        collideWith(aabbPhysics);
+                        collideWith(entity);
                         //do the collision calculations
                     } else {
                         overlapping = true;
