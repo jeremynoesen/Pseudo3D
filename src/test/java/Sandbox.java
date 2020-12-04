@@ -10,6 +10,7 @@ import jndev.pseudo3d.scene.entity.Sprite;
 import jndev.pseudo3d.scene.util.Vector;
 
 import java.io.File;
+import java.util.Random;
 
 /**
  * sandbox-style testing class for testing various bits of this project
@@ -67,7 +68,7 @@ public class Sandbox {
         
         Camera camera = new Camera();
         camera.setFieldOfView((float) Math.toRadians(72));
-        camera.setScenePosition(new Vector(0, 0, -100));
+        camera.setPosition(new Vector(0, 0, -100));
         camera.setSensorSize(1000);
         
         scene.setCamera(camera);
@@ -78,12 +79,10 @@ public class Sandbox {
         Pseudo3D.launch();
         
         scene.addRunnable(() -> {
-            camera.setRenderPosition(new Vector((float) Pseudo3D.getCanvas().getWidth() / 2.0f,
-                    (float) Pseudo3D.getCanvas().getHeight() / 2.0f));
-//            physicsObject.setVelocity(
+//            entity.setVelocity(
 //                    Mouse.getPosition().setY(Mouse.getPosition().multiply(-1).getY())
 //                            .subtract(camera.getRenderPosition().multiply(new Vector(1, -1)))
-//                            .subtract(physicsObject.getPosition().setZ(0)).multiply(0.1f));
+//                            .subtract(entity.getPosition().setZ(0)).multiply(0.1f));
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
                 entity.setVelocity(entity.getVelocity().setZ(-1));
@@ -140,6 +139,12 @@ public class Sandbox {
             
             if (Keyboard.isPressed(KeyCode.RIGHT)) {
                 camera.setRotation(camera.getRotation() - 0.01f);
+            }
+            
+            if (Keyboard.isPressed(KeyCode.F)) {
+                Random random = new Random();
+                camera.setOffset(new Vector(random.nextInt() % 4 - 2, random.nextInt() % 4 - 2));
+                camera.setRotation(((random.nextInt() % 4) - 2) * 0.001f);
             }
         });
     }

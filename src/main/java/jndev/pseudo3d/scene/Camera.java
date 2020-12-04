@@ -38,45 +38,45 @@ public class Camera {
     /**
      * 3D position of camera in scene
      */
-    private Vector scenePosition;
+    private Vector position;
     
     /**
      * 2D position of camera in window
      */
-    private Vector renderPosition;
+    private Vector offset;
     
     /**
      * creates a new camera centered at (0, 0, 0) with a fov of 100 degrees
      */
     public Camera() {
-        scenePosition = new Vector();
+        position = new Vector();
         fieldOfView = 90;
         sensorSize = 500;
         viewDistance = 500;
         zoom = 1;
         rotation = 0;
-        renderPosition = new Vector();
+        offset = new Vector();
     }
     
     /**
      * constructs a new camera with set position, sensor res, and field of view
      *
-     * @param scenePosition  camera position in scene
-     * @param sensorSize     camera sensor size
-     * @param fieldOfView    field of view in radians
-     * @param viewDistance   z distance camera is able to see
-     * @param zoom           camera zoom, scales render
-     * @param rotation       rotation of camera in radians
-     * @param renderPosition position of camera in window
+     * @param position     camera position in scene
+     * @param sensorSize   camera sensor size
+     * @param fieldOfView  field of view in radians
+     * @param viewDistance z distance camera is able to see
+     * @param zoom         camera zoom, scales render
+     * @param rotation     rotation of camera in radians
+     * @param offset       position of camera in window
      */
-    public Camera(Vector scenePosition, Vector renderPosition, float sensorSize, float fieldOfView,
+    public Camera(Vector position, Vector offset, float sensorSize, float fieldOfView,
                   float viewDistance, float zoom, float rotation) {
-        this.scenePosition = scenePosition;
+        this.position = position;
         this.fieldOfView = fieldOfView;
         this.sensorSize = sensorSize;
         this.viewDistance = viewDistance;
         this.zoom = zoom;
-        this.renderPosition = renderPosition;
+        this.offset = offset;
         this.rotation = rotation;
     }
     
@@ -86,12 +86,12 @@ public class Camera {
      * @param camera camera to copy
      */
     public Camera(Camera camera) {
-        scenePosition = camera.scenePosition;
+        position = camera.position;
         fieldOfView = camera.fieldOfView;
         sensorSize = camera.sensorSize;
         viewDistance = camera.viewDistance;
         zoom = camera.zoom;
-        renderPosition = camera.renderPosition;
+        offset = camera.offset;
         rotation = camera.rotation;
     }
     
@@ -118,35 +118,35 @@ public class Camera {
      *
      * @return vector position of camera in scene
      */
-    public Vector getScenePosition() {
-        return scenePosition;
+    public Vector getPosition() {
+        return position;
     }
     
     /**
      * set the camera's position in thew scene
      *
-     * @param scenePosition new position in scene
+     * @param position new position in scene
      */
-    public void setScenePosition(Vector scenePosition) {
-        this.scenePosition = scenePosition;
+    public void setPosition(Vector position) {
+        this.position = position;
     }
     
     /**
-     * get position of camera in the render
+     * get offset of render center
      *
-     * @return vector render position of camera
+     * @return vector render offset of camera
      */
-    public Vector getRenderPosition() {
-        return renderPosition;
+    public Vector getOffset() {
+        return offset;
     }
     
     /**
-     * set the position of the camera in the render. set to null to use the center of the render bounds
+     * set the offset from the center of the camera in the render
      *
-     * @param renderPosition 2D position vector
+     * @param offset 2D position vector
      */
-    public void setRenderPosition(Vector renderPosition) {
-        this.renderPosition = renderPosition;
+    public void setOffset(Vector offset) {
+        this.offset = offset;
     }
     
     /**
@@ -235,6 +235,6 @@ public class Camera {
         return Float.compare(that.fieldOfView, fieldOfView) == 0 &&
                 Float.compare(that.viewDistance, viewDistance) == 0 &&
                 Float.compare(that.sensorSize, sensorSize) == 0 &&
-                scenePosition.equals(that.scenePosition);
+                position.equals(that.position);
     }
 }
