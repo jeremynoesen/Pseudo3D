@@ -66,8 +66,11 @@ public class Scene {
      * @param scene scene to copy
      */
     public Scene(Scene scene) {
-        entities = new CopyOnWriteArrayList<>(scene.entities);
-        camera = scene.camera;
+        entities = new CopyOnWriteArrayList<>();
+        for (Entity entity : scene.entities) {
+            entities.add(new Entity(entity));
+        }
+        camera = new Camera(scene.camera);
         background = scene.background;
         runnables = scene.runnables;
     }
@@ -197,7 +200,7 @@ public class Scene {
      * @return true if the scene is equal to this scene
      */
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Scene that = (Scene) o;

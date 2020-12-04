@@ -33,7 +33,7 @@ public class Entity extends Physics {
      */
     public Entity(Entity entity) {
         super(entity);
-        sprite = entity.sprite;
+        sprite = new Sprite(entity.sprite);
     }
     
     /**
@@ -92,7 +92,7 @@ public class Entity extends Physics {
      * @return true if this entity is identical to the other entity
      */
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
