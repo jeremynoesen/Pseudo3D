@@ -1,7 +1,12 @@
 package jndev.pseudo3d.sprite;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+import javafx.scene.paint.Color;
+import jndev.pseudo3d.application.Pseudo3D;
+import jndev.pseudo3d.util.FastMath;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -9,32 +14,47 @@ import java.util.Objects;
  *
  * @author JNDev (Jeremaster101)
  */
-public abstract class Sprite {
+public class Sprite {
     
     /**
      * image used for sprite in pixels
      */
-    protected Image image;
+    private Image image;
     
     /**
      * width of the sprite
      */
-    protected float width;
+    private float width;
     
     /**
      * height of the sprite in pixels
      */
-    protected float height;
+    private float height;
     
     /**
      * counter-clock-wise rotation of sprite in radians
      */
-    protected float rotation;
+    private float rotation;
     
     /**
-     * construct new sprite only when subclassed
+     * current frame number
      */
-    protected Sprite(Image image) {
+    private double currentFrame;
+    
+    /**
+     * all images of the animated sprite
+     */
+    private ArrayList<Image> images;
+    
+    /**
+     * time between frames
+     */
+    private double frameStep;
+    
+    /**
+     * create a new image sprite
+     */
+    public Sprite(Image image) {
         this.image = image;
         this.width = (float) image.getWidth();
         this.height = (float) image.getHeight();
@@ -42,15 +62,45 @@ public abstract class Sprite {
     }
     
     /**
+     * create a new color sprite with specified dimensions and color
+     *
+     * @param width  sprite width
+     * @param height sprite height
+     * @param color  sprite color
+     */
+    public Sprite(int width, int height, Color color) {
+        this(new WritableImage(1, 1));
+        this.width = width;
+        this.height = height;
+        ((WritableImage) image).getPixelWriter().setColor(0, 0, color);
+    }
+    
+    /**
+     * create a new animated sprite with a list of images and frame rate
+     *
+     * @param images    all images of the animated sprite
+     * @param frameRate frames per second of the sprite
+     */
+    public Sprite(ArrayList<Image> images, float frameRate) {
+        this(images.get(0));
+        this.frameStep = frameRate / 1000.0f;
+        this.currentFrame = 0;
+        this.images = images;
+    }
+    
+    /**
      * copy constructor for sprites
      *
      * @param sprite sprite to copy
      */
-    protected Sprite(Sprite sprite) {
+    public Sprite(Sprite sprite) {
         image = sprite.image;
         width = sprite.getWidth();
         height = sprite.getHeight();
         rotation = sprite.getRotation();
+        images = sprite.images;
+        frameStep = sprite.frameStep;
+        currentFrame = sprite.currentFrame;
     }
     
     /**
@@ -117,6 +167,36 @@ public abstract class Sprite {
     }
     
     /**
+     * get the framerate of the sprite
+     *
+     * @return framerate of sprite
+     */
+    public double getFramerate() {
+        return frameStep * 1000;
+    }
+    
+    /**
+     * set the framerate for the sprite
+     *
+     * @param framerate frames per second
+     */
+    public void setFramerate(double framerate) {
+        frameStep = framerate / 1000f;
+    }
+    
+    /**
+     * set the current frame to the next available frame based on elapsed time
+     */
+    public void update() {
+        if (images != null && !images.isEmpty()) {
+            double renderStep = Pseudo3D.getRenderFrequency() / 1000.0;
+            currentFrame = currentFrame + (frameStep / renderStep) <
+                    images.size() ? currentFrame + (frameStep / renderStep) : 0;
+            image = images.get(FastMath.floor((float) currentFrame));
+        }
+    }
+    
+    /**
      * check if two sprites are similar to each other
      *
      * @param o object to check
@@ -126,10 +206,13 @@ public abstract class Sprite {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Sprite that = (Sprite) o;
-        return width == that.width &&
-                height == that.height &&
-                Float.compare(that.rotation, rotation) == 0 &&
-                Objects.equals(image, that.image);
+        Sprite sprite = (Sprite) o;
+        return Float.compare(sprite.width, width) == 0 &&
+                Float.compare(sprite.height, height) == 0 &&
+                Float.compare(sprite.rotation, rotation) == 0 &&
+                Double.compare(sprite.currentFrame, currentFrame) == 0 &&
+                Double.compare(sprite.frameStep, frameStep) == 0 &&
+                Objects.equals(image, sprite.image) &&
+                Objects.equals(images, sprite.images);
     }
 }
