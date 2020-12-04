@@ -16,12 +16,12 @@ The following are screenshots made with the use of the Pseudo3D renderer.
 ### Orthographic
 This is what an orthographic, or zero-degree field-of-view, render looks like. This is the style used for 2D sprite-based games. There is no depth whatsoever, making it difficult to decipher the exact positioning of the character with respect to the background or ground.
 
-![Orthograpgic rendering](https://i.imgur.com/eyxUMyG.png)
+![Orthograpgic rendering](https://i.imgur.com/kc7ACC5.png)
 
 ### Perspective
-This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera plane, field of view, etc. You can now see that the background here is not actually far away. You're also able to see that the character is standing in the middle of the platform on the horizontal axes.
+This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera plane, field of view, etc. You can now see that the background here is not actually far away. You're also able to see that there is another character behind the one you already saw. You can see how far apart they are, as well as in relation to the background.
 
-![Pseudo3D rendering](https://i.imgur.com/7UZJGv9.png)
+![Pseudo3D rendering](https://i.imgur.com/0IgZZHx.png)
 
 ## Building
 This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. In the folder of the project, you can open terminal and run `gradle build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency in your IDE of choice.
