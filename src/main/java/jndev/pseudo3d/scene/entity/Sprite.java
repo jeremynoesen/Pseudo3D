@@ -98,7 +98,7 @@ public class Sprite {
         width = sprite.getWidth();
         height = sprite.getHeight();
         rotation = sprite.getRotation();
-        images = new ArrayList<>(sprite.images);
+        if (sprite.images != null) images = new ArrayList<>(sprite.images);
         frameStep = sprite.frameStep;
         currentFrame = sprite.currentFrame;
     }
