@@ -3,7 +3,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import jndev.pseudo3d.Pseudo3D;
 import jndev.pseudo3d.input.Keyboard;
-import jndev.pseudo3d.scene.Camera;
+import jndev.pseudo3d.scene.renderer.Camera;
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.scene.entity.Entity;
 import jndev.pseudo3d.scene.entity.Sprite;

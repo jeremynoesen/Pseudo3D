@@ -2,6 +2,7 @@ package jndev.pseudo3d.scene;
 
 import javafx.scene.paint.Color;
 import jndev.pseudo3d.scene.entity.Entity;
+import jndev.pseudo3d.scene.renderer.Camera;
 
 import java.util.HashSet;
 import java.util.Objects;
