@@ -2,6 +2,7 @@ package jndev.pseudo3d.scene;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
+import jndev.pseudo3d.Pseudo3D;
 import jndev.pseudo3d.scene.entity.Entity;
 import jndev.pseudo3d.scene.entity.Sprite;
 import jndev.pseudo3d.scene.util.Box;
@@ -19,8 +20,8 @@ import java.util.Comparator;
 public class Renderer {
     
     /**
-     * comparator used to sort scene entities from lowest to highest z position. this allows the renderer to draw entities
-     * in front of others if their position is as such
+     * comparator used to sort scene entities from lowest to highest z position. this allows the renderer to draw
+     * entities in front of others if their position is as such
      */
     private static final Comparator<Entity> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
@@ -52,8 +53,9 @@ public class Renderer {
         //sort entities by z position so entities can be drawn in front of others
         
         Camera camera = scene.getCamera();
-        Vector camPos = camera.getScenePosition();
-        Vector renderPos = camera.getRenderPosition();
+        Vector camPos = camera.getPosition();
+        Vector renderPos = new Vector((float) Pseudo3D.getCanvas().getWidth() / 2.0f + camera.getOffset().getX(),
+                (float) Pseudo3D.getCanvas().getHeight() / 2.0f + camera.getOffset().getY());
         float fov = camera.getFieldOfView() / 2.0f;
         float sensorSize = camera.getSensorSize();
         float zoom = camera.getZoom();
