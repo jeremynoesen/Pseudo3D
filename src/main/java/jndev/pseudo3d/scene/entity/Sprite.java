@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 import jndev.pseudo3d.Pseudo3D;
-import jndev.pseudo3d.scene.util.FastMath;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -192,7 +191,7 @@ public class Sprite {
             double renderStep = Pseudo3D.getRenderFrequency() / 1000.0;
             currentFrame = currentFrame + (frameStep / renderStep) <
                     images.size() ? currentFrame + (frameStep / renderStep) : 0;
-            image = images.get(FastMath.floor((float) currentFrame));
+            image = images.get((int) Math.floor((float) currentFrame));
         }
     }
     

@@ -2,7 +2,6 @@ package jndev.pseudo3d.scene.entity;
 
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.scene.util.Box;
-import jndev.pseudo3d.scene.util.FastMath;
 import jndev.pseudo3d.scene.util.Side;
 import jndev.pseudo3d.scene.util.Vector;
 
@@ -157,19 +156,19 @@ public abstract class Physics {
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         
         if (vx > -terminalVelocity.getX() && ax < 0)
-            vx = FastMath.max(vx + ax, -terminalVelocity.getX());
+            vx = Math.max(vx + ax, -terminalVelocity.getX());
         else if (vx < terminalVelocity.getX() && ax > 0)
-            vx = FastMath.min(vx + ax, terminalVelocity.getX());
+            vx = Math.min(vx + ax, terminalVelocity.getX());
         
         if (vy > -terminalVelocity.getY() && ay < 0)
-            vy = FastMath.max(vy + ay, -terminalVelocity.getY());
+            vy = Math.max(vy + ay, -terminalVelocity.getY());
         else if (vy < terminalVelocity.getY() && ay > 0)
-            vy = FastMath.min(vy + ay, terminalVelocity.getY());
+            vy = Math.min(vy + ay, terminalVelocity.getY());
         
         if (vz > -terminalVelocity.getZ() && az < 0)
-            vz = FastMath.max(vz + az, -terminalVelocity.getZ());
+            vz = Math.max(vz + az, -terminalVelocity.getZ());
         else if (vz < terminalVelocity.getZ() && az > 0)
-            vz = FastMath.min(vz + az, terminalVelocity.getZ());
+            vz = Math.min(vz + az, terminalVelocity.getZ());
         //apply acceleration and gravity if not exceeding terminal velocity
         
         float fx = 0, fy = 0, fz = 0;
@@ -228,12 +227,12 @@ public abstract class Physics {
         }
         //apply friction from colliding entities
         
-        if (vx < 0) vx = FastMath.min(vx + (drag.getX() * box.getSurfaceArea()) + (fx * mass), 0);
-        else if (vx > 0) vx = FastMath.max(vx - (drag.getX() * box.getSurfaceArea()) - (fx * mass), 0);
-        if (vy < 0) vy = FastMath.min(vy + (drag.getY() * box.getSurfaceArea()) + (fy * mass), 0);
-        else if (vy > 0) vy = FastMath.max(vy - (drag.getY() * box.getSurfaceArea()) - (fy * mass), 0);
-        if (vz < 0) vz = FastMath.min(vz + (drag.getZ() * box.getSurfaceArea()) + (fz * mass), 0);
-        else if (vz > 0) vz = FastMath.max(vz - (drag.getZ() * box.getSurfaceArea()) - (fz * mass), 0);
+        if (vx < 0) vx = Math.min(vx + (drag.getX() * box.getSurfaceArea()) + (fx * mass), 0);
+        else if (vx > 0) vx = Math.max(vx - (drag.getX() * box.getSurfaceArea()) - (fx * mass), 0);
+        if (vy < 0) vy = Math.min(vy + (drag.getY() * box.getSurfaceArea()) + (fy * mass), 0);
+        else if (vy > 0) vy = Math.max(vy - (drag.getY() * box.getSurfaceArea()) - (fy * mass), 0);
+        if (vz < 0) vz = Math.min(vz + (drag.getZ() * box.getSurfaceArea()) + (fz * mass), 0);
+        else if (vz > 0) vz = Math.max(vz - (drag.getZ() * box.getSurfaceArea()) - (fz * mass), 0);
         //modify velocity based on friction and mass, and drag and surface area
         
         velocity = new Vector(vx, vy, vz);
@@ -295,7 +294,7 @@ public abstract class Physics {
         for (int i = 0; i < 6; i++) {
             if (overlaps[i] < distance) {
                 distance = overlaps[i];
-                dir = -FastMath.pow(-1, i);
+                dir = (int) -Math.pow(-1, i);
                 if (i <= 1) {
                     axis = 1;
                 } else if (i <= 3) {
