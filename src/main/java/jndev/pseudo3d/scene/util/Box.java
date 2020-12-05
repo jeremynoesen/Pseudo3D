@@ -8,6 +8,11 @@ package jndev.pseudo3d.scene.util;
 public class Box {
     
     /**
+     * sides of box
+     */
+    public enum Side {LEFT, RIGHT, TOP, BOTTOM, BACK, FRONT}
+    
+    /**
      * width of the box
      */
     private float width;
