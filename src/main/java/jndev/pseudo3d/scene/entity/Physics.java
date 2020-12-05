@@ -2,7 +2,6 @@ package jndev.pseudo3d.scene.entity;
 
 import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.scene.util.Box;
-import jndev.pseudo3d.scene.util.Side;
 import jndev.pseudo3d.scene.util.Vector;
 
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public abstract class Physics {
     /**
      * list of entities this one is colliding with per side
      */
-    private final HashMap<Side, ArrayList<Physics>> collidingObjects;
+    private final HashMap<Box.Side, ArrayList<Physics>> collidingObjects;
     
     /**
      * entity's collision status
@@ -119,7 +118,7 @@ public abstract class Physics {
         mass = 1.0f;
         box = new Box();
         collidingObjects = new HashMap<>();
-        for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
+        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
     
     /**
@@ -144,7 +143,7 @@ public abstract class Physics {
         kinematic = physics.kinematic;
         pushable = physics.pushable;
         collidingObjects = new HashMap<>();
-        for (Side s : Side.values()) collidingObjects.put(s, new ArrayList<>());
+        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
     
     /**
@@ -174,9 +173,9 @@ public abstract class Physics {
         float fx = 0, fy = 0, fz = 0;
         if (colliding) {
             int xCount = 0, yCount = 0, zCount = 0;
-            for (Side side : Side.values()) {
+            for (Box.Side side : Box.Side.values()) {
                 for (Physics physics : collidingObjects.get(side)) {
-                    if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
+                    if ((side == Box.Side.LEFT && vx < 0) || (side == Box.Side.RIGHT && vx > 0)) {
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
@@ -189,7 +188,7 @@ public abstract class Physics {
                         yCount++;
                         fz += physics.friction.getZ();
                         zCount++;
-                    } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
+                    } else if ((side == Box.Side.BOTTOM && vy < 0) || (side == Box.Side.TOP && vy > 0)) {
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
@@ -202,7 +201,7 @@ public abstract class Physics {
                         xCount++;
                         fz += physics.friction.getZ();
                         zCount++;
-                    } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
+                    } else if ((side == Box.Side.BACK && vz < 0) || (side == Box.Side.FRONT && vz > 0)) {
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
@@ -324,20 +323,20 @@ public abstract class Physics {
                 setPosition(position.setX(position.getX() - (distance * dir)));
                 // fix entity position so it is not overlapping
             }
-            collidingObjects.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
+            collidingObjects.get(dir == -1 ? Box.Side.LEFT : Box.Side.RIGHT).add(physics);
             //add to colliding entities for the colliding side
         } else if (axis == 2) {
             if (velocity.getY() * dir > 0) {
                 distance *= Math.abs(velocity.getY()) / (Math.abs(velocity.getY()) + Math.abs(physics.velocity.getY()));
                 setPosition(position.setY(position.getY() - (distance * dir)));
             }
-            collidingObjects.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
+            collidingObjects.get(dir == -1 ? Box.Side.BOTTOM : Box.Side.TOP).add(physics);
         } else {
             if (velocity.getZ() * dir > 0) {
                 distance *= Math.abs(velocity.getZ()) / (Math.abs(velocity.getZ()) + Math.abs(physics.velocity.getZ()));
                 setPosition(position.setZ(position.getZ() - (distance * dir)));
             }
-            collidingObjects.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
+            collidingObjects.get(dir == -1 ? Box.Side.BACK : Box.Side.FRONT).add(physics);
         }
     }
     
@@ -534,7 +533,7 @@ public abstract class Physics {
      * @param side side of the entity
      * @return true if the entity is colliding on the side
      */
-    public boolean collidesOn(Side side) {
+    public boolean collidesOn(Box.Side side) {
         return !collidingObjects.get(side).isEmpty();
     }
     
@@ -545,7 +544,7 @@ public abstract class Physics {
      * @param side    side of object
      * @return true if the object is colliding with the other object on the soecified side
      */
-    public boolean collidesWithOn(Physics physics, Side side) {
+    public boolean collidesWithOn(Physics physics, Box.Side side) {
         return collidingObjects.get(side).contains(physics);
     }
     
