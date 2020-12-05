@@ -8,7 +8,6 @@ import jndev.pseudo3d.scene.Scene;
 import jndev.pseudo3d.scene.entity.Entity;
 import jndev.pseudo3d.scene.entity.Sprite;
 import jndev.pseudo3d.scene.util.Box;
-import jndev.pseudo3d.scene.util.FastMath;
 import jndev.pseudo3d.scene.util.Vector;
 
 import java.util.Comparator;
@@ -25,7 +24,7 @@ public class Renderer {
      */
     private static final Comparator<Entity> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
-        return FastMath.round(diff / (diff == 0 ? 1 : Math.abs(diff)));
+        return Math.round(diff / (diff == 0 ? 1 : Math.abs(diff)));
     };
     
     /**
@@ -83,8 +82,8 @@ public class Renderer {
             Sprite sprite = entity.getSprite();
             //get sprite
             
-            int widthScaled = FastMath.ceil(sprite.getWidth() * scale);
-            int heightScaled = FastMath.ceil(sprite.getHeight() * scale);
+            int widthScaled = (int) Math.ceil(sprite.getWidth() * scale);
+            int heightScaled = (int) Math.ceil(sprite.getHeight() * scale);
             //scale image dimensions
             
             float x = ((objPos.getX() - camPos.getX()) * scale) + renderPos.getX();
