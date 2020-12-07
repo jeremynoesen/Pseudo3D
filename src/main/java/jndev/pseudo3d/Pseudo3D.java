@@ -173,7 +173,7 @@ public class Pseudo3D extends Application {
      *
      * @param hertz ticks per second
      */
-    public static void setTickFrequency(double hertz) {
+    public static void setTickFrequency(float hertz) {
         tickLoop.setRate(1 / (1000 / hertz));
     }
     
@@ -182,8 +182,8 @@ public class Pseudo3D extends Application {
      *
      * @return tick frequency
      */
-    public static double getTickFrequency() {
-        return 1000 / (1 / tickLoop.getRate());
+    public static float getTickFrequency() {
+        return (float) (1000 / (1 / tickLoop.getRate()));
     }
     
     /**
@@ -191,7 +191,7 @@ public class Pseudo3D extends Application {
      *
      * @param hertz frames per second
      */
-    public static void setRenderFrequency(double hertz) {
+    public static void setRenderFrequency(float hertz) {
         renderLoop.setRate(1 / (1000 / hertz));
     }
     
@@ -200,8 +200,8 @@ public class Pseudo3D extends Application {
      *
      * @return render frequency
      */
-    public static double getRenderFrequency() {
-        return 1000 / (1 / renderLoop.getRate());
+    public static float getRenderFrequency() {
+        return (float) (1000 / (1 / renderLoop.getRate()));
     }
     
     /**

@@ -28,7 +28,7 @@ public class Mouse {
      * get the motion of the scroll wheel. positive values indicate scrolling towards user, while negative values
      * indicate scrolling away
      */
-    private static double wheelRotation = 0;
+    private static float wheelRotation = 0;
     
     /**
      * get a list of all buttons pressed with their button codes
@@ -54,7 +54,7 @@ public class Mouse {
      *
      * @return motion of the scroll wheel
      */
-    public static double getWheelRotation() {
+    public static float getWheelRotation() {
         return wheelRotation;
     }
     
@@ -75,7 +75,7 @@ public class Mouse {
     public static void initialize(Canvas canvas) {
         canvas.setOnMouseClicked(e -> pressed.add(e.getButton()));
         canvas.setOnMouseReleased(e -> pressed.remove(e.getButton()));
-        canvas.setOnScroll(e -> wheelRotation = e.getDeltaY());
+        canvas.setOnScroll(e -> wheelRotation = (float) e.getDeltaY());
         canvas.setOnMouseMoved(e -> position = new Vector((float) e.getSceneX(), (float) e.getSceneY()));
     }
 }

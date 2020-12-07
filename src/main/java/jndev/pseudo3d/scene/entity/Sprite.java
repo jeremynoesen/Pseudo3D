@@ -38,7 +38,7 @@ public class Sprite {
     /**
      * current frame number
      */
-    private double currentFrame;
+    private float currentFrame;
     
     /**
      * all images of the animated sprite
@@ -48,7 +48,7 @@ public class Sprite {
     /**
      * time between frames
      */
-    private double frameStep;
+    private float frameStep;
     
     /**
      * create a new image sprite
@@ -170,7 +170,7 @@ public class Sprite {
      *
      * @return framerate of sprite
      */
-    public double getFramerate() {
+    public float getFramerate() {
         return frameStep * 1000;
     }
     
@@ -179,7 +179,7 @@ public class Sprite {
      *
      * @param framerate frames per second
      */
-    public void setFramerate(double framerate) {
+    public void setFramerate(float framerate) {
         frameStep = framerate / 1000f;
     }
     
@@ -188,7 +188,7 @@ public class Sprite {
      */
     public void update() {
         if (images != null && !images.isEmpty()) {
-            double renderStep = Pseudo3D.getRenderFrequency() / 1000.0;
+            float renderStep = Pseudo3D.getRenderFrequency() / 1000.0f;
             currentFrame = currentFrame + (frameStep / renderStep) <
                     images.size() ? currentFrame + (frameStep / renderStep) : 0;
             image = images.get((int) Math.floor((float) currentFrame));

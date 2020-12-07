@@ -289,14 +289,14 @@ public abstract class Physics {
         overlaps[5] = Math.abs(box.getMaximum().getZ() - physics.getBoundingBox().getMinimum().getZ()); //front
         //get overlap distances
         
-        int zeros = 0;
-        int axis = 1;
-        int dir = -1;
+        byte zeros = 0;
+        byte axis = 1;
+        byte dir = -1;
         float distance = overlaps[0];
         for (int i = 0; i < 6; i++) {
             if (overlaps[i] < distance) {
                 distance = overlaps[i];
-                dir = (int) -Math.pow(-1, i);
+                dir = (byte) -Math.pow(-1, i);
                 if (i <= 1) {
                     axis = 1;
                 } else if (i <= 3) {
