@@ -34,7 +34,7 @@ public class Vector {
     /**
      * create a new 3D vector with components x, y, and z
      *
-     * @param x x compnent of vector
+     * @param x x component of vector
      * @param y y component of vector
      * @param z z component of vector
      */
@@ -47,7 +47,7 @@ public class Vector {
     /**
      * create a new 2D vector with components x and y
      *
-     * @param x x compnent of vector
+     * @param x x component of vector
      * @param y y component of vector
      */
     public Vector(float x, float y) {
@@ -209,7 +209,7 @@ public class Vector {
     /**
      * calculate the distance between the ends of two vectors
      *
-     * @param vector vector to calulcate distance to
+     * @param vector vector to calculate distance to
      * @return distance to location
      */
     public float distance(Vector vector) {

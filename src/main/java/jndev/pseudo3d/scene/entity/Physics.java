@@ -77,7 +77,7 @@ public abstract class Physics {
     private boolean overlapping;
     
     /**
-     * whether this entity can move or not and feel motion of other entitys. this is best used for ground entitys.
+     * whether this entity can move or not and feel motion of other entities. this is best used for ground entities.
      * setting this to false will disallow this entity from having any updates to motion or collisions, which can
      * prevent you from getting the data from its collisions. these entities can remain collidable.
      */
@@ -254,7 +254,7 @@ public abstract class Physics {
         //reset all collision data
         
         for (Entity entity : scene.getEntities()) {
-            //loop through all renderable entitys in scene
+            //loop through all entities in scene
             
             if (entity != this) {
                 //check that this is not itself
@@ -545,7 +545,7 @@ public abstract class Physics {
      *
      * @param physics object to check if colliding with
      * @param side    side of object
-     * @return true if the object is colliding with the other object on the soecified side
+     * @return true if the object is colliding with the other object on the specified side
      */
     public boolean collidesWithOn(Physics physics, Box.Side side) {
         return collidingObjects.get(side).contains(physics);
@@ -635,10 +635,10 @@ public abstract class Physics {
     }
     
     /**
-     * check if another set of aabbphysics data is equal to this one
+     * check if another set of physics data is equal to this one
      *
      * @param o object to check for equality
-     * @return true if aabbphysics data is equivalent to this
+     * @return true if physics data is equivalent to this
      */
     @Override
     public boolean equals(Object o) {

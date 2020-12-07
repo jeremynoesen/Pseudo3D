@@ -30,7 +30,7 @@ public class Keyboard {
     /**
      * check if a key is pressed
      *
-     * @param key key to check if pressed (KeyEvent.VK_KEYNAME)
+     * @param key key to check if pressed
      * @return true if the key is pressed
      */
     public static boolean isPressed(KeyCode key) {
