@@ -176,6 +176,7 @@ public abstract class Physics {
             for (Box.Side side : Box.Side.values()) {
                 for (Physics physics : collidingObjects.get(side)) {
                     if ((side == Box.Side.LEFT && vx < 0) || (side == Box.Side.RIGHT && vx > 0)) {
+                        //check if colliding and moving towards a side
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
@@ -184,10 +185,12 @@ public abstract class Physics {
                             vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
                             physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vx = 0;
+                        //calculate conservation of momentum only if object is pushable and kinematic
                         fy += physics.friction.getY();
                         yCount++;
                         fz += physics.friction.getZ();
                         zCount++;
+                        //sum frictions in other axes
                     } else if ((side == Box.Side.BOTTOM && vy < 0) || (side == Box.Side.TOP && vy > 0)) {
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
@@ -217,7 +220,7 @@ public abstract class Physics {
                     }
                 }
             }
-            //get sum of frictions for each axis
+            //get sum of frictions for each axis, as well as apply conservation of momentum
             
             if (xCount > 0) fx = (fx + friction.getX()) / (xCount + 1);
             if (yCount > 0) fy = (fy + friction.getY()) / (yCount + 1);
