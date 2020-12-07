@@ -177,6 +177,11 @@ public abstract class Physics {
                 for (Physics physics : collidingObjects.get(side)) {
                     if ((side == Box.Side.LEFT && vx < 0) || (side == Box.Side.RIGHT && vx > 0)) {
                         //check if colliding and moving towards a side
+                        fy += physics.friction.getY() * Math.abs(vx);
+                        yCount++;
+                        fz += physics.friction.getZ() * Math.abs(vx);
+                        zCount++;
+                        //sum frictions in other axes
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
@@ -186,12 +191,11 @@ public abstract class Physics {
                             physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vx = 0;
                         //calculate conservation of momentum only if object is pushable and kinematic
-                        fy += physics.friction.getY();
-                        yCount++;
-                        fz += physics.friction.getZ();
-                        zCount++;
-                        //sum frictions in other axes
                     } else if ((side == Box.Side.BOTTOM && vy < 0) || (side == Box.Side.TOP && vy > 0)) {
+                        fx += physics.friction.getX() * Math.abs(vy);
+                        xCount++;
+                        fz += physics.friction.getZ() * Math.abs(vy);
+                        zCount++;
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
@@ -200,11 +204,11 @@ public abstract class Physics {
                             vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
                             physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vy = 0;
-                        fx += physics.friction.getX();
-                        xCount++;
-                        fz += physics.friction.getZ();
-                        zCount++;
                     } else if ((side == Box.Side.BACK && vz < 0) || (side == Box.Side.FRONT && vz > 0)) {
+                        fx += physics.friction.getX() * Math.abs(vz);
+                        xCount++;
+                        fy += physics.friction.getY() * Math.abs(vz);
+                        yCount++;
                         if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
@@ -213,10 +217,6 @@ public abstract class Physics {
                             vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
                             physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vz = 0;
-                        fx += physics.friction.getX();
-                        xCount++;
-                        fy += physics.friction.getY();
-                        yCount++;
                     }
                 }
             }
