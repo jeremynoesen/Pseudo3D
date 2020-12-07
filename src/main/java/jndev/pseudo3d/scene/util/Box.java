@@ -108,7 +108,7 @@ public class Box {
     /**
      * get the height of the box
      *
-     * @return heigh of box
+     * @return height of box
      */
     public float getHeight() {
         return height;
@@ -128,7 +128,7 @@ public class Box {
     /**
      * get the width of the box
      *
-     * @return width ofbox
+     * @return width of box
      */
     public float getWidth() {
         return width;
@@ -148,7 +148,7 @@ public class Box {
     /**
      * get the depth of the box
      *
-     * @return depth ofbox
+     * @return depth of box
      */
     public float getDepth() {
         return depth;
