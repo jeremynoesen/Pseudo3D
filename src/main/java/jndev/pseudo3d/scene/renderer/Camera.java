@@ -5,7 +5,7 @@ import jndev.pseudo3d.scene.util.Vector;
 /**
  * camera used to determine where to render a scene
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Camera {
     

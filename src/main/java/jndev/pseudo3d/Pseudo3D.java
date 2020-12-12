@@ -16,7 +16,7 @@ import jndev.pseudo3d.scene.renderer.Renderer;
 /**
  * main application for any project using Pseudo3D
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Pseudo3D extends Application {
     

@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * class to keep track of key strokes allowing multiple key presses
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Keyboard {
     

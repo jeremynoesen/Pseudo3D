@@ -15,7 +15,7 @@ import java.util.Comparator;
 /**
  * Pseudo3D scene renderer, will turn a scene into a render on a javafx canvas
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Renderer {
     

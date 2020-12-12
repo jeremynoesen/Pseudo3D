@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * sprites to be rendered in game
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Sprite {
     

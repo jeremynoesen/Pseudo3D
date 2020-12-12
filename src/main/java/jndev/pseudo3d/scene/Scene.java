@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 /**
  * scene to place entities, a camera, and code injections to modify them
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Scene {
     
