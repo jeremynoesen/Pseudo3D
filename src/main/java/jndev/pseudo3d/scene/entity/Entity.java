@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * entity to be placed in a scene, includes physics and a sprite
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Entity extends Physics {
     

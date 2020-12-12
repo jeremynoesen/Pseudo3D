@@ -3,7 +3,7 @@ package jndev.pseudo3d.scene.util;
 /**
  * immutable vector with vector mathematical operators
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Vector {
     

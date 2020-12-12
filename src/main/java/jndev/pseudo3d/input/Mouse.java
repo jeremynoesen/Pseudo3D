@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * class to keep track of mouse buttons and motions
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Mouse {
     

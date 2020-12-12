@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * axis-aligned bounding box entity physics
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public abstract class Physics {
     

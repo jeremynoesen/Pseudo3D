@@ -3,7 +3,7 @@ package jndev.pseudo3d.scene.util;
 /**
  * simple box with some checks and mathematical operators
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Box {
     

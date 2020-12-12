@@ -16,7 +16,7 @@ import java.util.Random;
 /**
  * sandbox-style testing class for testing various bits of this project
  *
- * @author JNDev (Jeremaster101)
+ * @author Jeremy Noesen
  */
 public class Sandbox {
     
