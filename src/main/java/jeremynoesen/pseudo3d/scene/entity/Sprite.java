@@ -1,9 +1,9 @@
-package jndev.pseudo3d.scene.entity;
+package jeremynoesen.pseudo3d.scene.entity;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import jndev.pseudo3d.Pseudo3D;
+import jeremynoesen.pseudo3d.Pseudo3D;
 
 import java.util.ArrayList;
 import java.util.Objects;

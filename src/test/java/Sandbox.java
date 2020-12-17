@@ -1,13 +1,13 @@
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import jndev.pseudo3d.Pseudo3D;
-import jndev.pseudo3d.input.Keyboard;
-import jndev.pseudo3d.scene.renderer.Camera;
-import jndev.pseudo3d.scene.Scene;
-import jndev.pseudo3d.scene.entity.Entity;
-import jndev.pseudo3d.scene.entity.Sprite;
-import jndev.pseudo3d.scene.util.Vector;
+import jeremynoesen.pseudo3d.Pseudo3D;
+import jeremynoesen.pseudo3d.input.Keyboard;
+import jeremynoesen.pseudo3d.scene.renderer.Camera;
+import jeremynoesen.pseudo3d.scene.Scene;
+import jeremynoesen.pseudo3d.scene.entity.Entity;
+import jeremynoesen.pseudo3d.scene.entity.Sprite;
+import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

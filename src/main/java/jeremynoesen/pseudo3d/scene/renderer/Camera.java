@@ -1,6 +1,6 @@
-package jndev.pseudo3d.scene.renderer;
+package jeremynoesen.pseudo3d.scene.renderer;
 
-import jndev.pseudo3d.scene.util.Vector;
+import jeremynoesen.pseudo3d.scene.util.Vector;
 
 /**
  * camera used to determine where to render a scene

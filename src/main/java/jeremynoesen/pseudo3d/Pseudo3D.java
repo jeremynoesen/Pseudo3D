@@ -1,4 +1,4 @@
-package jndev.pseudo3d;
+package jeremynoesen.pseudo3d;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,9 +9,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jndev.pseudo3d.input.Keyboard;
-import jndev.pseudo3d.input.Mouse;
-import jndev.pseudo3d.scene.renderer.Renderer;
+import jeremynoesen.pseudo3d.input.Keyboard;
+import jeremynoesen.pseudo3d.input.Mouse;
+import jeremynoesen.pseudo3d.scene.renderer.Renderer;
 
 /**
  * main application for any project using Pseudo3D
@@ -33,7 +33,7 @@ public class Pseudo3D extends Application {
     /**
      * active scene to render and tick
      */
-    private static jndev.pseudo3d.scene.Scene activeScene;
+    private static jeremynoesen.pseudo3d.scene.Scene activeScene;
     
     /**
      * width of the window
@@ -155,7 +155,7 @@ public class Pseudo3D extends Application {
      *
      * @return active scene
      */
-    public static jndev.pseudo3d.scene.Scene getActiveScene() {
+    public static jeremynoesen.pseudo3d.scene.Scene getActiveScene() {
         return activeScene;
     }
     
@@ -164,7 +164,7 @@ public class Pseudo3D extends Application {
      *
      * @param activeScene pseudo3d scene
      */
-    public static void setActiveScene(jndev.pseudo3d.scene.Scene activeScene) {
+    public static void setActiveScene(jeremynoesen.pseudo3d.scene.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
     }
     
