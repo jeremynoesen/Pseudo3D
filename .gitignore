@@ -19,5 +19,9 @@ hs_err_pid*
 .idea/
 out/
 *.iml
-/.gradle/
-/build/
+.gradle/
+gradle/
+build/
+gradlew
+gradlew.bat
+build.gradle
