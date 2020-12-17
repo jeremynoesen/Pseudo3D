@@ -1,4 +1,4 @@
-package jndev.pseudo3d.scene.util;
+package jeremynoesen.pseudo3d.scene.util;
 
 /**
  * immutable vector with vector mathematical operators
