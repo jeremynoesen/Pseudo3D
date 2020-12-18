@@ -191,7 +191,7 @@ public class Sprite {
             float renderStep = Pseudo3D.getRenderFrequency() / 1000.0f;
             currentFrame = currentFrame + (frameStep / renderStep) <
                     images.size() ? currentFrame + (frameStep / renderStep) : 0;
-            image = images.get((int) Math.floor((float) currentFrame));
+            image = images.get((int) Math.floor(currentFrame));
         }
     }
     
