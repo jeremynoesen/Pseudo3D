@@ -3,10 +3,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.input.Keyboard;
-import jeremynoesen.pseudo3d.scene.renderer.Camera;
+import jeremynoesen.pseudo3d.input.Mouse;
 import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
+import jeremynoesen.pseudo3d.scene.renderer.Camera;
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.io.FileInputStream;
@@ -39,8 +40,7 @@ public class Sandbox {
         entity.getBoundingBox().setWidth((float) entity.getSprite().getImage().getWidth());
         entity.getBoundingBox().setHeight((float) entity.getSprite().getImage().getHeight());
         entity.getBoundingBox().setDepth((float) entity.getSprite().getImage().getWidth());
-        entity.setPosition(new Vector(entity.getBoundingBox().getWidth() * 10 - 450, 0,
-                -entity.getBoundingBox().getWidth()));
+        entity.setPosition(new Vector(0, 0, -150));
         entity.setMass(1f);
         scene.addEntity(entity);
         
@@ -48,44 +48,43 @@ public class Sandbox {
         entity1.setMass(4f);
         scene.addEntity(entity1);
         
-        for (int j = 1; j < 22; j++) {
-            for (int i = 1; i <= 6; i++) {
+        for (int j = 1; j < 18; j++) {
+            for (int i = 1; i <= 5; i++) {
                 Entity copy = new Entity();
                 copy.setSprite(floor);
                 copy.getBoundingBox().setWidth((float) copy.getSprite().getImage().getWidth());
                 copy.getBoundingBox().setHeight((float) copy.getSprite().getImage().getHeight());
                 copy.getBoundingBox().setDepth((float) copy.getSprite().getImage().getWidth());
-                copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 525, -465,
-                        -copy.getBoundingBox().getWidth() * i));
+                copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 425, -226,
+                        -copy.getBoundingBox().getWidth() * i - 52));
                 copy.setKinematic(false);
                 scene.addEntity(copy);
             }
         }
         
         Entity backdrop = new Entity();
+        backdrop.getBoundingBox().setWidth(1000);
+        backdrop.getBoundingBox().setHeight(1000);
         backdrop.setKinematic(false);
-        backdrop.setCollidable(false);
         backdrop.setPosition(new Vector(0, 0, -300));
+        background.setWidth(1000);
+        background.setHeight(1000);
         backdrop.setSprite(background);
         scene.addEntity(backdrop);
         
         Camera camera = new Camera();
-        camera.setFieldOfView((float) Math.toRadians(72));
+        camera.setFieldOfView((float) Math.toRadians(40));
         camera.setPosition(new Vector(0, 0, -100));
-        camera.setSensorSize(1000);
+        camera.setSensorSize(500);
         
         scene.setCamera(camera);
         scene.setBackground(Color.DARKGRAY);
         
-        Pseudo3D.init(1000, 1000, false, "Sandbox");
+        Pseudo3D.init(500, 500, true, "Sandbox");
         Pseudo3D.setActiveScene(scene);
         Pseudo3D.launch();
         
         scene.addRunnable(() -> {
-//            entity.setVelocity(
-//                    Mouse.getPosition().setY(Mouse.getPosition().multiply(-1).getY())
-//                            .subtract(camera.getRenderPosition().multiply(new Vector(1, -1)))
-//                            .subtract(entity.getPosition().setZ(0)).multiply(0.1f));
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
                 entity.setVelocity(entity.getVelocity().setZ(-1));
@@ -129,11 +128,11 @@ public class Sandbox {
             }
             
             if (Keyboard.isPressed(KeyCode.UP)) {
-                camera.setFieldOfView(camera.getFieldOfView() + 0.1f);
+                camera.setFieldOfView(camera.getFieldOfView() + 0.01f);
             }
             
             if (Keyboard.isPressed(KeyCode.DOWN)) {
-                camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.1f, 0));
+                camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.01f, 0));
             }
             
             if (Keyboard.isPressed(KeyCode.LEFT)) {
@@ -148,6 +147,14 @@ public class Sandbox {
                 Random random = new Random();
                 camera.setOffset(new Vector(random.nextInt() % 4 - 2, random.nextInt() % 4 - 2));
                 camera.setRotation(((random.nextInt() % 4) - 2) * 0.001f);
+            }
+            
+            if (Keyboard.isPressed(KeyCode.R)) {
+                camera.setOffset(new Vector());
+                camera.setRotation(0);
+                entity.setPosition(new Vector(0, 0, -150));
+                entity1.setPosition(new Vector(0, 0, -150));
+                camera.setFieldOfView((float) Math.toRadians(40));
             }
         });
     }

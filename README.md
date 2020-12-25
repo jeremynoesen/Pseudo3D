@@ -19,7 +19,7 @@ This is what an orthographic, or zero-degree field-of-view, render looks like. T
 ![Orthograpgic rendering](Orthographic.png)
 
 ### Perspective
-This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera plane, field of view, etc. You can now see that the background here is not actually far away. You're also able to see that there is another character behind the one you already saw. You can see how far apart they are, as well as in relation to the background.
+This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera plane, field of view, etc. You can now see that the background here is not actually far away. You can also see that the character is centered on the horizontal axes on the surface.
 
 ![Pseudo3D rendering](Perspective.png)
 
