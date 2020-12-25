@@ -11,17 +11,17 @@ Pseudo3D was originally just a 2D game I was working on. Later, that transformed
 For now, view the Sandbox class in `src/test/java` for a basic idea of how to create a simple scene. More details will be given when the wiki is created.
 
 ## Screenshots
-The following are screenshots made with the use of the Pseudo3D renderer.
+The following are recordings of the Pseudo3D renderer in action. You can also try these out for yourself by running the `Sandbox` class under `src/test/java`.
 
 ### Orthographic
-This is what an orthographic, or zero-degree field-of-view, render looks like. This is the style used for 2D sprite-based games. There is no depth whatsoever, making it difficult to decipher the exact positioning of the character with respect to the background or ground.
+This is what an orthographic, or zero-degree field-of-view, render looks like. This is the style used for 2D sprite-based games. There is no depth whatsoever, making it difficult to decipher the exact positioning of the character with respect to the other character or the ground. In this, the character can only move in 2D space. Sprites are only drawn in 2D.
 
-![Orthograpgic rendering](Orthographic.png)
+![Orthograpgic rendering](Orthographic.gif)
 
 ### Perspective
-This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera plane, field of view, etc. You can now see that the background here is not actually far away. You can also see that the character is centered on the horizontal axes on the surface.
+This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera, field of view, sensor size, and zoom; however, they are still all 2D. You can now see that the background here is not actually far away. You can also make out the position of the moving character in relation to the stationary character in 3D space, due to physics being 3D.
 
-![Pseudo3D rendering](Perspective.png)
+![Pseudo3D rendering](Perspective.gif)
 
 ## Building
 This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. In the folder of the project, you can open terminal and run `gradle build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency in your IDE of choice.
