@@ -10,7 +10,10 @@ Pseudo3D was originally just a 2D game I was working on. Later, that transformed
 ***Wiki coming soon!***<br>
 For now, view the Sandbox class in `src/test/java` for a basic idea of how to create a simple scene. More details will be given when the wiki is created.
 
-## Screenshots
+## Building
+This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. In the folder of the project, you can open terminal and run `gradle build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency in your IDE of choice.
+
+## Demonstration
 The following are recordings of the Pseudo3D renderer in action. You can also try these out for yourself by running the `Sandbox` class under `src/test/java`.
 
 ### Orthographic
@@ -23,11 +26,5 @@ This is what the Pseudo3D rendering looks like. Sprites scale based on distance 
 
 ![Pseudo3D rendering](Perspective.gif)
 
-## Building
-This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. In the folder of the project, you can open terminal and run `gradle build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency in your IDE of choice.
-
-## Contributing
-I will only permit contributions directly to this repo from those who I have directly asked for help from. Any other contribution attempt will be rejected. You are free to fork this repo and do whatever you please, as I cannot stop you from doing that.
-
-## Disclaimer
-This project is far from complete. You can view the associated GitHub project to see what is planned for this. A wiki will be made eventually explaining how to use this, but until then, there are no explanations available. Not everything is implemented yet, so use at your own risk.
+## Notice
+This project is far from complete. You can view the associated GitHub projects to see what is planned for this. A wiki will be made eventually explaining how to use this, but until then, there are no explanations available. Not everything is implemented yet, so use at your own risk.
