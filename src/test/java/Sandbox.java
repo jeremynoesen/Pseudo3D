@@ -34,39 +34,34 @@ public class Sandbox {
         Sprite background = new Sprite(new Image(new FileInputStream("src/test/resources/images/background.png")));
         
         Scene scene = new Scene();
-        Entity entity = new Entity();
-        entity.setSprite(playerFront);
-        entity.setWidth((float) entity.getSprite().getImage().getWidth());
-        entity.setHeight((float) entity.getSprite().getImage().getHeight());
-        entity.setDepth((float) entity.getSprite().getImage().getWidth());
-        entity.setPosition(new Vector(0, 0, -150));
-        entity.setMass(1f);
-        scene.addEntity(entity);
         
-        Entity entity1 = new Entity(entity);
-        entity1.setMass(4f);
-        scene.addEntity(entity1);
+        Entity player = new Entity();
+        player.setSprite(playerFront);
+        player.setDimensions(playerFront.getWidth(), playerFront.getHeight(), playerFront.getWidth());
+        player.setPosition(new Vector(0, 0, -150));
+        player.setMass(1f);
+        scene.addEntity(player);
+        
+        Entity dummy = new Entity(player);
+        dummy.setMass(4f);
+        scene.addEntity(dummy);
         
         for (int j = 1; j < 18; j++) {
             for (int i = 1; i <= 5; i++) {
-                Entity copy = new Entity();
-                copy.setSprite(floor);
-                copy.setWidth((float) copy.getSprite().getImage().getWidth());
-                copy.setHeight((float) copy.getSprite().getImage().getHeight());
-                copy.setDepth((float) copy.getSprite().getImage().getWidth());
-                copy.setPosition(new Vector(copy.getWidth() * j - 425, -226, -copy.getWidth() * i - 52));
-                copy.setKinematic(false);
-                scene.addEntity(copy);
+                Entity block = new Entity();
+                block.setSprite(floor);
+                block.setDimensions(floor.getWidth(), floor.getHeight(), floor.getWidth());
+                block.setPosition(new Vector(block.getWidth() * j - 425, -226, -block.getWidth() * i - 52));
+                block.setKinematic(false);
+                scene.addEntity(block);
             }
         }
         
         Entity backdrop = new Entity();
-        backdrop.setWidth(1000);
-        backdrop.setHeight(1000);
+        backdrop.setDimensions(1000, 1000, 0);
         backdrop.setKinematic(false);
         backdrop.setPosition(new Vector(0, 0, -300));
-        background.setWidth(1000);
-        background.setHeight(1000);
+        background.setDimensions(1000, 1000);
         backdrop.setSprite(background);
         scene.addEntity(backdrop);
         
@@ -85,44 +80,44 @@ public class Sandbox {
         scene.addRunnable(() -> {
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
-                entity.setVelocity(entity.getVelocity().setZ(-1));
-                entity.setSprite(playerBack);
+                player.setVelocity(player.getVelocity().setZ(-1));
+                player.setSprite(playerBack);
             }
             
             if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
-                entity.setVelocity(entity.getVelocity().setZ(1));
-                entity.setSprite(playerFront);
+                player.setVelocity(player.getVelocity().setZ(1));
+                player.setSprite(playerFront);
             }
             
             if ((Keyboard.isPressed(KeyCode.W) && Keyboard.isPressed(KeyCode.S)) ||
                     camera.getFieldOfView() == 0) {
-                entity.setVelocity(entity.getVelocity().setZ(0));
+                player.setVelocity(player.getVelocity().setZ(0));
             }
             
             if (Keyboard.isPressed(KeyCode.A)) {
-                entity.setVelocity(entity.getVelocity().setX(-1));
-                entity.setSprite(playerLeft);
+                player.setVelocity(player.getVelocity().setX(-1));
+                player.setSprite(playerLeft);
             }
             
             if (Keyboard.isPressed(KeyCode.D)) {
-                entity.setVelocity(entity.getVelocity().setX(1));
-                entity.setSprite(playerRight);
+                player.setVelocity(player.getVelocity().setX(1));
+                player.setSprite(playerRight);
             }
             
             if (Keyboard.isPressed(KeyCode.A) && Keyboard.isPressed(KeyCode.D)) {
-                entity.setVelocity(entity.getVelocity().setX(0));
+                player.setVelocity(player.getVelocity().setX(0));
             }
             
             if (Keyboard.isPressed(KeyCode.SPACE)) {
-                entity.setVelocity(entity.getVelocity().setY(1));
+                player.setVelocity(player.getVelocity().setY(1));
             }
             
             if (Keyboard.isPressed(KeyCode.SHIFT)) {
-                entity.setVelocity(entity.getVelocity().setY(-1));
+                player.setVelocity(player.getVelocity().setY(-1));
             }
             
             if (Keyboard.isPressed(KeyCode.SPACE) && Keyboard.isPressed(KeyCode.SHIFT)) {
-                entity.setVelocity(entity.getVelocity().setY(0));
+                player.setVelocity(player.getVelocity().setY(0));
             }
             
             if (Keyboard.isPressed(KeyCode.UP)) {
@@ -150,8 +145,8 @@ public class Sandbox {
             if (Keyboard.isPressed(KeyCode.R)) {
                 camera.setOffset(new Vector());
                 camera.setRotation(0);
-                entity.setPosition(new Vector(0, 0, -150));
-                entity1.setPosition(new Vector(0, 0, -150));
+                player.setPosition(new Vector(0, 0, -150));
+                dummy.setPosition(new Vector(0, 0, -150));
                 camera.setFieldOfView((float) Math.toRadians(40));
             }
         });

@@ -112,6 +112,17 @@ public class Sprite {
     }
     
     /**
+     * set the dimensions of the sprite
+     *
+     * @param width  width of sprite
+     * @param height height of sprite
+     */
+    public void setDimensions(float width, float height) {
+        setWidth(width);
+        setHeight(height);
+    }
+    
+    /**
      * get the width of the sprite image
      *
      * @return width of sprite
