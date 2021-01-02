@@ -106,23 +106,16 @@ public class Box {
     }
     
     /**
-     * get the height of the box
+     * set teh dimensions of the box
      *
-     * @return height of box
-     */
-    public float getHeight() {
-        return height;
-    }
-    
-    /**
-     * set the height of the box and recalculate its actual min and max coords in the y axis
-     *
+     * @param width  width of box
      * @param height height of box
+     * @param depth  depth of box
      */
-    public void setHeight(float height) {
-        this.height = Math.abs(height);
-        max = max.setY(position.getY() + (height / 2.0f));
-        min = min.setY(position.getY() - (height / 2.0f));
+    public void setDimensions(float width, float height, float depth) {
+        setWidth(width);
+        setHeight(height);
+        setDepth(depth);
     }
     
     /**
@@ -143,6 +136,26 @@ public class Box {
         this.width = Math.abs(width);
         max = max.setX(position.getX() + (width / 2.0f));
         min = min.setX(position.getX() - (width / 2.0f));
+    }
+    
+    /**
+     * get the height of the box
+     *
+     * @return height of box
+     */
+    public float getHeight() {
+        return height;
+    }
+    
+    /**
+     * set the height of the box and recalculate its actual min and max coords in the y axis
+     *
+     * @param height height of box
+     */
+    public void setHeight(float height) {
+        this.height = Math.abs(height);
+        max = max.setY(position.getY() + (height / 2.0f));
+        min = min.setY(position.getY() - (height / 2.0f));
     }
     
     /**
