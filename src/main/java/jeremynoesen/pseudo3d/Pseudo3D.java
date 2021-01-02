@@ -56,10 +56,25 @@ public class Pseudo3D extends Application {
     private static String title = "Pseudo3D";
     
     /**
+     * time taken in last iteration of the tick loop
+     */
+    private static float deltaTime;
+    
+    /**
+     * last time the tick loop was run
+     */
+    private static long last;
+    
+    
+    /**
      * timeline loop for ticking operations
      */
     private static final Timeline tickLoop = new Timeline(new KeyFrame(Duration.millis(1),
-            ae -> activeScene.tick()));
+            ae -> {
+                if(last > 0) deltaTime = (System.nanoTime() - last) / 1000000000.0f;
+                last = System.nanoTime();
+                activeScene.tick();
+            }));
     
     /**
      * timeline loop for rendering
@@ -122,6 +137,8 @@ public class Pseudo3D extends Application {
     public static void pause() {
         renderLoop.pause();
         tickLoop.pause();
+        deltaTime = 0;
+        last = 0;
     }
     
     /**
@@ -202,6 +219,15 @@ public class Pseudo3D extends Application {
      */
     public static float getRenderFrequency() {
         return (float) (1000 / (1 / renderLoop.getRate()));
+    }
+    
+    /**
+     * get the time taken for the last iteration of the game loop
+     *
+     * @return delta time
+     */
+    public static float getDeltaTime() {
+        return deltaTime;
     }
     
     /**
