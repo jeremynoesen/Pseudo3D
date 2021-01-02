@@ -16,53 +16,52 @@ import java.util.Objects;
 public abstract class Physics extends Box {
     
     /**
-     * gravity applied to the entity (pixels / tick ^ 2))
+     * gravity applied to the entity (meters / second ^ 2)
      */
     private Vector gravity;
     
     /**
-     * position of entity (pixels)
+     * applied force on entity (newtons)
+     */
+    private Vector force;
+    
+    /**
+     * position of entity (meters)
      */
     private Vector position;
     
     /**
-     * velocity of entity, or rate of change of position (pixels / tick)
+     * velocity of entity, or rate of change of position (meters / second)
      */
     private Vector velocity;
     
     /**
-     * acceleration of entity, or rate of change of velocity (pixels / tick ^ 2)
+     * acceleration of entity, or rate of change of velocity (meters / second ^ 2)
      */
     private Vector acceleration;
     
     /**
-     * +/- terminal velocity of gravity acceleration of entity (pixels / tick)
-     */
-    private Vector terminalVelocity;
-    
-    /**
-     * +/- drag applied to the entity, used to slow down per direction. for simplicity, this is an acceleration vector
-     * (pixels / tick ^ 2)
+     * coefficient of drag per axis
      */
     private Vector drag;
     
     /**
-     * +/- friction applied to colliding entities. for simplicity, this is an acceleration vector (pixels / tick ^ 2)
+     * roughness of object per axis, used for friction
      */
-    private Vector friction;
+    private Vector roughness;
     
     /**
-     * scene the entity is colliding in
+     * scene the entity is in
      */
     private Scene scene;
     
     /**
-     * if an entity can collide with others
+     * if an entity is solid, allowing collision
      */
-    private boolean collidable;
+    private boolean solid;
     
     /**
-     * list of entities this one is colliding with per side
+     * list of entities colliding with per side
      */
     private final HashMap<Box.Side, ArrayList<Physics>> collidingObjects;
     
@@ -96,15 +95,15 @@ public abstract class Physics extends Box {
      */
     public Physics() {
         super();
-        gravity = new Vector(0, -0.1f, 0);
+        gravity = new Vector(0, -9.81f, 0);
+        force = new Vector();
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
-        terminalVelocity = new Vector(10, 10, 10);
-        drag = new Vector(0.0000001f, 0.0000001f, 0.0000001f);
-        friction = new Vector(0.05f, 0.05f, 0.05f);
+        drag = new Vector(0.01f, 0.01f, 0.01f);
+        roughness = new Vector(0.1f, 0.1f, 0.1f);
         scene = null;
-        collidable = true;
+        solid = true;
         colliding = false;
         overlapping = false;
         kinematic = true;
@@ -122,14 +121,14 @@ public abstract class Physics extends Box {
     public Physics(Physics physics) {
         super(physics);
         gravity = physics.gravity;
+        force= physics.force;
         position = physics.position;
         velocity = physics.velocity;
-        terminalVelocity = physics.terminalVelocity;
         acceleration = physics.acceleration;
         drag = physics.drag;
-        friction = physics.friction;
+        roughness = physics.roughness;
         scene = physics.scene;
-        collidable = physics.collidable;
+        solid = physics.solid;
         colliding = physics.colliding;
         overlapping = physics.overlapping;
         mass = physics.mass;
@@ -140,101 +139,10 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * update the motion of the entity in 3D space using jerk, acceleration, velocity, and position
+     * update the motion of the entity
      */
     public void tickMotion() {
-        float ax = acceleration.getX() + gravity.getX(), ay = acceleration.getY() + gravity.getY(),
-                az = acceleration.getZ() + gravity.getZ();
-        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
-        
-        if (vx > -terminalVelocity.getX() && ax < 0)
-            vx = Math.max(vx + ax, -terminalVelocity.getX());
-        else if (vx < terminalVelocity.getX() && ax > 0)
-            vx = Math.min(vx + ax, terminalVelocity.getX());
-        
-        if (vy > -terminalVelocity.getY() && ay < 0)
-            vy = Math.max(vy + ay, -terminalVelocity.getY());
-        else if (vy < terminalVelocity.getY() && ay > 0)
-            vy = Math.min(vy + ay, terminalVelocity.getY());
-        
-        if (vz > -terminalVelocity.getZ() && az < 0)
-            vz = Math.max(vz + az, -terminalVelocity.getZ());
-        else if (vz < terminalVelocity.getZ() && az > 0)
-            vz = Math.min(vz + az, terminalVelocity.getZ());
-        //apply acceleration and gravity if not exceeding terminal velocity
-        
-        float fx = 0, fy = 0, fz = 0;
-        if (colliding) {
-            int xCount = 0, yCount = 0, zCount = 0;
-            for (Box.Side side : Box.Side.values()) {
-                for (Physics physics : collidingObjects.get(side)) {
-                    if ((side == Box.Side.LEFT && vx < 0) || (side == Box.Side.RIGHT && vx > 0)) {
-                        //check if colliding and moving towards a side
-                        fy += physics.friction.getY() * Math.abs(vx);
-                        yCount++;
-                        fz += physics.friction.getZ() * Math.abs(vx);
-                        zCount++;
-                        //sum frictions in other axes
-                        if (physics.pushable && physics.kinematic) {
-                            float sum = mass + physics.mass;
-                            float diff = mass - physics.mass;
-                            float v1 = vx;
-                            float v2 = physics.velocity.getX();
-                            vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
-                        } else vx = 0;
-                        //calculate conservation of momentum only if object is pushable and kinematic
-                    } else if ((side == Box.Side.BOTTOM && vy < 0) || (side == Box.Side.TOP && vy > 0)) {
-                        fx += physics.friction.getX() * Math.abs(vy);
-                        xCount++;
-                        fz += physics.friction.getZ() * Math.abs(vy);
-                        zCount++;
-                        if (physics.pushable && physics.kinematic) {
-                            float sum = mass + physics.mass;
-                            float diff = mass - physics.mass;
-                            float v1 = vy;
-                            float v2 = physics.velocity.getY();
-                            vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
-                        } else vy = 0;
-                    } else if ((side == Box.Side.BACK && vz < 0) || (side == Box.Side.FRONT && vz > 0)) {
-                        fx += physics.friction.getX() * Math.abs(vz);
-                        xCount++;
-                        fy += physics.friction.getY() * Math.abs(vz);
-                        yCount++;
-                        if (physics.pushable && physics.kinematic) {
-                            float sum = mass + physics.mass;
-                            float diff = mass - physics.mass;
-                            float v1 = vz;
-                            float v2 = physics.velocity.getZ();
-                            vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
-                        } else vz = 0;
-                    }
-                }
-            }
-            //get sum of frictions for each axis, as well as apply conservation of momentum
-            
-            if (xCount > 0) fx = (fx + friction.getX()) / (xCount + 1);
-            if (yCount > 0) fy = (fy + friction.getY()) / (yCount + 1);
-            if (zCount > 0) fz = (fz + friction.getZ()) / (zCount + 1);
-            //calculate average friction per axis that has friction applied
-        }
-        //apply friction from colliding entities
-        
-        if (vx < 0) vx = Math.min(vx + (drag.getX() * getSurfaceArea()) + (fx * mass), 0);
-        else if (vx > 0) vx = Math.max(vx - (drag.getX() * getSurfaceArea()) - (fx * mass), 0);
-        if (vy < 0) vy = Math.min(vy + (drag.getY() * getSurfaceArea()) + (fy * mass), 0);
-        else if (vy > 0) vy = Math.max(vy - (drag.getY() * getSurfaceArea()) - (fy * mass), 0);
-        if (vz < 0) vz = Math.min(vz + (drag.getZ() * getSurfaceArea()) + (fz * mass), 0);
-        else if (vz > 0) vz = Math.max(vz - (drag.getZ() * getSurfaceArea()) - (fz * mass), 0);
-        //modify velocity based on friction and mass, and drag and surface area
-        
-        velocity = new Vector(vx, vy, vz);
-        //set new velocity
-        
-        setPosition(position.add(velocity));
-        //update position based on velocity
+    
     }
     
     /**
@@ -254,7 +162,7 @@ public abstract class Physics extends Box {
                 
                 if (overlaps(entity)) {
                     //check for an overlap
-                    if (entity.isCollidable() && collidable) {
+                    if (entity.isSolid() && solid) {
                         //if this and other entity can collide
                         collideWith(entity);
                         //do the collision calculations
@@ -409,23 +317,6 @@ public abstract class Physics extends Box {
         this.gravity = gravity;
     }
     
-    /**
-     * get terminal velocity for this entity
-     *
-     * @return terminal velocity
-     */
-    public Vector getTerminalVelocity() {
-        return terminalVelocity;
-    }
-    
-    /**
-     * set the terminal velocity for this entity
-     *
-     * @param terminalVelocity terminal velocity
-     */
-    public void setTerminalVelocity(Vector terminalVelocity) {
-        this.terminalVelocity = terminalVelocity;
-    }
     
     /**
      * get the drag of the entity
@@ -446,21 +337,21 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * get the friction of the entity
+     * get the roughness of the entity
      *
-     * @return friction vector
+     * @return roughness vector
      */
-    public Vector getFriction() {
-        return friction;
+    public Vector getRoughness() {
+        return roughness;
     }
     
     /**
      * set the friction of the entity
      *
-     * @param friction friction vector
+     * @param roughness friction vector
      */
-    public void setFriction(Vector friction) {
-        this.friction = friction;
+    public void setRoughness(Vector roughness) {
+        this.roughness = roughness;
     }
     
     /**
@@ -486,17 +377,17 @@ public abstract class Physics extends Box {
      *
      * @return true if collidable
      */
-    public boolean isCollidable() {
-        return collidable;
+    public boolean isSolid() {
+        return solid;
     }
     
     /**
      * enable or disable collisions for the entity
      *
-     * @param collidable true to allow collisions
+     * @param solid true to allow collisions
      */
-    public void setCollidable(boolean collidable) {
-        this.collidable = collidable;
+    public void setSolid(boolean solid) {
+        this.solid = solid;
     }
     
     /**
@@ -618,7 +509,7 @@ public abstract class Physics extends Box {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Physics that = (Physics) o;
-        return collidable == that.collidable &&
+        return solid == that.solid &&
                 colliding == that.colliding &&
                 overlapping == that.overlapping &&
                 kinematic == that.kinematic &&
@@ -627,10 +518,9 @@ public abstract class Physics extends Box {
                 Objects.equals(velocity, that.velocity) &&
                 Objects.equals(acceleration, that.acceleration) &&
                 Objects.equals(drag, that.drag) &&
-                Objects.equals(friction, that.friction) &&
+                Objects.equals(roughness, that.roughness) &&
                 Objects.equals(scene, that.scene) &&
                 Objects.equals(collidingObjects, that.collidingObjects) &&
-                Objects.equals(terminalVelocity, that.terminalVelocity) &&
                 super.equals(that);
     }
 }
