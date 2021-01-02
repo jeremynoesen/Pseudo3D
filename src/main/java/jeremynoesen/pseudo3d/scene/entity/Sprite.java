@@ -199,7 +199,7 @@ public class Sprite {
      */
     public void update() {
         if (images != null && !images.isEmpty()) {
-            float renderStep = Pseudo3D.getRenderFrequency() / 1000.0f;
+            float renderStep = Pseudo3D.getDeltaTime();
             currentFrame = currentFrame + (frameStep / renderStep) <
                     images.size() ? currentFrame + (frameStep / renderStep) : 0;
             image = images.get((int) Math.floor(currentFrame));
