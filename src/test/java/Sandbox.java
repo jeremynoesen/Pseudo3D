@@ -3,7 +3,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.input.Keyboard;
-import jeremynoesen.pseudo3d.input.Mouse;
 import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
@@ -37,9 +36,9 @@ public class Sandbox {
         Scene scene = new Scene();
         Entity entity = new Entity();
         entity.setSprite(playerFront);
-        entity.getBoundingBox().setWidth((float) entity.getSprite().getImage().getWidth());
-        entity.getBoundingBox().setHeight((float) entity.getSprite().getImage().getHeight());
-        entity.getBoundingBox().setDepth((float) entity.getSprite().getImage().getWidth());
+        entity.setWidth((float) entity.getSprite().getImage().getWidth());
+        entity.setHeight((float) entity.getSprite().getImage().getHeight());
+        entity.setDepth((float) entity.getSprite().getImage().getWidth());
         entity.setPosition(new Vector(0, 0, -150));
         entity.setMass(1f);
         scene.addEntity(entity);
@@ -52,19 +51,18 @@ public class Sandbox {
             for (int i = 1; i <= 5; i++) {
                 Entity copy = new Entity();
                 copy.setSprite(floor);
-                copy.getBoundingBox().setWidth((float) copy.getSprite().getImage().getWidth());
-                copy.getBoundingBox().setHeight((float) copy.getSprite().getImage().getHeight());
-                copy.getBoundingBox().setDepth((float) copy.getSprite().getImage().getWidth());
-                copy.setPosition(new Vector(copy.getBoundingBox().getWidth() * j - 425, -226,
-                        -copy.getBoundingBox().getWidth() * i - 52));
+                copy.setWidth((float) copy.getSprite().getImage().getWidth());
+                copy.setHeight((float) copy.getSprite().getImage().getHeight());
+                copy.setDepth((float) copy.getSprite().getImage().getWidth());
+                copy.setPosition(new Vector(copy.getWidth() * j - 425, -226, -copy.getWidth() * i - 52));
                 copy.setKinematic(false);
                 scene.addEntity(copy);
             }
         }
         
         Entity backdrop = new Entity();
-        backdrop.getBoundingBox().setWidth(1000);
-        backdrop.getBoundingBox().setHeight(1000);
+        backdrop.setWidth(1000);
+        backdrop.setHeight(1000);
         backdrop.setKinematic(false);
         backdrop.setPosition(new Vector(0, 0, -300));
         background.setWidth(1000);

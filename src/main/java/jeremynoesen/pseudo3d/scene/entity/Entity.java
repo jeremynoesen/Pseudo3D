@@ -50,7 +50,7 @@ public class Entity extends Physics {
         for (Entity entity : getScene().getEntities()) {
             if (entity == this) continue;
             Box area = new Box(xRadius * 2, yRadius * 2, zRadius * 2, getPosition());
-            if (entity.getBoundingBox().overlaps(area))
+            if (entity.overlaps(area))
                 nearby.add(entity);
         }
         return nearby;

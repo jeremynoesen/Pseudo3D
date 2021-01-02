@@ -13,7 +13,7 @@ import java.util.Objects;
  *
  * @author Jeremy Noesen
  */
-public abstract class Physics {
+public abstract class Physics extends Box {
     
     /**
      * gravity applied to the entity (pixels / tick ^ 2))
@@ -77,9 +77,7 @@ public abstract class Physics {
     private boolean overlapping;
     
     /**
-     * whether this entity can move or not and feel motion of other entities. this is best used for ground entities.
-     * setting this to false will disallow this entity from having any updates to motion or collisions, which can
-     * prevent you from getting the data from its collisions. these entities can remain collidable.
+     * whether this entity can have motion or not
      */
     private boolean kinematic;
     
@@ -94,14 +92,10 @@ public abstract class Physics {
     private float mass;
     
     /**
-     * bounding box for collisions
-     */
-    private Box box;
-    
-    /**
      * create a new aabb entity with default values
      */
     public Physics() {
+        super();
         gravity = new Vector(0, -0.1f, 0);
         position = new Vector();
         velocity = new Vector();
@@ -116,7 +110,6 @@ public abstract class Physics {
         kinematic = true;
         pushable = true;
         mass = 1.0f;
-        box = new Box();
         collidingObjects = new HashMap<>();
         for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new ArrayList<>());
     }
@@ -127,6 +120,7 @@ public abstract class Physics {
      * @param physics aabb entity to copy
      */
     public Physics(Physics physics) {
+        super(physics);
         gravity = physics.gravity;
         position = physics.position;
         velocity = physics.velocity;
@@ -138,7 +132,6 @@ public abstract class Physics {
         collidable = physics.collidable;
         colliding = physics.colliding;
         overlapping = physics.overlapping;
-        box = new Box(physics.box);
         mass = physics.mass;
         kinematic = physics.kinematic;
         pushable = physics.pushable;
@@ -229,12 +222,12 @@ public abstract class Physics {
         }
         //apply friction from colliding entities
         
-        if (vx < 0) vx = Math.min(vx + (drag.getX() * box.getSurfaceArea()) + (fx * mass), 0);
-        else if (vx > 0) vx = Math.max(vx - (drag.getX() * box.getSurfaceArea()) - (fx * mass), 0);
-        if (vy < 0) vy = Math.min(vy + (drag.getY() * box.getSurfaceArea()) + (fy * mass), 0);
-        else if (vy > 0) vy = Math.max(vy - (drag.getY() * box.getSurfaceArea()) - (fy * mass), 0);
-        if (vz < 0) vz = Math.min(vz + (drag.getZ() * box.getSurfaceArea()) + (fz * mass), 0);
-        else if (vz > 0) vz = Math.max(vz - (drag.getZ() * box.getSurfaceArea()) - (fz * mass), 0);
+        if (vx < 0) vx = Math.min(vx + (drag.getX() * getSurfaceArea()) + (fx * mass), 0);
+        else if (vx > 0) vx = Math.max(vx - (drag.getX() * getSurfaceArea()) - (fx * mass), 0);
+        if (vy < 0) vy = Math.min(vy + (drag.getY() * getSurfaceArea()) + (fy * mass), 0);
+        else if (vy > 0) vy = Math.max(vy - (drag.getY() * getSurfaceArea()) - (fy * mass), 0);
+        if (vz < 0) vz = Math.min(vz + (drag.getZ() * getSurfaceArea()) + (fz * mass), 0);
+        else if (vz > 0) vz = Math.max(vz - (drag.getZ() * getSurfaceArea()) - (fz * mass), 0);
         //modify velocity based on friction and mass, and drag and surface area
         
         velocity = new Vector(vx, vy, vz);
@@ -259,7 +252,7 @@ public abstract class Physics {
             if (entity != this) {
                 //check that this is not itself
                 
-                if (box.overlaps(entity.getBoundingBox())) {
+                if (overlaps(entity)) {
                     //check for an overlap
                     if (entity.isCollidable() && collidable) {
                         //if this and other entity can collide
@@ -281,12 +274,12 @@ public abstract class Physics {
      */
     private void collideWith(Physics physics) {
         float[] overlaps = new float[6];
-        overlaps[0] = Math.abs(box.getMinimum().getX() - physics.getBoundingBox().getMaximum().getX()); //left
-        overlaps[1] = Math.abs(box.getMaximum().getX() - physics.getBoundingBox().getMinimum().getX()); //right
-        overlaps[2] = Math.abs(box.getMinimum().getY() - physics.getBoundingBox().getMaximum().getY()); //bottom
-        overlaps[3] = Math.abs(box.getMaximum().getY() - physics.getBoundingBox().getMinimum().getY()); //top
-        overlaps[4] = Math.abs(box.getMinimum().getZ() - physics.getBoundingBox().getMaximum().getZ()); //back
-        overlaps[5] = Math.abs(box.getMaximum().getZ() - physics.getBoundingBox().getMinimum().getZ()); //front
+        overlaps[0] = Math.abs(getMinimum().getX() - physics.getMaximum().getX()); //left
+        overlaps[1] = Math.abs(getMaximum().getX() - physics.getMinimum().getX()); //right
+        overlaps[2] = Math.abs(getMinimum().getY() - physics.getMaximum().getY()); //bottom
+        overlaps[3] = Math.abs(getMaximum().getY() - physics.getMinimum().getY()); //top
+        overlaps[4] = Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()); //back
+        overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front
         //get overlap distances
         
         byte zeros = 0;
@@ -359,7 +352,7 @@ public abstract class Physics {
      */
     public void setPosition(Vector position) {
         this.position = position;
-        box.setPosition(position);
+        super.setPosition(position);
     }
     
     /**
@@ -561,26 +554,6 @@ public abstract class Physics {
     }
     
     /**
-     * set the bounding box for this object
-     *
-     * @return object's bounding box
-     */
-    public Box getBoundingBox() {
-        return box;
-    }
-    
-    /**
-     * set the object's bounding box centered at the object's current position
-     *
-     * @param box bounding box to set
-     */
-    public void setBoundingBox(Box box) {
-        Box newBox = new Box(box);
-        newBox.setPosition(position);
-        this.box = newBox;
-    }
-    
-    /**
      * check if the object is kinematic
      *
      * @return true if object is kinematic
@@ -657,7 +630,7 @@ public abstract class Physics {
                 Objects.equals(friction, that.friction) &&
                 Objects.equals(scene, that.scene) &&
                 Objects.equals(collidingObjects, that.collidingObjects) &&
-                Objects.equals(box, that.box) &&
-                Objects.equals(terminalVelocity, that.terminalVelocity);
+                Objects.equals(terminalVelocity, that.terminalVelocity) &&
+                super.equals(that);
     }
 }
