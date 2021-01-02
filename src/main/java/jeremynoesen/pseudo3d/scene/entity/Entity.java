@@ -1,9 +1,7 @@
 package jeremynoesen.pseudo3d.scene.entity;
 
 import jeremynoesen.pseudo3d.scene.Scene;
-import jeremynoesen.pseudo3d.scene.util.Box;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -34,26 +32,6 @@ public class Entity extends Physics {
     public Entity(Entity entity) {
         super(entity);
         sprite = new Sprite(entity.sprite);
-    }
-    
-    /**
-     * get all nearby entities in a cuboid region with x radius xRadius, y radius yRadius, and z radius zRadius
-     *
-     * @param xRadius radius x
-     * @param yRadius radius y
-     * @param zRadius radius z
-     * @return list of entities nearby
-     */
-    public ArrayList<Entity> getNearbyObjects(float xRadius, float yRadius, float zRadius) {
-        ArrayList<Entity> nearby = new ArrayList<>();
-        if (getScene() == null) return nearby;
-        for (Entity entity : getScene().getEntities()) {
-            if (entity == this) continue;
-            Box area = new Box(xRadius * 2, yRadius * 2, zRadius * 2, getPosition());
-            if (entity.overlaps(area))
-                nearby.add(entity);
-        }
-        return nearby;
     }
     
     /**
