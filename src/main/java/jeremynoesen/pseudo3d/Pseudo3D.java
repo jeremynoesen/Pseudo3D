@@ -76,7 +76,7 @@ public class Pseudo3D extends Application {
     private static final Timeline renderLoop = new Timeline();
     
     /**
-     * initialize parameters of the main window. this must be run before launch(), otherwise it will have no effect
+     * launch the instance of the application
      *
      * @param width     width of window
      * @param height    height of window
@@ -85,7 +85,7 @@ public class Pseudo3D extends Application {
      * @param resizable resizable status
      * @param title     window title
      */
-    public static void init(int width, int height, int framerate, int tickspeed, boolean resizable, String title) {
+    public static void launch(int width, int height, int framerate, int tickspeed, boolean resizable, String title) {
         Pseudo3D.width = width;
         Pseudo3D.height = height;
         Pseudo3D.resizable = resizable;
@@ -102,6 +102,8 @@ public class Pseudo3D extends Application {
                     canvas.setHeight(scene.getHeight());
                     Renderer.render(activeScene, canvas);
                 }));
+    
+        new Thread(Application::launch).start();
     }
     
     /**
@@ -138,13 +140,6 @@ public class Pseudo3D extends Application {
         renderLoop.stop();
         tickLoop.stop();
         super.stop();
-    }
-    
-    /**
-     * launch the application
-     */
-    public static void launch() {
-        new Thread(Application::launch).start();
     }
     
     /**

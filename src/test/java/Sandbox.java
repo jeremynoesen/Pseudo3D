@@ -32,8 +32,10 @@ public class Sandbox {
         Sprite playerRight = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/right.png")));
         Sprite floor = new Sprite(new Image(new FileInputStream("src/test/resources/images/floor.png")));
         Sprite background = new Sprite(new Image(new FileInputStream("src/test/resources/images/background.png")));
+        //load all sprites
         
         Scene scene = new Scene();
+        //init scene
         
         Entity player = new Entity();
         player.setSprite(playerFront);
@@ -41,10 +43,12 @@ public class Sandbox {
         player.setPosition(new Vector(0, 0, -150));
         player.setMass(1f);
         scene.addEntity(player);
+        //create player entity and add to scene
         
         Entity dummy = new Entity(player);
         dummy.setMass(4f);
         scene.addEntity(dummy);
+        //create dummy entity and add to scene
         
         for (int j = 1; j < 18; j++) {
             for (int i = 1; i <= 5; i++) {
@@ -56,6 +60,7 @@ public class Sandbox {
                 scene.addEntity(block);
             }
         }
+        //generate floor
         
         Entity backdrop = new Entity();
         backdrop.setDimensions(1000, 1000, 0);
@@ -64,20 +69,24 @@ public class Sandbox {
         background.setDimensions(1000, 1000);
         backdrop.setSprite(background);
         scene.addEntity(backdrop);
+        //place backdrop
         
         Camera camera = new Camera();
         camera.setFieldOfView((float) Math.toRadians(40));
         camera.setPosition(new Vector(0, 0, -100));
         camera.setSensorSize(500);
-        
         scene.setCamera(camera);
+        //add camera to scene
+        
         scene.setBackground(Color.DARKGRAY);
+        //set scene background color
         
-        Pseudo3D.init(500, 500, 60, 120, true, "Sandbox");
+        Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
         Pseudo3D.setActiveScene(scene);
-        Pseudo3D.launch();
+        //launch application
         
-        scene.addRunnable(() -> {
+        //the following adds controls to the scene
+        scene.addLoopInjection(() -> {
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
                 player.setVelocity(player.getVelocity().setZ(-1));
@@ -146,7 +155,11 @@ public class Sandbox {
                 camera.setOffset(new Vector());
                 camera.setRotation(0);
                 player.setPosition(new Vector(0, 0, -150));
+                player.setVelocity(new Vector());
+                player.setAcceleration(new Vector());
                 dummy.setPosition(new Vector(0, 0, -150));
+                dummy.setVelocity(new Vector());
+                dummy.setAcceleration(new Vector());
                 camera.setFieldOfView((float) Math.toRadians(40));
             }
         });
