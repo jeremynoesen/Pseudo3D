@@ -31,7 +31,7 @@ public class Entity extends Physics {
      */
     public Entity(Entity entity) {
         super(entity);
-        sprite = new Sprite(entity.sprite);
+        if (entity.sprite != null) sprite = new Sprite(entity.sprite);
     }
     
     /**
