@@ -34,7 +34,7 @@ public class Scene {
     /**
      * runnable code fragments to run every time the scene ticks
      */
-    private final Set<Runnable> runnables;
+    private final Set<Runnable> injections;
     
     /**
      * create a new scene
@@ -43,7 +43,7 @@ public class Scene {
         entities = new CopyOnWriteArrayList<>();
         camera = new Camera();
         background = Color.WHITE;
-        runnables = new HashSet<>();
+        injections = new HashSet<>();
     }
     
     /**
@@ -52,13 +52,13 @@ public class Scene {
      * @param entities   entities in scene
      * @param camera     scene camera
      * @param background background color
-     * @param runnables  runnables to be injected into game loop
+     * @param injections  code to be injected into game loop
      */
-    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Color background, Set<Runnable> runnables) {
+    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Color background, Set<Runnable> injections) {
         this.entities = entities;
         this.camera = camera;
         this.background = background;
-        this.runnables = runnables;
+        this.injections = injections;
     }
     
     /**
@@ -73,15 +73,15 @@ public class Scene {
         }
         camera = new Camera(scene.camera);
         background = scene.background;
-        runnables = scene.runnables;
+        injections = scene.injections;
     }
     
     /**
      * tick all entities in the scene, updating all motion first, and then all collisions take place. also run any
-     * runnables added to the scene
+     * code injections added to the scene
      */
     public void tick() {
-        runnables.forEach(Runnable::run);
+        injections.forEach(Runnable::run);
         for (Entity entity : entities) {
             if (entity.isKinematic()) entity.tickMotion();
         }
@@ -167,31 +167,30 @@ public class Scene {
     }
     
     /**
-     * add a runnable to the game loop to execute code that is not usually in the game loop. these execute at the same
-     * frequency as physics updates and only when the scene is active
+     * add a code injection to the game loop for this scene
      *
-     * @param runnable runnable
+     * @param injection code injection
      */
-    public void addRunnable(Runnable runnable) {
-        runnables.add(runnable);
+    public void addLoopInjection(Runnable injection) {
+        injections.add(injection);
     }
     
     /**
-     * remove a runnable from the game loop
+     * remove a code injection from the game loop for the scene
      *
-     * @param runnable runnable
+     * @param injection code injection
      */
-    public void removeRunnable(Runnable runnable) {
-        runnables.remove(runnable);
+    public void removeLoopInjection(Runnable injection) {
+        injections.remove(injection);
     }
     
     /**
-     * get all runnables for the scene to be injected into the game loop
+     * get all code injections for the scene
      *
-     * @return all runnables for the scene
+     * @return all code injections for the scene
      */
-    public Set<Runnable> getRunnables() {
-        return runnables;
+    public Set<Runnable> getLoopInjections() {
+        return injections;
     }
     
     /**
