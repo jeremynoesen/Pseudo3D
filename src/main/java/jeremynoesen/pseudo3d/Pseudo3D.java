@@ -38,22 +38,22 @@ public class Pseudo3D extends Application {
     /**
      * width of the window
      */
-    private static int width = 842;
+    private static int width;
     
     /**
      * height of the window
      */
-    private static int height = 480;
+    private static int height;
     
     /**
      * whether the window can be resized
      */
-    private static boolean resizable = true;
+    private static boolean resizable;
     
     /**
      * title of window
      */
-    private static String title = "Pseudo3D";
+    private static String title;
     
     /**
      * time taken in last iteration of the tick loop
@@ -65,26 +65,44 @@ public class Pseudo3D extends Application {
      */
     private static long last;
     
-    
     /**
      * timeline loop for ticking operations
      */
-    private static final Timeline tickLoop = new Timeline(new KeyFrame(Duration.millis(1),
-            ae -> {
-                if(last > 0) deltaTime = (System.nanoTime() - last) / 1000000000.0f;
-                last = System.nanoTime();
-                activeScene.tick();
-            }));
+    private static final Timeline tickLoop = new Timeline();
     
     /**
      * timeline loop for rendering
      */
-    private static final Timeline renderLoop = new Timeline(new KeyFrame(Duration.millis(1),
-            ae -> {
-                canvas.setWidth(scene.getWidth());
-                canvas.setHeight(scene.getHeight());
-                Renderer.render(activeScene, canvas);
-            }));
+    private static final Timeline renderLoop = new Timeline();
+    
+    /**
+     * initialize parameters of the main window. this must be run before launch(), otherwise it will have no effect
+     *
+     * @param width     width of window
+     * @param height    height of window
+     * @param framerate framerate of window (hertz)
+     * @param tickspeed tick speed for physics (hertz)
+     * @param resizable resizable status
+     * @param title     window title
+     */
+    public static void init(int width, int height, int framerate, int tickspeed, boolean resizable, String title) {
+        Pseudo3D.width = width;
+        Pseudo3D.height = height;
+        Pseudo3D.resizable = resizable;
+        Pseudo3D.title = title;
+        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / tickspeed),
+                ae -> {
+                    if (last > 0) deltaTime = (System.nanoTime() - last) / 1000000000.0f;
+                    last = System.nanoTime();
+                    activeScene.tick();
+                }));
+        renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / framerate),
+                ae -> {
+                    canvas.setWidth(scene.getWidth());
+                    canvas.setHeight(scene.getHeight());
+                    Renderer.render(activeScene, canvas);
+                }));
+    }
     
     /**
      * start the application
@@ -108,8 +126,6 @@ public class Pseudo3D extends Application {
         tickLoop.setCycleCount(Animation.INDEFINITE);
         renderLoop.setCycleCount(Animation.INDEFINITE);
         unpause();
-        setRenderFrequency(60);
-        setTickFrequency(120);
     }
     
     /**
@@ -159,15 +175,6 @@ public class Pseudo3D extends Application {
     }
     
     /**
-     * get the scene on the stage
-     *
-     * @return scene on stage
-     */
-    public static Scene getScene() {
-        return scene;
-    }
-    
-    /**
      * get the active scene
      *
      * @return active scene
@@ -186,62 +193,11 @@ public class Pseudo3D extends Application {
     }
     
     /**
-     * set the tick frequency for the tick loop
-     *
-     * @param hertz ticks per second
-     */
-    public static void setTickFrequency(float hertz) {
-        tickLoop.setRate(1 / (1000 / hertz));
-    }
-    
-    /**
-     * get the tick frequency
-     *
-     * @return tick frequency
-     */
-    public static float getTickFrequency() {
-        return (float) (1000 / (1 / tickLoop.getRate()));
-    }
-    
-    /**
-     * set the render frequency for the render loop
-     *
-     * @param hertz frames per second
-     */
-    public static void setRenderFrequency(float hertz) {
-        renderLoop.setRate(1 / (1000 / hertz));
-    }
-    
-    /**
-     * get the render frequency
-     *
-     * @return render frequency
-     */
-    public static float getRenderFrequency() {
-        return (float) (1000 / (1 / renderLoop.getRate()));
-    }
-    
-    /**
-     * get the time taken for the last iteration of the game loop
+     * get the time taken for the last iteration of the tick loop
      *
      * @return delta time
      */
     public static float getDeltaTime() {
         return deltaTime;
-    }
-    
-    /**
-     * initialize parameters of the main window. this must be run before launch(), otherwise it will have no effect
-     *
-     * @param width     width of window
-     * @param height    height of window
-     * @param resizable resizable status
-     * @param title     window title
-     */
-    public static void init(int width, int height, boolean resizable, String title) {
-        Pseudo3D.width = width;
-        Pseudo3D.height = height;
-        Pseudo3D.resizable = resizable;
-        Pseudo3D.title = title;
     }
 }
