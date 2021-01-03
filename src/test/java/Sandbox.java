@@ -73,7 +73,7 @@ public class Sandbox {
         scene.setCamera(camera);
         scene.setBackground(Color.DARKGRAY);
         
-        Pseudo3D.init(500, 500, true, "Sandbox");
+        Pseudo3D.init(500, 500, 60, 120, true, "Sandbox");
         Pseudo3D.setActiveScene(scene);
         Pseudo3D.launch();
         
