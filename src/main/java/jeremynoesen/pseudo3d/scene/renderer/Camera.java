@@ -2,6 +2,8 @@ package jeremynoesen.pseudo3d.scene.renderer;
 
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
+import java.util.Objects;
+
 /**
  * camera used to determine where to render a scene
  *
@@ -230,10 +232,13 @@ public class Camera {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Camera that = (Camera) o;
-        return Float.compare(that.fieldOfView, fieldOfView) == 0 &&
-                Float.compare(that.viewDistance, viewDistance) == 0 &&
-                Float.compare(that.sensorSize, sensorSize) == 0 &&
-                position.equals(that.position);
+        Camera camera = (Camera) o;
+        return Float.compare(camera.fieldOfView, fieldOfView) == 0 &&
+                Float.compare(camera.viewDistance, viewDistance) == 0 &&
+                Float.compare(camera.sensorSize, sensorSize) == 0 &&
+                Float.compare(camera.zoom, zoom) == 0 &&
+                Float.compare(camera.rotation, rotation) == 0 &&
+                Objects.equals(position, camera.position) &&
+                Objects.equals(offset, camera.offset);
     }
 }

@@ -206,6 +206,7 @@ public class Scene {
         Scene that = (Scene) o;
         return Objects.equals(entities, that.entities) &&
                 camera.equals(that.camera) &&
-                Objects.equals(background, that.background);
+                Objects.equals(background, that.background) &&
+                Objects.equals(injections, that.injections);
     }
 }
