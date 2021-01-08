@@ -22,7 +22,7 @@ This is what an orthographic, or zero-degree field-of-view, render looks like. T
 ![Orthograpgic rendering](Orthographic.gif)
 
 ### Perspective
-This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera, field of view, sensor size, and zoom; however, they are still all 2D. You can now see that the background here is not actually far away. You can also make out the position of the moving character in relation to the stationary character in 3D space, due to physics being 3D.
+This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera, field of view, sensor size, and zoom; however, they are still all 2D. You can make out the position of the moving character in relation to the stationary character in 3D space, due to physics being 3D.
 
 ![Pseudo3D rendering](Perspective.gif)
 

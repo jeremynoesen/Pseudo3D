@@ -1,6 +1,5 @@
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.input.Keyboard;
 import jeremynoesen.pseudo3d.scene.Scene;
@@ -62,15 +61,6 @@ public class Sandbox {
         }
         //generate floor
         
-        Entity backdrop = new Entity();
-        backdrop.setDimensions(1000, 1000, 0);
-        backdrop.setKinematic(false);
-        backdrop.setPosition(new Vector(0, 0, -300));
-        background.setDimensions(1000, 1000);
-        backdrop.setSprite(background);
-        scene.addEntity(backdrop);
-        //place backdrop
-        
         Camera camera = new Camera();
         camera.setFieldOfView((float) Math.toRadians(40));
         camera.setPosition(new Vector(0, 0, -100));
@@ -78,8 +68,9 @@ public class Sandbox {
         scene.setCamera(camera);
         //add camera to scene
         
-        scene.setBackground(Color.DARKGRAY);
-        //set scene background color
+        background.setDimensions(1000, 1000);
+        scene.setBackground(background);
+        //set scene background image
         
         Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
         Pseudo3D.setActiveScene(scene);

@@ -4,10 +4,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import jeremynoesen.pseudo3d.Pseudo3D;
+import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
 import jeremynoesen.pseudo3d.scene.util.Box;
-import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.Comparator;
@@ -41,15 +41,9 @@ public class Renderer {
         gc.setImageSmoothing(false);
         //set rendering settings for speed
         
-        gc.setFill(scene.getBackground());
-        //draw scene background color
-        
-        float gWidth = (float) gc.getCanvas().getWidth();
-        float gHeight = (float) gc.getCanvas().getHeight();
+        short gWidth = (short) gc.getCanvas().getWidth();
+        short gHeight = (short) gc.getCanvas().getHeight();
         //graphics dimensions
-        
-        gc.fillRect(0, 0, (int) gWidth, (int) gHeight);
-        //clear out last drawn frame
         
         scene.getEntities().sort(zComparator);
         //sort entities by z position so entities can be drawn in front of others
@@ -62,7 +56,29 @@ public class Renderer {
         float sensorSize = camera.getSensorSize();
         float zoom = camera.getZoom();
         float viewDistance = camera.getViewDistance();
+        float cameraRotation = -camera.getRotation();
+        Affine original = gc.getTransform();
         //camera data
+        
+        gc.fillRect(0, 0, gWidth, gHeight);
+        //clear out last frame
+        
+        if (scene.getBackground() != null) {
+            Sprite background = scene.getBackground();
+            if (camera.getRotation() != 0) {
+                Affine transform = new Affine();
+                transform.appendRotation(Math.toDegrees(-camera.getRotation()),
+                        renderPos.getX(), renderPos.getY());
+                gc.setTransform(transform);
+            }
+            gc.drawImage(scene.getBackground().getImage(),
+                    (renderPos.getX() - (background.getWidth() * zoom) / 2),
+                    (renderPos.getY() - (background.getHeight() * zoom) / 2),
+                    background.getWidth() * zoom, background.getHeight() * zoom);
+            gc.setTransform(original);
+            scene.getBackground().update();
+        }
+        //draw background
         
         for (Entity entity : scene.getEntities()) {
             Vector objPos = entity.getPosition();
@@ -102,8 +118,7 @@ public class Renderer {
                 //check if there is any rotation
                 
                 float spriteRotation = sprite.getRotation();
-                float cameraRotation = -camera.getRotation();
-                //convert to radians
+                //sprite rotation
                 
                 transform.appendRotation(Math.toDegrees(cameraRotation), renderPos.getX(), renderPos.getY());
                 transform.appendRotation(Math.toDegrees(spriteRotation), x, y);
@@ -136,7 +151,6 @@ public class Renderer {
             if (spriteBox.overlaps(screenBox)) {
                 //check if any part of image is visible in panel
                 
-                Affine original = gc.getTransform();
                 gc.setTransform(transform);
                 gc.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
                         y - (heightScaled / 2.0), widthScaled, heightScaled);
