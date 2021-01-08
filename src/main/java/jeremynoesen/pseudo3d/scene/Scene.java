@@ -2,6 +2,7 @@ package jeremynoesen.pseudo3d.scene;
 
 import javafx.scene.paint.Color;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
+import jeremynoesen.pseudo3d.scene.entity.Sprite;
 import jeremynoesen.pseudo3d.scene.renderer.Camera;
 
 import java.util.HashSet;
@@ -27,9 +28,9 @@ public class Scene {
     private Camera camera;
     
     /**
-     * background color of scene;
+     * background sprite of scene;
      */
-    private Color background;
+    private Sprite background;
     
     /**
      * runnable code fragments to run every time the scene ticks
@@ -42,7 +43,7 @@ public class Scene {
     public Scene() {
         entities = new CopyOnWriteArrayList<>();
         camera = new Camera();
-        background = Color.WHITE;
+        background = null;
         injections = new HashSet<>();
     }
     
@@ -51,10 +52,10 @@ public class Scene {
      *
      * @param entities   entities in scene
      * @param camera     scene camera
-     * @param background background color
+     * @param background background sprite
      * @param injections  code to be injected into game loop
      */
-    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Color background, Set<Runnable> injections) {
+    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Sprite background, Set<Runnable> injections) {
         this.entities = entities;
         this.camera = camera;
         this.background = background;
@@ -149,20 +150,20 @@ public class Scene {
     }
     
     /**
-     * get the background color for the scene
+     * get the background sprite for the scene
      *
-     * @return background color of scene
+     * @return background sprite of scene
      */
-    public Color getBackground() {
+    public Sprite getBackground() {
         return background;
     }
     
     /**
-     * set a color to show when the scene is rendered, like a sky color
+     * set a sprite to show when the scene is rendered
      *
-     * @param background color to set as background
+     * @param background sprite to set as background
      */
-    public void setBackground(Color background) {
+    public void setBackground(Sprite background) {
         this.background = background;
     }
     
