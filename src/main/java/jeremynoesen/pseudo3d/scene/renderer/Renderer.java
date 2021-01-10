@@ -157,6 +157,10 @@ public class Renderer {
                 gc.setTransform(original);
                 sprite.update();
                 //draw image to panel
+                
+                entity.setOnScreen(true);
+            } else {
+                entity.setOnScreen(false);
             }
         }
     }

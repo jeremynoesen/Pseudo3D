@@ -17,11 +17,23 @@ public class Entity extends Physics {
     private Sprite sprite;
     
     /**
+     * whether the entity is on screen or not
+     */
+    private boolean onScreen;
+    
+    /**
+     * whether to allow updating the entity when it is not on-screen
+     */
+    private boolean updateOffScreen;
+    
+    /**
      * constructs a new default entity
      */
     public Entity() {
         super();
         sprite = null;
+        onScreen = false;
+        updateOffScreen = true;
     }
     
     /**
@@ -50,6 +62,42 @@ public class Entity extends Physics {
      */
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
+    }
+    
+    /**
+     * check if the entity is shown on screen. if the entity has no sprite, this will always be false
+     *
+     * @return true if shown on screen
+     */
+    public boolean isOnScreen() {
+        return onScreen;
+    }
+    
+    /**
+     * set if the entity is on screen. manually setting this will do nothing, as this value is automatically updated
+     *
+     * @param onScreen true to be shown on screen
+     */
+    public void setOnScreen(boolean onScreen) {
+        this.onScreen = onScreen;
+    }
+    
+    /**
+     * get whether the entity can update when not visible on screen
+     *
+     * @return true if can update off screen
+     */
+    public boolean canUpdateOffScreen() {
+        return updateOffScreen;
+    }
+    
+    /**
+     * get whether the entity can update when not visible on screen
+     *
+     * @param updateOffScreen true to allow updating off screen
+     */
+    public void setUpdateOffScreen(boolean updateOffScreen) {
+        this.updateOffScreen = updateOffScreen;
     }
     
     /**
