@@ -142,24 +142,27 @@ public abstract class Physics extends Box {
      * update the motion of the entity
      */
     public void tickMotion() {
-    
+        
+        if (!kinematic) return;
+        
     }
     
     /**
      * check if a entity has collided with this entity
      */
     public void tickCollisions() {
+    
+        if (!kinematic) return;
+    
         colliding = false;
         overlapping = false;
         collidingObjects.values().forEach(ArrayList::clear);
         //reset all collision data
-        
+    
         for (Entity entity : scene.getEntities()) {
             //loop through all entities in scene
-            
-            if (entity != this) {
-                //check that this is not itself
-                
+            if (entity != this && (entity.isOnScreen() || entity.canUpdateOffScreen())) {
+                //check that this is not itself, or can't be checked at the moment
                 if (overlaps(entity)) {
                     //check for an overlap
                     if (entity.isSolid() && solid) {

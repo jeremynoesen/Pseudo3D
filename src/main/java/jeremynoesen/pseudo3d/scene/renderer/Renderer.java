@@ -3,7 +3,6 @@ package jeremynoesen.pseudo3d.scene.renderer;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
-import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
@@ -50,8 +49,8 @@ public class Renderer {
         
         Camera camera = scene.getCamera();
         Vector camPos = camera.getPosition();
-        Vector renderPos = new Vector((float) Pseudo3D.getCanvas().getWidth() / 2.0f + camera.getOffset().getX(),
-                (float) Pseudo3D.getCanvas().getHeight() / 2.0f + camera.getOffset().getY());
+        Vector renderPos = new Vector(gWidth / 2.0f + camera.getOffset().getX(),
+                gHeight / 2.0f + camera.getOffset().getY());
         float fov = camera.getFieldOfView() / 2.0f;
         float sensorSize = camera.getSensorSize();
         float zoom = camera.getZoom();
@@ -85,15 +84,21 @@ public class Renderer {
             float camDist = camPos.getZ() - objPos.getZ();
             //entity data
             
-            if (camDist >= viewDistance || entity.getSprite() == null) continue;
+            if (camDist >= viewDistance || entity.getSprite() == null) {
+                entity.setOnScreen(false);
+                continue;
+            }
             //don't render entities without a sprite, with a camera sprite, or further than view distance
             
             float scale = (float) (zoom * (sensorSize / (sensorSize + (2.0 *
                     camDist * (Math.sin(fov) / Math.sin((Math.PI / 2.0) - fov))))));
             //scale entities based on fov angle and distance from camera using law of sines and camera sensor size
             
-            if (scale < 0) break;
-            //stop render if entities have negative scale (too far in front of camera)
+            if (scale < 0) {
+                entity.setOnScreen(false);
+                continue;
+            }
+            //don't render if entities have negative scale (too far in front of camera)
             
             Sprite sprite = entity.getSprite();
             //get sprite
@@ -159,8 +164,11 @@ public class Renderer {
                 //draw image to panel
                 
                 entity.setOnScreen(true);
+                //update on screen status
             } else {
                 entity.setOnScreen(false);
+                if (entity.canUpdateOffScreen()) sprite.update();
+                //update sprite if allowed
             }
         }
     }
