@@ -84,10 +84,10 @@ public class Scene {
     public void tick() {
         injections.forEach(Runnable::run);
         for (Entity entity : entities) {
-            if (entity.isKinematic()) entity.tickMotion();
+            if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickMotion();
         }
         for (Entity entity : entities) {
-            if (entity.isKinematic()) entity.tickCollisions();
+            if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickCollisions();
         }
     }
     

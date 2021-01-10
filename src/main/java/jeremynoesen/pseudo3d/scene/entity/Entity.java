@@ -33,7 +33,7 @@ public class Entity extends Physics {
         super();
         sprite = null;
         onScreen = false;
-        updateOffScreen = true;
+        updateOffScreen = false;
     }
     
     /**
