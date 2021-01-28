@@ -33,41 +33,37 @@ public class Sandbox {
         Sprite background = new Sprite(21, 21, new Image(new FileInputStream("src/test/resources/images/background.png")));
         //load all sprites
         
-        Scene scene = new Scene();
-        scene.setGridScale(new Vector(48, 48, 48));
-        //init scene
-        
-        Entity player = new Entity();
-        player.setSprite(playerFront);
-        player.setDimensions(1, 2, 1);
-        player.setMass(1f);
-        scene.addEntity(player);
-        //create player entity and add to scene
+        Entity player = (Entity) new Entity()
+                .setSprite(playerFront)
+                .setMass(1f)
+                .setDimensions(1, 2, 1);
+        //create player entity
         
         Entity dummy = new Entity(player);
-        dummy.setMass(4f);
-        scene.addEntity(dummy);
-        //create dummy entity and add to scene
+        //create dummy entity
+        
+        Camera camera = new Camera().setFieldOfView((float) Math.toRadians(40));
+        //create camera
+        
+        Scene scene = new Scene()
+                .setGridScale(new Vector(48, 48, 48))
+                .setBackground(background)
+                .addEntity(player)
+                .addEntity(dummy)
+                .setCamera(camera);
+        //init scene
         
         for (int j = -8; j <= 8; j++) {
             for (int i = -4; i <= 0; i++) {
-                Entity block = new Entity();
-                block.setSprite(floor);
-                block.setDimensions(1, 1, 1);
-                block.setPosition(new Vector(j, -4.75f, i));
-                block.setKinematic(false);
+                Entity block = (Entity) new Entity()
+                        .setSprite(floor)
+                        .setPosition(new Vector(j, -4.75f, i))
+                        .setKinematic(false)
+                        .setDimensions(1, 1, 1);
                 scene.addEntity(block);
             }
         }
         //generate floor
-        
-        Camera camera = new Camera();
-        camera.setFieldOfView((float) Math.toRadians(40));
-        scene.setCamera(camera);
-        //add camera to scene
-        
-        scene.setBackground(background);
-        //set scene background image
         
         Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
         Pseudo3D.setActiveScene(scene);

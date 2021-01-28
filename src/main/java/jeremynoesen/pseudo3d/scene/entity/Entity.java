@@ -60,8 +60,9 @@ public class Entity extends Physics {
      *
      * @param sprite new image to set as the sprite
      */
-    public void setSprite(Sprite sprite) {
+    public Entity setSprite(Sprite sprite) {
         this.sprite = sprite;
+        return this;
     }
     
     /**
@@ -78,8 +79,9 @@ public class Entity extends Physics {
      *
      * @param onScreen true to be shown on screen
      */
-    public void setOnScreen(boolean onScreen) {
+    public Entity setOnScreen(boolean onScreen) {
         this.onScreen = onScreen;
+        return this;
     }
     
     /**
@@ -96,8 +98,9 @@ public class Entity extends Physics {
      *
      * @param updateOffScreen true to allow updating off screen
      */
-    public void setUpdateOffScreen(boolean updateOffScreen) {
+    public Entity setUpdateOffScreen(boolean updateOffScreen) {
         this.updateOffScreen = updateOffScreen;
+        return this;
     }
     
     /**
@@ -105,10 +108,10 @@ public class Entity extends Physics {
      *
      * @param scene scene to place entity in
      */
-    @Override
-    public void setScene(Scene scene) {
+    public Entity setScene(Scene scene) {
         super.setScene(scene);
         if (scene != null && !scene.getEntities().contains(this)) scene.addEntity(this);
+        return this;
     }
     
     /**
