@@ -17,7 +17,7 @@ public class Camera {
     private float fieldOfView;
     
     /**
-     * how far away the camera is able to render
+     * how far away the camera is able to render in grid units
      */
     private float viewDistance;
     
@@ -37,23 +37,23 @@ public class Camera {
     private float rotation;
     
     /**
-     * 3D position of camera in scene
+     * 3D position of camera in scene in grid units
      */
     private Vector position;
     
     /**
-     * 2D position of camera in window
+     * 2D position of camera in window in pixels
      */
     private Vector offset;
     
     /**
-     * creates a new camera centered at (0, 0, 0) with a fov of 100 degrees
+     * creates a new default camera
      */
     public Camera() {
         position = new Vector();
         fieldOfView = 90;
         sensorSize = 500;
-        viewDistance = 500;
+        viewDistance = 32;
         zoom = 1;
         rotation = 0;
         offset = new Vector();
@@ -65,7 +65,7 @@ public class Camera {
      * @param position     camera position in scene
      * @param sensorSize   camera sensor size
      * @param fieldOfView  field of view in radians
-     * @param viewDistance z distance camera is able to see
+     * @param viewDistance z distance camera is able to see in grid units
      * @param zoom         camera zoom, scales render
      * @param rotation     rotation of camera in radians
      * @param offset       position of camera in window

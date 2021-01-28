@@ -16,17 +16,17 @@ import java.util.Objects;
 public class Sprite {
     
     /**
-     * image used for sprite in pixels
+     * image used for sprite
      */
     private Image image;
     
     /**
-     * width of the sprite
+     * width of the sprite in grid units
      */
     private float width;
     
     /**
-     * height of the sprite in pixels
+     * height of the sprite in grid units
      */
     private float height;
     
@@ -52,23 +52,26 @@ public class Sprite {
     
     /**
      * create a new image sprite
+     *
+     * @param width  sprite width
+     * @param height sprite height
      */
-    public Sprite(Image image) {
+    public Sprite(float width, float height, Image image) {
         this.image = image;
-        this.width = (float) image.getWidth();
-        this.height = (float) image.getHeight();
+        this.width = width;
+        this.height = height;
         this.rotation = 0;
     }
     
     /**
      * create a new color sprite with specified dimensions and color
      *
-     * @param width  sprite width
-     * @param height sprite height
+     * @param width  sprite width in grid units
+     * @param height sprite height in grid units
      * @param color  sprite color
      */
-    public Sprite(int width, int height, Color color) {
-        this(new WritableImage(1, 1));
+    public Sprite(float width, float height, Color color) {
+        this(width, height, new WritableImage(1, 1));
         this.width = width;
         this.height = height;
         ((WritableImage) image).getPixelWriter().setColor(0, 0, color);
@@ -79,9 +82,11 @@ public class Sprite {
      *
      * @param images    all images of the animated sprite
      * @param frameRate frames per second of the sprite
+     * @param width  sprite width in grid units
+     * @param height sprite height in grid units
      */
-    public Sprite(ArrayList<Image> images, float frameRate) {
-        this(images.get(0));
+    public Sprite(float width, float height, ArrayList<Image> images, float frameRate) {
+        this(width, height, images.get(0));
         this.frameStep = frameRate / 1000.0f;
         this.currentFrame = 0;
         this.images = images;
@@ -114,8 +119,8 @@ public class Sprite {
     /**
      * set the dimensions of the sprite
      *
-     * @param width  width of sprite
-     * @param height height of sprite
+     * @param width  width of sprite in grid units
+     * @param height height of sprite in grid units
      */
     public void setDimensions(float width, float height) {
         setWidth(width);
@@ -123,7 +128,7 @@ public class Sprite {
     }
     
     /**
-     * get the width of the sprite image
+     * get the width of the sprite image in grid units
      *
      * @return width of sprite
      */
@@ -132,7 +137,7 @@ public class Sprite {
     }
     
     /**
-     * get the height of the sprite image
+     * get the height of the sprite image in grid units
      *
      * @return height of sprite
      */
@@ -143,7 +148,7 @@ public class Sprite {
     /**
      * set the width of the sprite, which the image will stretch to fit
      *
-     * @param width new sprite width
+     * @param width new sprite width in grid units
      */
     public void setWidth(float width) {
         this.width = width;
@@ -152,7 +157,7 @@ public class Sprite {
     /**
      * set the height of the sprite, which the image will stretch to fit
      *
-     * @param height new sprite height
+     * @param height new sprite height in grid units
      */
     public void setHeight(float height) {
         this.height = height;
