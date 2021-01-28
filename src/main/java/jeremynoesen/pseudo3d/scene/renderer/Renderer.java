@@ -48,13 +48,13 @@ public class Renderer {
         //sort entities by z position so entities can be drawn in front of others
         
         Camera camera = scene.getCamera();
-        Vector camPos = camera.getPosition();
+        Vector camPos = camera.getPosition().multiply(scene.getGridScale());
         Vector renderPos = new Vector(gWidth / 2.0f + camera.getOffset().getX(),
                 gHeight / 2.0f + camera.getOffset().getY());
         float fov = camera.getFieldOfView() / 2.0f;
         float sensorSize = camera.getSensorSize();
         float zoom = camera.getZoom();
-        float viewDistance = camera.getViewDistance();
+        float viewDistance = camera.getViewDistance() * scene.getGridScale().getZ();
         float cameraRotation = -camera.getRotation();
         Affine original = gc.getTransform();
         //camera data
@@ -71,20 +71,21 @@ public class Renderer {
                 gc.setTransform(transform);
             }
             gc.drawImage(scene.getBackground().getImage(),
-                    (renderPos.getX() - (background.getWidth() * zoom) / 2),
-                    (renderPos.getY() - (background.getHeight() * zoom) / 2),
-                    background.getWidth() * zoom, background.getHeight() * zoom);
+                    (renderPos.getX() - (background.getWidth() * scene.getGridScale().getX() * zoom) / 2),
+                    (renderPos.getY() - (background.getHeight() * scene.getGridScale().getY() * zoom) / 2),
+                    background.getWidth() * zoom * scene.getGridScale().getX(),
+                    background.getHeight() * zoom * scene.getGridScale().getY());
             gc.setTransform(original);
             scene.getBackground().update();
         }
         //draw background
         
         for (Entity entity : scene.getEntities()) {
-            Vector objPos = entity.getPosition();
+            Vector objPos = entity.getPosition().multiply(scene.getGridScale());
             float camDist = camPos.getZ() - objPos.getZ();
             //entity data
             
-            if (camDist >= viewDistance || entity.getSprite() == null) {
+            if (camDist >= viewDistance * scene.getGridScale().getZ() || entity.getSprite() == null) {
                 entity.setOnScreen(false);
                 continue;
             }
@@ -103,8 +104,8 @@ public class Renderer {
             Sprite sprite = entity.getSprite();
             //get sprite
             
-            int widthScaled = (int) Math.ceil(sprite.getWidth() * scale);
-            int heightScaled = (int) Math.ceil(sprite.getHeight() * scale);
+            int widthScaled = (int) Math.ceil(sprite.getWidth() * scene.getGridScale().getX() * scale);
+            int heightScaled = (int) Math.ceil(sprite.getHeight() * scene.getGridScale().getY() * scale);
             //scale image dimensions
             
             float x = ((objPos.getX() - camPos.getX()) * scale) + renderPos.getX();

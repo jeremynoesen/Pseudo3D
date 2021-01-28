@@ -1,9 +1,9 @@
 package jeremynoesen.pseudo3d.scene;
 
-import javafx.scene.paint.Color;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
 import jeremynoesen.pseudo3d.scene.renderer.Camera;
+import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -33,6 +33,11 @@ public class Scene {
     private Sprite background;
     
     /**
+     * grid scaling for scene, how many pixels represent a meter
+     */
+    private Vector gridScale;
+    
+    /**
      * runnable code fragments to run every time the scene ticks
      */
     private final Set<Runnable> injections;
@@ -45,6 +50,7 @@ public class Scene {
         camera = new Camera();
         background = null;
         injections = new HashSet<>();
+        gridScale = new Vector(32, 32, 32);
     }
     
     /**
@@ -53,13 +59,16 @@ public class Scene {
      * @param entities   entities in scene
      * @param camera     scene camera
      * @param background background sprite
-     * @param injections  code to be injected into game loop
+     * @param injections code to be injected into game loop
+     * @param gridScale  scene grid scale
      */
-    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Sprite background, Set<Runnable> injections) {
+    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Sprite background, Set<Runnable> injections,
+                 Vector gridScale) {
         this.entities = entities;
         this.camera = camera;
         this.background = background;
         this.injections = injections;
+        this.gridScale = gridScale;
     }
     
     /**
@@ -75,11 +84,12 @@ public class Scene {
         camera = new Camera(scene.camera);
         background = scene.background;
         injections = scene.injections;
+        gridScale = scene.gridScale;
     }
     
     /**
-     * tick all entities in the scene, updating all motion first, and then all collisions take place. also run any
-     * code injections added to the scene
+     * tick all entities in the scene, updating all motion first, and then all collisions take place. also run any code
+     * injections added to the scene
      */
     public void tick() {
         injections.forEach(Runnable::run);
@@ -192,6 +202,24 @@ public class Scene {
      */
     public Set<Runnable> getLoopInjections() {
         return injections;
+    }
+    
+    /**
+     * get the scene grid scale
+     *
+     * @return grid scale for the scene
+     */
+    public Vector getGridScale() {
+        return gridScale;
+    }
+    
+    /**
+     * set a new grid scale for the scene
+     *
+     * @param gridScale vector scales
+     */
+    public void setGridScale(Vector gridScale) {
+        this.gridScale = gridScale;
     }
     
     /**

@@ -25,21 +25,21 @@ public class Sandbox {
      * @param args program arguments
      */
     public static void main(String[] args) throws FileNotFoundException {
-        Sprite playerFront = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/front.png")));
-        Sprite playerBack = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/back.png")));
-        Sprite playerLeft = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/left.png")));
-        Sprite playerRight = new Sprite(new Image(new FileInputStream("src/test/resources/images/player/right.png")));
-        Sprite floor = new Sprite(new Image(new FileInputStream("src/test/resources/images/floor.png")));
-        Sprite background = new Sprite(new Image(new FileInputStream("src/test/resources/images/background.png")));
+        Sprite playerFront = new Sprite(1, 2, new Image(new FileInputStream("src/test/resources/images/player/front.png")));
+        Sprite playerBack = new Sprite(1, 2, new Image(new FileInputStream("src/test/resources/images/player/back.png")));
+        Sprite playerLeft = new Sprite(0.75f, 2, new Image(new FileInputStream("src/test/resources/images/player/left.png")));
+        Sprite playerRight = new Sprite(0.75f, 2, new Image(new FileInputStream("src/test/resources/images/player/right.png")));
+        Sprite floor = new Sprite(1, 1, new Image(new FileInputStream("src/test/resources/images/floor.png")));
+        Sprite background = new Sprite(21, 21, new Image(new FileInputStream("src/test/resources/images/background.png")));
         //load all sprites
         
         Scene scene = new Scene();
+        scene.setGridScale(new Vector(48, 48, 48));
         //init scene
         
         Entity player = new Entity();
         player.setSprite(playerFront);
-        player.setDimensions(playerFront.getWidth(), playerFront.getHeight(), playerFront.getWidth());
-        player.setPosition(new Vector(0, 0, -150));
+        player.setDimensions(1, 2, 1);
         player.setMass(1f);
         scene.addEntity(player);
         //create player entity and add to scene
@@ -49,12 +49,12 @@ public class Sandbox {
         scene.addEntity(dummy);
         //create dummy entity and add to scene
         
-        for (int j = 1; j < 18; j++) {
-            for (int i = 1; i <= 5; i++) {
+        for (int j = -8; j <= 8; j++) {
+            for (int i = -4; i <= 0; i++) {
                 Entity block = new Entity();
                 block.setSprite(floor);
-                block.setDimensions(floor.getWidth(), floor.getHeight(), floor.getWidth());
-                block.setPosition(new Vector(block.getWidth() * j - 425, -226, -block.getWidth() * i - 52));
+                block.setDimensions(1, 1, 1);
+                block.setPosition(new Vector(j, -4.75f, i));
                 block.setKinematic(false);
                 scene.addEntity(block);
             }
@@ -63,12 +63,9 @@ public class Sandbox {
         
         Camera camera = new Camera();
         camera.setFieldOfView((float) Math.toRadians(40));
-        camera.setPosition(new Vector(0, 0, -100));
-        camera.setSensorSize(500);
         scene.setCamera(camera);
         //add camera to scene
         
-        background.setDimensions(1000, 1000);
         scene.setBackground(background);
         //set scene background image
         
@@ -145,10 +142,10 @@ public class Sandbox {
             if (Keyboard.isPressed(KeyCode.R)) {
                 camera.setOffset(new Vector());
                 camera.setRotation(0);
-                player.setPosition(new Vector(0, 0, -150));
+                player.setPosition(new Vector());
                 player.setVelocity(new Vector());
                 player.setAcceleration(new Vector());
-                dummy.setPosition(new Vector(0, 0, -150));
+                dummy.setPosition(new Vector());
                 dummy.setVelocity(new Vector());
                 dummy.setAcceleration(new Vector());
                 camera.setFieldOfView((float) Math.toRadians(40));
