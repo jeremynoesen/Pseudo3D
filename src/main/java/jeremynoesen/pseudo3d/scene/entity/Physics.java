@@ -151,7 +151,7 @@ public abstract class Physics extends Box {
      * check if a entity has collided with this entity
      */
     public void tickCollisions() {
-    
+        
         if (!kinematic) return;
     
         colliding = false;
@@ -261,9 +261,10 @@ public abstract class Physics extends Box {
      *
      * @param position position vector
      */
-    public void setPosition(Vector position) {
+    public Physics setPosition(Vector position) {
         this.position = position;
         super.setPosition(position);
+        return this;
     }
     
     /**
@@ -280,8 +281,9 @@ public abstract class Physics extends Box {
      *
      * @param velocity velocity vector
      */
-    public void setVelocity(Vector velocity) {
+    public Physics setVelocity(Vector velocity) {
         this.velocity = velocity;
+        return this;
     }
     
     /**
@@ -298,8 +300,9 @@ public abstract class Physics extends Box {
      *
      * @param acceleration acceleration vector
      */
-    public void setAcceleration(Vector acceleration) {
+    public Physics setAcceleration(Vector acceleration) {
         this.acceleration = acceleration;
+        return this;
     }
     
     /**
@@ -316,8 +319,9 @@ public abstract class Physics extends Box {
      *
      * @param gravity gravity vector
      */
-    public void setGravity(Vector gravity) {
+    public Physics setGravity(Vector gravity) {
         this.gravity = gravity;
+        return this;
     }
     
     
@@ -335,8 +339,9 @@ public abstract class Physics extends Box {
      *
      * @param drag drag of entity
      */
-    public void setDrag(Vector drag) {
+    public Physics setDrag(Vector drag) {
         this.drag = drag;
+        return this;
     }
     
     /**
@@ -353,8 +358,9 @@ public abstract class Physics extends Box {
      *
      * @param roughness friction vector
      */
-    public void setRoughness(Vector roughness) {
+    public Physics setRoughness(Vector roughness) {
         this.roughness = roughness;
+        return this;
     }
     
     /**
@@ -362,8 +368,9 @@ public abstract class Physics extends Box {
      *
      * @param scene scene for collisions
      */
-    public void setScene(Scene scene) {
+    public Physics setScene(Scene scene) {
         this.scene = scene;
+        return this;
     }
     
     /**
@@ -389,8 +396,9 @@ public abstract class Physics extends Box {
      *
      * @param solid true to allow collisions
      */
-    public void setSolid(boolean solid) {
+    public Physics setSolid(boolean solid) {
         this.solid = solid;
+        return this;
     }
     
     /**
@@ -461,8 +469,9 @@ public abstract class Physics extends Box {
      *
      * @param kinematic true to allow object motion self collision checks
      */
-    public void setKinematic(boolean kinematic) {
+    public Physics setKinematic(boolean kinematic) {
         this.kinematic = kinematic;
+        return this;
     }
     
     /**
@@ -479,8 +488,9 @@ public abstract class Physics extends Box {
      *
      * @param pushable true to allow pushing
      */
-    public void setPushable(boolean pushable) {
+    public Physics setPushable(boolean pushable) {
         this.pushable = pushable;
+        return this;
     }
     
     /**
@@ -497,8 +507,9 @@ public abstract class Physics extends Box {
      *
      * @param mass new mass for object
      */
-    public void setMass(float mass) {
+    public Physics setMass(float mass) {
         this.mass = mass;
+        return this;
     }
     
     /**

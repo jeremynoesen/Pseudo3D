@@ -110,8 +110,9 @@ public class Camera {
      *
      * @param fieldOfView field of view in radians
      */
-    public void setFieldOfView(float fieldOfView) {
+    public Camera setFieldOfView(float fieldOfView) {
         this.fieldOfView = fieldOfView;
+        return this;
     }
     
     /**
@@ -128,8 +129,9 @@ public class Camera {
      *
      * @param position new position in scene
      */
-    public void setPosition(Vector position) {
+    public Camera setPosition(Vector position) {
         this.position = position;
+        return this;
     }
     
     /**
@@ -146,8 +148,9 @@ public class Camera {
      *
      * @param offset 2D position vector
      */
-    public void setOffset(Vector offset) {
+    public Camera setOffset(Vector offset) {
         this.offset = offset;
+        return this;
     }
     
     /**
@@ -164,8 +167,9 @@ public class Camera {
      *
      * @param sensorSize new sensor size
      */
-    public void setSensorSize(float sensorSize) {
+    public Camera setSensorSize(float sensorSize) {
         this.sensorSize = sensorSize;
+        return this;
     }
     
     /**
@@ -182,8 +186,9 @@ public class Camera {
      *
      * @param viewDistance new view distance for camera
      */
-    public void setViewDistance(float viewDistance) {
+    public Camera setViewDistance(float viewDistance) {
         this.viewDistance = viewDistance;
+        return this;
     }
     
     /**
@@ -200,8 +205,9 @@ public class Camera {
      *
      * @param zoom camera zoom
      */
-    public void setZoom(float zoom) {
+    public Camera setZoom(float zoom) {
         this.zoom = zoom;
+        return this;
     }
     
     /**
@@ -218,8 +224,9 @@ public class Camera {
      *
      * @param rotation rotation of camera in radians counter-clock-wise
      */
-    public void setRotation(float rotation) {
+    public Camera setRotation(float rotation) {
         this.rotation = rotation;
+        return this;
     }
     
     /**

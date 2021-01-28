@@ -115,9 +115,10 @@ public class Scene {
      *
      * @param entity entity to add
      */
-    public void addEntity(Entity entity) {
+    public Scene addEntity(Entity entity) {
         entities.add(entity);
         entity.setScene(this);
+        return this;
     }
     
     /**
@@ -125,11 +126,12 @@ public class Scene {
      *
      * @param entity entity to remove
      */
-    public void removeEntity(Entity entity) {
+    public Scene removeEntity(Entity entity) {
         if (entities.contains(entity)) {
             entities.remove(entity);
             entity.setScene(null);
         }
+        return this;
     }
     
     /**
@@ -137,8 +139,9 @@ public class Scene {
      *
      * @param entities list of entities
      */
-    public void setEntities(CopyOnWriteArrayList<Entity> entities) {
+    public Scene setEntities(CopyOnWriteArrayList<Entity> entities) {
         this.entities = entities;
+        return this;
     }
     
     /**
@@ -155,8 +158,9 @@ public class Scene {
      *
      * @param camera new camera
      */
-    public void setCamera(Camera camera) {
+    public Scene setCamera(Camera camera) {
         this.camera = camera;
+        return this;
     }
     
     /**
@@ -173,8 +177,9 @@ public class Scene {
      *
      * @param background sprite to set as background
      */
-    public void setBackground(Sprite background) {
+    public Scene setBackground(Sprite background) {
         this.background = background;
+        return this;
     }
     
     /**
@@ -182,8 +187,9 @@ public class Scene {
      *
      * @param injection code injection
      */
-    public void addLoopInjection(Runnable injection) {
+    public Scene addLoopInjection(Runnable injection) {
         injections.add(injection);
+        return this;
     }
     
     /**
@@ -191,8 +197,9 @@ public class Scene {
      *
      * @param injection code injection
      */
-    public void removeLoopInjection(Runnable injection) {
+    public Scene removeLoopInjection(Runnable injection) {
         injections.remove(injection);
+        return this;
     }
     
     /**
@@ -218,8 +225,9 @@ public class Scene {
      *
      * @param gridScale vector scales
      */
-    public void setGridScale(Vector gridScale) {
+    public Scene setGridScale(Vector gridScale) {
         this.gridScale = gridScale;
+        return this;
     }
     
     /**

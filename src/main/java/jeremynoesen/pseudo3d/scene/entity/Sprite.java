@@ -122,9 +122,10 @@ public class Sprite {
      * @param width  width of sprite in grid units
      * @param height height of sprite in grid units
      */
-    public void setDimensions(float width, float height) {
+    public Sprite setDimensions(float width, float height) {
         setWidth(width);
         setHeight(height);
+        return this;
     }
     
     /**
@@ -150,8 +151,9 @@ public class Sprite {
      *
      * @param width new sprite width in grid units
      */
-    public void setWidth(float width) {
+    public Sprite setWidth(float width) {
         this.width = width;
+        return this;
     }
     
     /**
@@ -159,8 +161,9 @@ public class Sprite {
      *
      * @param height new sprite height in grid units
      */
-    public void setHeight(float height) {
+    public Sprite setHeight(float height) {
         this.height = height;
+        return this;
     }
     
     /**
@@ -168,8 +171,9 @@ public class Sprite {
      *
      * @param rotation rotation of sprite in radians counter-clock-wise
      */
-    public void setRotation(float rotation) {
+    public Sprite setRotation(float rotation) {
         this.rotation = rotation;
+        return this;
     }
     
     /**
@@ -195,8 +199,9 @@ public class Sprite {
      *
      * @param framerate frames per second
      */
-    public void setFramerate(float framerate) {
+    public Sprite setFramerate(float framerate) {
         frameStep = framerate / 1000f;
+        return this;
     }
     
     /**
