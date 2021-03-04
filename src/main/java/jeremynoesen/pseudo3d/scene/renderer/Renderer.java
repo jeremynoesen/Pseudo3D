@@ -59,9 +59,6 @@ public class Renderer {
         Affine original = gc.getTransform();
         //camera data
         
-        gc.fillRect(0, 0, gWidth, gHeight);
-        //clear out last frame
-        
         if (scene.getBackground() != null) {
             Sprite background = scene.getBackground();
             if (camera.getRotation() != 0) {
@@ -78,7 +75,7 @@ public class Renderer {
             gc.setTransform(original);
             scene.getBackground().update();
         }
-        //draw background
+        //draw background, also clears screen where drawn
         
         for (Entity entity : scene.getEntities()) {
             Vector objPos = entity.getPosition().multiply(scene.getGridScale());
