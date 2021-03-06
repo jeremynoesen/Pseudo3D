@@ -126,14 +126,14 @@ public class Scene {
         injections.forEach(Runnable::run);
         // run all loop injections
         
-        for(Entity entity : entitiesToRemove) {
+        for (Entity entity : entitiesToRemove) {
             entities.remove(entity);
             entity.setScene(null);
         }
         entitiesToRemove.clear();
         // remove any entities queued for removal
         
-        for(Entity entity : entitiesToAdd) {
+        for (Entity entity : entitiesToAdd) {
             entities.add(entity);
             entity.setScene(this);
         }
