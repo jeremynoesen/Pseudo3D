@@ -1,12 +1,11 @@
 package jeremynoesen.pseudo3d.scene.entity;
 
+import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.util.Box;
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * axis-aligned bounding box entity physics
@@ -63,7 +62,7 @@ public abstract class Physics extends Box {
     /**
      * list of entities colliding with per side
      */
-    private final HashMap<Box.Side, ArrayList<Physics>> collidingObjects;
+    private final HashMap<Box.Side, HashSet<Physics>> collidingObjects;
     
     /**
      * entity's collision status
@@ -110,7 +109,7 @@ public abstract class Physics extends Box {
         pushable = true;
         mass = 1.0f;
         collidingObjects = new HashMap<>();
-        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new ArrayList<>());
+        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new HashSet<>());
     }
     
     /**
@@ -121,7 +120,7 @@ public abstract class Physics extends Box {
     public Physics(Physics physics) {
         super(physics);
         gravity = physics.gravity;
-        force= physics.force;
+        force = physics.force;
         position = physics.position;
         velocity = physics.velocity;
         acceleration = physics.acceleration;
@@ -135,7 +134,7 @@ public abstract class Physics extends Box {
         kinematic = physics.kinematic;
         pushable = physics.pushable;
         collidingObjects = new HashMap<>();
-        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new ArrayList<>());
+        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new HashSet<>());
     }
     
     /**
@@ -145,6 +144,33 @@ public abstract class Physics extends Box {
         
         if (!kinematic) return;
         
+        Vector Fnet = new Vector();
+        //net force
+        
+        Fnet = Fnet.add(force);
+        //add applied force
+        
+        Fnet = Fnet.add(gravity.multiply(mass * 100));
+        //add weight force
+        
+        if (colliding) {
+            //todo friction
+        }
+        
+        //todo drag
+        
+        acceleration = Fnet.multiply(1 / mass);
+        //get acceleration from net force
+        
+        velocity = velocity.add(acceleration.multiply(Pseudo3D.getDeltaTime()));
+        //add acceleration to velocity
+        
+        if (colliding) {
+            //todo momentum
+        }
+        
+        setPosition(position.add(velocity.multiply(Pseudo3D.getDeltaTime())));
+        //add velocity to position
     }
     
     /**
@@ -153,12 +179,12 @@ public abstract class Physics extends Box {
     public void tickCollisions() {
         
         if (!kinematic) return;
-    
+        
         colliding = false;
         overlapping = false;
-        collidingObjects.values().forEach(ArrayList::clear);
+        collidingObjects.values().forEach(HashSet::clear);
         //reset all collision data
-    
+        
         for (Entity entity : scene.getEntities()) {
             //loop through all entities in scene
             if (entity != this && (entity.isOnScreen() || entity.canUpdateOffScreen())) {
@@ -418,7 +444,7 @@ public abstract class Physics extends Box {
      */
     public boolean collidesWith(Physics physics) {
         
-        for (ArrayList<Physics> list : collidingObjects.values()) {
+        for (HashSet<Physics> list : collidingObjects.values()) {
             if (list.contains(physics)) return true;
         }
         
