@@ -6,9 +6,8 @@ import jeremynoesen.pseudo3d.scene.renderer.Camera;
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * scene to place entities, a camera, and code injections to modify them
@@ -20,7 +19,7 @@ public class Scene {
     /**
      * all entities in the scene
      */
-    private CopyOnWriteArrayList<Entity> entities;
+    private final LinkedList<Entity> entities;
     
     /**
      * camera for the scene to determine where to render from
@@ -40,16 +39,40 @@ public class Scene {
     /**
      * runnable code fragments to run every time the scene ticks
      */
-    private final Set<Runnable> injections;
+    private final HashSet<Runnable> injections;
+    
+    /**
+     * list of entities to be added to the main list
+     */
+    private final HashSet<Entity> entitiesToAdd;
+    
+    /**
+     * list of entities to be removed from the main list
+     */
+    private final HashSet<Entity> entitiesToRemove;
+    
+    /**
+     * list of code injections to be added to the main list
+     */
+    private final HashSet<Runnable> injectionsToAdd;
+    
+    /**
+     * list of code injections to be removed from the main list
+     */
+    private final HashSet<Runnable> injectionsToRemove;
     
     /**
      * create a new scene
      */
     public Scene() {
-        entities = new CopyOnWriteArrayList<>();
+        entities = new LinkedList<>();
         camera = new Camera();
         background = null;
         injections = new HashSet<>();
+        entitiesToAdd = new HashSet<>();
+        entitiesToRemove = new HashSet<>();
+        injectionsToAdd = new HashSet<>();
+        injectionsToRemove = new HashSet<>();
         gridScale = new Vector(32, 32, 32);
     }
     
@@ -62,13 +85,17 @@ public class Scene {
      * @param injections code to be injected into game loop
      * @param gridScale  scene grid scale
      */
-    public Scene(CopyOnWriteArrayList<Entity> entities, Camera camera, Sprite background, Set<Runnable> injections,
+    public Scene(LinkedList<Entity> entities, Camera camera, Sprite background, HashSet<Runnable> injections,
                  Vector gridScale) {
         this.entities = entities;
         this.camera = camera;
         this.background = background;
         this.injections = injections;
         this.gridScale = gridScale;
+        entitiesToAdd = new HashSet<>();
+        entitiesToRemove = new HashSet<>();
+        injectionsToAdd = new HashSet<>();
+        injectionsToRemove = new HashSet<>();
     }
     
     /**
@@ -77,7 +104,7 @@ public class Scene {
      * @param scene scene to copy
      */
     public Scene(Scene scene) {
-        entities = new CopyOnWriteArrayList<>();
+        entities = new LinkedList<>();
         for (Entity entity : scene.entities) {
             entities.add(new Entity(entity));
         }
@@ -85,6 +112,10 @@ public class Scene {
         background = scene.background;
         injections = scene.injections;
         gridScale = scene.gridScale;
+        entitiesToAdd = scene.entitiesToAdd;
+        entitiesToRemove = scene.entitiesToRemove;
+        injectionsToAdd = scene.injectionsToAdd;
+        injectionsToRemove = scene.injectionsToRemove;
     }
     
     /**
@@ -93,20 +124,47 @@ public class Scene {
      */
     public void tick() {
         injections.forEach(Runnable::run);
+        // run all loop injections
+        
+        for(Entity entity : entitiesToRemove) {
+            entities.remove(entity);
+            entity.setScene(null);
+        }
+        entitiesToRemove.clear();
+        // remove any entities queued for removal
+        
+        for(Entity entity : entitiesToAdd) {
+            entities.add(entity);
+            entity.setScene(this);
+        }
+        entitiesToAdd.clear();
+        // add any entities queued to be added
+        
+        injections.removeAll(injectionsToRemove);
+        injectionsToRemove.clear();
+        // remove any loop injections queued to be removed
+        
+        injections.addAll(injectionsToAdd);
+        injectionsToAdd.clear();
+        // add any loop injections queued to be added
+        
         for (Entity entity : entities) {
             if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickMotion();
         }
+        // tick all entities' motion
+        
         for (Entity entity : entities) {
             if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickCollisions();
         }
+        // tick all entities' collisions
     }
     
     /**
-     * get all the entities in this scene
+     * get all the entities in this scene. modifying this directly will cause problems
      *
      * @return list of all entities in this scene
      */
-    public CopyOnWriteArrayList<Entity> getEntities() {
+    public LinkedList<Entity> getEntities() {
         return entities;
     }
     
@@ -116,8 +174,7 @@ public class Scene {
      * @param entity entity to add
      */
     public Scene addEntity(Entity entity) {
-        entities.add(entity);
-        entity.setScene(this);
+        entitiesToAdd.add(entity);
         return this;
     }
     
@@ -127,20 +184,8 @@ public class Scene {
      * @param entity entity to remove
      */
     public Scene removeEntity(Entity entity) {
-        if (entities.contains(entity)) {
-            entities.remove(entity);
-            entity.setScene(null);
-        }
-        return this;
-    }
-    
-    /**
-     * set the entities in this scene
-     *
-     * @param entities list of entities
-     */
-    public Scene setEntities(CopyOnWriteArrayList<Entity> entities) {
-        this.entities = entities;
+        if (entities.contains(entity))
+            entitiesToRemove.add(entity);
         return this;
     }
     
@@ -188,7 +233,7 @@ public class Scene {
      * @param injection code injection
      */
     public Scene addLoopInjection(Runnable injection) {
-        injections.add(injection);
+        injectionsToAdd.add(injection);
         return this;
     }
     
@@ -198,16 +243,16 @@ public class Scene {
      * @param injection code injection
      */
     public Scene removeLoopInjection(Runnable injection) {
-        injections.remove(injection);
+        injectionsToRemove.add(injection);
         return this;
     }
     
     /**
-     * get all code injections for the scene
+     * get all code injections for the scene. modifying this directly will cause problems
      *
      * @return all code injections for the scene
      */
-    public Set<Runnable> getLoopInjections() {
+    public HashSet<Runnable> getLoopInjections() {
         return injections;
     }
     
