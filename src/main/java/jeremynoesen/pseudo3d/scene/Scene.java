@@ -42,26 +42,6 @@ public class Scene {
     private final HashSet<Runnable> injections;
     
     /**
-     * list of entities to be added to the main list
-     */
-    private final HashSet<Entity> entitiesToAdd;
-    
-    /**
-     * list of entities to be removed from the main list
-     */
-    private final HashSet<Entity> entitiesToRemove;
-    
-    /**
-     * list of code injections to be added to the main list
-     */
-    private final HashSet<Runnable> injectionsToAdd;
-    
-    /**
-     * list of code injections to be removed from the main list
-     */
-    private final HashSet<Runnable> injectionsToRemove;
-    
-    /**
      * create a new scene
      */
     public Scene() {
@@ -69,10 +49,6 @@ public class Scene {
         camera = new Camera();
         background = null;
         injections = new HashSet<>();
-        entitiesToAdd = new HashSet<>();
-        entitiesToRemove = new HashSet<>();
-        injectionsToAdd = new HashSet<>();
-        injectionsToRemove = new HashSet<>();
         gridScale = new Vector(32, 32, 32);
     }
     
@@ -92,10 +68,6 @@ public class Scene {
         this.background = background;
         this.injections = injections;
         this.gridScale = gridScale;
-        entitiesToAdd = new HashSet<>();
-        entitiesToRemove = new HashSet<>();
-        injectionsToAdd = new HashSet<>();
-        injectionsToRemove = new HashSet<>();
     }
     
     /**
@@ -112,10 +84,6 @@ public class Scene {
         background = scene.background;
         injections = scene.injections;
         gridScale = scene.gridScale;
-        entitiesToAdd = scene.entitiesToAdd;
-        entitiesToRemove = scene.entitiesToRemove;
-        injectionsToAdd = scene.injectionsToAdd;
-        injectionsToRemove = scene.injectionsToRemove;
     }
     
     /**
@@ -125,28 +93,6 @@ public class Scene {
     public void tick() {
         injections.forEach(Runnable::run);
         // run all loop injections
-        
-        for (Entity entity : entitiesToRemove) {
-            entities.remove(entity);
-            entity.setScene(null);
-        }
-        entitiesToRemove.clear();
-        // remove any entities queued for removal
-        
-        for (Entity entity : entitiesToAdd) {
-            entities.add(entity);
-            entity.setScene(this);
-        }
-        entitiesToAdd.clear();
-        // add any entities queued to be added
-        
-        injections.removeAll(injectionsToRemove);
-        injectionsToRemove.clear();
-        // remove any loop injections queued to be removed
-        
-        injections.addAll(injectionsToAdd);
-        injectionsToAdd.clear();
-        // add any loop injections queued to be added
         
         for (Entity entity : entities) {
             if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickMotion();
@@ -174,7 +120,8 @@ public class Scene {
      * @param entity entity to add
      */
     public Scene addEntity(Entity entity) {
-        entitiesToAdd.add(entity);
+        entities.add(entity);
+        entity.setScene(this);
         return this;
     }
     
@@ -184,8 +131,10 @@ public class Scene {
      * @param entity entity to remove
      */
     public Scene removeEntity(Entity entity) {
-        if (entities.contains(entity))
-            entitiesToRemove.add(entity);
+        if (entities.contains(entity)) {
+            entities.remove(entity);
+            entity.setScene(null);
+        }
         return this;
     }
     
@@ -233,7 +182,7 @@ public class Scene {
      * @param injection code injection
      */
     public Scene addLoopInjection(Runnable injection) {
-        injectionsToAdd.add(injection);
+        injections.add(injection);
         return this;
     }
     
@@ -243,7 +192,7 @@ public class Scene {
      * @param injection code injection
      */
     public Scene removeLoopInjection(Runnable injection) {
-        injectionsToRemove.add(injection);
+        injections.remove(injection);
         return this;
     }
     
