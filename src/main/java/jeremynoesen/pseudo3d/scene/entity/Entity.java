@@ -109,8 +109,12 @@ public class Entity extends Physics {
      * @param scene scene to place entity in
      */
     public Entity setScene(Scene scene) {
+        if (scene != null && !scene.getEntities().contains(this)) {
+            scene.getEntities().add(this);
+        } else if (scene == null && super.getScene() != null) {
+            super.getScene().getEntities().remove(this);
+        }
         super.setScene(scene);
-        if (scene != null && !scene.getEntities().contains(this)) scene.addEntity(this);
         return this;
     }
     

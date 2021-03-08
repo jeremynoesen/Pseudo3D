@@ -90,13 +90,13 @@ public class Pseudo3D extends Application {
         Pseudo3D.height = height;
         Pseudo3D.resizable = resizable;
         Pseudo3D.title = title;
-        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / tickspeed),
+        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickspeed),
                 ae -> {
                     if (last > 0) deltaTime = (System.nanoTime() - last) / 1000000000.0f;
                     last = System.nanoTime();
                     activeScene.tick();
                 }));
-        renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000 / framerate),
+        renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / framerate),
                 ae -> {
                     canvas.setWidth(scene.getWidth());
                     canvas.setHeight(scene.getHeight());
