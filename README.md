@@ -1,4 +1,6 @@
-<div align="center" ><img src="Banner.png" alt="Banner" title = "Banner" /></div>
+<img src="Logo.png" alt="Logo" title = "Logo" align="right" width="200" height="200" />
+
+# Pseudo3D
 
 ## About
 Pseudo3D is a 2.5D game engine written with JavaFX. This engine uses sprite scaling and order of drawing to achieve a fake 3D rendering effect for a 3D physics world. Physics in this engine are AABB (Axis Aligned Bounding Box) basic kinematics.
