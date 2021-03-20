@@ -1,8 +1,10 @@
 package jeremynoesen.pseudo3d.scene;
 
+import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
 import jeremynoesen.pseudo3d.scene.renderer.Camera;
+import jeremynoesen.pseudo3d.scene.renderer.Renderer;
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.HashSet;
@@ -103,6 +105,13 @@ public class Scene {
             if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickCollisions();
         }
         // tick all entities' collisions
+    }
+    
+    /**
+     * render this scene to the main canvas
+     */
+    public void render() {
+        Renderer.render(this, Pseudo3D.getCanvas());
     }
     
     /**

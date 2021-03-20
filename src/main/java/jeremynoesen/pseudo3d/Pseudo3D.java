@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import jeremynoesen.pseudo3d.input.Keyboard;
 import jeremynoesen.pseudo3d.input.Mouse;
-import jeremynoesen.pseudo3d.scene.renderer.Renderer;
 
 /**
  * main application for any project using Pseudo3D
@@ -100,7 +99,7 @@ public class Pseudo3D extends Application {
                 ae -> {
                     canvas.setWidth(scene.getWidth());
                     canvas.setHeight(scene.getHeight());
-                    Renderer.render(activeScene, canvas);
+                    activeScene.render();
                 }));
     
         new Thread(Application::launch).start();
