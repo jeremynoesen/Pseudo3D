@@ -253,7 +253,7 @@ public abstract class Physics extends Box {
                 // check if entity is moving in proper direction on the axis
                 if (Math.signum(velocity.getX()) == -Math.signum(physics.velocity.getX()))
                     //check that the two entities are moving towards each other
-                    distance *= Math.abs(velocity.getX()) / (Math.abs(velocity.getX()) + Math.abs(physics.velocity.getX()));
+                    distance *= velocity.getX() / (velocity.getX() - physics.velocity.getX());
                 // scale distance based on entity velocities to improve collision accuracy
                 setPosition(position.setX(position.getX() - (distance * dir)));
                 // fix entity position so it is not overlapping
@@ -263,14 +263,14 @@ public abstract class Physics extends Box {
         } else if (axis == 2) {
             if (velocity.getY() * dir > 0) {
                 if (Math.signum(velocity.getY()) == -Math.signum(physics.velocity.getY()))
-                    distance *= Math.abs(velocity.getY()) / (Math.abs(velocity.getY()) + Math.abs(physics.velocity.getY()));
+                    distance *= velocity.getY() / (velocity.getY() - physics.velocity.getY());
                 setPosition(position.setY(position.getY() - (distance * dir)));
             }
             collidingObjects.get(dir == -1 ? Box.Side.BOTTOM : Box.Side.TOP).add(physics);
         } else {
             if (velocity.getZ() * dir > 0) {
                 if (Math.signum(velocity.getZ()) == -Math.signum(physics.velocity.getZ()))
-                    distance *= Math.abs(velocity.getZ()) / (Math.abs(velocity.getZ()) + Math.abs(physics.velocity.getZ()));
+                    distance *= velocity.getZ() / (velocity.getZ() - physics.velocity.getZ());
                 setPosition(position.setZ(position.getZ() - (distance * dir)));
             }
             collidingObjects.get(dir == -1 ? Box.Side.BACK : Box.Side.FRONT).add(physics);
