@@ -1,4 +1,4 @@
-<img src="Logo.png" alt="Logo" title = "Logo" align="right" width="200" height="200" />
+<img src="img/Logo.png" alt="Logo" title = "Logo" align="right" width="200" height="200" />
 
 # Pseudo3D
 
@@ -23,12 +23,12 @@ The following are recordings of the Pseudo3D renderer in action. You can also tr
 This is what an orthographic, or zero-degree field-of-view, render looks like. This is the style used for 2D sprite-based games. There is no depth whatsoever, making it difficult to decipher the exact positioning of the character with respect to the other character or the ground. In this, the character can only move in 2D space. Sprites are only drawn in 2D.
 
 
-<div align="center" ><img src="Orthographic.gif" alt="Orthographic rendering" title="Orthographic rendering" /></div>
+<div align="center" ><img src="img/Orthographic.gif" alt="Orthographic rendering" title="Orthographic rendering" /></div>
 
 ### Perspective
 This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera, field of view, sensor size, and zoom; however, they are still all 2D. You can make out the position of the moving character in relation to the stationary character in 3D space, due to physics being 3D.
 
-<div align="center" ><img src="Perspective.gif" alt="Pseudo3D rendering" title="Pseudo3D Rendering" /></div>
+<div align="center" ><img src="img/Perspective.gif" alt="Pseudo3D rendering" title="Pseudo3D Rendering" /></div>
 
 ## Notice
 This project is far from complete. You can view the associated GitHub projects to see what is planned for this. A wiki will be made eventually explaining how to use this, but until then, there are no explanations available. Not everything is implemented yet, so use at your own risk.
