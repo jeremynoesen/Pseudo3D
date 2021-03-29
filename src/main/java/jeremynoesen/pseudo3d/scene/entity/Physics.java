@@ -150,7 +150,7 @@ public abstract class Physics extends Box {
         Fnet = Fnet.add(force);
         //add applied force
         
-        Fnet = Fnet.add(gravity.multiply(mass * 100));
+        Fnet = Fnet.add(gravity.multiply(mass));
         //add weight force
         
         if (colliding) {
