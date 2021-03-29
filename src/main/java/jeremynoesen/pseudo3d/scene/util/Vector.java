@@ -207,6 +207,16 @@ public class Vector {
     }
     
     /**
+     * scale a vector's magnitude by a scalar, which divides each component by the scalar
+     *
+     * @param scale what to scale vector by
+     * @return scaled vector
+     */
+    public Vector divide(float scale) {
+        return new Vector(x * scale, y * scale, z * scale);
+    }
+    
+    /**
      * calculate the distance between the ends of two vectors
      *
      * @param vector vector to calculate distance to
