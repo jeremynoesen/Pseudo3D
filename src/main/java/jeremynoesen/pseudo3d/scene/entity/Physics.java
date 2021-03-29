@@ -22,7 +22,12 @@ public abstract class Physics extends Box {
     /**
      * applied force on entity (newtons)
      */
-    private Vector force;
+    private Vector appliedForce;
+    
+    /**
+     * net force on entity (newtons)
+     */
+    private Vector netForce;
     
     /**
      * position of entity (meters)
@@ -95,7 +100,8 @@ public abstract class Physics extends Box {
     public Physics() {
         super();
         gravity = new Vector(0, -9.81f, 0);
-        force = new Vector();
+        appliedForce = new Vector();
+        netForce = new Vector();
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
@@ -120,7 +126,8 @@ public abstract class Physics extends Box {
     public Physics(Physics physics) {
         super(physics);
         gravity = physics.gravity;
-        force = physics.force;
+        appliedForce = physics.appliedForce;
+        netForce = physics.netForce;
         position = physics.position;
         velocity = physics.velocity;
         acceleration = physics.acceleration;
@@ -141,34 +148,45 @@ public abstract class Physics extends Box {
      * update the motion of the entity
      */
     public void tickMotion() {
-        
         if (!kinematic) return;
-        
-        Vector Fnet = new Vector();
-        //net force
-        
-        Fnet = Fnet.add(force);
+        updateNetForce();
+        updateKinematics();
+    }
+    
+    /**
+     * get the net force on the entity based on external forces
+     */
+    private void updateNetForce() {
+        netForce = new Vector();
+        //reset net force to 0 on all axes
+    
+        netForce = netForce.add(appliedForce);
         //add applied force
-        
-        Fnet = Fnet.add(gravity.multiply(mass));
+    
+        netForce = netForce.add(gravity.multiply(mass));
         //add weight force
-        
+    
         if (colliding) {
             //todo friction
         }
-        
+    
         //todo drag
-        
-        acceleration = Fnet.divide(mass);
+    }
+    
+    /**
+     * update the motion vectors of the entity based on forces acting on it
+     */
+    private void updateKinematics() {
+        acceleration = netForce.divide(mass);
         //get acceleration from net force
-        
+    
         velocity = velocity.add(acceleration.multiply(Pseudo3D.getDeltaTime()));
         //add acceleration to velocity
-        
+    
         if (colliding) {
             //todo momentum
         }
-        
+    
         setPosition(position.add(velocity.multiply(Pseudo3D.getDeltaTime())));
         //add velocity to position
     }
@@ -177,7 +195,6 @@ public abstract class Physics extends Box {
      * check if a entity has collided with this entity
      */
     public void tickCollisions() {
-        
         if (!kinematic) return;
         
         colliding = false;
@@ -540,6 +557,34 @@ public abstract class Physics extends Box {
     public Physics setMass(float mass) {
         this.mass = mass;
         return this;
+    }
+    
+    /**
+     * get the applied force vector for this entity
+     *
+     * @return applied force vector
+     */
+    public Vector getAppliedForce() {
+        return appliedForce;
+    }
+    
+    /**
+     * apply a force on this entity
+     *
+     * @param appliedForce force vector to apply
+     */
+    public Physics setAppliedForce(Vector appliedForce) {
+        this.appliedForce = appliedForce;
+        return this;
+    }
+    
+    /**
+     * get the net force vector for this entity
+     *
+     * @return net force vector
+     */
+    public Vector getNetForce() {
+        return appliedForce;
     }
     
     /**
