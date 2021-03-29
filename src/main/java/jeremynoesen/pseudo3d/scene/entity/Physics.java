@@ -159,7 +159,7 @@ public abstract class Physics extends Box {
         
         //todo drag
         
-        acceleration = Fnet.multiply(1 / mass);
+        acceleration = Fnet.divide(mass);
         //get acceleration from net force
         
         velocity = velocity.add(acceleration.multiply(Pseudo3D.getDeltaTime()));
