@@ -1,6 +1,5 @@
 package jeremynoesen.pseudo3d.scene;
 
-import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
 import jeremynoesen.pseudo3d.scene.renderer.Camera;
@@ -44,6 +43,11 @@ public class Scene {
     private final HashSet<Runnable> injections;
     
     /**
+     * scene renderer
+     */
+    private final Renderer renderer;
+    
+    /**
      * create a new scene
      */
     public Scene() {
@@ -52,6 +56,7 @@ public class Scene {
         background = null;
         injections = new HashSet<>();
         gridScale = new Vector(32, 32, 32);
+        renderer = new Renderer(this);
     }
     
     /**
@@ -70,6 +75,7 @@ public class Scene {
         this.background = background;
         this.injections = injections;
         this.gridScale = gridScale;
+        this.renderer = new Renderer(this);
     }
     
     /**
@@ -86,6 +92,7 @@ public class Scene {
         background = scene.background;
         injections = scene.injections;
         gridScale = scene.gridScale;
+        renderer = new Renderer(this);
     }
     
     /**
@@ -111,7 +118,7 @@ public class Scene {
      * render this scene to the main canvas
      */
     public void render() {
-        Renderer.render(this, Pseudo3D.getCanvas());
+        renderer.render();
     }
     
     /**
