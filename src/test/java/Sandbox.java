@@ -32,7 +32,10 @@ public class Sandbox {
         Sprite floor = new Sprite(1, 1, new Image(new FileInputStream("src/test/resources/images/floor.png")));
         Sprite background = new Sprite(21, 21, new Image(new FileInputStream("src/test/resources/images/background.png")));
         //load all sprites
-        
+    
+        Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
+        //launch program
+    
         Entity player = (Entity) new Entity()
                 .setSprite(playerFront)
                 .setMass(1f)
@@ -65,9 +68,8 @@ public class Sandbox {
         }
         //generate floor
         
-        Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
         Pseudo3D.setActiveScene(scene);
-        //launch application
+        //set scene
         
         //the following adds controls to the scene
         scene.addLoopInjection(() -> {

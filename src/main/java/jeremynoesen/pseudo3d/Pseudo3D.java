@@ -89,6 +89,7 @@ public class Pseudo3D extends Application {
         Pseudo3D.height = height;
         Pseudo3D.resizable = resizable;
         Pseudo3D.title = title;
+        
         tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickspeed),
                 ae -> {
                     if (last > 0) deltaTime = (System.nanoTime() - last) / 1000000000.0f;
@@ -101,6 +102,8 @@ public class Pseudo3D extends Application {
                     canvas.setHeight(scene.getHeight());
                     activeScene.render();
                 }));
+        
+        canvas = new Canvas(width, height);
     
         new Thread(Application::launch).start();
     }
@@ -113,7 +116,6 @@ public class Pseudo3D extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();
-        canvas = new Canvas(width, height);
         Mouse.initialize(canvas);
         Keyboard.initialize(canvas);
         root.getChildren().add(canvas);
