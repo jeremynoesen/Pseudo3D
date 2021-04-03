@@ -1,6 +1,5 @@
 package jeremynoesen.pseudo3d.scene.entity;
 
-import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.util.Box;
 import jeremynoesen.pseudo3d.scene.util.Vector;
@@ -95,6 +94,11 @@ public abstract class Physics extends Box {
     private float mass;
     
     /**
+     * time elapsed in the last tick
+     */
+    private float deltaTime;
+    
+    /**
      * create a new aabb entity with default values
      */
     public Physics() {
@@ -146,9 +150,12 @@ public abstract class Physics extends Box {
     
     /**
      * update the motion of the entity
+     *
+     * @param deltaTime time elapsed to use in calculation
      */
-    public void tickMotion() {
+    public void tickMotion(float deltaTime) {
         if (!kinematic) return;
+        this.deltaTime = deltaTime;
         updateNetForce();
         updateKinematics();
     }
@@ -180,14 +187,14 @@ public abstract class Physics extends Box {
         acceleration = netForce.divide(mass);
         //get acceleration from net force
     
-        velocity = velocity.add(acceleration.multiply(Pseudo3D.getDeltaTime()));
+        velocity = velocity.add(acceleration.multiply(deltaTime));
         //add acceleration to velocity
     
         if (colliding) {
             //todo momentum
         }
     
-        setPosition(position.add(velocity.multiply(Pseudo3D.getDeltaTime())));
+        setPosition(position.add(velocity.multiply(deltaTime)));
         //add velocity to position
     }
     
