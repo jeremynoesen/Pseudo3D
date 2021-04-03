@@ -2,7 +2,6 @@ package jeremynoesen.pseudo3d.scene.renderer;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
-import jeremynoesen.pseudo3d.Pseudo3D;
 import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
@@ -27,11 +26,6 @@ public class Renderer {
     };
     
     /**
-     * javafx canvas graphics context to render to
-     */
-    private static final GraphicsContext graphicsContext = Pseudo3D.getCanvas().getGraphicsContext2D();
-    
-    /**
      * scene being rendered by this renderer
      */
     private final Scene scene;
@@ -47,21 +41,33 @@ public class Renderer {
     private Vector renderPos;
     
     /**
-     * create a new renderer for the specified scene with the specified javafx canvas as the output destination
+     * javafx canvas graphics context to render to
+     */
+    private GraphicsContext graphicsContext;
+    
+    /**
+     * time elapsed in the last render frame
+     */
+    private float deltaTime;
+    
+    /**
+     * create a new renderer for the specified scene
      *
      * @param scene  scene to render
      */
     public Renderer(Scene scene) {
         this.scene = scene;
-        
-        graphicsContext.setImageSmoothing(false);
-        //set rendering settings for speed
     }
     
     /**
      * render the next full frame
+     *
+     * @param graphicsContext graphics context to draw to
+     * @param deltaTime time elapsed in last frame, used for sprite updating
      */
-    public void render() {
+    public void render(GraphicsContext graphicsContext, float deltaTime) {
+        this.graphicsContext = graphicsContext;
+        this.deltaTime = deltaTime;
         init();
         drawBackground();
         for (Entity entity : scene.getEntities()) {
@@ -75,6 +81,9 @@ public class Renderer {
     private void init() {
         scene.getEntities().sort(zComparator);
         //sort entities by z position so entities can be drawn in front of others
+    
+        graphicsContext.setImageSmoothing(false);
+        //set rendering settings for speed
         
         camera = scene.getCamera();
         renderPos = new Vector((float) graphicsContext.getCanvas().getWidth() / 2.0f + camera.getOffset().getX(),
@@ -108,7 +117,7 @@ public class Renderer {
             //draw the image
             
             graphicsContext.setTransform(original);
-            scene.getBackground().update();
+            scene.getBackground().update(deltaTime);
             //update the sprite's frames and put the canvas back
         }
     }
@@ -116,7 +125,7 @@ public class Renderer {
     /**
      * draw an entity to the canvas
      *
-     * @param entity entity to draw to the canvas
+     * @param entity    entity to draw to the canvas
      */
     private void drawEntity(Entity entity) {
         Vector objPos = entity.getPosition().multiply(scene.getGridScale());
@@ -147,7 +156,7 @@ public class Renderer {
         int widthScaled = (int) Math.ceil(sprite.getWidth() * scene.getGridScale().getX() * scale);
         int heightScaled = (int) Math.ceil(sprite.getHeight() * scene.getGridScale().getY() * scale);
         //scale image dimensions
-    
+        
         short gWidth = (short) graphicsContext.getCanvas().getWidth();
         short gHeight = (short) graphicsContext.getCanvas().getHeight();
         //references to canvas dimensions
@@ -160,10 +169,10 @@ public class Renderer {
                 new Vector(gWidth / 2.0f, gHeight / 2.0f));
         Box spriteBox;
         //boxes to represent image and panel bounds
-    
+        
         Affine original = graphicsContext.getTransform();
         //original affine transform
-    
+        
         Affine transform = new Affine();
         //create new transform, resetting old one
         
@@ -209,14 +218,14 @@ public class Renderer {
             graphicsContext.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
                     y - (heightScaled / 2.0), widthScaled, heightScaled);
             graphicsContext.setTransform(original);
-            sprite.update();
+            sprite.update(deltaTime);
             //draw image to panel
             
             entity.setOnScreen(true);
             //update on screen status
         } else {
             entity.setOnScreen(false);
-            if (entity.canUpdateOffScreen()) sprite.update();
+            if (entity.canUpdateOffScreen()) sprite.update(deltaTime);
             //update sprite if allowed
         }
     }

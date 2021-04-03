@@ -1,5 +1,6 @@
 package jeremynoesen.pseudo3d.scene;
 
+import javafx.scene.canvas.GraphicsContext;
 import jeremynoesen.pseudo3d.scene.entity.Entity;
 import jeremynoesen.pseudo3d.scene.entity.Sprite;
 import jeremynoesen.pseudo3d.scene.renderer.Camera;
@@ -46,6 +47,16 @@ public class Scene {
      * scene renderer
      */
     private final Renderer renderer;
+    
+    /**
+     * last time a tick finished in nanoseconds
+     */
+    private float lastTick;
+    
+    /**
+     * last time a render finished in nanoseconds
+     */
+    private float lastRender;
     
     /**
      * create a new scene
@@ -100,11 +111,15 @@ public class Scene {
      * injections added to the scene
      */
     public void tick() {
+        float deltaTime = 0;
+        if (lastTick > 0) deltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
+        //delta time for ticking
+        
         injections.forEach(Runnable::run);
         // run all loop injections
         
         for (Entity entity : entities) {
-            if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickMotion();
+            if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickMotion(deltaTime);
         }
         // tick all entities' motion
         
@@ -112,13 +127,32 @@ public class Scene {
             if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickCollisions();
         }
         // tick all entities' collisions
+    
+        lastTick = System.nanoTime();
     }
     
     /**
      * render this scene to the main canvas
+     *
+     * @param graphicsContext graphics context to render to
      */
-    public void render() {
-        renderer.render();
+    public void render(GraphicsContext graphicsContext) {
+        float deltaTime = 0;
+        if (lastRender > 0) deltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
+        //delta time for rendering
+        
+        renderer.render(graphicsContext,deltaTime);
+        //render frame
+        
+        lastRender = System.nanoTime();
+    }
+    
+    /**
+     * reset the last values for ticking and rendering. should only be called if the game loop is paused
+     */
+    public void clearDeltaTime() {
+        lastRender = 0;
+        lastTick = 0;
     }
     
     /**

@@ -35,16 +35,6 @@ public class Pseudo3D extends Application {
     private static jeremynoesen.pseudo3d.scene.Scene activeScene;
     
     /**
-     * width of the window
-     */
-    private static int width;
-    
-    /**
-     * height of the window
-     */
-    private static int height;
-    
-    /**
      * whether the window can be resized
      */
     private static boolean resizable;
@@ -53,16 +43,6 @@ public class Pseudo3D extends Application {
      * title of window
      */
     private static String title;
-    
-    /**
-     * time taken in last iteration of the tick loop
-     */
-    private static float deltaTime;
-    
-    /**
-     * last time the tick loop was run
-     */
-    private static long last;
     
     /**
      * timeline loop for ticking operations
@@ -85,22 +65,18 @@ public class Pseudo3D extends Application {
      * @param title     window title
      */
     public static void launch(int width, int height, int framerate, int tickspeed, boolean resizable, String title) {
-        Pseudo3D.width = width;
-        Pseudo3D.height = height;
         Pseudo3D.resizable = resizable;
         Pseudo3D.title = title;
         
         tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickspeed),
                 ae -> {
-                    if (last > 0) deltaTime = (System.nanoTime() - last) / 1000000000.0f;
-                    last = System.nanoTime();
                     activeScene.tick();
                 }));
         renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / framerate),
                 ae -> {
                     canvas.setWidth(scene.getWidth());
                     canvas.setHeight(scene.getHeight());
-                    activeScene.render();
+                    activeScene.render(canvas.getGraphicsContext2D());
                 }));
         
         canvas = new Canvas(width, height);
@@ -140,6 +116,7 @@ public class Pseudo3D extends Application {
     public void stop() throws Exception {
         renderLoop.stop();
         tickLoop.stop();
+        activeScene.clearDeltaTime();
         super.stop();
     }
     
@@ -149,8 +126,7 @@ public class Pseudo3D extends Application {
     public static void pause() {
         renderLoop.pause();
         tickLoop.pause();
-        deltaTime = 0;
-        last = 0;
+        activeScene.clearDeltaTime();
     }
     
     /**
@@ -186,14 +162,5 @@ public class Pseudo3D extends Application {
      */
     public static void setActiveScene(jeremynoesen.pseudo3d.scene.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
-    }
-    
-    /**
-     * get the time taken for the last iteration of the tick loop
-     *
-     * @return delta time
-     */
-    public static float getDeltaTime() {
-        return deltaTime;
     }
 }

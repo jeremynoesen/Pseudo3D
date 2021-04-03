@@ -3,7 +3,6 @@ package jeremynoesen.pseudo3d.scene.entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import jeremynoesen.pseudo3d.Pseudo3D;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -206,12 +205,13 @@ public class Sprite {
     
     /**
      * set the current frame to the next available frame based on elapsed time
+     *
+     * @param deltaTime time elapsed for the render frame
      */
-    public void update() {
-        if (images != null && !images.isEmpty()) {
-            float renderStep = Pseudo3D.getDeltaTime();
-            currentFrame = currentFrame + (frameStep / renderStep) <
-                    images.size() ? currentFrame + (frameStep / renderStep) : 0;
+    public void update(float deltaTime) {
+        if (images != null && !images.isEmpty()) { ;
+            currentFrame = currentFrame + (frameStep / deltaTime) <
+                    images.size() ? currentFrame + (frameStep / deltaTime) : 0;
             image = images.get((int) Math.floor(currentFrame));
         }
     }
