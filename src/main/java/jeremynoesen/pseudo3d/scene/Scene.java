@@ -51,12 +51,12 @@ public class Scene {
     /**
      * last time a tick finished in nanoseconds
      */
-    private float lastTick;
+    private long lastTick;
     
     /**
      * last time a render finished in nanoseconds
      */
-    private float lastRender;
+    private long lastRender;
     
     /**
      * create a new scene
