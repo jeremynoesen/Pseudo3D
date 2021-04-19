@@ -49,7 +49,7 @@ public abstract class Physics extends Box {
     private Vector drag;
     
     /**
-     * roughness of object per axis, used for friction
+     * roughness of entity per axis, used for friction
      */
     private Vector roughness;
     
@@ -66,7 +66,12 @@ public abstract class Physics extends Box {
     /**
      * list of entities colliding with per side
      */
-    private final HashMap<Box.Side, HashSet<Physics>> collidingObjects;
+    private final HashMap<Side, HashSet<Physics>> collidingEntities;
+    
+    /**
+     * list of entities overlapping this one
+     */
+    private final HashSet<Physics> overlappingEntities;
     
     /**
      * entity's collision status
@@ -118,8 +123,9 @@ public abstract class Physics extends Box {
         kinematic = true;
         pushable = true;
         mass = 1.0f;
-        collidingObjects = new HashMap<>();
-        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new HashSet<>());
+        collidingEntities = new HashMap<>();
+        overlappingEntities = new HashSet<>();
+        for (Side s : Side.values()) collidingEntities.put(s, new HashSet<>());
     }
     
     /**
@@ -144,8 +150,9 @@ public abstract class Physics extends Box {
         mass = physics.mass;
         kinematic = physics.kinematic;
         pushable = physics.pushable;
-        collidingObjects = new HashMap<>();
-        for (Box.Side s : Box.Side.values()) collidingObjects.put(s, new HashSet<>());
+        collidingEntities = new HashMap<>();
+        overlappingEntities = new HashSet<>(physics.overlappingEntities);
+        for (Side s : Side.values()) collidingEntities.put(s, new HashSet<>(physics.collidingEntities.get(s)));
     }
     
     /**
@@ -166,17 +173,17 @@ public abstract class Physics extends Box {
     private void updateNetForce() {
         netForce = new Vector();
         //reset net force to 0 on all axes
-    
+        
         netForce = netForce.add(appliedForce);
         //add applied force
-    
+        
         netForce = netForce.add(gravity.multiply(mass));
         //add weight force
-    
+        
         if (colliding) {
             //todo friction
         }
-    
+        
         //todo drag
     }
     
@@ -186,14 +193,14 @@ public abstract class Physics extends Box {
     private void updateKinematics() {
         acceleration = netForce.divide(mass);
         //get acceleration from net force
-    
+        
         velocity = velocity.add(acceleration.multiply(deltaTime));
         //add acceleration to velocity
-    
+        
         if (colliding) {
             //todo momentum
         }
-    
+        
         setPosition(position.add(velocity.multiply(deltaTime)));
         //add velocity to position
     }
@@ -206,22 +213,23 @@ public abstract class Physics extends Box {
         
         colliding = false;
         overlapping = false;
-        collidingObjects.values().forEach(HashSet::clear);
+        collidingEntities.values().forEach(HashSet::clear);
+        overlappingEntities.clear();
         //reset all collision data
         
         for (Entity entity : scene.getEntities()) {
             //loop through all entities in scene
             if (entity != this && (entity.isOnScreen() || entity.canUpdateOffScreen())) {
                 //check that this is not itself, or can't be checked at the moment
-                if (overlaps(entity)) {
+                if (super.overlaps(entity)) {
                     //check for an overlap
                     if (entity.isSolid() && solid) {
                         //if this and other entity can collide
                         collideWith(entity);
                         //do the collision calculations
                     } else {
-                        overlapping = true;
-                        //set overlapping
+                        overlapWith(entity);
+                        //do overlap
                     }
                 }
             }
@@ -282,7 +290,7 @@ public abstract class Physics extends Box {
                 setPosition(position.setX(position.getX() - (distance * dir)));
                 // fix entity position so it is not overlapping
             }
-            collidingObjects.get(dir == -1 ? Box.Side.LEFT : Box.Side.RIGHT).add(physics);
+            collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
             //add to colliding entities for the colliding side
         } else if (axis == 2) {
             if (velocity.getY() * dir > 0) {
@@ -290,15 +298,25 @@ public abstract class Physics extends Box {
                     distance *= velocity.getY() / (velocity.getY() - physics.velocity.getY());
                 setPosition(position.setY(position.getY() - (distance * dir)));
             }
-            collidingObjects.get(dir == -1 ? Box.Side.BOTTOM : Box.Side.TOP).add(physics);
+            collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
         } else {
             if (velocity.getZ() * dir > 0) {
                 if (Math.signum(velocity.getZ()) == -Math.signum(physics.velocity.getZ()))
                     distance *= velocity.getZ() / (velocity.getZ() - physics.velocity.getZ());
                 setPosition(position.setZ(position.getZ() - (distance * dir)));
             }
-            collidingObjects.get(dir == -1 ? Box.Side.BACK : Box.Side.FRONT).add(physics);
+            collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
         }
+    }
+    
+    /**
+     * set this entity as overlapping another
+     *
+     * @param physics entity to overlap with
+     */
+    private void overlapWith(Physics physics) {
+        overlapping = true;
+        overlappingEntities.add(physics);
     }
     
     /**
@@ -471,11 +489,9 @@ public abstract class Physics extends Box {
      * @return true if this entity collides with the other entity
      */
     public boolean collidesWith(Physics physics) {
-        
-        for (HashSet<Physics> list : collidingObjects.values()) {
+        for (HashSet<Physics> list : collidingEntities.values()) {
             if (list.contains(physics)) return true;
         }
-        
         return false;
     }
     
@@ -485,23 +501,44 @@ public abstract class Physics extends Box {
      * @param side side of the entity
      * @return true if the entity is colliding on the side
      */
-    public boolean collidesOn(Box.Side side) {
-        return !collidingObjects.get(side).isEmpty();
+    public boolean collidesOn(Side side) {
+        return !collidingEntities.get(side).isEmpty();
     }
     
     /**
      * check if an entity collides with this one on a specific side
      *
-     * @param physics object to check if colliding with
-     * @param side    side of object
-     * @return true if the object is colliding with the other object on the specified side
+     * @param physics entity to check if colliding with
+     * @param side    side of entity
+     * @return true if the entity is colliding with the other entity on the specified side
      */
-    public boolean collidesWithOn(Physics physics, Box.Side side) {
-        return collidingObjects.get(side).contains(physics);
+    public boolean collidesWithOn(Physics physics, Side side) {
+        return collidingEntities.get(side).contains(physics);
     }
     
     /**
-     * see if this object is overlapping any object
+     * get all entities colliding on the specified side
+     *
+     * @param side side to get colliding entities of
+     * @return set of all entities colliding on the side
+     */
+    public HashSet<Physics> getCollidingEntities(Side side) {
+        return collidingEntities.get(side);
+    }
+    
+    /**
+     * get a set of all entities colliding with this one
+     *
+     * @return all colliding entities
+     */
+    public HashSet<Physics> getCollidingEntities() {
+        HashSet<Physics> allEntities = new HashSet<>();
+        for (Side side : Side.values()) allEntities.addAll(collidingEntities.get(side));
+        return allEntities;
+    }
+    
+    /**
+     * see if this entity is overlapping any entity
      *
      * @return true if overlapping
      */
@@ -510,18 +547,37 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * check if the object is kinematic
+     * check if this entity overlaps another
      *
-     * @return true if object is kinematic
+     * @param physics entity to check with
+     * @return true if this entity overlaps the specified entity
+     */
+    public boolean overlaps(Physics physics) {
+        return overlappingEntities.contains(physics);
+    }
+    
+    /**
+     * get the set of all entities overlapping this one
+     *
+     * @return set of overlapping entities
+     */
+    public HashSet<Physics> getOverlappingEntities() {
+        return overlappingEntities;
+    }
+    
+    /**
+     * check if the entity is kinematic
+     *
+     * @return true if entity is kinematic
      */
     public boolean isKinematic() {
         return kinematic;
     }
     
     /**
-     * set an object to be kinematic or not
+     * set an entity to be kinematic or not
      *
-     * @param kinematic true to allow object motion self collision checks
+     * @param kinematic true to allow entity motion
      */
     public Physics setKinematic(boolean kinematic) {
         this.kinematic = kinematic;
@@ -529,16 +585,16 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * check if the object is pushable
+     * check if the entity is pushable
      *
-     * @return true if an object is pushable
+     * @return true if an entity is pushable
      */
     public boolean isPushable() {
         return pushable;
     }
     
     /**
-     * set the pushablility status of the object
+     * set the pushablility status of the entity
      *
      * @param pushable true to allow pushing
      */
@@ -548,18 +604,18 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * get the mass of the object
+     * get the mass of the entity
      *
-     * @return mass of the object
+     * @return mass of the entity
      */
     public float getMass() {
         return mass;
     }
     
     /**
-     * set the mass of the object
+     * set the mass of the entity
      *
-     * @param mass new mass for object
+     * @param mass new mass for entity
      */
     public Physics setMass(float mass) {
         this.mass = mass;
@@ -616,7 +672,7 @@ public abstract class Physics extends Box {
                 Objects.equals(drag, that.drag) &&
                 Objects.equals(roughness, that.roughness) &&
                 Objects.equals(scene, that.scene) &&
-                Objects.equals(collidingObjects, that.collidingObjects) &&
+                Objects.equals(collidingEntities, that.collidingEntities) &&
                 super.equals(that);
     }
 }
