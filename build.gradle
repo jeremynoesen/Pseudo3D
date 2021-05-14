@@ -16,12 +16,10 @@ javafx {
 
 repositories {
     mavenCentral()
-    jcenter()
     mavenLocal()
 }
 
 dependencies {
-    implementation 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
     implementation 'org.apache.commons:commons-text:1.6'
 }
 
@@ -30,6 +28,5 @@ application {
 }
 
 shadowJar {
-    mergeServiceFiles()
     archiveFileName = 'Pseudo3D.jar'
 }
