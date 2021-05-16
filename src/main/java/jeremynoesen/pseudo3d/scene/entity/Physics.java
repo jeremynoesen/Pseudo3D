@@ -1,17 +1,21 @@
 package jeremynoesen.pseudo3d.scene.entity;
 
-import jeremynoesen.pseudo3d.scene.Scene;
 import jeremynoesen.pseudo3d.scene.util.Box;
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.*;
 
 /**
- * axis-aligned bounding box entity physics
+ * axis-aligned bounding box physics entity
  *
  * @author Jeremy Noesen
  */
 public abstract class Physics extends Box {
+    
+    /**
+     * entities this entity is in a scene with
+     */
+    private LinkedList<Physics> entities;
     
     /**
      * gravity applied to the entity (meters / second ^ 2)
@@ -52,11 +56,6 @@ public abstract class Physics extends Box {
      * roughness of entity per axis, used for friction
      */
     private Vector roughness;
-    
-    /**
-     * scene the entity is in
-     */
-    private Scene scene;
     
     /**
      * if an entity is solid, allowing collision
@@ -104,6 +103,11 @@ public abstract class Physics extends Box {
     private float deltaTime;
     
     /**
+     * whether the entity can update or not
+     */
+    private boolean updatable;
+    
+    /**
      * create a new aabb entity with default values
      */
     public Physics() {
@@ -116,12 +120,13 @@ public abstract class Physics extends Box {
         acceleration = new Vector();
         drag = new Vector(0.01f, 0.01f, 0.01f);
         roughness = new Vector(0.1f, 0.1f, 0.1f);
-        scene = null;
+        entities = null;
         solid = true;
         colliding = false;
         overlapping = false;
         kinematic = true;
         pushable = true;
+        updatable = true;
         mass = 1.0f;
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>();
@@ -143,15 +148,16 @@ public abstract class Physics extends Box {
         acceleration = physics.acceleration;
         drag = physics.drag;
         roughness = physics.roughness;
-        scene = physics.scene;
         solid = physics.solid;
         colliding = physics.colliding;
         overlapping = physics.overlapping;
         mass = physics.mass;
         kinematic = physics.kinematic;
         pushable = physics.pushable;
+        updatable = physics.updatable;
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>(physics.overlappingEntities);
+        entities = physics.entities;
         for (Side s : Side.values()) collidingEntities.put(s, new HashSet<>(physics.collidingEntities.get(s)));
     }
     
@@ -209,7 +215,7 @@ public abstract class Physics extends Box {
      * check if a entity has collided with this entity
      */
     public void tickCollisions() {
-        if (!kinematic) return;
+        if (!kinematic || entities == null) return;
         
         colliding = false;
         overlapping = false;
@@ -217,9 +223,9 @@ public abstract class Physics extends Box {
         overlappingEntities.clear();
         //reset all collision data
         
-        for (Entity entity : scene.getEntities()) {
+        for (Physics entity : entities) {
             //loop through all entities in scene
-            if (entity != this && (entity.isOnScreen() || entity.canUpdateOffScreen())) {
+            if (entity != this && updatable) {
                 //check that this is not itself, or can't be checked at the moment
                 if (super.overlaps(entity)) {
                     //check for an overlap
@@ -436,25 +442,6 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * set the scene this entity is in
-     *
-     * @param scene scene for collisions
-     */
-    public Physics setScene(Scene scene) {
-        this.scene = scene;
-        return this;
-    }
-    
-    /**
-     * get the scene the collisions are set to occur in
-     *
-     * @return scene for collisions
-     */
-    public Scene getScene() {
-        return scene;
-    }
-    
-    /**
      * check if an entity can be collided with
      *
      * @return true if collidable
@@ -651,6 +638,34 @@ public abstract class Physics extends Box {
     }
     
     /**
+     * set the entities the object is in a scene with, only callable by parent class
+     *
+     * @param entities list of physics objects
+     */
+    @SuppressWarnings("unchecked")
+    protected void setEntities(LinkedList<? extends Physics> entities) {
+        this.entities = (LinkedList<Physics>) entities;
+    }
+    
+    /**
+     * set if the entity can update, called by parent class for special function
+     *
+     * @param updatable true to allow updating
+     */
+    protected void setUpdatable(boolean updatable) {
+        this.updatable = updatable;
+    }
+    
+    /**
+     * check if the entity can update, called by parent class for special function
+     *
+     * @return true if entity can update
+     */
+    protected boolean isUpdatable() {
+        return updatable;
+    }
+    
+    /**
      * check if another set of physics data is equal to this one
      *
      * @param o object to check for equality
@@ -671,7 +686,6 @@ public abstract class Physics extends Box {
                 Objects.equals(acceleration, that.acceleration) &&
                 Objects.equals(drag, that.drag) &&
                 Objects.equals(roughness, that.roughness) &&
-                Objects.equals(scene, that.scene) &&
                 Objects.equals(collidingEntities, that.collidingEntities) &&
                 super.equals(that);
     }

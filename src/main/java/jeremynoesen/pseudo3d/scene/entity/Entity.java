@@ -12,6 +12,11 @@ import java.util.Objects;
 public class Entity extends Physics {
     
     /**
+     * scene the entity is in
+     */
+    private Scene scene;
+    
+    /**
      * image that represents the entity when rendered
      */
     private Sprite sprite;
@@ -31,6 +36,7 @@ public class Entity extends Physics {
      */
     public Entity() {
         super();
+        scene = null;
         sprite = null;
         onScreen = false;
         updateOffScreen = false;
@@ -44,6 +50,7 @@ public class Entity extends Physics {
     public Entity(Entity entity) {
         super(entity);
         if (entity.sprite != null) sprite = new Sprite(entity.sprite);
+        this.scene = entity.scene;
     }
     
     /**
@@ -79,9 +86,10 @@ public class Entity extends Physics {
      *
      * @param onScreen true to be shown on screen
      */
-    public Entity setOnScreen(boolean onScreen) {
+    public void setOnScreen(boolean onScreen) {
         this.onScreen = onScreen;
-        return this;
+        if (onScreen || updateOffScreen) setUpdatable(true);
+        else setUpdatable(false);
     }
     
     /**
@@ -109,13 +117,22 @@ public class Entity extends Physics {
      * @param scene scene to place entity in
      */
     public Entity setScene(Scene scene) {
-        if (scene != null && !scene.getEntities().contains(this)) {
-            scene.getEntities().add(this);
-        } else if (scene == null && super.getScene() != null) {
-            super.getScene().getEntities().remove(this);
+        if (scene != null) {
+            super.setEntities(scene.getEntities());
+        } else {
+            super.setEntities(null);
         }
-        super.setScene(scene);
+        this.scene = scene;
         return this;
+    }
+    
+    /**
+     * get the scene the entity is in
+     *
+     * @return scene entity is in
+     */
+    public Scene getScene() {
+        return scene;
     }
     
     /**
@@ -131,6 +148,7 @@ public class Entity extends Physics {
         if (!super.equals(o)) return false;
         Entity that = (Entity) o;
         return Objects.equals(sprite, that.sprite) &&
+                Objects.equals(scene, that.scene) &&
                 super.equals(that);
     }
 }
