@@ -81,12 +81,12 @@ public class Sprite {
      *
      * @param images    all images of the animated sprite
      * @param frameRate frames per second of the sprite
-     * @param width  sprite width in grid units
-     * @param height sprite height in grid units
+     * @param width     sprite width in grid units
+     * @param height    sprite height in grid units
      */
     public Sprite(float width, float height, ArrayList<Image> images, float frameRate) {
         this(width, height, images.get(0));
-        this.frameStep = frameRate / 1000.0f;
+        this.frameStep = 1 / frameRate;
         this.currentFrame = 0;
         this.images = images;
     }
@@ -190,7 +190,7 @@ public class Sprite {
      * @return framerate of sprite
      */
     public float getFramerate() {
-        return frameStep * 1000;
+        return 1 / frameStep;
     }
     
     /**
@@ -199,7 +199,7 @@ public class Sprite {
      * @param framerate frames per second
      */
     public Sprite setFramerate(float framerate) {
-        frameStep = framerate / 1000f;
+        frameStep = 1 / framerate;
         return this;
     }
     
@@ -209,9 +209,9 @@ public class Sprite {
      * @param deltaTime time elapsed for the render frame
      */
     public void update(float deltaTime) {
-        if (images != null && !images.isEmpty()) { ;
-            currentFrame = currentFrame + (frameStep / deltaTime) <
-                    images.size() ? currentFrame + (frameStep / deltaTime) : 0;
+        if (images != null && !images.isEmpty()) {
+            currentFrame = currentFrame + (deltaTime / frameStep) <
+                    images.size() ? currentFrame + (deltaTime / frameStep) : 0;
             image = images.get((int) Math.floor(currentFrame));
         }
     }
