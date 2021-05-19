@@ -9,6 +9,7 @@ import jeremynoesen.pseudo3d.scene.util.Box;
 import jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * scene renderer, will turn a scene into a render on a javafx canvas
@@ -53,7 +54,7 @@ public class Renderer {
     /**
      * create a new renderer for the specified scene
      *
-     * @param scene  scene to render
+     * @param scene scene to render
      */
     public Renderer(Scene scene) {
         this.scene = scene;
@@ -63,7 +64,7 @@ public class Renderer {
      * render the next full frame
      *
      * @param graphicsContext graphics context to draw to
-     * @param deltaTime time elapsed in last frame, used for sprite updating
+     * @param deltaTime       time elapsed in last frame, used for sprite updating
      */
     public void render(GraphicsContext graphicsContext, float deltaTime) {
         this.graphicsContext = graphicsContext;
@@ -81,7 +82,7 @@ public class Renderer {
     private void init() {
         scene.getEntities().sort(zComparator);
         //sort entities by z position so entities can be drawn in front of others
-    
+        
         graphicsContext.setImageSmoothing(false);
         //set rendering settings for speed
         
@@ -125,7 +126,7 @@ public class Renderer {
     /**
      * draw an entity to the canvas
      *
-     * @param entity    entity to draw to the canvas
+     * @param entity entity to draw to the canvas
      */
     private void drawEntity(Entity entity) {
         Vector objPos = entity.getPosition().multiply(scene.getGridScale());
@@ -228,5 +229,22 @@ public class Renderer {
             if (entity.canUpdateOffScreen()) sprite.update(deltaTime);
             //update sprite if allowed
         }
+    }
+    
+    /**
+     * check if two renderer objects are equal
+     *
+     * @param o object to check
+     * @return true if equal
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Renderer renderer = (Renderer) o;
+        return Objects.equals(scene, renderer.scene) &&
+                Objects.equals(camera, renderer.camera) &&
+                Objects.equals(renderPos, renderer.renderPos) &&
+                Objects.equals(graphicsContext, renderer.graphicsContext);
     }
 }

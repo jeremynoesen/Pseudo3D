@@ -127,7 +127,7 @@ public class Scene {
             if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickCollisions();
         }
         // tick all entities' collisions
-    
+        
         lastTick = System.nanoTime();
     }
     
@@ -141,7 +141,7 @@ public class Scene {
         if (lastRender > 0) deltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
         //delta time for rendering
         
-        renderer.render(graphicsContext,deltaTime);
+        renderer.render(graphicsContext, deltaTime);
         //render frame
         
         lastRender = System.nanoTime();
@@ -284,10 +284,12 @@ public class Scene {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Scene that = (Scene) o;
-        return Objects.equals(entities, that.entities) &&
-                camera.equals(that.camera) &&
-                Objects.equals(background, that.background) &&
-                Objects.equals(injections, that.injections);
+        Scene scene = (Scene) o;
+        return Objects.equals(entities, scene.entities) &&
+                Objects.equals(camera, scene.camera) &&
+                Objects.equals(background, scene.background) &&
+                Objects.equals(gridScale, scene.gridScale) &&
+                Objects.equals(injections, scene.injections) &&
+                Objects.equals(renderer, scene.renderer);
     }
 }

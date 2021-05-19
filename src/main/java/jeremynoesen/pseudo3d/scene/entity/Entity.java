@@ -146,9 +146,10 @@ public class Entity extends Physics {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        Entity that = (Entity) o;
-        return Objects.equals(sprite, that.sprite) &&
-                Objects.equals(scene, that.scene) &&
-                super.equals(that);
+        Entity entity = (Entity) o;
+        return onScreen == entity.onScreen &&
+                updateOffScreen == entity.updateOffScreen &&
+                Objects.equals(scene, entity.scene) &&
+                Objects.equals(sprite, entity.sprite);
     }
 }
