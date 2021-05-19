@@ -675,18 +675,24 @@ public abstract class Physics extends Box {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Physics that = (Physics) o;
-        return solid == that.solid &&
-                colliding == that.colliding &&
-                overlapping == that.overlapping &&
-                kinematic == that.kinematic &&
-                Objects.equals(gravity, that.gravity) &&
-                Objects.equals(position, that.position) &&
-                Objects.equals(velocity, that.velocity) &&
-                Objects.equals(acceleration, that.acceleration) &&
-                Objects.equals(drag, that.drag) &&
-                Objects.equals(roughness, that.roughness) &&
-                Objects.equals(collidingEntities, that.collidingEntities) &&
-                super.equals(that);
+        if (!super.equals(o)) return false;
+        Physics physics = (Physics) o;
+        return solid == physics.solid &&
+                colliding == physics.colliding &&
+                overlapping == physics.overlapping &&
+                kinematic == physics.kinematic &&
+                pushable == physics.pushable &&
+                Float.compare(physics.mass, mass) == 0 &&
+                updatable == physics.updatable &&
+                Objects.equals(gravity, physics.gravity) &&
+                Objects.equals(appliedForce, physics.appliedForce) &&
+                Objects.equals(netForce, physics.netForce) &&
+                Objects.equals(position, physics.position) &&
+                Objects.equals(velocity, physics.velocity) &&
+                Objects.equals(acceleration, physics.acceleration) &&
+                Objects.equals(drag, physics.drag) &&
+                Objects.equals(roughness, physics.roughness) &&
+                Objects.equals(collidingEntities, physics.collidingEntities) &&
+                Objects.equals(overlappingEntities, physics.overlappingEntities);
     }
 }
