@@ -119,14 +119,14 @@ public class Scene {
         // run all loop injections
         
         for (Entity entity : entities) {
-            if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickMotion(deltaTime);
+            entity.tickMotion(deltaTime);
         }
-        // tick all entities' motion
+        // tick all entities motion
         
         for (Entity entity : entities) {
-            if (entity.isOnScreen() || entity.canUpdateOffScreen()) entity.tickCollisions();
+            entity.tickCollisions();
         }
-        // tick all entities' collisions
+        // tick all entities collisions
         
         lastTick = System.nanoTime();
     }
