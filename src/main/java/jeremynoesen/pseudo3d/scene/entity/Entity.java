@@ -82,9 +82,10 @@ public class Entity extends Physics {
     }
     
     /**
-     * set if the entity is on screen. manually setting this will do nothing, as this value is automatically updated
+     * set if the entity is on screen. manually setting this will do nothing, as this value is automatically updated by
+     * the renderer
      *
-     * @param onScreen true to be shown on screen
+     * @param onScreen true when visible on screen
      */
     public void setOnScreen(boolean onScreen) {
         this.onScreen = onScreen;

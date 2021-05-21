@@ -167,7 +167,7 @@ public abstract class Physics extends Box {
      * @param deltaTime time elapsed to use in calculation
      */
     public void tickMotion(float deltaTime) {
-        if (!kinematic) return;
+        if (!kinematic || !updatable) return;
         this.deltaTime = deltaTime;
         updateNetForce();
         updateKinematics();
@@ -215,7 +215,7 @@ public abstract class Physics extends Box {
      * check if a entity has collided with this entity
      */
     public void tickCollisions() {
-        if (!kinematic || entities == null) return;
+        if (!kinematic || !updatable || entities == null) return;
         
         colliding = false;
         overlapping = false;
@@ -225,7 +225,7 @@ public abstract class Physics extends Box {
         
         for (Physics entity : entities) {
             //loop through all entities in scene
-            if (entity != this && updatable) {
+            if (entity != this && entity.updatable) {
                 //check that this is not itself, or can't be checked at the moment
                 if (super.overlaps(entity)) {
                     //check for an overlap
