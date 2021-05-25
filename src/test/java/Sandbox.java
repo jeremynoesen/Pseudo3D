@@ -25,27 +25,28 @@ public class Sandbox {
      * @param args program arguments
      */
     public static void main(String[] args) throws FileNotFoundException {
-        Sprite playerFront = new Sprite(1, 2, new Image(new FileInputStream("src/test/resources/images/player/front.png")));
-        Sprite playerBack = new Sprite(1, 2, new Image(new FileInputStream("src/test/resources/images/player/back.png")));
-        Sprite playerLeft = new Sprite(0.75f, 2, new Image(new FileInputStream("src/test/resources/images/player/left.png")));
-        Sprite playerRight = new Sprite(0.75f, 2, new Image(new FileInputStream("src/test/resources/images/player/right.png")));
+        Sprite playerFront = new Sprite(0.85f, 2, new Image(new FileInputStream("src/test/resources/images/player/front.png")));
+        Sprite playerBack = new Sprite(0.85f, 2, new Image(new FileInputStream("src/test/resources/images/player/back.png")));
+        Sprite playerLeft = new Sprite(0.6f, 2, new Image(new FileInputStream("src/test/resources/images/player/left.png")));
+        Sprite playerRight = new Sprite(0.6f, 2, new Image(new FileInputStream("src/test/resources/images/player/right.png")));
         Sprite floor = new Sprite(1, 1, new Image(new FileInputStream("src/test/resources/images/floor.png")));
-        Sprite background = new Sprite(21, 21, new Image(new FileInputStream("src/test/resources/images/background.png")));
+        Sprite background = new Sprite(16, 16, new Image(new FileInputStream("src/test/resources/images/background.png")));
         //load all sprites
     
         Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
         //launch program
     
         Entity player = (Entity) new Entity()
+                .setUpdateOffScreen(true)
                 .setSprite(playerFront)
                 .setMass(1f)
-                .setDimensions(1, 2, 1);
+                .setDimensions(0.85f, 2, 0.85f);
         //create player entity
         
-        Entity dummy = new Entity(player);
+        Entity dummy = new Entity(player).setUpdateOffScreen(false);
         //create dummy entity
         
-        Camera camera = new Camera().setFieldOfView((float) Math.toRadians(40));
+        Camera camera = new Camera().setFieldOfView((float) Math.toRadians(49));
         //create camera
         
         Scene scene = new Scene()
@@ -57,7 +58,7 @@ public class Sandbox {
         //init scene
         
         for (int j = -8; j <= 8; j++) {
-            for (int i = -4; i <= 0; i++) {
+            for (int i = -3; i <= 0; i++) {
                 Entity block = (Entity) new Entity()
                         .setSprite(floor)
                         .setPosition(new Vector(j, -4.75f, i))
@@ -146,7 +147,7 @@ public class Sandbox {
                 dummy.setPosition(new Vector());
                 dummy.setVelocity(new Vector());
                 dummy.setAcceleration(new Vector());
-                camera.setFieldOfView((float) Math.toRadians(40));
+                camera.setFieldOfView((float) Math.toRadians(49));
             }
         });
     }
