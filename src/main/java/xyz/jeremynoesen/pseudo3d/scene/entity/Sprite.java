@@ -1,4 +1,4 @@
-package jeremynoesen.pseudo3d.scene.entity;
+package xyz.jeremynoesen.pseudo3d.scene.entity;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;

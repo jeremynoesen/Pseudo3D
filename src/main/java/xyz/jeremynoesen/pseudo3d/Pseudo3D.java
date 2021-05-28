@@ -1,4 +1,4 @@
-package jeremynoesen.pseudo3d;
+package xyz.jeremynoesen.pseudo3d;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -9,8 +9,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import jeremynoesen.pseudo3d.input.Keyboard;
-import jeremynoesen.pseudo3d.input.Mouse;
+import xyz.jeremynoesen.pseudo3d.input.Keyboard;
+import xyz.jeremynoesen.pseudo3d.input.Mouse;
 
 /**
  * main application for any project using Pseudo3D
@@ -32,7 +32,7 @@ public class Pseudo3D extends Application {
     /**
      * active scene to render and tick
      */
-    private static jeremynoesen.pseudo3d.scene.Scene activeScene;
+    private static xyz.jeremynoesen.pseudo3d.scene.Scene activeScene;
     
     /**
      * whether the window can be resized
@@ -151,7 +151,7 @@ public class Pseudo3D extends Application {
      *
      * @return active scene
      */
-    public static jeremynoesen.pseudo3d.scene.Scene getActiveScene() {
+    public static xyz.jeremynoesen.pseudo3d.scene.Scene getActiveScene() {
         return activeScene;
     }
     
@@ -160,7 +160,7 @@ public class Pseudo3D extends Application {
      *
      * @param activeScene pseudo3d scene
      */
-    public static void setActiveScene(jeremynoesen.pseudo3d.scene.Scene activeScene) {
+    public static void setActiveScene(xyz.jeremynoesen.pseudo3d.scene.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
     }
 }
