@@ -1,6 +1,6 @@
-package jeremynoesen.pseudo3d.scene.entity;
+package xyz.jeremynoesen.pseudo3d.scene.entity;
 
-import jeremynoesen.pseudo3d.scene.Scene;
+import xyz.jeremynoesen.pseudo3d.scene.Scene;
 
 import java.util.Objects;
 

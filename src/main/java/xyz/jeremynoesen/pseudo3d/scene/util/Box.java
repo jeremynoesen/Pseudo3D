@@ -1,4 +1,4 @@
-package jeremynoesen.pseudo3d.scene.util;
+package xyz.jeremynoesen.pseudo3d.scene.util;
 
 /**
  * simple box with some checks and mathematical operators

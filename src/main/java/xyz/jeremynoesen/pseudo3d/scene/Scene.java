@@ -1,11 +1,11 @@
-package jeremynoesen.pseudo3d.scene;
+package xyz.jeremynoesen.pseudo3d.scene;
 
 import javafx.scene.canvas.GraphicsContext;
-import jeremynoesen.pseudo3d.scene.entity.Entity;
-import jeremynoesen.pseudo3d.scene.entity.Sprite;
-import jeremynoesen.pseudo3d.scene.renderer.Camera;
-import jeremynoesen.pseudo3d.scene.renderer.Renderer;
-import jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.scene.entity.Entity;
+import xyz.jeremynoesen.pseudo3d.scene.entity.Sprite;
+import xyz.jeremynoesen.pseudo3d.scene.renderer.Camera;
+import xyz.jeremynoesen.pseudo3d.scene.renderer.Renderer;
+import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.HashSet;
 import java.util.LinkedList;
