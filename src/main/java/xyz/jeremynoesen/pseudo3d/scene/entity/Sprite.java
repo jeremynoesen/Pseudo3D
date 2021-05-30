@@ -50,10 +50,20 @@ public class Sprite {
     private float frameStep;
     
     /**
+     * whether the sprite animation should loop or not
+     */
+    private boolean loop;
+    
+    /**
+     * whether the sprite animation is paused or not
+     */
+    private boolean paused;
+    
+    /**
      * create a new image sprite
      *
-     * @param width  sprite width
-     * @param height sprite height
+     * @param width  sprite width in grid units
+     * @param height sprite height in grid units
      */
     public Sprite(float width, float height, Image image) {
         this.image = image;
@@ -83,12 +93,14 @@ public class Sprite {
      * @param frameRate frames per second of the sprite
      * @param width     sprite width in grid units
      * @param height    sprite height in grid units
+     * @param loop      true to allow sprite to loop
      */
-    public Sprite(float width, float height, ArrayList<Image> images, float frameRate) {
+    public Sprite(float width, float height, ArrayList<Image> images, float frameRate, boolean loop) {
         this(width, height, images.get(0));
         this.frameStep = 1 / frameRate;
         this.currentFrame = 0;
         this.images = images;
+        this.loop = loop;
     }
     
     /**
@@ -104,6 +116,8 @@ public class Sprite {
         if (sprite.images != null) images = new ArrayList<>(sprite.images);
         frameStep = sprite.frameStep;
         currentFrame = sprite.currentFrame;
+        loop = sprite.loop;
+        paused = sprite.paused;
     }
     
     /**
@@ -204,15 +218,62 @@ public class Sprite {
     }
     
     /**
-     * set the current frame to the next available frame based on elapsed time
+     * set the sprite to loop or not
+     *
+     * @param loop true to allow animation loop
+     */
+    public Sprite setLoop(boolean loop) {
+        this.loop = loop;
+        return this;
+    }
+    
+    /**
+     * check if the sprite can loop animation
+     *
+     * @return true if the animation can loop
+     */
+    public boolean canLoop() {
+        return loop;
+    }
+    
+    /**
+     * set the animation to be paused
+     *
+     * @param paused true to pause the animation
+     */
+    public Sprite setPaused(boolean paused) {
+        this.paused = paused;
+        return this;
+    }
+    
+    /**
+     * check if the animation is paused
+     *
+     * @return true if paused
+     */
+    public boolean isPaused() {
+        return paused;
+    }
+    
+    /**
+     * set the current frame to the next available frame based on elapsed time, usually called by the renderer
      *
      * @param deltaTime time elapsed for the render frame
      */
     public void update(float deltaTime) {
-        if (images != null && !images.isEmpty()) {
-            currentFrame = currentFrame + (deltaTime / frameStep) <
-                    images.size() ? currentFrame + (deltaTime / frameStep) : 0;
-            image = images.get((int) Math.floor(currentFrame));
+        if (!paused && images != null && !images.isEmpty()) {
+            if (currentFrame + (deltaTime / frameStep) >= images.size()) {
+                if (loop) {
+                    currentFrame = 0;
+                    image = images.get((int) currentFrame);
+                } else {
+                    paused = true;
+                    currentFrame = 0;
+                }
+            } else {
+                currentFrame = currentFrame + (deltaTime / frameStep);
+                image = images.get((int) Math.floor(currentFrame));
+            }
         }
     }
     
@@ -233,6 +294,8 @@ public class Sprite {
                 Double.compare(sprite.currentFrame, currentFrame) == 0 &&
                 Double.compare(sprite.frameStep, frameStep) == 0 &&
                 Objects.equals(image, sprite.image) &&
-                Objects.equals(images, sprite.images);
+                Objects.equals(images, sprite.images) &&
+                Objects.equals(loop, sprite.loop) &&
+                Objects.equals(paused, sprite.paused);
     }
 }
