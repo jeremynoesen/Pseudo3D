@@ -104,7 +104,7 @@ public class Pseudo3D extends Application {
         canvas.requestFocus();
         tickLoop.setCycleCount(Animation.INDEFINITE);
         renderLoop.setCycleCount(Animation.INDEFINITE);
-        unpause();
+        setPaused(false);
     }
     
     /**
@@ -121,20 +121,19 @@ public class Pseudo3D extends Application {
     }
     
     /**
-     * pause ticking and rendering
+     * pause or unpause the game loops
+     *
+     * @param paused true to pause
      */
-    public static void pause() {
-        renderLoop.pause();
-        tickLoop.pause();
-        activeScene.clearDeltaTime();
-    }
-    
-    /**
-     * unpause ticking and rendering
-     */
-    public static void unpause() {
-        renderLoop.play();
-        tickLoop.play();
+    public static void setPaused(boolean paused) {
+        if (paused) {
+            renderLoop.pause();
+            tickLoop.pause();
+            activeScene.clearDeltaTime();
+        } else {
+            renderLoop.play();
+            tickLoop.play();
+        }
     }
     
     /**
