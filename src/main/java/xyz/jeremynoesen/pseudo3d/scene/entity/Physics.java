@@ -204,8 +204,44 @@ public abstract class Physics extends Box {
         //add acceleration to velocity
         
         if (colliding) {
-            //todo momentum
+            float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
+            for (Side side : Side.values()) {
+                for (Physics physics : collidingEntities.get(side)) {
+                    if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
+                        //check if colliding and moving towards a side
+                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                            float sum = mass + physics.mass;
+                            float diff = mass - physics.mass;
+                            float v1 = vx;
+                            float v2 = physics.velocity.getX();
+                            vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                            physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        } else vx = 0;
+                        //calculate conservation of momentum only if entity is able to be moved at this time
+                    } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
+                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                            float sum = mass + physics.mass;
+                            float diff = mass - physics.mass;
+                            float v1 = vy;
+                            float v2 = physics.velocity.getY();
+                            vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                            physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        } else vy = 0;
+                    } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
+                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                            float sum = mass + physics.mass;
+                            float diff = mass - physics.mass;
+                            float v1 = vz;
+                            float v2 = physics.velocity.getZ();
+                            vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                            physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        } else vz = 0;
+                    }
+                }
+            }
+            velocity = new Vector(vx, vy, vz);
         }
+        //apply conservation of momentum
         
         setPosition(position.add(velocity.multiply(deltaTime)));
         //add velocity to position
