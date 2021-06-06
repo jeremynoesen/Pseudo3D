@@ -213,7 +213,7 @@ public class Vector {
      * @return scaled vector
      */
     public Vector divide(float scale) {
-        return new Vector(x * scale, y * scale, z * scale);
+        return new Vector(x / scale, y / scale, z / scale);
     }
     
     /**
