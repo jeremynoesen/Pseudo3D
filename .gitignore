@@ -1,14 +1,10 @@
-/gradlew
-/gradlew.bat
 /settings.gradle
 /.gradle/
 /.idea/
-/gradle/
 *.class
 *.log
 *.ctxt
 .mtj.tmp/
-*.jar
 *.war
 *.nar
 *.ear
@@ -19,8 +15,4 @@ hs_err_pid*
 .idea/
 out/
 *.iml
-.gradle/
-gradle/
 build/
-gradlew
-gradlew.bat

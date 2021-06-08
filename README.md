@@ -14,7 +14,7 @@ Pseudo3D was originally just a 2D game I was working on. Later, that transformed
 For now, view the Sandbox class in `src/test/java` for a basic idea of how to create a simple scene. More details will be given when the wiki is created.
 
 ## Building
-This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. In the folder of the project, you can open terminal and run `gradle build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency in your IDE of choice.
+This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. In the folder of the project, you can open terminal and run `./gradlew build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency in your IDE of choice.
 
 ## Demonstration
 The following are recordings of the Pseudo3D renderer in action. You can also try these out for yourself by running the `Sandbox` class under `src/test/java`.

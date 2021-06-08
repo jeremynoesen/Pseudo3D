@@ -5,7 +5,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
 
-group 'jeremynoesen.pseudo3d'
+group 'xyz.jeremynoesen.pseudo3d'
 version '1.0.0'
 compileJava.options.encoding = 'UTF-8'
 
@@ -22,7 +22,7 @@ repositories {
 dependencies {}
 
 application {
-    mainClassName = 'jeremynoesen.pseudo3d.Pseudo3D'
+    mainClassName = 'xyz.jeremynoesen.pseudo3d.Pseudo3D'
 }
 
 shadowJar {
