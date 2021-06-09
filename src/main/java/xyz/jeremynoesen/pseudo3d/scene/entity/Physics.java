@@ -215,7 +215,7 @@ public abstract class Physics extends Box {
                             float v1 = vx;
                             float v2 = physics.velocity.getX();
                             vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            physics.setVelocity(physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1)));
                         } else vx = 0;
                         //calculate conservation of momentum only if entity is able to be moved at this time
                     } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
@@ -225,7 +225,7 @@ public abstract class Physics extends Box {
                             float v1 = vy;
                             float v2 = physics.velocity.getY();
                             vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            physics.setVelocity(physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1)));
                         } else vy = 0;
                     } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
                         if (physics.pushable && physics.kinematic && physics.updatable) {
@@ -234,7 +234,7 @@ public abstract class Physics extends Box {
                             float v1 = vz;
                             float v2 = physics.velocity.getZ();
                             vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            physics.setVelocity(physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1)));
                         } else vz = 0;
                     }
                 }
