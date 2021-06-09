@@ -181,7 +181,8 @@ public abstract class Physics extends Box {
         //reset net force to 0 on all axes
         
         netForce = netForce.add(appliedForce);
-        //add applied force
+        appliedForce = new Vector();
+        //add applied force and reset for next tick
         
         netForce = netForce.add(gravity.multiply(mass));
         //add weight force
@@ -391,12 +392,12 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * set the velocity of the entity
+     * set the velocity of the entity for the next tick
      *
      * @param velocity velocity vector
      */
     public Physics setVelocity(Vector velocity) {
-        this.velocity = velocity;
+        appliedForce = ((velocity.subtract(this.velocity)).multiply(mass)).divide(deltaTime);
         return this;
     }
     
@@ -410,12 +411,12 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * set the acceleration of the entity
+     * set the acceleration of the entity for the next tick
      *
      * @param acceleration acceleration vector
      */
     public Physics setAcceleration(Vector acceleration) {
-        this.acceleration = acceleration;
+        appliedForce = acceleration.multiply(mass);
         return this;
     }
     
