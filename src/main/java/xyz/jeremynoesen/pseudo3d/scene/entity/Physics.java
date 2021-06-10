@@ -240,7 +240,7 @@ public abstract class Physics extends Box {
                     }
                 }
             }
-            velocity = new Vector(vx, vy, vz);
+            setVelocity(new Vector(vx, vy, vz));
         }
         //apply conservation of momentum
         
@@ -372,7 +372,7 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * set the position of the entity
+     * set the position of the entity instantly
      *
      * @param position position vector
      */
