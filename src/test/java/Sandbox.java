@@ -33,7 +33,7 @@ public class Sandbox {
         Sprite background = new Sprite(16, 16, new Image(new FileInputStream("src/test/resources/images/background.png")));
         //load all sprites
     
-        Pseudo3D.launch(500, 500, 30, 30, true, "Sandbox");
+        Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
         //launch program
     
         Entity player = (Entity) new Entity()
@@ -74,56 +74,46 @@ public class Sandbox {
         
         //the following adds controls to the scene
         scene.addLoopInjection(() -> {
-            
-            Vector velocity = player.getVelocity();
-            
+    
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
-                velocity = velocity.setZ(-1);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setZ(-2));
                 player.setSprite(playerBack);
             }
-            
+    
             if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
-                velocity = velocity.setZ(1);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setZ(2));
                 player.setSprite(playerFront);
             }
     
-            if (Keyboard.isPressed(KeyCode.W) && Keyboard.isPressed(KeyCode.S)) {
-                velocity = velocity.setZ(0);
-                player.setVelocity(velocity);
+            if ((Keyboard.isPressed(KeyCode.W) && Keyboard.isPressed(KeyCode.S)) ||
+                    camera.getFieldOfView() == 0) {
+                player.setVelocity(player.getVelocity().setZ(0));
             }
-            
+    
             if (Keyboard.isPressed(KeyCode.A)) {
-                velocity = velocity.setX(-1);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setX(-2));
                 player.setSprite(playerLeft);
             }
-            
+    
             if (Keyboard.isPressed(KeyCode.D)) {
-                velocity = velocity.setX(1);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setX(2));
                 player.setSprite(playerRight);
             }
     
             if (Keyboard.isPressed(KeyCode.A) && Keyboard.isPressed(KeyCode.D)) {
-                velocity = velocity.setX(0);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setX(0));
             }
-            
+    
             if (Keyboard.isPressed(KeyCode.SPACE)) {
-                velocity = velocity.setY(1);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setY(2));
             }
-            
+    
             if (Keyboard.isPressed(KeyCode.SHIFT)) {
-                velocity = velocity.setY(-1);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setY(-2));
             }
     
             if (Keyboard.isPressed(KeyCode.SPACE) && Keyboard.isPressed(KeyCode.SHIFT)) {
-                velocity = velocity.setY(0);
-                player.setVelocity(velocity);
+                player.setVelocity(player.getVelocity().setY(0));
             }
             
             if (Keyboard.isPressed(KeyCode.UP)) {

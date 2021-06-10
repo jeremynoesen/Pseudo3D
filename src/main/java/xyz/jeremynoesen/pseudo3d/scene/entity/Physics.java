@@ -23,16 +23,6 @@ public abstract class Physics extends Box {
     private Vector gravity;
     
     /**
-     * applied force on entity (newtons)
-     */
-    private Vector appliedForce;
-    
-    /**
-     * net force on entity (newtons)
-     */
-    private Vector netForce;
-    
-    /**
      * position of entity (meters)
      */
     private Vector position;
@@ -41,6 +31,11 @@ public abstract class Physics extends Box {
      * velocity of entity, or rate of change of position (meters / second)
      */
     private Vector velocity;
+    
+    /**
+     * +/- terminal velocity of gravity acceleration of entity (meters / second)
+     */
+    private Vector terminalVelocity;
     
     /**
      * acceleration of entity, or rate of change of velocity (meters / second ^ 2)
@@ -98,11 +93,6 @@ public abstract class Physics extends Box {
     private float mass;
     
     /**
-     * time elapsed in the last tick
-     */
-    private float deltaTime;
-    
-    /**
      * whether the entity can update or not
      */
     private boolean updatable;
@@ -113,13 +103,12 @@ public abstract class Physics extends Box {
     public Physics() {
         super();
         gravity = new Vector(0, -9.81f, 0);
-        appliedForce = new Vector();
-        netForce = new Vector();
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
-        drag = new Vector(0.01f, 0.01f, 0.01f);
-        roughness = new Vector(0.1f, 0.1f, 0.1f);
+        terminalVelocity = new Vector(10, 10, 10);
+        drag = new Vector(0.5f, 0.5f, 0.5f);
+        roughness = new Vector(2f, 2f, 2f);
         entities = null;
         solid = true;
         colliding = false;
@@ -141,11 +130,10 @@ public abstract class Physics extends Box {
     public Physics(Physics physics) {
         super(physics);
         gravity = physics.gravity;
-        appliedForce = physics.appliedForce;
-        netForce = physics.netForce;
         position = physics.position;
         velocity = physics.velocity;
         acceleration = physics.acceleration;
+        terminalVelocity = physics.terminalVelocity;
         drag = physics.drag;
         roughness = physics.roughness;
         solid = physics.solid;
@@ -168,84 +156,100 @@ public abstract class Physics extends Box {
      */
     public void tickMotion(float deltaTime) {
         if (!kinematic || !updatable) return;
-        this.deltaTime = deltaTime;
-        updateNetForce();
-        updateKinematics();
-    }
-    
-    /**
-     * get the net force on the entity based on external forces
-     */
-    private void updateNetForce() {
-        netForce = new Vector();
-        //reset net force to 0 on all axes
         
-        netForce = netForce.add(appliedForce);
-        appliedForce = new Vector();
-        //add applied force and reset for next tick
+        float ax = acceleration.getX() + gravity.getX(), ay = acceleration.getY() + gravity.getY(),
+                az = acceleration.getZ() + gravity.getZ();
         
-        netForce = netForce.add(gravity.multiply(mass));
-        //add weight force
+        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         
+        if (vx > -terminalVelocity.getX() && ax < 0)
+            vx = Math.max(vx + (ax * deltaTime), -terminalVelocity.getX());
+        else if (vx < terminalVelocity.getX() && ax > 0)
+            vx = Math.min(vx + (ax * deltaTime), terminalVelocity.getX());
+        
+        if (vy > -terminalVelocity.getY() && ay < 0)
+            vy = Math.max(vy + (ay * deltaTime), -terminalVelocity.getY());
+        else if (vy < terminalVelocity.getY() && ay > 0)
+            vy = Math.min(vy + (ay * deltaTime), terminalVelocity.getY());
+        
+        if (vz > -terminalVelocity.getZ() && az < 0)
+            vz = Math.max(vz + (az * deltaTime), -terminalVelocity.getZ());
+        else if (vz < terminalVelocity.getZ() && az > 0)
+            vz = Math.min(vz + (az * deltaTime), terminalVelocity.getZ());
+        //apply acceleration and gravity if not exceeding terminal velocity
+        
+        float fx = 0, fy = 0, fz = 0;
         if (colliding) {
-            //todo friction
-        }
-        
-        //todo drag
-    }
-    
-    /**
-     * update the motion vectors of the entity based on forces acting on it
-     */
-    private void updateKinematics() {
-        acceleration = netForce.divide(mass);
-        //get acceleration from net force
-        
-        velocity = velocity.add(acceleration.multiply(deltaTime));
-        //add acceleration to velocity
-        
-        if (colliding) {
-            float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
-            for (Side side : Side.values()) {
+            int xCount = 0, yCount = 0, zCount = 0;
+            for (Box.Side side : Box.Side.values()) {
                 for (Physics physics : collidingEntities.get(side)) {
-                    if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
+                    if ((side == Box.Side.LEFT && vx < 0) || (side == Box.Side.RIGHT && vx > 0)) {
                         //check if colliding and moving towards a side
-                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                        fy += physics.roughness.getY() * Math.abs(vx);
+                        yCount++;
+                        fz += physics.roughness.getZ() * Math.abs(vx);
+                        zCount++;
+                        //sum frictions in other axes
+                        if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vx;
                             float v2 = physics.velocity.getX();
                             vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.setVelocity(physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1)));
+                            physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vx = 0;
-                        //calculate conservation of momentum only if entity is able to be moved at this time
-                    } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
-                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                        //calculate conservation of momentum only if object is pushable and kinematic
+                    } else if ((side == Box.Side.BOTTOM && vy < 0) || (side == Box.Side.TOP && vy > 0)) {
+                        fx += physics.roughness.getX() * Math.abs(vy);
+                        xCount++;
+                        fz += physics.roughness.getZ() * Math.abs(vy);
+                        zCount++;
+                        if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vy;
                             float v2 = physics.velocity.getY();
                             vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.setVelocity(physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1)));
+                            physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vy = 0;
-                    } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
-                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                    } else if ((side == Box.Side.BACK && vz < 0) || (side == Box.Side.FRONT && vz > 0)) {
+                        fx += physics.roughness.getX() * Math.abs(vz);
+                        xCount++;
+                        fy += physics.roughness.getY() * Math.abs(vz);
+                        yCount++;
+                        if (physics.pushable && physics.kinematic) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vz;
                             float v2 = physics.velocity.getZ();
                             vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.setVelocity(physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1)));
+                            physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vz = 0;
                     }
                 }
             }
-            setVelocity(new Vector(vx, vy, vz));
+            //get sum of frictions for each axis, as well as apply conservation of momentum
+            
+            if (xCount > 0) fx = (fx + roughness.getX()) / (xCount + 1);
+            if (yCount > 0) fy = (fy + roughness.getY()) / (yCount + 1);
+            if (zCount > 0) fz = (fz + roughness.getZ()) / (zCount + 1);
+            //calculate average friction per axis that has friction applied
         }
-        //apply conservation of momentum
+        //apply friction from colliding entities
+        
+        if (vx < 0) vx = Math.min(vx + (drag.getX() * (getHeight() * getDepth()) * deltaTime) + (fx * mass * deltaTime), 0);
+        else if (vx > 0) vx = Math.max(vx - (drag.getX() * (getHeight() * getDepth()) * deltaTime) - (fx * mass * deltaTime), 0);
+        if (vy < 0) vy = Math.min(vy + (drag.getY() * (getWidth() * getDepth()) * deltaTime) + (fy * mass * deltaTime), 0);
+        else if (vy > 0) vy = Math.max(vy - (drag.getY() * (getWidth() * getDepth()) * deltaTime) - (fy * mass * deltaTime), 0);
+        if (vz < 0) vz = Math.min(vz + (drag.getZ() * (getWidth() * getHeight()) * deltaTime) + (fz * mass * deltaTime), 0);
+        else if (vz > 0) vz = Math.max(vz - (drag.getZ() * (getWidth() * getHeight()) * deltaTime) - (fz * mass * deltaTime), 0);
+        //modify velocity based on friction and mass, and drag and surface area
+        
+        velocity = new Vector(vx, vy, vz);
+        //set new velocity
         
         setPosition(position.add(velocity.multiply(deltaTime)));
-        //add velocity to position
+        //update position based on velocity
     }
     
     /**
@@ -372,7 +376,7 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * set the position of the entity instantly
+     * set the position of the entity
      *
      * @param position position vector
      */
@@ -392,12 +396,12 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * set the velocity of the entity for the next tick
+     * set the velocity of the entity
      *
      * @param velocity velocity vector
      */
     public Physics setVelocity(Vector velocity) {
-        appliedForce = ((velocity.subtract(this.velocity)).multiply(mass)).divide(deltaTime);
+        this.velocity = velocity;
         return this;
     }
     
@@ -411,12 +415,12 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * set the acceleration of the entity for the next tick
+     * set the acceleration of the entity
      *
      * @param acceleration acceleration vector
      */
     public Physics setAcceleration(Vector acceleration) {
-        appliedForce = acceleration.multiply(mass);
+        this.acceleration = acceleration;
         return this;
     }
     
@@ -439,6 +443,23 @@ public abstract class Physics extends Box {
         return this;
     }
     
+    /**
+     * get terminal velocity for this entity
+     *
+     * @return terminal velocity
+     */
+    public Vector getTerminalVelocity() {
+        return terminalVelocity;
+    }
+    
+    /**
+     * set the terminal velocity for this entity
+     *
+     * @param terminalVelocity terminal velocity
+     */
+    public void setTerminalVelocity(Vector terminalVelocity) {
+        this.terminalVelocity = terminalVelocity;
+    }
     
     /**
      * get the drag of the entity
@@ -647,34 +668,6 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * get the applied force vector for this entity
-     *
-     * @return applied force vector
-     */
-    public Vector getAppliedForce() {
-        return appliedForce;
-    }
-    
-    /**
-     * apply a force on this entity
-     *
-     * @param appliedForce force vector to apply
-     */
-    public Physics setAppliedForce(Vector appliedForce) {
-        this.appliedForce = appliedForce;
-        return this;
-    }
-    
-    /**
-     * get the net force vector for this entity
-     *
-     * @return net force vector
-     */
-    public Vector getNetForce() {
-        return appliedForce;
-    }
-    
-    /**
      * set the entities the object is in a scene with, only callable by parent class
      *
      * @param entities list of physics objects
@@ -722,10 +715,9 @@ public abstract class Physics extends Box {
                 Float.compare(physics.mass, mass) == 0 &&
                 updatable == physics.updatable &&
                 Objects.equals(gravity, physics.gravity) &&
-                Objects.equals(appliedForce, physics.appliedForce) &&
-                Objects.equals(netForce, physics.netForce) &&
                 Objects.equals(position, physics.position) &&
                 Objects.equals(velocity, physics.velocity) &&
+                Objects.equals(terminalVelocity, physics.terminalVelocity) &&
                 Objects.equals(acceleration, physics.acceleration) &&
                 Objects.equals(drag, physics.drag) &&
                 Objects.equals(roughness, physics.roughness) &&
