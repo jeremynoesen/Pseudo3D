@@ -106,7 +106,7 @@ public abstract class Physics extends Box {
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
-        terminalVelocity = new Vector(10, 10, 10);
+        terminalVelocity = new Vector(20, 20, 20);
         drag = new Vector(0.5f, 0.5f, 0.5f);
         roughness = new Vector(2f, 2f, 2f);
         entities = null;
@@ -457,8 +457,9 @@ public abstract class Physics extends Box {
      *
      * @param terminalVelocity terminal velocity
      */
-    public void setTerminalVelocity(Vector terminalVelocity) {
+    public Physics setTerminalVelocity(Vector terminalVelocity) {
         this.terminalVelocity = terminalVelocity;
+        return this;
     }
     
     /**
