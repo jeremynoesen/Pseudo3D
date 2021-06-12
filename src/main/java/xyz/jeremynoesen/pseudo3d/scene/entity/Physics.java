@@ -108,7 +108,7 @@ public abstract class Physics extends Box {
         acceleration = new Vector();
         terminalVelocity = new Vector(20, 20, 20);
         drag = new Vector(0.5f, 0.5f, 0.5f);
-        roughness = new Vector(2f, 2f, 2f);
+        roughness = new Vector(5, 5, 5);
         entities = null;
         solid = true;
         colliding = false;
@@ -190,7 +190,7 @@ public abstract class Physics extends Box {
                         fz += physics.roughness.getZ() * Math.abs(vx);
                         zCount++;
                         //sum frictions in other axes
-                        if (physics.pushable && physics.kinematic) {
+                        if (physics.pushable && physics.kinematic && physics.updatable) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vx;
@@ -198,13 +198,13 @@ public abstract class Physics extends Box {
                             vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
                             physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vx = 0;
-                        //calculate conservation of momentum only if object is pushable and kinematic
+                        //calculate conservation of momentum if entity is able to
                     } else if ((side == Box.Side.BOTTOM && vy < 0) || (side == Box.Side.TOP && vy > 0)) {
                         fx += physics.roughness.getX() * Math.abs(vy);
                         xCount++;
                         fz += physics.roughness.getZ() * Math.abs(vy);
                         zCount++;
-                        if (physics.pushable && physics.kinematic) {
+                        if (physics.pushable && physics.kinematic && physics.updatable) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vy;
@@ -217,7 +217,7 @@ public abstract class Physics extends Box {
                         xCount++;
                         fy += physics.roughness.getY() * Math.abs(vz);
                         yCount++;
-                        if (physics.pushable && physics.kinematic) {
+                        if (physics.pushable && physics.kinematic && physics.updatable) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vz;
@@ -230,19 +230,24 @@ public abstract class Physics extends Box {
             }
             //get sum of frictions for each axis, as well as apply conservation of momentum
             
-            if (xCount > 0) fx = (fx + roughness.getX()) / (xCount + 1);
-            if (yCount > 0) fy = (fy + roughness.getY()) / (yCount + 1);
-            if (zCount > 0) fz = (fz + roughness.getZ()) / (zCount + 1);
+            if (xCount > 0) fx = ((fx + roughness.getX()) / (xCount + 1)) * mass * deltaTime;
+            if (yCount > 0) fy = ((fy + roughness.getY()) / (yCount + 1)) * mass * deltaTime;
+            if (zCount > 0) fz = ((fz + roughness.getZ()) / (zCount + 1)) * mass * deltaTime;
             //calculate average friction per axis that has friction applied
         }
         //apply friction from colliding entities
         
-        if (vx < 0) vx = Math.min(vx + (drag.getX() * (getHeight() * getDepth()) * deltaTime) + (fx * mass * deltaTime), 0);
-        else if (vx > 0) vx = Math.max(vx - (drag.getX() * (getHeight() * getDepth()) * deltaTime) - (fx * mass * deltaTime), 0);
-        if (vy < 0) vy = Math.min(vy + (drag.getY() * (getWidth() * getDepth()) * deltaTime) + (fy * mass * deltaTime), 0);
-        else if (vy > 0) vy = Math.max(vy - (drag.getY() * (getWidth() * getDepth()) * deltaTime) - (fy * mass * deltaTime), 0);
-        if (vz < 0) vz = Math.min(vz + (drag.getZ() * (getWidth() * getHeight()) * deltaTime) + (fz * mass * deltaTime), 0);
-        else if (vz > 0) vz = Math.max(vz - (drag.getZ() * (getWidth() * getHeight()) * deltaTime) - (fz * mass * deltaTime), 0);
+        float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(vx);
+        float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(vy);
+        float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(vz);
+        ///calculate drag
+        
+        if (vx < 0) vx = Math.min(vx + dx + fx, 0);
+        else if (vx > 0) vx = Math.max(vx - dx - fx, 0);
+        if (vy < 0) vy = Math.min(vy + dy + fy, 0);
+        else if (vy > 0) vy = Math.max(vy - dy - fy, 0);
+        if (vz < 0) vz = Math.min(vz + dz + fz, 0);
+        else if (vz > 0) vz = Math.max(vz - dz - fz, 0);
         //modify velocity based on friction and mass, and drag and surface area
         
         velocity = new Vector(vx, vy, vz);
@@ -446,16 +451,16 @@ public abstract class Physics extends Box {
     /**
      * get terminal velocity for this entity
      *
-     * @return terminal velocity
+     * @return terminal velocity vector
      */
     public Vector getTerminalVelocity() {
         return terminalVelocity;
     }
     
     /**
-     * set the terminal velocity for this entity
+     * set the terminal velocity for this entity to limit maximum velocity due to accelerations
      *
-     * @param terminalVelocity terminal velocity
+     * @param terminalVelocity terminal velocity vector
      */
     public Physics setTerminalVelocity(Vector terminalVelocity) {
         this.terminalVelocity = terminalVelocity;
