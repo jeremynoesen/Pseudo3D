@@ -39,8 +39,7 @@ public class Sandbox {
         Entity player = (Entity) new Entity()
                 .setUpdateOffScreen(true)
                 .setSprite(playerFront)
-                .setMass(1f)
-                .setDimensions(0.85f, 2, 0.85f);
+                .setDimensions(0.8f, 2, 0.8f);
         //create player entity
         
         Entity dummy = new Entity(player).setUpdateOffScreen(false);

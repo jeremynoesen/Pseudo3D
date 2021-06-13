@@ -116,7 +116,7 @@ public abstract class Physics extends Box {
         kinematic = true;
         pushable = true;
         updatable = true;
-        mass = 1.0f;
+        mass = 1;
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>();
         for (Side s : Side.values()) collidingEntities.put(s, new HashSet<>());
@@ -181,9 +181,9 @@ public abstract class Physics extends Box {
         float fx = 0, fy = 0, fz = 0;
         if (colliding) {
             int xCount = 0, yCount = 0, zCount = 0;
-            for (Box.Side side : Box.Side.values()) {
+            for (Side side : Side.values()) {
                 for (Physics physics : collidingEntities.get(side)) {
-                    if ((side == Box.Side.LEFT && vx < 0) || (side == Box.Side.RIGHT && vx > 0)) {
+                    if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
                         //check if colliding and moving towards a side
                         fy += physics.roughness.getY() * Math.abs(vx);
                         yCount++;
@@ -199,7 +199,7 @@ public abstract class Physics extends Box {
                             physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vx = 0;
                         //calculate conservation of momentum if entity is able to
-                    } else if ((side == Box.Side.BOTTOM && vy < 0) || (side == Box.Side.TOP && vy > 0)) {
+                    } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
                         fx += physics.roughness.getX() * Math.abs(vy);
                         xCount++;
                         fz += physics.roughness.getZ() * Math.abs(vy);
@@ -212,7 +212,7 @@ public abstract class Physics extends Box {
                             vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
                             physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                         } else vy = 0;
-                    } else if ((side == Box.Side.BACK && vz < 0) || (side == Box.Side.FRONT && vz > 0)) {
+                    } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
                         fx += physics.roughness.getX() * Math.abs(vz);
                         xCount++;
                         fy += physics.roughness.getY() * Math.abs(vz);
