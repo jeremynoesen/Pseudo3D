@@ -134,7 +134,7 @@ public class Renderer {
         float camDist = camPos.getZ() - objPos.getZ();
         //entity and camera data
         
-        if (camDist >= camera.getViewDistance() * scene.getGridScale().getZ() || entity.getSprite() == null) {
+        if (camDist >= camera.getViewDistance() * scene.getGridScale().getZ() || entity.getSprite() == null || entity.isHidden()) {
             entity.setOnScreen(false);
             return;
         }
