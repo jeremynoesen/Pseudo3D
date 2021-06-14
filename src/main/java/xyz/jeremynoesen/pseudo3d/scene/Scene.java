@@ -104,6 +104,8 @@ public class Scene {
         injections = scene.injections;
         gridScale = scene.gridScale;
         renderer = new Renderer(this);
+        lastRender = 0;
+        lastTick = 0;
     }
     
     /**

@@ -85,7 +85,7 @@ public abstract class Physics extends Box {
     /**
      * whether this entity can be pushed by other entities
      */
-    private boolean pushable[];
+    private final boolean[] pushable;
     
     /**
      * mass of an entity used for calculations, such as momentum conservation
@@ -508,7 +508,7 @@ public abstract class Physics extends Box {
     /**
      * check if an entity can be collided with
      *
-     * @return true if collidable
+     * @return true if able to be collided with
      */
     public boolean isSolid() {
         return solid;

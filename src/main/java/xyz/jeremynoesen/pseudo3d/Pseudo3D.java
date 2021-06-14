@@ -60,18 +60,16 @@ public class Pseudo3D extends Application {
      * @param width     width of window
      * @param height    height of window
      * @param framerate framerate of window (hertz)
-     * @param tickspeed tick speed for physics (hertz)
+     * @param tickSpeed tick speed for physics (hertz)
      * @param resizable resizable status
      * @param title     window title
      */
-    public static void launch(int width, int height, int framerate, int tickspeed, boolean resizable, String title) {
+    public static void launch(int width, int height, int framerate, int tickSpeed, boolean resizable, String title) {
         Pseudo3D.resizable = resizable;
         Pseudo3D.title = title;
         
-        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickspeed),
-                ae -> {
-                    activeScene.tick();
-                }));
+        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickSpeed),
+                ae -> activeScene.tick()));
         renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / framerate),
                 ae -> {
                     canvas.setWidth(scene.getWidth());
@@ -110,7 +108,7 @@ public class Pseudo3D extends Application {
     /**
      * stop the application
      *
-     * @throws Exception
+     * @throws Exception if stop fails
      */
     @Override
     public void stop() throws Exception {

@@ -51,6 +51,8 @@ public class Entity extends Physics {
         super(entity);
         if (entity.sprite != null) sprite = new Sprite(entity.sprite);
         this.scene = entity.scene;
+        this.onScreen = entity.onScreen;
+        this.updateOffScreen = entity.updateOffScreen;
     }
     
     /**
@@ -89,8 +91,7 @@ public class Entity extends Physics {
      */
     public void setOnScreen(boolean onScreen) {
         this.onScreen = onScreen;
-        if (onScreen || updateOffScreen) setUpdatable(true);
-        else setUpdatable(false);
+        setUpdatable(onScreen || updateOffScreen);
     }
     
     /**
