@@ -32,6 +32,11 @@ public class Entity extends Physics {
     private boolean updateOffScreen;
     
     /**
+     * speed modifier for physics and rendering
+     */
+    private float speed;
+    
+    /**
      * constructs a new default entity
      */
     public Entity() {
@@ -40,6 +45,7 @@ public class Entity extends Physics {
         sprite = null;
         onScreen = false;
         updateOffScreen = false;
+        speed = 1;
     }
     
     /**
@@ -53,6 +59,7 @@ public class Entity extends Physics {
         this.scene = entity.scene;
         this.onScreen = entity.onScreen;
         this.updateOffScreen = entity.updateOffScreen;
+        this.speed = entity.speed;
     }
     
     /**
@@ -138,6 +145,35 @@ public class Entity extends Physics {
     }
     
     /**
+     * get the speed modifier of the entity
+     *
+     * @return speed modifier value
+     */
+    public float getSpeed() {
+        return speed;
+    }
+    
+    /**
+     * set the speed modifier for the entity
+     *
+     * @param speed speed modifier value
+     */
+    public Entity setSpeed(float speed) {
+        this.speed = speed;
+        return this;
+    }
+    
+    /**
+     * update the motion of the entity
+     *
+     * @param deltaTime time elapsed to use in calculation
+     */
+    @Override
+    public void tickMotion(float deltaTime) {
+        super.tickMotion(deltaTime * speed);
+    }
+    
+    /**
      * check if this entity is identical to another
      *
      * @param o entity to check
@@ -152,6 +188,8 @@ public class Entity extends Physics {
         return onScreen == entity.onScreen &&
                 updateOffScreen == entity.updateOffScreen &&
                 Objects.equals(scene, entity.scene) &&
-                Objects.equals(sprite, entity.sprite);
+                Objects.equals(sprite, entity.sprite) &&
+                Float.compare(speed, entity.speed) == 0;
+        
     }
 }
