@@ -1,4 +1,4 @@
-package jeremynoesen.pseudo3d.scene.util;
+package xyz.jeremynoesen.pseudo3d.scene.util;
 
 /**
  * immutable vector with vector mathematical operators
@@ -204,6 +204,16 @@ public class Vector {
      */
     public Vector divide(Vector vector) {
         return new Vector(x / vector.getX(), y / vector.getY(), z / vector.getZ());
+    }
+    
+    /**
+     * scale a vector's magnitude by a scalar, which divides each component by the scalar
+     *
+     * @param scale what to scale vector by
+     * @return scaled vector
+     */
+    public Vector divide(float scale) {
+        return new Vector(x / scale, y / scale, z / scale);
     }
     
     /**

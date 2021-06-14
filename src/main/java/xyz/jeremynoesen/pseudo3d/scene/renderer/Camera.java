@@ -1,6 +1,8 @@
-package jeremynoesen.pseudo3d.scene.renderer;
+package xyz.jeremynoesen.pseudo3d.scene.renderer;
 
-import jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
+
+import java.util.Objects;
 
 /**
  * camera used to determine where to render a scene
@@ -15,7 +17,7 @@ public class Camera {
     private float fieldOfView;
     
     /**
-     * how far away the camera is able to render
+     * how far away the camera is able to render in grid units
      */
     private float viewDistance;
     
@@ -35,23 +37,23 @@ public class Camera {
     private float rotation;
     
     /**
-     * 3D position of camera in scene
+     * 3D position of camera in scene in grid units
      */
     private Vector position;
     
     /**
-     * 2D position of camera in window
+     * 2D position of camera in window in pixels
      */
     private Vector offset;
     
     /**
-     * creates a new camera centered at (0, 0, 0) with a fov of 100 degrees
+     * creates a new default camera
      */
     public Camera() {
         position = new Vector();
         fieldOfView = 90;
         sensorSize = 500;
-        viewDistance = 500;
+        viewDistance = 32;
         zoom = 1;
         rotation = 0;
         offset = new Vector();
@@ -63,7 +65,7 @@ public class Camera {
      * @param position     camera position in scene
      * @param sensorSize   camera sensor size
      * @param fieldOfView  field of view in radians
-     * @param viewDistance z distance camera is able to see
+     * @param viewDistance z distance camera is able to see in grid units
      * @param zoom         camera zoom, scales render
      * @param rotation     rotation of camera in radians
      * @param offset       position of camera in window
@@ -108,8 +110,9 @@ public class Camera {
      *
      * @param fieldOfView field of view in radians
      */
-    public void setFieldOfView(float fieldOfView) {
+    public Camera setFieldOfView(float fieldOfView) {
         this.fieldOfView = fieldOfView;
+        return this;
     }
     
     /**
@@ -126,8 +129,9 @@ public class Camera {
      *
      * @param position new position in scene
      */
-    public void setPosition(Vector position) {
+    public Camera setPosition(Vector position) {
         this.position = position;
+        return this;
     }
     
     /**
@@ -144,8 +148,9 @@ public class Camera {
      *
      * @param offset 2D position vector
      */
-    public void setOffset(Vector offset) {
+    public Camera setOffset(Vector offset) {
         this.offset = offset;
+        return this;
     }
     
     /**
@@ -162,8 +167,9 @@ public class Camera {
      *
      * @param sensorSize new sensor size
      */
-    public void setSensorSize(float sensorSize) {
+    public Camera setSensorSize(float sensorSize) {
         this.sensorSize = sensorSize;
+        return this;
     }
     
     /**
@@ -180,8 +186,9 @@ public class Camera {
      *
      * @param viewDistance new view distance for camera
      */
-    public void setViewDistance(float viewDistance) {
+    public Camera setViewDistance(float viewDistance) {
         this.viewDistance = viewDistance;
+        return this;
     }
     
     /**
@@ -198,8 +205,9 @@ public class Camera {
      *
      * @param zoom camera zoom
      */
-    public void setZoom(float zoom) {
+    public Camera setZoom(float zoom) {
         this.zoom = zoom;
+        return this;
     }
     
     /**
@@ -216,8 +224,9 @@ public class Camera {
      *
      * @param rotation rotation of camera in radians counter-clock-wise
      */
-    public void setRotation(float rotation) {
+    public Camera setRotation(float rotation) {
         this.rotation = rotation;
+        return this;
     }
     
     /**
@@ -230,10 +239,13 @@ public class Camera {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Camera that = (Camera) o;
-        return Float.compare(that.fieldOfView, fieldOfView) == 0 &&
-                Float.compare(that.viewDistance, viewDistance) == 0 &&
-                Float.compare(that.sensorSize, sensorSize) == 0 &&
-                position.equals(that.position);
+        Camera camera = (Camera) o;
+        return Float.compare(camera.fieldOfView, fieldOfView) == 0 &&
+                Float.compare(camera.viewDistance, viewDistance) == 0 &&
+                Float.compare(camera.sensorSize, sensorSize) == 0 &&
+                Float.compare(camera.zoom, zoom) == 0 &&
+                Float.compare(camera.rotation, rotation) == 0 &&
+                Objects.equals(position, camera.position) &&
+                Objects.equals(offset, camera.offset);
     }
 }

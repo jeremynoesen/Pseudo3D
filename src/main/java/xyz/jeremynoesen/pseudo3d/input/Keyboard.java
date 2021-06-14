@@ -1,4 +1,4 @@
-package jeremynoesen.pseudo3d.input;
+package xyz.jeremynoesen.pseudo3d.input;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
