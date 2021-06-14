@@ -219,14 +219,14 @@ public class Renderer {
             graphicsContext.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
                     y - (heightScaled / 2.0), widthScaled, heightScaled);
             graphicsContext.setTransform(original);
-            sprite.update(deltaTime);
+            sprite.update(deltaTime * entity.getSpeed());
             //draw image to panel
             
             entity.setOnScreen(true);
             //update on screen status
         } else {
             entity.setOnScreen(false);
-            if (entity.canUpdateOffScreen()) sprite.update(deltaTime);
+            if (entity.canUpdateOffScreen()) sprite.update(deltaTime * entity.getSpeed());
             //update sprite if allowed
         }
     }

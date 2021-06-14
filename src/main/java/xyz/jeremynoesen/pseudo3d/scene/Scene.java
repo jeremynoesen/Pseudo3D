@@ -59,6 +59,11 @@ public class Scene {
     private long lastRender;
     
     /**
+     * speed modifier for physics and rendering
+     */
+    private float speed;
+    
+    /**
      * create a new scene
      */
     public Scene() {
@@ -68,6 +73,7 @@ public class Scene {
         injections = new HashSet<>();
         gridScale = new Vector(32, 32, 32);
         renderer = new Renderer(this);
+        speed = 1;
     }
     
     /**
@@ -87,6 +93,7 @@ public class Scene {
         this.injections = injections;
         this.gridScale = gridScale;
         this.renderer = new Renderer(this);
+        speed = 1;
     }
     
     /**
@@ -106,6 +113,7 @@ public class Scene {
         renderer = new Renderer(this);
         lastRender = 0;
         lastTick = 0;
+        speed = scene.speed;
     }
     
     /**
@@ -121,7 +129,7 @@ public class Scene {
         // run all loop injections
         
         for (Entity entity : entities) {
-            entity.tickMotion(deltaTime);
+            entity.tickMotion(deltaTime * speed);
         }
         // tick all entities motion
         
@@ -143,7 +151,7 @@ public class Scene {
         if (lastRender > 0) deltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
         //delta time for rendering
         
-        renderer.render(graphicsContext, deltaTime);
+        renderer.render(graphicsContext, deltaTime * speed);
         //render frame
         
         lastRender = System.nanoTime();
@@ -277,6 +285,25 @@ public class Scene {
     }
     
     /**
+     * get the speed of the scene
+     *
+     * @return speed modifier value
+     */
+    public float getSpeed() {
+        return speed;
+    }
+    
+    /**
+     * set the speed modifier for the scene
+     *
+     * @param speed speed modifier value
+     */
+    public Scene setSpeed(float speed) {
+        this.speed = speed;
+        return this;
+    }
+    
+    /**
      * check if a scene is identical to this scene
      *
      * @param o entity to check
@@ -292,6 +319,7 @@ public class Scene {
                 Objects.equals(background, scene.background) &&
                 Objects.equals(gridScale, scene.gridScale) &&
                 Objects.equals(injections, scene.injections) &&
-                Objects.equals(renderer, scene.renderer);
+                Objects.equals(renderer, scene.renderer) &&
+                Float.compare(speed, scene.speed) == 0;
     }
 }
