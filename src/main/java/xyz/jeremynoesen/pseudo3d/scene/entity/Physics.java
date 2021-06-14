@@ -85,7 +85,7 @@ public abstract class Physics extends Box {
     /**
      * whether this entity can be pushed by other entities
      */
-    private boolean pushable;
+    private boolean pushable[];
     
     /**
      * mass of an entity used for calculations, such as momentum conservation
@@ -114,7 +114,7 @@ public abstract class Physics extends Box {
         colliding = false;
         overlapping = false;
         kinematic = true;
-        pushable = true;
+        pushable = new boolean[] {true, true, true};
         updatable = true;
         mass = 1;
         collidingEntities = new HashMap<>();
@@ -190,7 +190,7 @@ public abstract class Physics extends Box {
                         fz += physics.roughness.getZ() * Math.abs(vx);
                         zCount++;
                         //sum frictions in other axes
-                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                        if (physics.pushable[0] && physics.kinematic && physics.updatable) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vx;
@@ -204,7 +204,7 @@ public abstract class Physics extends Box {
                         xCount++;
                         fz += physics.roughness.getZ() * Math.abs(vy);
                         zCount++;
-                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                        if (physics.pushable[1] && physics.kinematic && physics.updatable) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vy;
@@ -217,7 +217,7 @@ public abstract class Physics extends Box {
                         xCount++;
                         fy += physics.roughness.getY() * Math.abs(vz);
                         yCount++;
-                        if (physics.pushable && physics.kinematic && physics.updatable) {
+                        if (physics.pushable[2] && physics.kinematic && physics.updatable) {
                             float sum = mass + physics.mass;
                             float diff = mass - physics.mass;
                             float v1 = vz;
@@ -636,21 +636,52 @@ public abstract class Physics extends Box {
     }
     
     /**
-     * check if the entity is pushable
+     * check if the entity is pushable on any axis
      *
-     * @return true if an entity is pushable
+     * @return true if an entity is pushable on any axis
      */
     public boolean isPushable() {
-        return pushable;
+        return pushable[0] || pushable[1] || pushable[2];
     }
     
     /**
-     * set the pushablility status of the entity
+     * check if the entity is pushable on the x axis
      *
-     * @param pushable true to allow pushing
+     * @return true if an entity is pushable on the x axis
      */
-    public Physics setPushable(boolean pushable) {
-        this.pushable = pushable;
+    public boolean isPushableX() {
+        return pushable[0];
+    }
+    
+    /**
+     * check if the entity is pushable on the y axis
+     *
+     * @return true if an entity is pushable on the y axis
+     */
+    public boolean isPushableY() {
+        return pushable[1];
+    }
+    
+    /**
+     * check if the entity is pushable on the z axis
+     *
+     * @return true if an entity is pushable on the z axis
+     */
+    public boolean isPushableZ() {
+        return pushable[2];
+    }
+    
+    /**
+     * set whether the entity can be pushed or not per axis
+     *
+     * @param x true to allow pushing on the x axis
+     * @param y true to allow pushing on the y axis
+     * @param z true to allow pushing on the z axis
+     */
+    public Physics setPushable(boolean x, boolean y, boolean z) {
+        pushable[0] = x;
+        pushable[1] = y;
+        pushable[2] = z;
         return this;
     }
     
