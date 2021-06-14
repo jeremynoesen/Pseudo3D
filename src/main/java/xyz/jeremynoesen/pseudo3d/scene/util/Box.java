@@ -1,4 +1,4 @@
-package jeremynoesen.pseudo3d.scene.util;
+package xyz.jeremynoesen.pseudo3d.scene.util;
 
 /**
  * simple box with some checks and mathematical operators
@@ -106,23 +106,17 @@ public class Box {
     }
     
     /**
-     * get the height of the box
+     * set teh dimensions of the box
      *
-     * @return height of box
-     */
-    public float getHeight() {
-        return height;
-    }
-    
-    /**
-     * set the height of the box and recalculate its actual min and max coords in the y axis
-     *
+     * @param width  width of box
      * @param height height of box
+     * @param depth  depth of box
      */
-    public void setHeight(float height) {
-        this.height = Math.abs(height);
-        max = max.setY(position.getY() + (height / 2.0f));
-        min = min.setY(position.getY() - (height / 2.0f));
+    public Box setDimensions(float width, float height, float depth) {
+        setWidth(width);
+        setHeight(height);
+        setDepth(depth);
+        return this;
     }
     
     /**
@@ -139,10 +133,32 @@ public class Box {
      *
      * @param width width of box
      */
-    public void setWidth(float width) {
+    public Box setWidth(float width) {
         this.width = Math.abs(width);
         max = max.setX(position.getX() + (width / 2.0f));
         min = min.setX(position.getX() - (width / 2.0f));
+        return this;
+    }
+    
+    /**
+     * get the height of the box
+     *
+     * @return height of box
+     */
+    public float getHeight() {
+        return height;
+    }
+    
+    /**
+     * set the height of the box and recalculate its actual min and max coords in the y axis
+     *
+     * @param height height of box
+     */
+    public Box setHeight(float height) {
+        this.height = Math.abs(height);
+        max = max.setY(position.getY() + (height / 2.0f));
+        min = min.setY(position.getY() - (height / 2.0f));
+        return this;
     }
     
     /**
@@ -159,10 +175,11 @@ public class Box {
      *
      * @param depth depth of box
      */
-    public void setDepth(float depth) {
+    public Box setDepth(float depth) {
         this.depth = depth;
         max = max.setZ(position.getZ() + (depth / 2.0f));
         min = min.setZ(position.getZ() - (depth / 2.0f));
+        return this;
     }
     
     /**
@@ -179,12 +196,13 @@ public class Box {
      *
      * @param position new position
      */
-    public void setPosition(Vector position) {
+    public Box setPosition(Vector position) {
         this.position = position;
         max = new Vector(position.getX() + (width / 2.0f),
                 position.getY() + (height / 2.0f), position.getZ() + (depth / 2.0f));
         min = new Vector(position.getX() - (width / 2.0f),
                 position.getY() - (height / 2.0f), position.getZ() - (depth / 2.0f));
+        return this;
     }
     
     /**

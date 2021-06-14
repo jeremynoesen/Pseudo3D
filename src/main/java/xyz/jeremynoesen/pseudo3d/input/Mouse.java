@@ -1,8 +1,8 @@
-package jeremynoesen.pseudo3d.input;
+package xyz.jeremynoesen.pseudo3d.input;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
-import jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.HashSet;
 import java.util.Set;

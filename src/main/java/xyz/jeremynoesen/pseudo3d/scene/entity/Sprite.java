@@ -1,9 +1,8 @@
-package jeremynoesen.pseudo3d.scene.entity;
+package xyz.jeremynoesen.pseudo3d.scene.entity;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import jeremynoesen.pseudo3d.Pseudo3D;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -16,17 +15,17 @@ import java.util.Objects;
 public class Sprite {
     
     /**
-     * image used for sprite in pixels
+     * image used for sprite
      */
     private Image image;
     
     /**
-     * width of the sprite
+     * width of the sprite in grid units
      */
     private float width;
     
     /**
-     * height of the sprite in pixels
+     * height of the sprite in grid units
      */
     private float height;
     
@@ -51,24 +50,37 @@ public class Sprite {
     private float frameStep;
     
     /**
-     * create a new image sprite
+     * whether the sprite animation should loop or not
      */
-    public Sprite(Image image) {
+    private boolean loop;
+    
+    /**
+     * whether the sprite animation is paused or not
+     */
+    private boolean paused;
+    
+    /**
+     * create a new image sprite
+     *
+     * @param width  sprite width in grid units
+     * @param height sprite height in grid units
+     */
+    public Sprite(float width, float height, Image image) {
         this.image = image;
-        this.width = (float) image.getWidth();
-        this.height = (float) image.getHeight();
+        this.width = width;
+        this.height = height;
         this.rotation = 0;
     }
     
     /**
      * create a new color sprite with specified dimensions and color
      *
-     * @param width  sprite width
-     * @param height sprite height
+     * @param width  sprite width in grid units
+     * @param height sprite height in grid units
      * @param color  sprite color
      */
-    public Sprite(int width, int height, Color color) {
-        this(new WritableImage(1, 1));
+    public Sprite(float width, float height, Color color) {
+        this(width, height, new WritableImage(1, 1));
         this.width = width;
         this.height = height;
         ((WritableImage) image).getPixelWriter().setColor(0, 0, color);
@@ -79,12 +91,16 @@ public class Sprite {
      *
      * @param images    all images of the animated sprite
      * @param frameRate frames per second of the sprite
+     * @param width     sprite width in grid units
+     * @param height    sprite height in grid units
+     * @param loop      true to allow sprite to loop
      */
-    public Sprite(ArrayList<Image> images, float frameRate) {
-        this(images.get(0));
-        this.frameStep = frameRate / 1000.0f;
+    public Sprite(float width, float height, ArrayList<Image> images, float frameRate, boolean loop) {
+        this(width, height, images.get(0));
+        this.frameStep = 1 / frameRate;
         this.currentFrame = 0;
         this.images = images;
+        this.loop = loop;
     }
     
     /**
@@ -100,6 +116,8 @@ public class Sprite {
         if (sprite.images != null) images = new ArrayList<>(sprite.images);
         frameStep = sprite.frameStep;
         currentFrame = sprite.currentFrame;
+        loop = sprite.loop;
+        paused = sprite.paused;
     }
     
     /**
@@ -112,7 +130,19 @@ public class Sprite {
     }
     
     /**
-     * get the width of the sprite image
+     * set the dimensions of the sprite
+     *
+     * @param width  width of sprite in grid units
+     * @param height height of sprite in grid units
+     */
+    public Sprite setDimensions(float width, float height) {
+        setWidth(width);
+        setHeight(height);
+        return this;
+    }
+    
+    /**
+     * get the width of the sprite image in grid units
      *
      * @return width of sprite
      */
@@ -121,7 +151,7 @@ public class Sprite {
     }
     
     /**
-     * get the height of the sprite image
+     * get the height of the sprite image in grid units
      *
      * @return height of sprite
      */
@@ -132,19 +162,21 @@ public class Sprite {
     /**
      * set the width of the sprite, which the image will stretch to fit
      *
-     * @param width new sprite width
+     * @param width new sprite width in grid units
      */
-    public void setWidth(float width) {
+    public Sprite setWidth(float width) {
         this.width = width;
+        return this;
     }
     
     /**
      * set the height of the sprite, which the image will stretch to fit
      *
-     * @param height new sprite height
+     * @param height new sprite height in grid units
      */
-    public void setHeight(float height) {
+    public Sprite setHeight(float height) {
         this.height = height;
+        return this;
     }
     
     /**
@@ -152,8 +184,9 @@ public class Sprite {
      *
      * @param rotation rotation of sprite in radians counter-clock-wise
      */
-    public void setRotation(float rotation) {
+    public Sprite setRotation(float rotation) {
         this.rotation = rotation;
+        return this;
     }
     
     /**
@@ -171,7 +204,7 @@ public class Sprite {
      * @return framerate of sprite
      */
     public float getFramerate() {
-        return frameStep * 1000;
+        return 1 / frameStep;
     }
     
     /**
@@ -179,19 +212,68 @@ public class Sprite {
      *
      * @param framerate frames per second
      */
-    public void setFramerate(float framerate) {
-        frameStep = framerate / 1000f;
+    public Sprite setFramerate(float framerate) {
+        frameStep = 1 / framerate;
+        return this;
     }
     
     /**
-     * set the current frame to the next available frame based on elapsed time
+     * set the sprite to loop or not
+     *
+     * @param loop true to allow animation loop
      */
-    public void update() {
-        if (images != null && !images.isEmpty()) {
-            float renderStep = Pseudo3D.getRenderFrequency() / 1000.0f;
-            currentFrame = currentFrame + (frameStep / renderStep) <
-                    images.size() ? currentFrame + (frameStep / renderStep) : 0;
-            image = images.get((int) Math.floor(currentFrame));
+    public Sprite setLoop(boolean loop) {
+        this.loop = loop;
+        return this;
+    }
+    
+    /**
+     * check if the sprite can loop animation
+     *
+     * @return true if the animation can loop
+     */
+    public boolean canLoop() {
+        return loop;
+    }
+    
+    /**
+     * set the animation to be paused
+     *
+     * @param paused true to pause the animation
+     */
+    public Sprite setPaused(boolean paused) {
+        this.paused = paused;
+        return this;
+    }
+    
+    /**
+     * check if the animation is paused
+     *
+     * @return true if paused
+     */
+    public boolean isPaused() {
+        return paused;
+    }
+    
+    /**
+     * set the current frame to the next available frame based on elapsed time, usually called by the renderer
+     *
+     * @param deltaTime time elapsed for the render frame
+     */
+    public void update(float deltaTime) {
+        if (!paused && images != null && !images.isEmpty()) {
+            if (currentFrame + (deltaTime / frameStep) >= images.size()) {
+                if (loop) {
+                    currentFrame = 0;
+                    image = images.get((int) currentFrame);
+                } else {
+                    paused = true;
+                    currentFrame = 0;
+                }
+            } else {
+                currentFrame = currentFrame + (deltaTime / frameStep);
+                image = images.get((int) Math.floor(currentFrame));
+            }
         }
     }
     
@@ -212,6 +294,8 @@ public class Sprite {
                 Double.compare(sprite.currentFrame, currentFrame) == 0 &&
                 Double.compare(sprite.frameStep, frameStep) == 0 &&
                 Objects.equals(image, sprite.image) &&
-                Objects.equals(images, sprite.images);
+                Objects.equals(images, sprite.images) &&
+                Objects.equals(loop, sprite.loop) &&
+                Objects.equals(paused, sprite.paused);
     }
 }
