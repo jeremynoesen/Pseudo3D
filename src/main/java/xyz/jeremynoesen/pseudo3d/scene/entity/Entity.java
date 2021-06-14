@@ -37,6 +37,11 @@ public class Entity extends Physics {
     private float speed;
     
     /**
+     * whether the entity is hidden and inactive in the scene
+     */
+    boolean hidden;
+    
+    /**
      * constructs a new default entity
      */
     public Entity() {
@@ -46,6 +51,7 @@ public class Entity extends Physics {
         onScreen = false;
         updateOffScreen = false;
         speed = 1;
+        hidden = false;
     }
     
     /**
@@ -60,6 +66,7 @@ public class Entity extends Physics {
         this.onScreen = entity.onScreen;
         this.updateOffScreen = entity.updateOffScreen;
         this.speed = entity.speed;
+        this.hidden = entity.hidden;
     }
     
     /**
@@ -171,6 +178,26 @@ public class Entity extends Physics {
     @Override
     public void tickMotion(float deltaTime) {
         super.tickMotion(deltaTime * speed);
+    }
+    
+    /**
+     * check if the entity is hidden in the scene
+     *
+     * @return true if hidden
+     */
+    public boolean isHidden() {
+        return hidden;
+    }
+    
+    /**
+     * set the entity to be hidden from rendering and physics updates
+     *
+     * @param hidden true to hide in the scene
+     */
+    public Entity setHidden(boolean hidden) {
+        this.hidden = hidden;
+        setUpdatable(!hidden);
+        return this;
     }
     
     /**
