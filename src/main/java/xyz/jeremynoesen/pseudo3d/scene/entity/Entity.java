@@ -37,9 +37,14 @@ public class Entity extends Physics {
     private float speed;
     
     /**
-     * whether the entity is hidden and inactive in the scene
+     * whether the entity is visible and updatable in the scene
      */
-    boolean hidden;
+    boolean enabled;
+    
+    /**
+     * whether the entity is visible in the scene or not
+     */
+    boolean visible;
     
     /**
      * constructs a new default entity
@@ -51,7 +56,8 @@ public class Entity extends Physics {
         onScreen = false;
         updateOffScreen = false;
         speed = 1;
-        hidden = false;
+        enabled = true;
+        visible = true;
     }
     
     /**
@@ -66,7 +72,8 @@ public class Entity extends Physics {
         this.onScreen = entity.onScreen;
         this.updateOffScreen = entity.updateOffScreen;
         this.speed = entity.speed;
-        this.hidden = entity.hidden;
+        this.enabled = entity.enabled;
+        this.visible = entity.visible;
     }
     
     /**
@@ -105,7 +112,7 @@ public class Entity extends Physics {
      */
     public void setOnScreen(boolean onScreen) {
         this.onScreen = onScreen;
-        setUpdatable(onScreen || updateOffScreen);
+        setUpdatable((onScreen || updateOffScreen || !visible) && enabled);
     }
     
     /**
@@ -181,22 +188,39 @@ public class Entity extends Physics {
     }
     
     /**
-     * check if the entity is hidden in the scene
+     * check if the entity is enabled in the scene
      *
-     * @return true if hidden
+     * @return true if enabled
      */
-    public boolean isHidden() {
-        return hidden;
+    public boolean isEnabled() {
+        return enabled;
     }
     
     /**
-     * set the entity to be hidden from rendering and physics updates
+     * set the entity to be visible in the scene and updatable in physics
      *
-     * @param hidden true to hide in the scene
+     * @param enabled true to enable entity in scene
      */
-    public Entity setHidden(boolean hidden) {
-        this.hidden = hidden;
-        setUpdatable(!hidden);
+    public Entity setEnabled(boolean enabled) {
+        this.enabled = enabled;
+        if (!enabled) setUpdatable(false);
+        return this;
+    }
+    
+    /**
+     * check if the entity is visible in rendering
+     *
+     * @return true if visible
+     */
+    public boolean isVisible() {
+        return visible;
+    }
+    
+    /**
+     * set the entity to be visible in rendering
+     */
+    public Entity setVisible(boolean visible) {
+        this.visible = visible;
         return this;
     }
     
@@ -214,9 +238,10 @@ public class Entity extends Physics {
         Entity entity = (Entity) o;
         return onScreen == entity.onScreen &&
                 updateOffScreen == entity.updateOffScreen &&
+                Float.compare(entity.speed, speed) == 0 &&
+                enabled == entity.enabled &&
+                visible == entity.visible &&
                 Objects.equals(scene, entity.scene) &&
-                Objects.equals(sprite, entity.sprite) &&
-                Float.compare(speed, entity.speed) == 0;
-        
+                Objects.equals(sprite, entity.sprite);
     }
 }
