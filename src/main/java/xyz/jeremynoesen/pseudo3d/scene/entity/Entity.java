@@ -47,6 +47,11 @@ public class Entity extends Physics {
     boolean visible;
     
     /**
+     * whether the entity has physics or not
+     */
+    boolean physics;
+    
+    /**
      * constructs a new default entity
      */
     public Entity() {
@@ -58,6 +63,7 @@ public class Entity extends Physics {
         speed = 1;
         enabled = true;
         visible = true;
+        physics = true;
     }
     
     /**
@@ -74,6 +80,7 @@ public class Entity extends Physics {
         this.speed = entity.speed;
         this.enabled = entity.enabled;
         this.visible = entity.visible;
+        this.physics = entity.physics;
     }
     
     /**
@@ -112,7 +119,7 @@ public class Entity extends Physics {
      */
     public void setOnScreen(boolean onScreen) {
         this.onScreen = onScreen;
-        setUpdatable((onScreen || updateOffScreen || !visible) && enabled);
+        setUpdatable((onScreen || updateOffScreen || !visible) && enabled && physics);
     }
     
     /**
@@ -225,6 +232,26 @@ public class Entity extends Physics {
     }
     
     /**
+     * check if the entity has physics enabled
+     *
+     * @return true if entity has physics
+     */
+    public boolean hasPhysics() {
+        return physics;
+    }
+    
+    /**
+     * set the entity to have physics or not
+     *
+     * @param enabled true to enable physics
+     */
+    public Entity setPhysics(boolean enabled) {
+        this.physics = enabled;
+        if (!enabled) setUpdatable(false);
+        return this;
+    }
+    
+    /**
      * check if this entity is identical to another
      *
      * @param o entity to check
@@ -241,6 +268,7 @@ public class Entity extends Physics {
                 Float.compare(entity.speed, speed) == 0 &&
                 enabled == entity.enabled &&
                 visible == entity.visible &&
+                physics == entity.physics &&
                 Objects.equals(scene, entity.scene) &&
                 Objects.equals(sprite, entity.sprite);
     }
