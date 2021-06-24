@@ -261,7 +261,7 @@ public abstract class Physics extends Box {
      * check if a entity has collided with this entity
      */
     public void tickCollisions() {
-        if (!kinematic || !updatable || entities == null) return;
+        if (!updatable || entities == null) return;
         
         colliding = false;
         overlapping = false;
@@ -333,7 +333,7 @@ public abstract class Physics extends Box {
         
         if (axis == 1) {
             // check if collision is on this axis (1 = x, 2 = y, 3 = z)
-            if (velocity.getX() * dir > 0) {
+            if (velocity.getX() * dir > 0 && kinematic) {
                 // check if entity is moving in proper direction on the axis
                 if (Math.signum(velocity.getX()) == -Math.signum(physics.velocity.getX()))
                     //check that the two entities are moving towards each other
@@ -345,14 +345,14 @@ public abstract class Physics extends Box {
             collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
             //add to colliding entities for the colliding side
         } else if (axis == 2) {
-            if (velocity.getY() * dir > 0) {
+            if (velocity.getY() * dir > 0 && kinematic) {
                 if (Math.signum(velocity.getY()) == -Math.signum(physics.velocity.getY()))
                     distance *= velocity.getY() / (velocity.getY() - physics.velocity.getY());
                 setPosition(position.setY(position.getY() - (distance * dir)));
             }
             collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
         } else {
-            if (velocity.getZ() * dir > 0) {
+            if (velocity.getZ() * dir > 0 && kinematic) {
                 if (Math.signum(velocity.getZ()) == -Math.signum(physics.velocity.getZ()))
                     distance *= velocity.getZ() / (velocity.getZ() - physics.velocity.getZ());
                 setPosition(position.setZ(position.getZ() - (distance * dir)));
