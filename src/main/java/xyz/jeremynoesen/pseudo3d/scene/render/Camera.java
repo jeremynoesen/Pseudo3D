@@ -1,4 +1,4 @@
-package xyz.jeremynoesen.pseudo3d.scene.renderer;
+package xyz.jeremynoesen.pseudo3d.scene.render;
 
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
