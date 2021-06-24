@@ -1,4 +1,4 @@
-package xyz.jeremynoesen.pseudo3d.scene.renderer;
+package xyz.jeremynoesen.pseudo3d.scene.render;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
