@@ -4,6 +4,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -64,9 +66,10 @@ public class Sprite {
      *
      * @param width  sprite width in grid units
      * @param height sprite height in grid units
+     * @param src    path to image to use for sprite
      */
-    public Sprite(float width, float height, Image image) {
-        this.image = image;
+    public Sprite(float width, float height, String src) throws FileNotFoundException {
+        this.image = new Image(new FileInputStream(src));
         this.width = width;
         this.height = height;
         this.rotation = 0;
@@ -80,26 +83,34 @@ public class Sprite {
      * @param color  sprite color
      */
     public Sprite(float width, float height, Color color) {
-        this(width, height, new WritableImage(1, 1));
+        this.image = new WritableImage(1, 1);
         this.width = width;
         this.height = height;
+        this.rotation = 0;
         ((WritableImage) image).getPixelWriter().setColor(0, 0, color);
     }
     
     /**
      * create a new animated sprite with a list of images and frame rate
      *
-     * @param images    all images of the animated sprite
+     * @param src       path to all images of the animated sprite
      * @param frameRate frames per second of the sprite
      * @param width     sprite width in grid units
      * @param height    sprite height in grid units
      * @param loop      true to allow sprite to loop
      */
-    public Sprite(float width, float height, ArrayList<Image> images, float frameRate, boolean loop) {
-        this(width, height, images.get(0));
+    public Sprite(float width, float height, float frameRate, boolean loop, String[] src) throws FileNotFoundException {
+        ArrayList<Image> images = new ArrayList<>();
+        for (String s : src) {
+            images.add(new Image(new FileInputStream(s)));
+        }
+        this.images = images;
+        this.image = images.get(0);
+        this.width = width;
+        this.height = height;
+        this.rotation = 0;
         this.frameStep = 1 / frameRate;
         this.currentFrame = 0;
-        this.images = images;
         this.loop = loop;
     }
     
