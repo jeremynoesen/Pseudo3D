@@ -155,7 +155,7 @@ public abstract class Physics extends Box {
      * @param deltaTime time elapsed to use in calculation
      */
     public void tickMotion(float deltaTime) {
-        if (!kinematic || !updatable) return;
+        if (!updatable || !kinematic) return;
         
         float ax = acceleration.getX() + gravity.getX(), ay = acceleration.getY() + gravity.getY(),
                 az = acceleration.getZ() + gravity.getZ();
@@ -190,41 +190,47 @@ public abstract class Physics extends Box {
                         fz += physics.roughness.getZ() * Math.abs(vx);
                         zCount++;
                         //sum frictions in other axes
-                        if (physics.pushable[0] && physics.kinematic && physics.updatable) {
-                            float sum = mass + physics.mass;
-                            float diff = mass - physics.mass;
-                            float v1 = vx;
-                            float v2 = physics.velocity.getX();
-                            vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
-                        } else vx = 0;
+                        if (physics.updatable) {
+                            if (physics.kinematic && physics.pushable[0]) {
+                                float sum = mass + physics.mass;
+                                float diff = mass - physics.mass;
+                                float v1 = vx;
+                                float v2 = physics.velocity.getX();
+                                vx = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                                physics.velocity = physics.velocity.setX(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            } else vx = 0;
+                        }
                         //calculate conservation of momentum if entity is able to
                     } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
                         fx += physics.roughness.getX() * Math.abs(vy);
                         xCount++;
                         fz += physics.roughness.getZ() * Math.abs(vy);
                         zCount++;
-                        if (physics.pushable[1] && physics.kinematic && physics.updatable) {
-                            float sum = mass + physics.mass;
-                            float diff = mass - physics.mass;
-                            float v1 = vy;
-                            float v2 = physics.velocity.getY();
-                            vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
-                        } else vy = 0;
+                        if (physics.updatable) {
+                            if (physics.kinematic && physics.pushable[1]) {
+                                float sum = mass + physics.mass;
+                                float diff = mass - physics.mass;
+                                float v1 = vy;
+                                float v2 = physics.velocity.getY();
+                                vy = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                                physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            } else vy = 0;
+                        }
                     } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
                         fx += physics.roughness.getX() * Math.abs(vz);
                         xCount++;
                         fy += physics.roughness.getY() * Math.abs(vz);
                         yCount++;
-                        if (physics.pushable[2] && physics.kinematic && physics.updatable) {
-                            float sum = mass + physics.mass;
-                            float diff = mass - physics.mass;
-                            float v1 = vz;
-                            float v2 = physics.velocity.getZ();
-                            vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
-                        } else vz = 0;
+                        if (physics.updatable) {
+                            if (physics.kinematic && physics.pushable[2]) {
+                                float sum = mass + physics.mass;
+                                float diff = mass - physics.mass;
+                                float v1 = vz;
+                                float v2 = physics.velocity.getZ();
+                                vz = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                                physics.velocity = physics.velocity.setZ(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                            } else vz = 0;
+                        }
                     }
                 }
             }
@@ -275,7 +281,7 @@ public abstract class Physics extends Box {
                 //check that this is not itself, or can't be checked at the moment
                 if (super.overlaps(entity)) {
                     //check for an overlap
-                    if (entity.isSolid() && solid) {
+                    if (solid && entity.isSolid()) {
                         //if this and other entity can collide
                         collideWith(entity);
                         //do the collision calculations
@@ -333,7 +339,7 @@ public abstract class Physics extends Box {
         
         if (axis == 1) {
             // check if collision is on this axis (1 = x, 2 = y, 3 = z)
-            if (velocity.getX() * dir > 0 && kinematic) {
+            if (kinematic && velocity.getX() * dir > 0) {
                 // check if entity is moving in proper direction on the axis
                 if (Math.signum(velocity.getX()) == -Math.signum(physics.velocity.getX()))
                     //check that the two entities are moving towards each other
@@ -345,14 +351,14 @@ public abstract class Physics extends Box {
             collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
             //add to colliding entities for the colliding side
         } else if (axis == 2) {
-            if (velocity.getY() * dir > 0 && kinematic) {
+            if (kinematic && velocity.getY() * dir > 0) {
                 if (Math.signum(velocity.getY()) == -Math.signum(physics.velocity.getY()))
                     distance *= velocity.getY() / (velocity.getY() - physics.velocity.getY());
                 setPosition(position.setY(position.getY() - (distance * dir)));
             }
             collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
         } else {
-            if (velocity.getZ() * dir > 0 && kinematic) {
+            if (kinematic && velocity.getZ() * dir > 0) {
                 if (Math.signum(velocity.getZ()) == -Math.signum(physics.velocity.getZ()))
                     distance *= velocity.getZ() / (velocity.getZ() - physics.velocity.getZ());
                 setPosition(position.setZ(position.getZ() - (distance * dir)));
