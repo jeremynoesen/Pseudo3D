@@ -119,7 +119,7 @@ public class Entity extends Physics {
      */
     public void setOnScreen(boolean onScreen) {
         this.onScreen = onScreen;
-        setUpdatable((onScreen || updateOffScreen || !visible) && enabled && physics);
+        setUpdatable(enabled && physics && (onScreen || updateOffScreen || !visible));
     }
     
     /**
