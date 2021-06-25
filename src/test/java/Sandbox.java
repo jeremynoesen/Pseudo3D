@@ -1,4 +1,3 @@
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import xyz.jeremynoesen.pseudo3d.Pseudo3D;
 import xyz.jeremynoesen.pseudo3d.input.Keyboard;
@@ -8,7 +7,6 @@ import xyz.jeremynoesen.pseudo3d.scene.entity.Sprite;
 import xyz.jeremynoesen.pseudo3d.scene.render.Camera;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Random;
 
@@ -25,17 +23,17 @@ public class Sandbox {
      * @param args program arguments
      */
     public static void main(String[] args) throws FileNotFoundException {
-        Sprite playerFront = new Sprite(0.85f, 2, new Image(new FileInputStream("src/test/resources/images/player/front.png")));
-        Sprite playerBack = new Sprite(0.85f, 2, new Image(new FileInputStream("src/test/resources/images/player/back.png")));
-        Sprite playerLeft = new Sprite(0.6f, 2, new Image(new FileInputStream("src/test/resources/images/player/left.png")));
-        Sprite playerRight = new Sprite(0.6f, 2, new Image(new FileInputStream("src/test/resources/images/player/right.png")));
-        Sprite floor = new Sprite(1, 1, new Image(new FileInputStream("src/test/resources/images/floor.png")));
-        Sprite background = new Sprite(16, 16, new Image(new FileInputStream("src/test/resources/images/background.png")));
+        Sprite playerFront = new Sprite(0.85f, 2, "src/test/resources/images/player/front.png");
+        Sprite playerBack = new Sprite(0.85f, 2, "src/test/resources/images/player/back.png");
+        Sprite playerLeft = new Sprite(0.6f, 2, "src/test/resources/images/player/left.png");
+        Sprite playerRight = new Sprite(0.6f, 2, "src/test/resources/images/player/right.png");
+        Sprite floor = new Sprite(1, 1, "src/test/resources/images/floor.png");
+        Sprite background = new Sprite(16, 16, "src/test/resources/images/background.png");
         //load all sprites
-    
+        
         Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
         //launch program
-    
+        
         Entity player = (Entity) new Entity()
                 .setUpdateOffScreen(true)
                 .setSprite(playerFront)
@@ -73,44 +71,44 @@ public class Sandbox {
         
         //the following adds controls to the scene
         scene.addLoopInjection(() -> {
-    
+            
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
                 player.setVelocity(player.getVelocity().setZ(-2));
                 player.setSprite(playerBack);
             }
-    
+            
             if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
                 player.setVelocity(player.getVelocity().setZ(2));
                 player.setSprite(playerFront);
             }
-    
+            
             if ((Keyboard.isPressed(KeyCode.W) && Keyboard.isPressed(KeyCode.S)) ||
                     camera.getFieldOfView() == 0) {
                 player.setVelocity(player.getVelocity().setZ(0));
             }
-    
+            
             if (Keyboard.isPressed(KeyCode.A)) {
                 player.setVelocity(player.getVelocity().setX(-2));
                 player.setSprite(playerLeft);
             }
-    
+            
             if (Keyboard.isPressed(KeyCode.D)) {
                 player.setVelocity(player.getVelocity().setX(2));
                 player.setSprite(playerRight);
             }
-    
+            
             if (Keyboard.isPressed(KeyCode.A) && Keyboard.isPressed(KeyCode.D)) {
                 player.setVelocity(player.getVelocity().setX(0));
             }
-    
+            
             if (Keyboard.isPressed(KeyCode.SPACE)) {
                 player.setVelocity(player.getVelocity().setY(2));
             }
-    
+            
             if (Keyboard.isPressed(KeyCode.SHIFT)) {
                 player.setVelocity(player.getVelocity().setY(-2));
             }
-    
+            
             if (Keyboard.isPressed(KeyCode.SPACE) && Keyboard.isPressed(KeyCode.SHIFT)) {
                 player.setVelocity(player.getVelocity().setY(0));
             }
