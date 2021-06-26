@@ -8,10 +8,9 @@ import xyz.jeremynoesen.pseudo3d.scene.render.Camera;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.io.FileNotFoundException;
-import java.util.Random;
 
 /**
- * sandbox-style testing class for testing various bits of this project
+ * sandbox-style testing class for testing various bits of this project, also used as an example for demonstration
  *
  * @author Jeremy Noesen
  */
@@ -30,9 +29,6 @@ public class Sandbox {
         Sprite floor = new Sprite(1, 1, "src/test/resources/images/floor.png");
         Sprite background = new Sprite(16, 16, "src/test/resources/images/background.png");
         //load all sprites
-        
-        Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
-        //launch program
         
         Entity player = (Entity) new Entity()
                 .setUpdateOffScreen(true)
@@ -66,10 +62,13 @@ public class Sandbox {
         }
         //generate floor
         
-        Pseudo3D.setActiveScene(scene);
-        //set scene
+        Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
+        //launch program
         
-        //the following adds controls to the scene
+        Pseudo3D.setActiveScene(scene);
+        //set active scene
+        
+        //scene keyboard controls
         scene.addLoopInjection(() -> {
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
@@ -127,12 +126,6 @@ public class Sandbox {
             
             if (Keyboard.isPressed(KeyCode.RIGHT)) {
                 camera.setRotation(camera.getRotation() - 0.5f);
-            }
-            
-            if (Keyboard.isPressed(KeyCode.F)) {
-                Random random = new Random();
-                camera.setOffset(new Vector(random.nextInt() % 4 - 2, random.nextInt() % 4 - 2));
-                camera.setRotation(((random.nextInt() % 2) / 2.0f));
             }
             
             if (Keyboard.isPressed(KeyCode.R)) {
