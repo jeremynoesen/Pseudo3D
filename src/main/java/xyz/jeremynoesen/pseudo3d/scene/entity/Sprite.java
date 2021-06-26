@@ -32,7 +32,7 @@ public class Sprite {
     private float height;
     
     /**
-     * counter-clock-wise rotation of sprite in radians
+     * counter-clock-wise rotation of sprite in degrees
      */
     private float rotation;
     
@@ -121,9 +121,9 @@ public class Sprite {
      */
     public Sprite(Sprite sprite) {
         image = sprite.image;
-        width = sprite.getWidth();
-        height = sprite.getHeight();
-        rotation = sprite.getRotation();
+        width = sprite.width;
+        height = sprite.height;
+        rotation = sprite.rotation;
         if (sprite.images != null) images = new ArrayList<>(sprite.images);
         frameStep = sprite.frameStep;
         currentFrame = sprite.currentFrame;
@@ -193,7 +193,7 @@ public class Sprite {
     /**
      * set the rotation of the sprite
      *
-     * @param rotation rotation of sprite in radians counter-clock-wise
+     * @param rotation rotation of sprite in degrees counter-clock-wise
      */
     public Sprite setRotation(float rotation) {
         this.rotation = rotation;
@@ -203,7 +203,7 @@ public class Sprite {
     /**
      * get the rotation of the sprite
      *
-     * @return rotation of sprite in radians counter-clock-wise
+     * @return rotation of sprite in degrees counter-clock-wise
      */
     public float getRotation() {
         return rotation;

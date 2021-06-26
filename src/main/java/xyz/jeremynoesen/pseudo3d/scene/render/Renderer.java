@@ -103,8 +103,7 @@ public class Renderer {
             Affine original = graphicsContext.getTransform();
             if (camera.getRotation() != 0) {
                 Affine transform = new Affine();
-                transform.appendRotation(Math.toDegrees(-camera.getRotation()),
-                        renderPos.getX(), renderPos.getY());
+                transform.appendRotation(-camera.getRotation(), renderPos.getX(), renderPos.getY());
                 graphicsContext.setTransform(transform);
             }
             //rotate the canvas if the camera is rotated
@@ -142,8 +141,8 @@ public class Renderer {
         //don't render entities without a sprite or further than view distance
         
         float scale = (float) (camera.getZoom() * (camera.getSensorSize() / (camera.getSensorSize() + (2.0 *
-                camDist * (Math.sin(camera.getFieldOfView() / 2.0f) /
-                Math.sin((Math.PI / 2.0) - camera.getFieldOfView() / 2.0f))))));
+                camDist * (Math.sin(Math.toRadians(camera.getFieldOfView()) / 2.0f) /
+                Math.sin((Math.PI / 2.0) - Math.toRadians(camera.getFieldOfView()) / 2.0f))))));
         //scale entities based on fov angle and distance from camera using law of sines and camera sensor size
         
         if (scale <= 0) {
@@ -185,9 +184,13 @@ public class Renderer {
             float cameraRotation = -camera.getRotation();
             //get rotations
             
-            transform.appendRotation(Math.toDegrees(cameraRotation), renderPos.getX(), renderPos.getY());
-            transform.appendRotation(Math.toDegrees(spriteRotation), x, y);
+            transform.appendRotation(cameraRotation, renderPos.getX(), renderPos.getY());
+            transform.appendRotation(spriteRotation, x, y);
             //rotate canvas
+    
+            spriteRotation = (float) Math.toRadians(spriteRotation);
+            cameraRotation = (float) Math.toRadians(cameraRotation);
+            //convert to radians
             
             float sprRotSin = (float) Math.sin(spriteRotation + cameraRotation);
             float sprRotCos = (float) Math.cos(spriteRotation + cameraRotation);

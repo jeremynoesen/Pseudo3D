@@ -43,7 +43,7 @@ public class Sandbox {
         Entity dummy = new Entity(player).setUpdateOffScreen(false);
         //create dummy entity
         
-        Camera camera = new Camera().setFieldOfView((float) Math.toRadians(49));
+        Camera camera = new Camera().setFieldOfView(49);
         //create camera
         
         Scene scene = new Scene()
@@ -114,25 +114,25 @@ public class Sandbox {
             }
             
             if (Keyboard.isPressed(KeyCode.UP)) {
-                camera.setFieldOfView(camera.getFieldOfView() + 0.01f);
+                camera.setFieldOfView(camera.getFieldOfView() + 0.5f);
             }
             
             if (Keyboard.isPressed(KeyCode.DOWN)) {
-                camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.01f, 0));
+                camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.5f, 0));
             }
             
             if (Keyboard.isPressed(KeyCode.LEFT)) {
-                camera.setRotation(camera.getRotation() + 0.01f);
+                camera.setRotation(camera.getRotation() + 0.5f);
             }
             
             if (Keyboard.isPressed(KeyCode.RIGHT)) {
-                camera.setRotation(camera.getRotation() - 0.01f);
+                camera.setRotation(camera.getRotation() - 0.5f);
             }
             
             if (Keyboard.isPressed(KeyCode.F)) {
                 Random random = new Random();
                 camera.setOffset(new Vector(random.nextInt() % 4 - 2, random.nextInt() % 4 - 2));
-                camera.setRotation(((random.nextInt() % 4) - 2) * 0.001f);
+                camera.setRotation(((random.nextInt() % 2) / 2.0f));
             }
             
             if (Keyboard.isPressed(KeyCode.R)) {
@@ -144,7 +144,7 @@ public class Sandbox {
                 dummy.setPosition(new Vector());
                 dummy.setVelocity(new Vector());
                 dummy.setAcceleration(new Vector());
-                camera.setFieldOfView((float) Math.toRadians(49));
+                camera.setFieldOfView(49);
             }
         });
     }

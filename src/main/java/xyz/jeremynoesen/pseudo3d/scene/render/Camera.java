@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Camera {
     
     /**
-     * field of view in radians, how wide the camera can see
+     * field of view in degrees, how wide the camera can see
      */
     private float fieldOfView;
     
@@ -32,7 +32,7 @@ public class Camera {
     private float zoom;
     
     /**
-     * rotation of the camera in radians, counter-clock-wise
+     * rotation of the camera in degrees, counter-clock-wise
      */
     private float rotation;
     
@@ -64,10 +64,10 @@ public class Camera {
      *
      * @param position     camera position in scene
      * @param sensorSize   camera sensor size
-     * @param fieldOfView  field of view in radians
+     * @param fieldOfView  field of view in degrees
      * @param viewDistance z distance camera is able to see in grid units
      * @param zoom         camera zoom, scales render
-     * @param rotation     rotation of camera in radians
+     * @param rotation     rotation of camera in degrees
      * @param offset       position of camera in window
      */
     public Camera(Vector position, Vector offset, float sensorSize, float fieldOfView,
@@ -97,9 +97,9 @@ public class Camera {
     }
     
     /**
-     * get field of view in radians
+     * get field of view in degrees
      *
-     * @return field of view in radians
+     * @return field of view in degrees
      */
     public float getFieldOfView() {
         return fieldOfView;
@@ -108,7 +108,7 @@ public class Camera {
     /**
      * set the camera's field of view
      *
-     * @param fieldOfView field of view in radians
+     * @param fieldOfView field of view in degrees
      */
     public Camera setFieldOfView(float fieldOfView) {
         this.fieldOfView = fieldOfView;
@@ -213,7 +213,7 @@ public class Camera {
     /**
      * get the rotation of the camera
      *
-     * @return rotation of camera in radians counter-clock-wise
+     * @return rotation of camera in degrees counter-clock-wise
      */
     public float getRotation() {
         return rotation;
@@ -222,7 +222,7 @@ public class Camera {
     /**
      * set the rotation of the camera
      *
-     * @param rotation rotation of camera in radians counter-clock-wise
+     * @param rotation rotation of camera in degrees counter-clock-wise
      */
     public Camera setRotation(float rotation) {
         this.rotation = rotation;
