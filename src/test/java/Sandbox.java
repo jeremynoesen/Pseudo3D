@@ -5,6 +5,7 @@ import xyz.jeremynoesen.pseudo3d.scene.Scene;
 import xyz.jeremynoesen.pseudo3d.scene.entity.Entity;
 import xyz.jeremynoesen.pseudo3d.scene.entity.Sprite;
 import xyz.jeremynoesen.pseudo3d.scene.render.Camera;
+import xyz.jeremynoesen.pseudo3d.scene.util.Box;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.io.FileNotFoundException;
@@ -33,6 +34,7 @@ public class Sandbox {
         Entity player = (Entity) new Entity()
                 .setUpdateOffScreen(true)
                 .setSprite(playerFront)
+                .setTerminalVelocity(new Vector(2, 10, 2))
                 .setDimensions(0.8f, 2, 0.8f);
         //create player entity
         
@@ -70,63 +72,61 @@ public class Sandbox {
         
         //scene keyboard controls
         scene.addLoopInjection(() -> {
+    
+            Vector accel = new Vector();
+            
+            player.setAcceleration(accel);
             
             if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
-                player.setVelocity(player.getVelocity().setZ(-2));
+                accel = accel.subtract(new Vector(0, 0, 20));
                 player.setSprite(playerBack);
             }
+            //accelerate forward
             
             if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
-                player.setVelocity(player.getVelocity().setZ(2));
+                accel = accel.add(new Vector(0, 0, 20));
                 player.setSprite(playerFront);
             }
-            
-            if ((Keyboard.isPressed(KeyCode.W) && Keyboard.isPressed(KeyCode.S)) ||
-                    camera.getFieldOfView() == 0) {
-                player.setVelocity(player.getVelocity().setZ(0));
-            }
+            //accelerate backward
             
             if (Keyboard.isPressed(KeyCode.A)) {
-                player.setVelocity(player.getVelocity().setX(-2));
+                accel = accel.subtract(new Vector(20, 0, 0));
                 player.setSprite(playerLeft);
             }
+            //accelerate left
             
             if (Keyboard.isPressed(KeyCode.D)) {
-                player.setVelocity(player.getVelocity().setX(2));
+                accel = accel.add(new Vector(20, 0, 0));
                 player.setSprite(playerRight);
             }
-            
-            if (Keyboard.isPressed(KeyCode.A) && Keyboard.isPressed(KeyCode.D)) {
-                player.setVelocity(player.getVelocity().setX(0));
+            //accelerate right
+    
+            player.setAcceleration(accel);
+    
+            if (Keyboard.isPressed(KeyCode.SPACE) && player.collidesOn(Box.Side.BOTTOM)) {
+                player.setVelocity(player.getVelocity().setY(7.5f));
             }
-            
-            if (Keyboard.isPressed(KeyCode.SPACE)) {
-                player.setVelocity(player.getVelocity().setY(2));
-            }
-            
-            if (Keyboard.isPressed(KeyCode.SHIFT)) {
-                player.setVelocity(player.getVelocity().setY(-2));
-            }
-            
-            if (Keyboard.isPressed(KeyCode.SPACE) && Keyboard.isPressed(KeyCode.SHIFT)) {
-                player.setVelocity(player.getVelocity().setY(0));
-            }
-            
+            //jump
+    
             if (Keyboard.isPressed(KeyCode.UP)) {
                 camera.setFieldOfView(camera.getFieldOfView() + 0.5f);
             }
+            //increase camera fov
             
             if (Keyboard.isPressed(KeyCode.DOWN)) {
                 camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.5f, 0));
             }
+            //decrease camera fov
             
             if (Keyboard.isPressed(KeyCode.LEFT)) {
                 camera.setRotation(camera.getRotation() + 0.5f);
             }
+            //rotate camera counter clockwise
             
             if (Keyboard.isPressed(KeyCode.RIGHT)) {
                 camera.setRotation(camera.getRotation() - 0.5f);
             }
+            //rotate camera clockwise
             
             if (Keyboard.isPressed(KeyCode.R)) {
                 camera.setOffset(new Vector());
@@ -139,6 +139,7 @@ public class Sandbox {
                 dummy.setAcceleration(new Vector());
                 camera.setFieldOfView(49);
             }
+            //reset scene
         });
     }
 }
