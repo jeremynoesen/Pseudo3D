@@ -41,7 +41,12 @@ public class Scene {
     /**
      * runnable code fragments to run every time the scene ticks
      */
-    private final HashSet<Runnable> injections;
+    private final HashSet<Runnable> tickRunnables;
+    
+    /**
+     * runnable code fragments to run every time the scene renders
+     */
+    private final HashSet<Runnable> renderRunnables;
     
     /**
      * scene renderer
@@ -70,7 +75,8 @@ public class Scene {
         entities = new LinkedList<>();
         camera = new Camera();
         background = null;
-        injections = new HashSet<>();
+        tickRunnables = new HashSet<>();
+        renderRunnables = new HashSet<>();
         gridScale = new Vector(32, 32, 32);
         renderer = new Renderer(this);
         speed = 1;
@@ -82,15 +88,14 @@ public class Scene {
      * @param entities   entities in scene
      * @param camera     scene camera
      * @param background background sprite
-     * @param injections code to be injected into game loop
      * @param gridScale  scene grid scale
      */
-    public Scene(LinkedList<Entity> entities, Camera camera, Sprite background, HashSet<Runnable> injections,
-                 Vector gridScale) {
+    public Scene(LinkedList<Entity> entities, Camera camera, Sprite background, Vector gridScale) {
         this.entities = entities;
         this.camera = camera;
         this.background = background;
-        this.injections = injections;
+        tickRunnables = new HashSet<>();
+        renderRunnables = new HashSet<>();
         this.gridScale = gridScale;
         this.renderer = new Renderer(this);
         speed = 1;
@@ -108,7 +113,8 @@ public class Scene {
         }
         camera = new Camera(scene.camera);
         background = scene.background;
-        injections = scene.injections;
+        tickRunnables = scene.tickRunnables;
+        renderRunnables = scene.renderRunnables;
         gridScale = scene.gridScale;
         renderer = new Renderer(this);
         lastRender = 0;
@@ -117,32 +123,32 @@ public class Scene {
     }
     
     /**
-     * tick all entities in the scene, updating all motion first, and then all collisions take place. also run any code
-     * injections added to the scene
+     * tick all entities in the scene, updating all motion first, and then all collisions take place. also run any tick
+     * injections
      */
     public void tick() {
         float deltaTime = 0;
         if (lastTick > 0) deltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
         //delta time for ticking
         
-        injections.forEach(Runnable::run);
-        // run all loop injections
+        tickRunnables.forEach(Runnable::run);
+        //run all tick loop injections
         
         for (Entity entity : entities) {
             entity.tickMotion(deltaTime * speed);
         }
-        // tick all entities motion
+        //tick all entities motion
         
         for (Entity entity : entities) {
             entity.tickCollisions();
         }
-        // tick all entities collisions
+        //tick all entities collisions
         
         lastTick = System.nanoTime();
     }
     
     /**
-     * render this scene to the main canvas
+     * render this scene to the main canvas, as well as run any render injections
      *
      * @param graphicsContext graphics context to render to
      */
@@ -150,6 +156,9 @@ public class Scene {
         float deltaTime = 0;
         if (lastRender > 0) deltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
         //delta time for rendering
+        
+        renderRunnables.forEach(Runnable::run);
+        //run all render loop injections
         
         renderer.render(graphicsContext, deltaTime * speed);
         //render frame
@@ -237,32 +246,61 @@ public class Scene {
     }
     
     /**
-     * add a code injection to the game loop for this scene
+     * add a runnable to the tick loop for this scene
      *
-     * @param injection code injection
+     * @param runnable runnable
      */
-    public Scene addLoopInjection(Runnable injection) {
-        injections.add(injection);
+    public Scene addTickRunnable(Runnable runnable) {
+        tickRunnables.add(runnable);
         return this;
     }
     
     /**
-     * remove a code injection from the game loop for the scene
+     * remove a runnable from the tick loop for the scene
      *
-     * @param injection code injection
+     * @param runnable runnable
      */
-    public Scene removeLoopInjection(Runnable injection) {
-        injections.remove(injection);
+    public Scene removeTickRunnable(Runnable runnable) {
+        tickRunnables.remove(runnable);
         return this;
     }
     
     /**
-     * get all code injections for the scene. modifying this directly will cause problems
+     * get all tick runnables for the scene
      *
-     * @return all code injections for the scene
+     * @return all tick runnables for the scene
      */
-    public HashSet<Runnable> getLoopInjections() {
-        return injections;
+    public HashSet<Runnable> getTickRunnables() {
+        return tickRunnables;
+    }
+    
+    /**
+     * add a runnable to the render loop for this scene
+     *
+     * @param runnable runnable
+     */
+    public Scene addRenderRunnables(Runnable runnable) {
+        renderRunnables.add(runnable);
+        return this;
+    }
+    
+    /**
+     * remove a runnable from the render loop for the scene
+     *
+     * @param runnable runnable
+     */
+    public Scene removeRenderRunnables(Runnable runnable) {
+        renderRunnables.remove(runnable);
+        return this;
+    }
+    
+    /**
+     * get all render runnables for the scene
+     *
+     * @return all render runnables for the scene
+     */
+    public HashSet<Runnable> getRenderRunnables() {
+        return renderRunnables;
     }
     
     /**
@@ -318,7 +356,8 @@ public class Scene {
                 Objects.equals(camera, scene.camera) &&
                 Objects.equals(background, scene.background) &&
                 Objects.equals(gridScale, scene.gridScale) &&
-                Objects.equals(injections, scene.injections) &&
+                Objects.equals(tickRunnables, scene.tickRunnables) &&
+                Objects.equals(renderRunnables, scene.renderRunnables) &&
                 Objects.equals(renderer, scene.renderer) &&
                 Float.compare(speed, scene.speed) == 0;
     }

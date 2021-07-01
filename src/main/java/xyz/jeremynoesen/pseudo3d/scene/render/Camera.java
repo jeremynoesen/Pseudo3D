@@ -144,7 +144,7 @@ public class Camera {
     }
     
     /**
-     * set the offset from the center of the camera in the render
+     * set the offset from the center of the camera in the render, in pixels
      *
      * @param offset 2D position vector
      */
