@@ -71,7 +71,7 @@ public class Sandbox {
         //set active scene
         
         //scene keyboard controls
-        scene.addLoopInjection(() -> {
+        scene.addTickRunnable(() -> {
     
             Vector accel = new Vector();
             
