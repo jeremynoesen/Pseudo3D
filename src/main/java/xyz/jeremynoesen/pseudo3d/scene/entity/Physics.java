@@ -11,92 +11,92 @@ import java.util.*;
  * @author Jeremy Noesen
  */
 public abstract class Physics extends Box {
-    
+
     /**
      * entities this entity is in a scene with
      */
     private LinkedList<Physics> entities;
-    
+
     /**
      * gravity applied to the entity (meters / second ^ 2)
      */
     private Vector gravity;
-    
+
     /**
      * position of entity (meters)
      */
     private Vector position;
-    
+
     /**
      * velocity of entity, or rate of change of position (meters / second)
      */
     private Vector velocity;
-    
+
     /**
      * +/- terminal velocity of gravity acceleration of entity (meters / second)
      */
     private Vector terminalVelocity;
-    
+
     /**
      * acceleration of entity, or rate of change of velocity (meters / second ^ 2)
      */
     private Vector acceleration;
-    
+
     /**
      * coefficient of drag per axis
      */
     private Vector drag;
-    
+
     /**
      * roughness of entity per axis, used for friction
      */
     private Vector roughness;
-    
+
     /**
      * if an entity is solid, allowing collision
      */
     private boolean solid;
-    
+
     /**
      * list of entities colliding with per side
      */
     private final HashMap<Side, HashSet<Physics>> collidingEntities;
-    
+
     /**
      * list of entities overlapping this one
      */
     private final HashSet<Physics> overlappingEntities;
-    
+
     /**
      * entity's collision status
      */
     private boolean colliding;
-    
+
     /**
      * entity's overlapping status
      */
     private boolean overlapping;
-    
+
     /**
      * whether this entity can have motion or not
      */
     private boolean kinematic;
-    
+
     /**
      * whether this entity can be pushed by other entities
      */
     private final boolean[] pushable;
-    
+
     /**
      * mass of an entity used for calculations, such as momentum conservation
      */
     private float mass;
-    
+
     /**
      * whether the entity can update or not
      */
     private boolean updatable;
-    
+
     /**
      * create a new aabb entity with default values
      */
@@ -114,14 +114,14 @@ public abstract class Physics extends Box {
         colliding = false;
         overlapping = false;
         kinematic = true;
-        pushable = new boolean[] {true, true, true};
+        pushable = new boolean[]{true, true, true};
         updatable = true;
         mass = 1;
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>();
         for (Side s : Side.values()) collidingEntities.put(s, new HashSet<>());
     }
-    
+
     /**
      * copy constructor for aabb entities
      *
@@ -148,7 +148,7 @@ public abstract class Physics extends Box {
         entities = physics.entities;
         for (Side s : Side.values()) collidingEntities.put(s, new HashSet<>(physics.collidingEntities.get(s)));
     }
-    
+
     /**
      * update the motion of the entity
      *
@@ -156,28 +156,78 @@ public abstract class Physics extends Box {
      */
     public void tickMotion(float deltaTime) {
         if (!updatable || !kinematic) return;
-        
+
         float ax = acceleration.getX() + gravity.getX(), ay = acceleration.getY() + gravity.getY(),
                 az = acceleration.getZ() + gravity.getZ();
-        
+
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
-        
+
         if (vx > -terminalVelocity.getX() && ax < 0)
             vx = Math.max(vx + (ax * deltaTime), -terminalVelocity.getX());
         else if (vx < terminalVelocity.getX() && ax > 0)
             vx = Math.min(vx + (ax * deltaTime), terminalVelocity.getX());
-        
+
         if (vy > -terminalVelocity.getY() && ay < 0)
             vy = Math.max(vy + (ay * deltaTime), -terminalVelocity.getY());
         else if (vy < terminalVelocity.getY() && ay > 0)
             vy = Math.min(vy + (ay * deltaTime), terminalVelocity.getY());
-        
+
         if (vz > -terminalVelocity.getZ() && az < 0)
             vz = Math.max(vz + (az * deltaTime), -terminalVelocity.getZ());
         else if (vz < terminalVelocity.getZ() && az > 0)
             vz = Math.min(vz + (az * deltaTime), terminalVelocity.getZ());
         //apply acceleration and gravity if not exceeding terminal velocity
-        
+
+        float totalMassX = 0, totalMassY = 0, totalMassZ = 0;
+
+        if ((collidesOn(Side.LEFT) || collidesOn(Side.RIGHT)) && vx != 0) {
+            Queue<Physics> current = new ArrayDeque<>();
+            Set<Physics> visited = new HashSet<>();
+            current.add(this);
+            while (!current.isEmpty()) {
+                Physics physics = current.poll();
+                if (!visited.contains(physics)) {
+                    totalMassX += physics.mass;
+                    current.addAll(physics.getCollidingEntities(vx > 0 ? Side.LEFT : Side.RIGHT));
+                    visited.add(physics);
+                }
+            }
+        }
+
+        if ((collidesOn(Side.BOTTOM) || collidesOn(Side.TOP)) && vy != 0) {
+            Queue<Physics> current = new ArrayDeque<>();
+            Set<Physics> visited = new HashSet<>();
+            current.add(this);
+            while (!current.isEmpty()) {
+                Physics physics = current.poll();
+                if (!visited.contains(physics)) {
+                    totalMassY += physics.mass;
+                    current.addAll(physics.getCollidingEntities(vy > 0 ? Side.BOTTOM : Side.TOP));
+                    visited.add(physics);
+                }
+            }
+        }
+
+        if ((collidesOn(Side.BACK) || collidesOn(Side.FRONT)) && vz != 0) {
+            Queue<Physics> current = new ArrayDeque<>();
+            Set<Physics> visited = new HashSet<>();
+            current.add(this);
+            while (!current.isEmpty()) {
+                Physics physics = current.poll();
+                if (!visited.contains(physics)) {
+                    totalMassZ += physics.mass;
+                    current.addAll(physics.getCollidingEntities(vz > 0 ? Side.BACK : Side.FRONT));
+                    visited.add(physics);
+                }
+            }
+        }
+        //get mass of entities if stacked
+
+        float finalMassX = (totalMassY + totalMassZ) == 0 ? mass : totalMassY + totalMassZ;
+        float finalMassY = (totalMassX + totalMassZ) == 0 ? mass : totalMassX + totalMassZ;
+        float finalMassZ = (totalMassX + totalMassY) == 0 ? mass : totalMassX + totalMassY;
+        //convert masses to work with friction
+
         float fx = 0, fy = 0, fz = 0;
         if (colliding) {
             int xCount = 0, yCount = 0, zCount = 0;
@@ -235,19 +285,19 @@ public abstract class Physics extends Box {
                 }
             }
             //get sum of frictions for each axis, as well as apply conservation of momentum
-            
-            if (xCount > 0) fx = ((fx + roughness.getX()) / (xCount + 1)) * mass * deltaTime;
-            if (yCount > 0) fy = ((fy + roughness.getY()) / (yCount + 1)) * mass * deltaTime;
-            if (zCount > 0) fz = ((fz + roughness.getZ()) / (zCount + 1)) * mass * deltaTime;
+
+            if (xCount > 0) fx = ((fx + roughness.getX()) / (xCount + 1)) * finalMassX * deltaTime;
+            if (yCount > 0) fy = ((fy + roughness.getY()) / (yCount + 1)) * finalMassY * deltaTime;
+            if (zCount > 0) fz = ((fz + roughness.getZ()) / (zCount + 1)) * finalMassZ * deltaTime;
             //calculate average friction per axis that has friction applied
         }
         //apply friction from colliding entities
-        
+
         float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(vx);
         float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(vy);
         float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(vz);
         ///calculate drag
-        
+
         if (vx < 0) vx = Math.min(vx + dx + fx, 0);
         else if (vx > 0) vx = Math.max(vx - dx - fx, 0);
         if (vy < 0) vy = Math.min(vy + dy + fy, 0);
@@ -255,26 +305,26 @@ public abstract class Physics extends Box {
         if (vz < 0) vz = Math.min(vz + dz + fz, 0);
         else if (vz > 0) vz = Math.max(vz - dz - fz, 0);
         //modify velocity based on friction and mass, and drag and surface area
-        
+
         velocity = new Vector(vx, vy, vz);
         //set new velocity
-        
+
         setPosition(position.add(velocity.multiply(deltaTime)));
         //update position based on velocity
     }
-    
+
     /**
      * check if a entity has collided with this entity
      */
     public void tickCollisions() {
         if (!updatable || entities == null) return;
-        
+
         colliding = false;
         overlapping = false;
         collidingEntities.values().forEach(HashSet::clear);
         overlappingEntities.clear();
         //reset all collision data
-        
+
         for (Physics entity : entities) {
             //loop through all entities in scene
             if (entity != this && entity.updatable) {
@@ -293,7 +343,7 @@ public abstract class Physics extends Box {
             }
         }
     }
-    
+
     /**
      * fix the position of this entity to make a collision occur
      *
@@ -308,7 +358,7 @@ public abstract class Physics extends Box {
         overlaps[4] = Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()); //back
         overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front
         //get overlap distances
-        
+
         byte zeros = 0;
         byte axis = 1;
         byte dir = -1;
@@ -326,17 +376,17 @@ public abstract class Physics extends Box {
                 }
             }
             //find min overlap, direction, and axis of collision
-            
+
             if (overlaps[i] == 0) zeros++;
             //check for 0 distance overlaps
         }
-        
+
         if (zeros > 1) return;
         //if entity has more than one 0 overlaps, it is technically not touching, so stop collision
-        
+
         colliding = true;
         //set entity to colliding
-        
+
         if (axis == 1) {
             // check if collision is on this axis (1 = x, 2 = y, 3 = z)
             if (kinematic && velocity.getX() * dir > 0) {
@@ -366,7 +416,7 @@ public abstract class Physics extends Box {
             collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
         }
     }
-    
+
     /**
      * set this entity as overlapping another
      *
@@ -376,7 +426,7 @@ public abstract class Physics extends Box {
         overlapping = true;
         overlappingEntities.add(physics);
     }
-    
+
     /**
      * get the position vector of the entity
      *
@@ -385,7 +435,7 @@ public abstract class Physics extends Box {
     public Vector getPosition() {
         return position;
     }
-    
+
     /**
      * set the position of the entity
      *
@@ -396,7 +446,7 @@ public abstract class Physics extends Box {
         super.setPosition(position);
         return this;
     }
-    
+
     /**
      * get the velocity vector of the entity
      *
@@ -405,7 +455,7 @@ public abstract class Physics extends Box {
     public Vector getVelocity() {
         return velocity;
     }
-    
+
     /**
      * set the velocity of the entity
      *
@@ -415,7 +465,7 @@ public abstract class Physics extends Box {
         this.velocity = velocity;
         return this;
     }
-    
+
     /**
      * get the acceleration vector of the entity
      *
@@ -424,7 +474,7 @@ public abstract class Physics extends Box {
     public Vector getAcceleration() {
         return acceleration;
     }
-    
+
     /**
      * set the acceleration of the entity
      *
@@ -434,7 +484,7 @@ public abstract class Physics extends Box {
         this.acceleration = acceleration;
         return this;
     }
-    
+
     /**
      * get the gravity applied to the entity
      *
@@ -443,7 +493,7 @@ public abstract class Physics extends Box {
     public Vector getGravity() {
         return gravity;
     }
-    
+
     /**
      * set the gravity applied to the entity
      *
@@ -453,7 +503,7 @@ public abstract class Physics extends Box {
         this.gravity = gravity;
         return this;
     }
-    
+
     /**
      * get terminal velocity for this entity
      *
@@ -462,7 +512,7 @@ public abstract class Physics extends Box {
     public Vector getTerminalVelocity() {
         return terminalVelocity;
     }
-    
+
     /**
      * set the terminal velocity for this entity to limit maximum velocity due to accelerations
      *
@@ -472,7 +522,7 @@ public abstract class Physics extends Box {
         this.terminalVelocity = terminalVelocity;
         return this;
     }
-    
+
     /**
      * get the drag of the entity
      *
@@ -481,7 +531,7 @@ public abstract class Physics extends Box {
     public Vector getDrag() {
         return drag;
     }
-    
+
     /**
      * set the drag for the entity
      *
@@ -491,7 +541,7 @@ public abstract class Physics extends Box {
         this.drag = drag;
         return this;
     }
-    
+
     /**
      * get the roughness of the entity
      *
@@ -500,7 +550,7 @@ public abstract class Physics extends Box {
     public Vector getRoughness() {
         return roughness;
     }
-    
+
     /**
      * set the friction of the entity
      *
@@ -510,7 +560,7 @@ public abstract class Physics extends Box {
         this.roughness = roughness;
         return this;
     }
-    
+
     /**
      * check if an entity can be collided with
      *
@@ -519,7 +569,7 @@ public abstract class Physics extends Box {
     public boolean isSolid() {
         return solid;
     }
-    
+
     /**
      * enable or disable collisions for the entity
      *
@@ -529,7 +579,7 @@ public abstract class Physics extends Box {
         this.solid = solid;
         return this;
     }
-    
+
     /**
      * check if the entity is currently colliding with another entity
      *
@@ -538,7 +588,7 @@ public abstract class Physics extends Box {
     public boolean isColliding() {
         return colliding;
     }
-    
+
     /**
      * check if an entity collides with this entity
      *
@@ -551,7 +601,7 @@ public abstract class Physics extends Box {
         }
         return false;
     }
-    
+
     /**
      * check if this entity is colliding on the specified side
      *
@@ -561,7 +611,7 @@ public abstract class Physics extends Box {
     public boolean collidesOn(Side side) {
         return !collidingEntities.get(side).isEmpty();
     }
-    
+
     /**
      * check if an entity collides with this one on a specific side
      *
@@ -572,7 +622,7 @@ public abstract class Physics extends Box {
     public boolean collidesWithOn(Physics physics, Side side) {
         return collidingEntities.get(side).contains(physics);
     }
-    
+
     /**
      * get all entities colliding on the specified side
      *
@@ -582,7 +632,7 @@ public abstract class Physics extends Box {
     public HashSet<Physics> getCollidingEntities(Side side) {
         return collidingEntities.get(side);
     }
-    
+
     /**
      * get a set of all entities colliding with this one
      *
@@ -593,7 +643,7 @@ public abstract class Physics extends Box {
         for (Side side : Side.values()) allEntities.addAll(collidingEntities.get(side));
         return allEntities;
     }
-    
+
     /**
      * see if this entity is overlapping any entity
      *
@@ -602,7 +652,7 @@ public abstract class Physics extends Box {
     public boolean isOverlapping() {
         return overlapping;
     }
-    
+
     /**
      * check if this entity overlaps another
      *
@@ -612,7 +662,7 @@ public abstract class Physics extends Box {
     public boolean overlaps(Physics physics) {
         return overlappingEntities.contains(physics);
     }
-    
+
     /**
      * get the set of all entities overlapping this one
      *
@@ -621,7 +671,7 @@ public abstract class Physics extends Box {
     public HashSet<Physics> getOverlappingEntities() {
         return overlappingEntities;
     }
-    
+
     /**
      * check if the entity is kinematic
      *
@@ -630,7 +680,7 @@ public abstract class Physics extends Box {
     public boolean isKinematic() {
         return kinematic;
     }
-    
+
     /**
      * set an entity to be kinematic or not
      *
@@ -640,7 +690,7 @@ public abstract class Physics extends Box {
         this.kinematic = kinematic;
         return this;
     }
-    
+
     /**
      * check if the entity is pushable on any axis
      *
@@ -649,7 +699,7 @@ public abstract class Physics extends Box {
     public boolean isPushable() {
         return pushable[0] || pushable[1] || pushable[2];
     }
-    
+
     /**
      * check if the entity is pushable on the x axis
      *
@@ -658,7 +708,7 @@ public abstract class Physics extends Box {
     public boolean isPushableX() {
         return pushable[0];
     }
-    
+
     /**
      * check if the entity is pushable on the y axis
      *
@@ -667,7 +717,7 @@ public abstract class Physics extends Box {
     public boolean isPushableY() {
         return pushable[1];
     }
-    
+
     /**
      * check if the entity is pushable on the z axis
      *
@@ -676,7 +726,7 @@ public abstract class Physics extends Box {
     public boolean isPushableZ() {
         return pushable[2];
     }
-    
+
     /**
      * set whether the entity can be pushed or not per axis
      *
@@ -690,7 +740,7 @@ public abstract class Physics extends Box {
         pushable[2] = z;
         return this;
     }
-    
+
     /**
      * get the mass of the entity
      *
@@ -699,7 +749,7 @@ public abstract class Physics extends Box {
     public float getMass() {
         return mass;
     }
-    
+
     /**
      * set the mass of the entity
      *
@@ -709,7 +759,7 @@ public abstract class Physics extends Box {
         this.mass = mass;
         return this;
     }
-    
+
     /**
      * set the entities the object is in a scene with, only callable by parent class
      *
@@ -719,7 +769,7 @@ public abstract class Physics extends Box {
     protected void setEntities(LinkedList<? extends Physics> entities) {
         this.entities = (LinkedList<Physics>) entities;
     }
-    
+
     /**
      * set if the entity can update, called by parent class for special function
      *
@@ -728,7 +778,7 @@ public abstract class Physics extends Box {
     protected void setUpdatable(boolean updatable) {
         this.updatable = updatable;
     }
-    
+
     /**
      * check if the entity can update, called by parent class for special function
      *
@@ -737,7 +787,7 @@ public abstract class Physics extends Box {
     protected boolean isUpdatable() {
         return updatable;
     }
-    
+
     /**
      * check if another set of physics data is equal to this one
      *
