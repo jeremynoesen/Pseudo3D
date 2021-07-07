@@ -179,67 +179,65 @@ public abstract class Physics extends Box {
         //apply acceleration and gravity if not exceeding terminal velocity
 
         float totalMassX = 0, totalMassY = 0, totalMassZ = 0;
-
-        if ((collidesOn(Side.LEFT) || collidesOn(Side.RIGHT)) && vx != 0) {
-            Queue<Physics> current = new ArrayDeque<>();
-            Set<Physics> visited = new HashSet<>();
-            current.add(this);
-            while (!current.isEmpty()) {
-                Physics physics = current.poll();
-                if (!visited.contains(physics)) {
-                    totalMassX += physics.mass;
-                    current.addAll(physics.getCollidingEntities(vx > 0 ? Side.LEFT : Side.RIGHT));
-                    visited.add(physics);
-                }
-            }
-        }
-
-        if ((collidesOn(Side.BOTTOM) || collidesOn(Side.TOP)) && vy != 0) {
-            Queue<Physics> current = new ArrayDeque<>();
-            Set<Physics> visited = new HashSet<>();
-            current.add(this);
-            while (!current.isEmpty()) {
-                Physics physics = current.poll();
-                if (!visited.contains(physics)) {
-                    totalMassY += physics.mass;
-                    current.addAll(physics.getCollidingEntities(vy > 0 ? Side.BOTTOM : Side.TOP));
-                    visited.add(physics);
-                }
-            }
-        }
-
-        if ((collidesOn(Side.BACK) || collidesOn(Side.FRONT)) && vz != 0) {
-            Queue<Physics> current = new ArrayDeque<>();
-            Set<Physics> visited = new HashSet<>();
-            current.add(this);
-            while (!current.isEmpty()) {
-                Physics physics = current.poll();
-                if (!visited.contains(physics)) {
-                    totalMassZ += physics.mass;
-                    current.addAll(physics.getCollidingEntities(vz > 0 ? Side.BACK : Side.FRONT));
-                    visited.add(physics);
-                }
-            }
-        }
-        //get mass of entities if stacked
-
-        float finalMassX = (totalMassY + totalMassZ) == 0 ? mass : totalMassY + totalMassZ;
-        float finalMassY = (totalMassX + totalMassZ) == 0 ? mass : totalMassX + totalMassZ;
-        float finalMassZ = (totalMassX + totalMassY) == 0 ? mass : totalMassX + totalMassY;
-        //convert masses to work with friction
-
         float fx = 0, fy = 0, fz = 0;
+
         if (colliding) {
+            if ((collidesOn(Side.LEFT) || collidesOn(Side.RIGHT)) && vx != 0) {
+                Queue<Physics> current = new ArrayDeque<>();
+                Set<Physics> visited = new HashSet<>();
+                current.add(this);
+                while (!current.isEmpty()) {
+                    Physics physics = current.poll();
+                    if (!visited.contains(physics)) {
+                        totalMassX += physics.mass;
+                        current.addAll(physics.getCollidingEntities(vx > 0 ? Side.LEFT : Side.RIGHT));
+                        visited.add(physics);
+                    }
+                }
+            }
+            //sum masses for stacked entities
+
+            if ((collidesOn(Side.BOTTOM) || collidesOn(Side.TOP)) && vy != 0) {
+                Queue<Physics> current = new ArrayDeque<>();
+                Set<Physics> visited = new HashSet<>();
+                current.add(this);
+                while (!current.isEmpty()) {
+                    Physics physics = current.poll();
+                    if (!visited.contains(physics)) {
+                        totalMassY += physics.mass;
+                        current.addAll(physics.getCollidingEntities(vy > 0 ? Side.BOTTOM : Side.TOP));
+                        visited.add(physics);
+                    }
+                }
+            }
+
+            if ((collidesOn(Side.BACK) || collidesOn(Side.FRONT)) && vz != 0) {
+                Queue<Physics> current = new ArrayDeque<>();
+                Set<Physics> visited = new HashSet<>();
+                current.add(this);
+                while (!current.isEmpty()) {
+                    Physics physics = current.poll();
+                    if (!visited.contains(physics)) {
+                        totalMassZ += physics.mass;
+                        current.addAll(physics.getCollidingEntities(vz > 0 ? Side.BACK : Side.FRONT));
+                        visited.add(physics);
+                    }
+                }
+            }
+
             int xCount = 0, yCount = 0, zCount = 0;
             for (Side side : Side.values()) {
                 for (Physics physics : collidingEntities.get(side)) {
+
                     if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
                         //check if colliding and moving towards a side
+
                         fy += physics.roughness.getY() * Math.abs(vx);
                         yCount++;
                         fz += physics.roughness.getZ() * Math.abs(vx);
                         zCount++;
                         //sum frictions in other axes
+
                         if (physics.updatable) {
                             if (physics.kinematic && physics.pushable[0]) {
                                 float sum = mass + physics.mass;
@@ -251,11 +249,14 @@ public abstract class Physics extends Box {
                             } else vx = 0;
                         }
                         //calculate conservation of momentum if entity is able to
+
                     } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
+
                         fx += physics.roughness.getX() * Math.abs(vy);
                         xCount++;
                         fz += physics.roughness.getZ() * Math.abs(vy);
                         zCount++;
+
                         if (physics.updatable) {
                             if (physics.kinematic && physics.pushable[1]) {
                                 float sum = mass + physics.mass;
@@ -266,11 +267,14 @@ public abstract class Physics extends Box {
                                 physics.velocity = physics.velocity.setY(((-diff / sum) * v2) + ((2 * mass / sum) * v1));
                             } else vy = 0;
                         }
+
                     } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
+
                         fx += physics.roughness.getX() * Math.abs(vz);
                         xCount++;
                         fy += physics.roughness.getY() * Math.abs(vz);
                         yCount++;
+
                         if (physics.updatable) {
                             if (physics.kinematic && physics.pushable[2]) {
                                 float sum = mass + physics.mass;
@@ -284,7 +288,11 @@ public abstract class Physics extends Box {
                     }
                 }
             }
-            //get sum of frictions for each axis, as well as apply conservation of momentum
+
+            float finalMassX = (totalMassY + totalMassZ) == 0 ? mass : totalMassY + totalMassZ;
+            float finalMassY = (totalMassX + totalMassZ) == 0 ? mass : totalMassX + totalMassZ;
+            float finalMassZ = (totalMassX + totalMassY) == 0 ? mass : totalMassX + totalMassY;
+            //convert masses to work with friction
 
             if (xCount > 0) fx = ((fx + roughness.getX()) / (xCount + 1)) * finalMassX * deltaTime;
             if (yCount > 0) fy = ((fy + roughness.getY()) / (yCount + 1)) * finalMassY * deltaTime;
