@@ -194,7 +194,7 @@ public abstract class Physics extends Box {
                         visited.add(physics);
                     }
                 }
-            }
+            } else totalMassX = mass;
             //sum masses for stacked entities
 
             if ((collidesOn(Side.BOTTOM) || collidesOn(Side.TOP)) && vy != 0) {
@@ -209,7 +209,7 @@ public abstract class Physics extends Box {
                         visited.add(physics);
                     }
                 }
-            }
+            } else totalMassY = mass;
 
             if ((collidesOn(Side.BACK) || collidesOn(Side.FRONT)) && vz != 0) {
                 Queue<Physics> current = new ArrayDeque<>();
@@ -223,7 +223,7 @@ public abstract class Physics extends Box {
                         visited.add(physics);
                     }
                 }
-            }
+            } else totalMassZ = mass;
 
             int xCount = 0, yCount = 0, zCount = 0;
             for (Side side : Side.values()) {
@@ -232,11 +232,9 @@ public abstract class Physics extends Box {
                     if ((side == Side.LEFT && vx < 0) || (side == Side.RIGHT && vx > 0)) {
                         //check if colliding and moving towards a side
 
-                        fy += physics.roughness.getY() * Math.abs(vx);
-                        yCount++;
-                        fz += physics.roughness.getZ() * Math.abs(vx);
-                        zCount++;
-                        //sum frictions in other axes
+                        fx += physics.roughness.getX() * Math.abs(vx);
+                        xCount++;
+                        //sum friction on axis
 
                         if (physics.updatable) {
                             if (physics.kinematic && physics.pushable[0]) {
@@ -252,10 +250,8 @@ public abstract class Physics extends Box {
 
                     } else if ((side == Side.BOTTOM && vy < 0) || (side == Side.TOP && vy > 0)) {
 
-                        fx += physics.roughness.getX() * Math.abs(vy);
-                        xCount++;
-                        fz += physics.roughness.getZ() * Math.abs(vy);
-                        zCount++;
+                        fy += physics.roughness.getY() * Math.abs(vy);
+                        yCount++;
 
                         if (physics.updatable) {
                             if (physics.kinematic && physics.pushable[1]) {
@@ -270,10 +266,8 @@ public abstract class Physics extends Box {
 
                     } else if ((side == Side.BACK && vz < 0) || (side == Side.FRONT && vz > 0)) {
 
-                        fx += physics.roughness.getX() * Math.abs(vz);
-                        xCount++;
-                        fy += physics.roughness.getY() * Math.abs(vz);
-                        yCount++;
+                        fz += physics.roughness.getZ() * Math.abs(vz);
+                        zCount++;
 
                         if (physics.updatable) {
                             if (physics.kinematic && physics.pushable[2]) {
@@ -289,29 +283,24 @@ public abstract class Physics extends Box {
                 }
             }
 
-            float finalMassX = (totalMassY + totalMassZ) == 0 ? mass : totalMassY + totalMassZ;
-            float finalMassY = (totalMassX + totalMassZ) == 0 ? mass : totalMassX + totalMassZ;
-            float finalMassZ = (totalMassX + totalMassY) == 0 ? mass : totalMassX + totalMassY;
-            //convert masses to work with friction
-
-            if (xCount > 0) fx = ((fx + roughness.getX()) / (xCount + 1)) * finalMassX * deltaTime;
-            if (yCount > 0) fy = ((fy + roughness.getY()) / (yCount + 1)) * finalMassY * deltaTime;
-            if (zCount > 0) fz = ((fz + roughness.getZ()) / (zCount + 1)) * finalMassZ * deltaTime;
-            //calculate average friction per axis that has friction applied
+            if (xCount > 0) fx = ((fx + roughness.getX()) / (xCount + 1)) * totalMassX * deltaTime;
+            if (yCount > 0) fy = ((fy + roughness.getY()) / (yCount + 1)) * totalMassY * deltaTime;
+            if (zCount > 0) fz = ((fz + roughness.getZ()) / (zCount + 1)) * totalMassZ * deltaTime;
+            //calculate average friction per axis, accounting for mass and delta time
         }
-        //apply friction from colliding entities
+        //apply friction and momentum
 
         float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(vx);
         float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(vy);
         float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(vz);
         ///calculate drag
 
-        if (vx < 0) vx = Math.min(vx + dx + fx, 0);
-        else if (vx > 0) vx = Math.max(vx - dx - fx, 0);
-        if (vy < 0) vy = Math.min(vy + dy + fy, 0);
-        else if (vy > 0) vy = Math.max(vy - dy - fy, 0);
-        if (vz < 0) vz = Math.min(vz + dz + fz, 0);
-        else if (vz > 0) vz = Math.max(vz - dz - fz, 0);
+        if (vx < 0) vx = Math.min(vx + dx + fy + fz, 0);
+        else if (vx > 0) vx = Math.max(vx - dx - fy - fz, 0);
+        if (vy < 0) vy = Math.min(vy + dy + fx + fz, 0);
+        else if (vy > 0) vy = Math.max(vy - dy - fx - fz, 0);
+        if (vz < 0) vz = Math.min(vz + dz + fx + fy, 0);
+        else if (vz > 0) vz = Math.max(vz - dz - fx - fy, 0);
         //modify velocity based on friction and mass, and drag and surface area
 
         velocity = new Vector(vx, vy, vz);
@@ -560,9 +549,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * set the friction of the entity
+     * set the roughness of the entity
      *
-     * @param roughness friction vector
+     * @param roughness roughness vector
      */
     public Physics setRoughness(Vector roughness) {
         this.roughness = roughness;
