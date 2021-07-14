@@ -6,6 +6,11 @@ package xyz.jeremynoesen.pseudo3d.scene.util;
  * @author Jeremy Noesen
  */
 public class Vector {
+
+    /**
+     * axes of vectors
+     */
+    public enum Axis {X, Y, Z}
     
     /**
      * x component of vector
@@ -122,6 +127,35 @@ public class Vector {
      */
     public Vector setZ(float z) {
         return new Vector(x, y, z);
+    }
+
+    /**
+     * get a specified component of the vector. useful for loops
+     *
+     * @param axis axis to get value for
+     * @return component of vector based on axis
+     */
+    public float get(Axis axis) {
+        return switch (axis) {
+            case X -> getX();
+            case Y -> getY();
+            case Z -> getZ();
+        };
+    }
+
+    /**
+     * set a specified component of the vector. useful for loops
+     *
+     * @param axis axis to set value to
+     * @param value value to set
+     * @return modified vector
+     */
+    public Vector set(Axis axis, float value) {
+        return switch (axis) {
+            case X -> setX(value);
+            case Y -> setY(value);
+            case Z -> setZ(value);
+        };
     }
     
     /**
