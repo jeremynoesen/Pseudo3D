@@ -356,20 +356,19 @@ public abstract class Physics extends Box {
         overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front
         //get overlap distances
 
-        byte zeros = 0;
-        byte axis = 1;
+        Vector.Axis axis = Vector.Axis.X;
         byte dir = -1;
+        byte zeros = 0;
         float distance = overlaps[0];
+
         for (int i = 0; i < 6; i++) {
             if (overlaps[i] < distance) {
                 distance = overlaps[i];
                 dir = (byte) -Math.pow(-1, i);
-                if (i <= 1) {
-                    axis = 1;
-                } else if (i <= 3) {
-                    axis = 2;
-                } else {
-                    axis = 3;
+                switch (i) {
+                    case 0, 1 -> axis = Vector.Axis.X;
+                    case 2, 3 -> axis = Vector.Axis.Y;
+                    case 4, 5 -> axis = Vector.Axis.Z;
                 }
             }
             //find min overlap, direction, and axis of collision
@@ -384,34 +383,22 @@ public abstract class Physics extends Box {
         colliding = true;
         //set entity to colliding
 
-        if (axis == 1) {
-            // check if collision is on this axis (1 = x, 2 = y, 3 = z)
-            if (kinematic && velocity.getX() * dir > 0) {
-                // check if entity is moving in proper direction on the axis
-                if (Math.signum(velocity.getX()) == -Math.signum(physics.velocity.getX()))
-                    //check that the two entities are moving towards each other
-                    distance *= velocity.getX() / (velocity.getX() - physics.velocity.getX());
-                // scale distance based on entity velocities to improve collision accuracy
-                setPosition(position.setX(position.getX() - (distance * dir)));
-                // fix entity position so it is not overlapping
-            }
-            collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
-            //add to colliding entities for the colliding side
-        } else if (axis == 2) {
-            if (kinematic && velocity.getY() * dir > 0) {
-                if (Math.signum(velocity.getY()) == -Math.signum(physics.velocity.getY()))
-                    distance *= velocity.getY() / (velocity.getY() - physics.velocity.getY());
-                setPosition(position.setY(position.getY() - (distance * dir)));
-            }
-            collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
-        } else {
-            if (kinematic && velocity.getZ() * dir > 0) {
-                if (Math.signum(velocity.getZ()) == -Math.signum(physics.velocity.getZ()))
-                    distance *= velocity.getZ() / (velocity.getZ() - physics.velocity.getZ());
-                setPosition(position.setZ(position.getZ() - (distance * dir)));
-            }
-            collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
+        if (kinematic && velocity.get(axis) * dir > 0) {
+            // check if entity is moving in proper direction on the axis
+            if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis)))
+                //check that the two entities are moving towards each other
+                distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
+            // scale distance based on entity velocities to improve collision accuracy
+            setPosition(position.set(axis, position.get(axis) - (distance * dir)));
+            // fix entity position so it is not overlapping
         }
+
+        switch (axis) {
+            case X -> collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
+            case Y -> collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
+            case Z -> collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
+        }
+        //add to colliding entities for the colliding side
     }
 
     /**
