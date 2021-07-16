@@ -106,7 +106,7 @@ public class Box {
     }
     
     /**
-     * set teh dimensions of the box
+     * set the dimensions of the box
      *
      * @param width  width of box
      * @param height height of box
@@ -116,6 +116,19 @@ public class Box {
         setWidth(width);
         setHeight(height);
         setDepth(depth);
+        return this;
+    }
+
+    /**
+     * set the dimensions of the box
+     *
+     * @param width  width of box
+     * @param height height of box
+     */
+    public Box setDimensions(float width, float height) {
+        setWidth(width);
+        setHeight(height);
+        setDepth(0);
         return this;
     }
     
