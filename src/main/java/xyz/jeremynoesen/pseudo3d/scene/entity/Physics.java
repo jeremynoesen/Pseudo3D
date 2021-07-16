@@ -718,6 +718,19 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * set whether the entity can be pushed or not per axis
+     *
+     * @param x true to allow pushing on the x axis
+     * @param y true to allow pushing on the y axis
+     */
+    public Physics setPushable(boolean x, boolean y) {
+        pushable[0] = x;
+        pushable[1] = y;
+        pushable[2] = false;
+        return this;
+    }
+
+    /**
      * get the mass of the entity
      *
      * @return mass of the entity
