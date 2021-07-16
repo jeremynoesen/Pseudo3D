@@ -157,27 +157,19 @@ public abstract class Physics extends Box {
     public void tickMotion(float deltaTime) {
         if (!updatable || !kinematic) return;
 
-        float ax = acceleration.getX() + gravity.getX(), ay = acceleration.getY() + gravity.getY(),
-                az = acceleration.getZ() + gravity.getZ();
+        for (Vector.Axis axis : Vector.Axis.values()) {
+            float a = acceleration.get(axis) + gravity.get(axis);
+            float v = velocity.get(axis);
+            float vt = terminalVelocity.get(axis);
 
-        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
-
-        if (vx > -terminalVelocity.getX() && ax < 0)
-            vx = Math.max(vx + (ax * deltaTime), -terminalVelocity.getX());
-        else if (vx < terminalVelocity.getX() && ax > 0)
-            vx = Math.min(vx + (ax * deltaTime), terminalVelocity.getX());
-
-        if (vy > -terminalVelocity.getY() && ay < 0)
-            vy = Math.max(vy + (ay * deltaTime), -terminalVelocity.getY());
-        else if (vy < terminalVelocity.getY() && ay > 0)
-            vy = Math.min(vy + (ay * deltaTime), terminalVelocity.getY());
-
-        if (vz > -terminalVelocity.getZ() && az < 0)
-            vz = Math.max(vz + (az * deltaTime), -terminalVelocity.getZ());
-        else if (vz < terminalVelocity.getZ() && az > 0)
-            vz = Math.min(vz + (az * deltaTime), terminalVelocity.getZ());
+            if (v > -vt && a < 0)
+                velocity = velocity.set(axis, Math.max(v + (a * deltaTime), -vt));
+            else if (v < vt && a > 0)
+                velocity = velocity.set(axis, Math.min(v + (a * deltaTime), vt));
+        }
         //apply acceleration and gravity if not exceeding terminal velocity
 
+        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float totalMassX = 0, totalMassY = 0, totalMassZ = 0;
         float fx = 0, fy = 0, fz = 0;
 
