@@ -129,21 +129,17 @@ public class Scene {
     public void tick() {
         float deltaTime = 0;
         if (lastTick > 0) deltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
-        //delta time for ticking
-        
+
         tickRunnables.forEach(Runnable::run);
-        //run all tick loop injections
-        
+
         for (Entity entity : entities) {
             entity.tickMotion(deltaTime * speed);
         }
-        //tick all entities motion
-        
+
         for (Entity entity : entities) {
             entity.tickCollisions();
         }
-        //tick all entities collisions
-        
+
         lastTick = System.nanoTime();
     }
     
@@ -155,14 +151,10 @@ public class Scene {
     public void render(GraphicsContext graphicsContext) {
         float deltaTime = 0;
         if (lastRender > 0) deltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
-        //delta time for rendering
-        
+
         renderRunnables.forEach(Runnable::run);
-        //run all render loop injections
-        
         renderer.render(graphicsContext, deltaTime * speed);
-        //render frame
-        
+
         lastRender = System.nanoTime();
     }
     

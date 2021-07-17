@@ -11,14 +11,14 @@ import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 import java.io.FileNotFoundException;
 
 /**
- * sandbox-style testing class for testing various bits of this project, also used as an example for demonstration
+ * example usage of the Pseudo3D API
  *
  * @author Jeremy Noesen
  */
-public class Sandbox {
+public class Example {
     
     /**
-     * run the sandbox test scene
+     * run the example scene
      *
      * @param args program arguments
      */
