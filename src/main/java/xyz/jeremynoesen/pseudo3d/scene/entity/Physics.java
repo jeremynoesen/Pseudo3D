@@ -98,6 +98,11 @@ public abstract class Physics extends Box {
     private boolean updatable;
 
     /**
+     * time elapsed in the previous tick
+     */
+    private float deltaTime;
+
+    /**
      * create a new aabb entity with default values
      */
     public Physics() {
@@ -116,6 +121,7 @@ public abstract class Physics extends Box {
         kinematic = true;
         pushable = new boolean[]{true, true, true};
         updatable = true;
+        deltaTime = 0;
         mass = 1;
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>();
@@ -143,6 +149,7 @@ public abstract class Physics extends Box {
         kinematic = physics.kinematic;
         pushable = physics.pushable;
         updatable = physics.updatable;
+        deltaTime = physics.deltaTime;
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>(physics.overlappingEntities);
         entities = physics.entities;
@@ -157,44 +164,69 @@ public abstract class Physics extends Box {
     public void tickMotion(float deltaTime) {
         if (!updatable || !kinematic) return;
 
-        Vector tempVelocity = new Vector();
-        Vector friction = new Vector();
+        this.deltaTime = deltaTime;
 
+        velocity = applyMomentum(applyFrictionAndDrag(applyAcceleration(velocity)));
+        setPosition(position.add(velocity.multiply(deltaTime)));
+    }
+
+    /**
+     * apply acceleration and gravity to the input velocity
+     *
+     * @param velocity input velocity vector
+     * @return updated velocity vector
+     */
+    private Vector applyAcceleration(Vector velocity) {
+        Vector output = new Vector(velocity);
         for (Vector.Axis axis : Vector.Axis.values()) {
             float v = velocity.get(axis);
-
             float a = acceleration.get(axis) + gravity.get(axis);
             float vt = terminalVelocity.get(axis);
 
             if (v > -vt && a < 0)
-                v = Math.max(v + (a * deltaTime), -vt);
+                output = output.set(axis, Math.max(v + (a * deltaTime), -vt));
             else if (v < vt && a > 0)
-                v = Math.min(v + (a * deltaTime), vt);
-            //apply acceleration and gravity if not exceeding terminal velocity
+                output = output.set(axis, Math.min(v + (a * deltaTime), vt));
+        }
+        return output;
+    }
 
-            float totalMass = 0;
+    /**
+     * apply the effects of friction and drag to the velocity
+     *
+     * @param velocity input velocity vector
+     * @return velocity vector with friction and drag applies
+     */
+    private Vector applyFrictionAndDrag(Vector velocity) {
+        Vector friction = getFriction(velocity);
+        Vector drag = getDrag(velocity);
+
+        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
+        float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
+        float dx = drag.getX(), dy = drag.getY(), dz = drag.getZ();
+
+        if (vx < 0) vx = Math.min(vx + dx + fy + fz, 0);
+        else if (vx > 0) vx = Math.max(vx - dx - fy - fz, 0);
+        if (vy < 0) vy = Math.min(vy + dy + fx + fz, 0);
+        else if (vy > 0) vy = Math.max(vy - dy - fx - fz, 0);
+        if (vz < 0) vz = Math.min(vz + dz + fx + fy, 0);
+        else if (vz > 0) vz = Math.max(vz - dz - fx - fy, 0);
+
+        return new Vector(vx, vy, vz);
+    }
+
+    /**
+     * get the friction vector for the entity
+     *
+     * @param velocity input velocity vector
+     * @return friction vector
+     */
+    private Vector getFriction(Vector velocity) {
+        Vector output = new Vector();
+        for (Vector.Axis axis : Vector.Axis.values()) {
+            float v = velocity.get(axis);
 
             if (colliding) {
-                if (collidesOn(axis) && v != 0) {
-                    Queue<Physics> current = new ArrayDeque<>();
-                    Set<Physics> visited = new HashSet<>();
-                    current.add(this);
-                    while (!current.isEmpty()) {
-                        Physics physics = current.poll();
-                        if (!visited.contains(physics)) {
-                            totalMass += physics.mass;
-                            Side side = switch (axis) {
-                                case X -> v > 0 ? Side.LEFT : Side.RIGHT;
-                                case Y -> v > 0 ? Side.BOTTOM : Side.TOP;
-                                case Z -> v > 0 ? Side.BACK : Side.FRONT;
-                            };
-                            current.addAll(physics.getCollidingEntities(side));
-                            visited.add(physics);
-                        }
-                    }
-                } else totalMass = mass;
-                //sum masses for stacked entities
-
                 float f = 0;
                 int count = 0;
 
@@ -206,15 +238,91 @@ public abstract class Physics extends Box {
 
                 if (v != 0 && collidesOn(side)) {
                     for (Physics physics : collidingEntities.get(side)) {
-
                         f += physics.roughness.get(axis) * Math.abs(v);
                         count++;
-                        //sum friction on axis
+                    }
+                }
+
+                float totalMass = (collidesOn(axis) && v != 0) ? getTotalMass(v, axis) : mass;
+                if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * totalMass * deltaTime;
+                output = output.set(axis, f);
+            }
+        }
+        return output;
+    }
+
+    /**
+     * get the drag vector based on velocity and dimensions
+     *
+     * @param velocity current velocity
+     * @return drag vector
+     */
+    private Vector getDrag(Vector velocity) {
+        float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(velocity.getX());
+        float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(velocity.getY());
+        float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(velocity.getZ());
+        return new Vector(dx, dy, dz);
+    }
+
+    /**
+     * sum masses of stacked entities
+     *
+     * @param velocity input velocity
+     * @param axis axis of motion
+     * @return sum of masses
+     */
+    private float getTotalMass(float velocity, Vector.Axis axis) {
+        float totalMass = 0;
+        Queue<Physics> current = new ArrayDeque<>();
+        Set<Physics> visited = new HashSet<>();
+        current.add(this);
+
+        while (!current.isEmpty()) {
+            Physics physics = current.poll();
+
+            if (!visited.contains(physics)) {
+                totalMass += physics.mass;
+
+                Side side = switch (axis) {
+                    case X -> velocity > 0 ? Side.LEFT : Side.RIGHT;
+                    case Y -> velocity > 0 ? Side.BOTTOM : Side.TOP;
+                    case Z -> velocity > 0 ? Side.BACK : Side.FRONT;
+                };
+
+                current.addAll(physics.getCollidingEntities(side));
+                visited.add(physics);
+            }
+        }
+        return totalMass;
+    }
+
+    /**
+     * apply the effects of momentum to the velocity
+     *
+     * @param velocity input velocity vector
+     * @return velocity vector after momentum is applied
+     */
+    private Vector applyMomentum(Vector velocity) {
+        Vector output = new Vector(velocity);
+        for (Vector.Axis axis : Vector.Axis.values()) {
+            float v = velocity.get(axis);
+
+            if (colliding) {
+
+                Side side = switch (axis) {
+                    case X -> v < 0 ? Side.LEFT : Side.RIGHT;
+                    case Y -> v < 0 ? Side.BOTTOM : Side.TOP;
+                    case Z -> v < 0 ? Side.BACK : Side.FRONT;
+                };
+
+                if (v != 0 && collidesOn(side)) {
+                    for (Physics physics : collidingEntities.get(side)) {
 
                         if (physics.updatable) {
                             if (physics.kinematic && ((axis == Vector.Axis.X && physics.pushable[0]) ||
                                     (axis == Vector.Axis.Y && physics.pushable[1]) ||
                                     (axis == Vector.Axis.Z && physics.pushable[2]))) {
+
                                 float sum = mass + physics.mass;
                                 float diff = mass - physics.mass;
                                 float v1 = v;
@@ -222,118 +330,106 @@ public abstract class Physics extends Box {
                                 v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
                                 physics.velocity =
                                         physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+
                             } else v = 0;
                         }
-                        //calculate conservation of momentum if entity is able to
                     }
                 }
-
-                if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * totalMass * deltaTime;
-                //calculate average friction, accounting for mass and delta time
-
-                friction = friction.set(axis, f);
             }
-            tempVelocity = tempVelocity.set(axis, v);
+            output = output.set(axis, v);
         }
-
-        float vx = tempVelocity.getX(), vy = tempVelocity.getY(), vz = tempVelocity.getZ();
-        float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
-
-        float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(vx);
-        float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(vy);
-        float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(vz);
-        ///calculate drag
-
-        if (vx < 0) vx = Math.min(vx + dx + fy + fz, 0);
-        else if (vx > 0) vx = Math.max(vx - dx - fy - fz, 0);
-        if (vy < 0) vy = Math.min(vy + dy + fx + fz, 0);
-        else if (vy > 0) vy = Math.max(vy - dy - fx - fz, 0);
-        if (vz < 0) vz = Math.min(vz + dz + fx + fy, 0);
-        else if (vz > 0) vz = Math.max(vz - dz - fx - fy, 0);
-        //modify velocity based on friction and mass, and drag and surface area
-
-        velocity = new Vector(vx, vy, vz);
-        //set new velocity
-
-        setPosition(position.add(velocity.multiply(deltaTime)));
-        //update position based on velocity
+        return output;
     }
 
     /**
-     * check if an entity has collided with this entity and fix this entity's position
+     * check if a entity has collided with this entity
      */
     public void tickCollisions() {
         if (!updatable || entities == null) return;
 
+        resetCollisions();
+
+        for (Physics entity : entities) {
+            if (entity != this && entity.updatable && super.overlaps(entity)) {
+                if (solid && entity.isSolid()) {
+                    collideWith(entity);
+                } else {
+                    overlapWith(entity);
+                }
+            }
+        }
+    }
+
+    /**
+     * resets all collision data
+     */
+    private void resetCollisions() {
         colliding = false;
         overlapping = false;
         collidingEntities.values().forEach(HashSet::clear);
         overlappingEntities.clear();
-        //reset all collision data
+    }
 
-        for (Physics physics : entities) {
-            if (physics != this && physics.updatable) {
-                if (super.overlaps(physics)) {
-                    if (solid && physics.isSolid()) {
-                        float[] overlaps = new float[6];
-                        overlaps[0] = Math.abs(getMinimum().getX() - physics.getMaximum().getX()); //left
-                        overlaps[1] = Math.abs(getMaximum().getX() - physics.getMinimum().getX()); //right
-                        overlaps[2] = Math.abs(getMinimum().getY() - physics.getMaximum().getY()); //bottom
-                        overlaps[3] = Math.abs(getMaximum().getY() - physics.getMinimum().getY()); //top
-                        overlaps[4] = Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()); //back
-                        overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front
-                        //get overlap distances
+    /**
+     * fix the position of this entity to make a collision occur
+     *
+     * @param physics entity colliding with this entity
+     */
+    private void collideWith(Physics physics) {
+        float[] overlaps = new float[6];
+        overlaps[0] = Math.abs(getMinimum().getX() - physics.getMaximum().getX()); //left overlap
+        overlaps[1] = Math.abs(getMaximum().getX() - physics.getMinimum().getX()); //right overlap
+        overlaps[2] = Math.abs(getMinimum().getY() - physics.getMaximum().getY()); //bottom overlap
+        overlaps[3] = Math.abs(getMaximum().getY() - physics.getMinimum().getY()); //top overlap
+        overlaps[4] = Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()); //back overlap
+        overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front overlap
 
-                        Vector.Axis axis = Vector.Axis.X;
-                        byte dir = -1;
-                        byte zeros = 0;
-                        float distance = overlaps[0];
+        Vector.Axis axis = Vector.Axis.X;
+        byte dir = -1;
+        byte zeros = 0;
+        float distance = overlaps[0];
 
-                        for (int i = 0; i < 6; i++) {
-                            if (overlaps[i] < distance) {
-                                distance = overlaps[i];
-                                dir = (byte) -Math.pow(-1, i);
-                                switch (i) {
-                                    case 0, 1 -> axis = Vector.Axis.X;
-                                    case 2, 3 -> axis = Vector.Axis.Y;
-                                    case 4, 5 -> axis = Vector.Axis.Z;
-                                }
-                            }
-                            //find min overlap, direction, and axis of collision
-
-                            if (overlaps[i] == 0) zeros++;
-                            //check for 0 distance overlaps
-                        }
-
-                        if (zeros > 1) return;
-                        //if entity has more than one 0 overlaps, it is technically not touching, so stop collision
-
-                        colliding = true;
-                        //set entity to colliding
-
-                        if (kinematic && velocity.get(axis) * dir > 0) {
-                            // check if entity is moving in proper direction on the axis
-                            if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis)))
-                                //check that the two entities are moving towards each other
-                                distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
-                            // scale distance based on entity velocities to improve collision accuracy
-                            setPosition(position.set(axis, position.get(axis) - (distance * dir)));
-                            // fix entity position so it is not overlapping
-                        }
-
-                        switch (axis) {
-                            case X -> collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
-                            case Y -> collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
-                            case Z -> collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
-                        }
-                        //add to colliding entities for the colliding side
-                    } else {
-                        overlapping = true;
-                        overlappingEntities.add(physics);
-                    }
+        for (int i = 0; i < 6; i++) {
+            if (overlaps[i] < distance) {
+                distance = overlaps[i];
+                dir = (byte) -Math.pow(-1, i);
+                switch (i) {
+                    case 0, 1 -> axis = Vector.Axis.X;
+                    case 2, 3 -> axis = Vector.Axis.Y;
+                    case 4, 5 -> axis = Vector.Axis.Z;
                 }
             }
+            if (overlaps[i] == 0) zeros++;
         }
+        //find min overlap, direction, and axis of collision
+
+        if (zeros > 1) return;
+        //if entity has multiple zero-distance overlaps, it is not touching, so stop collision
+
+        if (kinematic && velocity.get(axis) * dir > 0) {
+            if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis)))
+                distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
+            setPosition(position.set(axis, position.get(axis) - (distance * dir)));
+        }
+        // fix entity position so it is not overlapping
+
+        colliding = true;
+        switch (axis) {
+            case X -> collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
+            case Y -> collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
+            case Z -> collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
+        }
+        //add to colliding entities for the colliding side
+    }
+
+    /**
+     * set this entity as overlapping another
+     *
+     * @param physics entity to overlap with
+     */
+    private void overlapWith(Physics physics) {
+        overlapping = true;
+        overlappingEntities.add(physics);
     }
 
     /**
