@@ -101,9 +101,10 @@ public class Renderer {
             //check if there is a background sprite, if so, get it
             
             Affine original = graphicsContext.getTransform();
-            if (camera.getRotation() != 0) {
+            if (camera.getRotation() != 0 || background.getRotation() != 0) {
                 Affine transform = new Affine();
-                transform.appendRotation(-camera.getRotation(), renderPos.getX(), renderPos.getY());
+                transform.appendRotation(-camera.getRotation() - background.getRotation(),
+                        renderPos.getX(), renderPos.getY());
                 graphicsContext.setTransform(transform);
             }
             //rotate the canvas if the camera is rotated
