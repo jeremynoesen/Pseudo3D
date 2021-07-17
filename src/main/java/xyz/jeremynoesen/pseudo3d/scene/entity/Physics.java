@@ -268,7 +268,7 @@ public abstract class Physics extends Box {
      * sum masses of stacked entities
      *
      * @param velocity input velocity
-     * @param axis axis of motion
+     * @param axis     axis of motion
      * @return sum of masses
      */
     private float getTotalMass(float velocity, Vector.Axis axis) {
@@ -401,17 +401,14 @@ public abstract class Physics extends Box {
             }
             if (overlaps[i] == 0) zeros++;
         }
-        //find min overlap, direction, and axis of collision
 
         if (zeros > 1) return;
-        //if entity has multiple zero-distance overlaps, it is not touching, so stop collision
 
         if (kinematic && velocity.get(axis) * dir > 0) {
             if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis)))
                 distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
             setPosition(position.set(axis, position.get(axis) - (distance * dir)));
         }
-        // fix entity position so it is not overlapping
 
         colliding = true;
         switch (axis) {
@@ -419,7 +416,6 @@ public abstract class Physics extends Box {
             case Y -> collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
             case Z -> collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
         }
-        //add to colliding entities for the colliding side
     }
 
     /**
