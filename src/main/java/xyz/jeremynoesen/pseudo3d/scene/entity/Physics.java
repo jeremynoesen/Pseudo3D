@@ -167,7 +167,8 @@ public abstract class Physics extends Box {
         this.deltaTime = deltaTime;
 
         applyAcceleration();
-        applyFrictionAndDrag();
+        applyFriction();
+        applyDrag();
         applyMomentum();
 
         setPosition(position.add(velocity.multiply(deltaTime)));
@@ -190,22 +191,20 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * apply the effects of friction and drag to the velocity
+     * apply the effect of friction to the velocity
      */
-    private void applyFrictionAndDrag() {
-        Vector friction = calculateFriction(velocity);
-        Vector drag = calculateDrag(velocity);
+    private void applyFriction() {
+        Vector friction = calculateFriction();
 
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
-        float dx = drag.getX(), dy = drag.getY(), dz = drag.getZ();
 
-        if (vx < 0) vx = Math.min(vx + dx + fy + fz, 0);
-        else if (vx > 0) vx = Math.max(vx - dx - fy - fz, 0);
-        if (vy < 0) vy = Math.min(vy + dy + fx + fz, 0);
-        else if (vy > 0) vy = Math.max(vy - dy - fx - fz, 0);
-        if (vz < 0) vz = Math.min(vz + dz + fx + fy, 0);
-        else if (vz > 0) vz = Math.max(vz - dz - fx - fy, 0);
+        if (vx < 0) vx = Math.min(vx + fy + fz, 0);
+        else if (vx > 0) vx = Math.max(vx - fy - fz, 0);
+        if (vy < 0) vy = Math.min(vy + fx + fz, 0);
+        else if (vy > 0) vy = Math.max(vy - fx - fz, 0);
+        if (vz < 0) vz = Math.min(vz + fx + fy, 0);
+        else if (vz > 0) vz = Math.max(vz - fx - fy, 0);
 
         velocity = new Vector(vx, vy, vz);
     }
@@ -213,10 +212,9 @@ public abstract class Physics extends Box {
     /**
      * get the friction vector for the entity
      *
-     * @param velocity input velocity vector
      * @return friction vector
      */
-    private Vector calculateFriction(Vector velocity) {
+    private Vector calculateFriction() {
         Vector output = new Vector();
         for (Vector.Axis axis : Vector.Axis.values()) {
             float v = velocity.get(axis);
@@ -238,19 +236,6 @@ public abstract class Physics extends Box {
             }
         }
         return output;
-    }
-
-    /**
-     * get the drag vector based on velocity and dimensions
-     *
-     * @param velocity current velocity
-     * @return drag vector
-     */
-    private Vector calculateDrag(Vector velocity) {
-        float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(velocity.getX());
-        float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(velocity.getY());
-        float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(velocity.getZ());
-        return new Vector(dx, dy, dz);
     }
 
     /**
@@ -277,6 +262,37 @@ public abstract class Physics extends Box {
             }
         }
         return totalMass;
+    }
+
+    /**
+     * apply the effect of drag to the velocity
+     */
+    private void applyDrag() {
+        Vector drag = calculateDrag();
+
+        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
+        float dx = drag.getX(), dy = drag.getY(), dz = drag.getZ();
+
+        if (vx < 0) vx = Math.min(vx + dx, 0);
+        else if (vx > 0) vx = Math.max(vx - dx, 0);
+        if (vy < 0) vy = Math.min(vy + dy, 0);
+        else if (vy > 0) vy = Math.max(vy - dy, 0);
+        if (vz < 0) vz = Math.min(vz + dz, 0);
+        else if (vz > 0) vz = Math.max(vz - dz, 0);
+
+        velocity = new Vector(vx, vy, vz);
+    }
+
+    /**
+     * get the drag vector based on velocity and dimensions
+     *
+     * @return drag vector
+     */
+    private Vector calculateDrag() {
+        float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(velocity.getX());
+        float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(velocity.getY());
+        float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(velocity.getZ());
+        return new Vector(dx, dy, dz);
     }
 
     /**
