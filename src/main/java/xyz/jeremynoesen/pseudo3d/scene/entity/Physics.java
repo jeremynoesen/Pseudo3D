@@ -223,6 +223,7 @@ public abstract class Physics extends Box {
                 float f = 0;
                 int count = 0;
                 Side side = getSide(axis, v);
+                float stackedMass = calculateStackedMass(v, axis);
 
                 if (side != null && collidesOn(side)) {
                     for (Physics physics : collidingEntities.get(side)) {
@@ -231,8 +232,24 @@ public abstract class Physics extends Box {
                     }
                 }
 
-                if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * calculateStackedMass(v, axis) * deltaTime;
+                if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * stackedMass * deltaTime;
                 output = output.set(axis, f);
+
+                f = 0;
+                count = 0;
+
+                Side opposite = getSide(axis, -v);
+                if (opposite != null && collidesOn(opposite)) {
+                    for (Physics physics : collidingEntities.get(opposite)) {
+                        if(Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
+                            f += physics.roughness.get(axis) * Math.abs(physics.getVelocity().get(axis));
+                            count++;
+                        }
+                    }
+                }
+
+                if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * (stackedMass - mass) * deltaTime;
+                output = output.set(axis, output.get(axis) + f);
             }
         }
         return output;
