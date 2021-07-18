@@ -35,7 +35,7 @@ public class Example {
                 .setUpdateOffScreen(true)
                 .setSprite(playerFront)
                 .setTerminalVelocity(new Vector(2, 10, 2))
-                .setDimensions(0.8f, 2, 0.8f);
+                .setDimensions(new Vector(0.8f, 2, 0.8f));
         //create player entity
         
         Entity dummy = new Entity(player).setUpdateOffScreen(false);
@@ -58,7 +58,7 @@ public class Example {
                         .setSprite(floor)
                         .setPosition(new Vector(j, -4.75f, i))
                         .setKinematic(false)
-                        .setDimensions(1, 1, 1);
+                        .setDimensions(new Vector(1, 1, 1));
                 scene.addEntity(block);
             }
         }

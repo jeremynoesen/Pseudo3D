@@ -3,6 +3,7 @@ package xyz.jeremynoesen.pseudo3d.scene.entity;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
+import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -143,12 +144,11 @@ public class Sprite {
     /**
      * set the dimensions of the sprite
      *
-     * @param width  width of sprite in grid units
-     * @param height height of sprite in grid units
+     * @param dimensions 2D vector for dimensions
      */
-    public Sprite setDimensions(float width, float height) {
-        setWidth(width);
-        setHeight(height);
+    public Sprite setDimensions(Vector dimensions) {
+        setWidth(dimensions.getX());
+        setHeight(dimensions.getY());
         return this;
     }
     

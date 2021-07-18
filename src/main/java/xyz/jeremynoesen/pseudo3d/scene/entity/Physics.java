@@ -166,43 +166,35 @@ public abstract class Physics extends Box {
 
         this.deltaTime = deltaTime;
 
-        velocity = applyAcceleration(velocity);
-        velocity = applyFrictionAndDrag(velocity);
-        velocity = applyMomentum(velocity);
+        applyAcceleration();
+        applyFrictionAndDrag();
+        applyMomentum();
 
         setPosition(position.add(velocity.multiply(deltaTime)));
     }
 
     /**
-     * apply acceleration and gravity to the input velocity
-     *
-     * @param velocity input velocity vector
-     * @return updated velocity vector
+     * apply acceleration and gravity to the velocity
      */
-    private Vector applyAcceleration(Vector velocity) {
-        Vector output = new Vector(velocity);
+    private void applyAcceleration() {
         for (Vector.Axis axis : Vector.Axis.values()) {
             float v = velocity.get(axis);
             float a = acceleration.get(axis) + gravity.get(axis);
             float vt = terminalVelocity.get(axis);
 
             if (v > -vt && a < 0)
-                output = output.set(axis, Math.max(v + (a * deltaTime), -vt));
+                velocity = velocity.set(axis, Math.max(v + (a * deltaTime), -vt));
             else if (v < vt && a > 0)
-                output = output.set(axis, Math.min(v + (a * deltaTime), vt));
+                velocity = velocity.set(axis, Math.min(v + (a * deltaTime), vt));
         }
-        return output;
     }
 
     /**
      * apply the effects of friction and drag to the velocity
-     *
-     * @param velocity input velocity vector
-     * @return velocity vector with friction and drag applies
      */
-    private Vector applyFrictionAndDrag(Vector velocity) {
-        Vector friction = getFriction(velocity);
-        Vector drag = getDrag(velocity);
+    private void applyFrictionAndDrag() {
+        Vector friction = calculateFriction(velocity);
+        Vector drag = calculateDrag(velocity);
 
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
@@ -215,7 +207,7 @@ public abstract class Physics extends Box {
         if (vz < 0) vz = Math.min(vz + dz + fx + fy, 0);
         else if (vz > 0) vz = Math.max(vz - dz - fx - fy, 0);
 
-        return new Vector(vx, vy, vz);
+        velocity = new Vector(vx, vy, vz);
     }
 
     /**
@@ -224,7 +216,7 @@ public abstract class Physics extends Box {
      * @param velocity input velocity vector
      * @return friction vector
      */
-    private Vector getFriction(Vector velocity) {
+    private Vector calculateFriction(Vector velocity) {
         Vector output = new Vector();
         for (Vector.Axis axis : Vector.Axis.values()) {
             float v = velocity.get(axis);
@@ -232,22 +224,16 @@ public abstract class Physics extends Box {
             if (colliding) {
                 float f = 0;
                 int count = 0;
+                Side side = getSide(axis, v);
 
-                Side side = switch (axis) {
-                    case X -> v < 0 ? Side.LEFT : Side.RIGHT;
-                    case Y -> v < 0 ? Side.BOTTOM : Side.TOP;
-                    case Z -> v < 0 ? Side.BACK : Side.FRONT;
-                };
-
-                if (v != 0 && collidesOn(side)) {
+                if (side != null && collidesOn(side)) {
                     for (Physics physics : collidingEntities.get(side)) {
                         f += physics.roughness.get(axis) * Math.abs(v);
                         count++;
                     }
                 }
 
-                float totalMass = (collidesOn(axis) && v != 0) ? getTotalMass(v, axis) : mass;
-                if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * totalMass * deltaTime;
+                if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * calculateStackedMass(v, axis) * deltaTime;
                 output = output.set(axis, f);
             }
         }
@@ -260,7 +246,7 @@ public abstract class Physics extends Box {
      * @param velocity current velocity
      * @return drag vector
      */
-    private Vector getDrag(Vector velocity) {
+    private Vector calculateDrag(Vector velocity) {
         float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(velocity.getX());
         float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(velocity.getY());
         float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(velocity.getZ());
@@ -274,7 +260,7 @@ public abstract class Physics extends Box {
      * @param axis     axis of motion
      * @return sum of masses
      */
-    private float getTotalMass(float velocity, Vector.Axis axis) {
+    private float calculateStackedMass(float velocity, Vector.Axis axis) {
         float totalMass = 0;
         Queue<Physics> current = new ArrayDeque<>();
         Set<Physics> visited = new HashSet<>();
@@ -285,14 +271,8 @@ public abstract class Physics extends Box {
 
             if (!visited.contains(physics)) {
                 totalMass += physics.mass;
-
-                Side side = switch (axis) {
-                    case X -> velocity > 0 ? Side.LEFT : Side.RIGHT;
-                    case Y -> velocity > 0 ? Side.BOTTOM : Side.TOP;
-                    case Z -> velocity > 0 ? Side.BACK : Side.FRONT;
-                };
-
-                current.addAll(physics.getCollidingEntities(side));
+                Side side = getSide(axis, -velocity);
+                if (side != null) current.addAll(physics.getCollidingEntities(side));
                 visited.add(physics);
             }
         }
@@ -301,24 +281,14 @@ public abstract class Physics extends Box {
 
     /**
      * apply the effects of momentum to the velocity
-     *
-     * @param velocity input velocity vector
-     * @return velocity vector after momentum is applied
      */
-    private Vector applyMomentum(Vector velocity) {
-        Vector output = new Vector(velocity);
+    private void applyMomentum() {
         for (Vector.Axis axis : Vector.Axis.values()) {
             float v = velocity.get(axis);
 
             if (colliding) {
-
-                Side side = switch (axis) {
-                    case X -> v < 0 ? Side.LEFT : Side.RIGHT;
-                    case Y -> v < 0 ? Side.BOTTOM : Side.TOP;
-                    case Z -> v < 0 ? Side.BACK : Side.FRONT;
-                };
-
-                if (v != 0 && collidesOn(side)) {
+                Side side = getSide(axis, v);
+                if (side != null && collidesOn(side)) {
                     for (Physics physics : collidingEntities.get(side)) {
 
                         if (physics.updatable) {
@@ -339,9 +309,8 @@ public abstract class Physics extends Box {
                     }
                 }
             }
-            output = output.set(axis, v);
+            velocity = velocity.set(axis, v);
         }
-        return output;
     }
 
     /**
@@ -414,11 +383,7 @@ public abstract class Physics extends Box {
         }
 
         colliding = true;
-        switch (axis) {
-            case X -> collidingEntities.get(dir == -1 ? Side.LEFT : Side.RIGHT).add(physics);
-            case Y -> collidingEntities.get(dir == -1 ? Side.BOTTOM : Side.TOP).add(physics);
-            case Z -> collidingEntities.get(dir == -1 ? Side.BACK : Side.FRONT).add(physics);
-        }
+        collidingEntities.get(getSide(axis, dir)).add(physics);
     }
 
     /**
@@ -528,9 +493,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the drag of the entity
+     * get the drag coefficient vector of the entity
      *
-     * @return drag vector of an entity
+     * @return drag coefficient vector of an entity
      */
     public Vector getDrag() {
         return drag;
@@ -769,6 +734,18 @@ public abstract class Physics extends Box {
         pushable[0] = x;
         pushable[1] = y;
         pushable[2] = false;
+        return this;
+    }
+
+    /**
+     * set whether the entity can be pushed or not for all axes
+     *
+     * @param pushable true to allow pushing on all axes
+     */
+    public Physics setPushable(boolean pushable) {
+        this.pushable[0] = pushable;
+        this.pushable[1] = pushable;
+        this.pushable[2] = pushable;
         return this;
     }
 
