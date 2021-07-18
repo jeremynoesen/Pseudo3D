@@ -71,9 +71,7 @@ public class Renderer {
         this.deltaTime = deltaTime;
         init();
         drawBackground();
-        for (Entity entity : scene.getEntities()) {
-            drawEntity(entity);
-        }
+        for (Entity entity : scene.getEntities()) drawEntity(entity);
     }
 
     /**
@@ -81,9 +79,7 @@ public class Renderer {
      */
     private void init() {
         scene.getEntities().sort(zComparator);
-
         graphicsContext.setImageSmoothing(false);
-
         camera = scene.getCamera();
         renderPos = new Vector((float) graphicsContext.getCanvas().getWidth() / 2.0f + camera.getOffset().getX(),
                 (float) graphicsContext.getCanvas().getHeight() / 2.0f + camera.getOffset().getY());
@@ -95,8 +91,8 @@ public class Renderer {
     private void drawBackground() {
         if (scene.getBackground() != null) {
             Sprite background = scene.getBackground();
-
             Affine original = graphicsContext.getTransform();
+
             if (camera.getRotation() != 0 || background.getRotation() != 0) {
                 Affine transform = new Affine();
                 transform.appendRotation(-camera.getRotation() - background.getRotation(),
@@ -110,7 +106,6 @@ public class Renderer {
                     (renderPos.getY() - (background.getHeight() * scene.getGridScale().getY() * zoom) / 2),
                     background.getWidth() * zoom * scene.getGridScale().getX(),
                     background.getHeight() * zoom * scene.getGridScale().getY());
-
             graphicsContext.setTransform(original);
             scene.getBackground().update(deltaTime);
         }
@@ -142,25 +137,20 @@ public class Renderer {
         }
 
         Sprite sprite = entity.getSprite();
-
-        int widthScaled = (int) Math.ceil(sprite.getWidth() * scene.getGridScale().getX() * scale);
-        int heightScaled = (int) Math.ceil(sprite.getHeight() * scene.getGridScale().getY() * scale);
-
         short gWidth = (short) graphicsContext.getCanvas().getWidth();
         short gHeight = (short) graphicsContext.getCanvas().getHeight();
 
+        int widthScaled = (int) Math.ceil(sprite.getWidth() * scene.getGridScale().getX() * scale);
+        int heightScaled = (int) Math.ceil(sprite.getHeight() * scene.getGridScale().getY() * scale);
         float x = ((objPos.getX() - camPos.getX()) * scale) + renderPos.getX();
         float y = gHeight - (((objPos.getY() - camPos.getY()) * scale) + (gHeight - renderPos.getY()));
 
-        Box screenBox = new Box(gWidth, gHeight,
-                new Vector(gWidth / 2.0f, gHeight / 2.0f));
+        Box screenBox = new Box(gWidth, gHeight, new Vector(gWidth / 2.0f, gHeight / 2.0f));
         Box spriteBox;
-
         Affine original = graphicsContext.getTransform();
         Affine transform = new Affine();
 
         if (camera.getRotation() != 0 || sprite.getRotation() != 0) {
-
             float spriteRotation = sprite.getRotation();
             float cameraRotation = -camera.getRotation();
             transform.appendRotation(cameraRotation, renderPos.getX(), renderPos.getY());
@@ -186,13 +176,11 @@ public class Renderer {
         }
 
         if (spriteBox.overlaps(screenBox)) {
-
             graphicsContext.setTransform(transform);
             graphicsContext.drawImage(sprite.getImage(), x - (widthScaled / 2.0),
                     y - (heightScaled / 2.0), widthScaled, heightScaled);
             graphicsContext.setTransform(original);
             sprite.update(deltaTime * entity.getSpeed());
-
             entity.setOnScreen(true);
         } else {
             entity.setOnScreen(false);
