@@ -166,7 +166,10 @@ public abstract class Physics extends Box {
 
         this.deltaTime = deltaTime;
 
-        velocity = applyMomentum(applyFrictionAndDrag(applyAcceleration(velocity)));
+        velocity = applyAcceleration(velocity);
+        velocity = applyFrictionAndDrag(velocity);
+        velocity = applyMomentum(velocity);
+
         setPosition(position.add(velocity.multiply(deltaTime)));
     }
 
