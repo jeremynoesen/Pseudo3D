@@ -104,31 +104,16 @@ public class Box {
         this.min = box.min;
         this.max = box.max;
     }
-    
-    /**
-     * set the dimensions of the box
-     *
-     * @param width  width of box
-     * @param height height of box
-     * @param depth  depth of box
-     */
-    public Box setDimensions(float width, float height, float depth) {
-        setWidth(width);
-        setHeight(height);
-        setDepth(depth);
-        return this;
-    }
 
     /**
      * set the dimensions of the box
      *
-     * @param width  width of box
-     * @param height height of box
+     * @param dimensions dimensions of the box
      */
-    public Box setDimensions(float width, float height) {
-        setWidth(width);
-        setHeight(height);
-        setDepth(0);
+    public Box setDimensions(Vector dimensions) {
+        setWidth(dimensions.getX());
+        setHeight(dimensions.getY());
+        setDepth(dimensions.getZ());
         return this;
     }
     
@@ -288,6 +273,22 @@ public class Box {
      */
     public float getSurfaceArea() {
         return (2 * width * height) + (2 * height * depth) + (2 * width * depth);
+    }
+
+    /**
+     * get the side of the box based on direction and axis
+     *
+     * @param axis axis of motion
+     * @param dir direction
+     * @return side based on direction and axis
+     */
+    public Side getSide(Vector.Axis axis, float dir) {
+        if(dir == 0) return null;
+        return switch (axis) {
+            case X -> dir < 0 ? Side.LEFT : Side.RIGHT;
+            case Y -> dir < 0 ? Side.BOTTOM : Side.TOP;
+            case Z -> dir < 0 ? Side.BACK : Side.FRONT;
+        };
     }
     
     /**
