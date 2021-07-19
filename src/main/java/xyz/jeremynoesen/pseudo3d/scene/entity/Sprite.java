@@ -16,52 +16,52 @@ import java.util.Objects;
  * @author Jeremy Noesen
  */
 public class Sprite {
-    
+
     /**
      * image used for sprite
      */
     private Image image;
-    
+
     /**
      * width of the sprite in grid units
      */
     private float width;
-    
+
     /**
      * height of the sprite in grid units
      */
     private float height;
-    
+
     /**
      * counter-clock-wise rotation of sprite in degrees
      */
     private float rotation;
-    
+
     /**
      * current frame number
      */
     private float currentFrame;
-    
+
     /**
      * all images of the animated sprite
      */
     private ArrayList<Image> images;
-    
+
     /**
      * time between frames
      */
     private float frameStep;
-    
+
     /**
      * whether the sprite animation should loop or not
      */
     private boolean loop;
-    
+
     /**
      * whether the sprite animation is paused or not
      */
     private boolean paused;
-    
+
     /**
      * create a new image sprite
      *
@@ -75,7 +75,7 @@ public class Sprite {
         this.height = height;
         this.rotation = 0;
     }
-    
+
     /**
      * create a new color sprite with specified dimensions and color
      *
@@ -90,7 +90,7 @@ public class Sprite {
         this.rotation = 0;
         ((WritableImage) image).getPixelWriter().setColor(0, 0, color);
     }
-    
+
     /**
      * create a new animated sprite with a list of images and frame rate
      *
@@ -114,7 +114,7 @@ public class Sprite {
         this.currentFrame = 0;
         this.loop = loop;
     }
-    
+
     /**
      * copy constructor for sprites
      *
@@ -131,7 +131,7 @@ public class Sprite {
         loop = sprite.loop;
         paused = sprite.paused;
     }
-    
+
     /**
      * get the sprite image
      *
@@ -140,7 +140,7 @@ public class Sprite {
     public Image getImage() {
         return image;
     }
-    
+
     /**
      * set the dimensions of the sprite
      *
@@ -151,7 +151,7 @@ public class Sprite {
         setHeight(dimensions.getY());
         return this;
     }
-    
+
     /**
      * get the width of the sprite image in grid units
      *
@@ -160,7 +160,7 @@ public class Sprite {
     public float getWidth() {
         return width;
     }
-    
+
     /**
      * get the height of the sprite image in grid units
      *
@@ -169,7 +169,7 @@ public class Sprite {
     public float getHeight() {
         return height;
     }
-    
+
     /**
      * set the width of the sprite, which the image will stretch to fit
      *
@@ -179,7 +179,7 @@ public class Sprite {
         this.width = width;
         return this;
     }
-    
+
     /**
      * set the height of the sprite, which the image will stretch to fit
      *
@@ -189,7 +189,7 @@ public class Sprite {
         this.height = height;
         return this;
     }
-    
+
     /**
      * set the rotation of the sprite
      *
@@ -199,7 +199,7 @@ public class Sprite {
         this.rotation = rotation;
         return this;
     }
-    
+
     /**
      * get the rotation of the sprite
      *
@@ -208,7 +208,7 @@ public class Sprite {
     public float getRotation() {
         return rotation;
     }
-    
+
     /**
      * get the framerate of the sprite
      *
@@ -217,7 +217,7 @@ public class Sprite {
     public float getFramerate() {
         return 1 / frameStep;
     }
-    
+
     /**
      * set the framerate for the sprite
      *
@@ -227,7 +227,7 @@ public class Sprite {
         frameStep = 1 / framerate;
         return this;
     }
-    
+
     /**
      * set the sprite to loop or not
      *
@@ -237,7 +237,7 @@ public class Sprite {
         this.loop = loop;
         return this;
     }
-    
+
     /**
      * check if the sprite can loop animation
      *
@@ -246,7 +246,7 @@ public class Sprite {
     public boolean canLoop() {
         return loop;
     }
-    
+
     /**
      * set the animation to be paused
      *
@@ -256,7 +256,7 @@ public class Sprite {
         this.paused = paused;
         return this;
     }
-    
+
     /**
      * check if the animation is paused
      *
@@ -265,29 +265,74 @@ public class Sprite {
     public boolean isPaused() {
         return paused;
     }
-    
+
     /**
      * set the current frame to the next available frame based on elapsed time, usually called by the renderer
      *
      * @param deltaTime time elapsed for the render frame
      */
     public void update(float deltaTime) {
-        if (!paused && images != null && !images.isEmpty()) {
-            if (currentFrame + (deltaTime / frameStep) >= images.size()) {
-                if (loop) {
-                    currentFrame = 0;
-                    image = images.get((int) currentFrame);
-                } else {
-                    paused = true;
-                    currentFrame = 0;
-                }
-            } else {
+        if (!paused && images != null && !images.isEmpty() && frameStep != 0) {
+            try {
                 currentFrame = currentFrame + (deltaTime / frameStep);
-                image = images.get((int) Math.floor(currentFrame));
+                image = images.get(getFrame());
+            } catch (IndexOutOfBoundsException e) {
+                if (loop) {
+                    currentFrame = frameStep > 0 ? (currentFrame - images.size()) : (currentFrame + images.size());
+                    image = images.get(getFrame());
+                } else {
+                    currentFrame = frameStep > 0 ? 0 : images.size();
+                    paused = true;
+                }
             }
         }
     }
-    
+
+    /**
+     * set the current frame to the next frame
+     */
+    public Sprite nextFrame() {
+        boolean paused = this.paused;
+        setPaused(false);
+        update(Math.abs(frameStep));
+        setPaused(paused);
+        return this;
+    }
+
+    /**
+     * set the current frame to the previous frame
+     */
+    public Sprite previousFrame() {
+        boolean paused = this.paused;
+        float frameStep = this.frameStep;
+        setPaused(false);
+        this.frameStep = -this.frameStep;
+        update(Math.abs(frameStep));
+        setPaused(paused);
+        this.frameStep = frameStep;
+        return this;
+    }
+
+    /**
+     * get the current frame of the animation
+     *
+     * @return current frame of the animation
+     */
+    public int getFrame() {
+        return frameStep > 0 ? (int) Math.floor(currentFrame) : (int) Math.ceil(currentFrame);
+    }
+
+    /**
+     * set the current frame in the animation
+     *
+     * @param frame frame number
+     */
+    public Sprite setFrame(int frame) {
+        currentFrame = frame;
+        image = images.get(frame);
+        return this;
+    }
+
     /**
      * check if two sprites are similar to each other
      *
