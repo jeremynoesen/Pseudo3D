@@ -271,7 +271,7 @@ public class Scene {
      *
      * @param runnable runnable
      */
-    public Scene addRenderRunnables(Runnable runnable) {
+    public Scene addRenderRunnable(Runnable runnable) {
         renderRunnables.add(runnable);
         return this;
     }
@@ -281,7 +281,7 @@ public class Scene {
      *
      * @param runnable runnable
      */
-    public Scene removeRenderRunnables(Runnable runnable) {
+    public Scene removeRenderRunnable(Runnable runnable) {
         renderRunnables.remove(runnable);
         return this;
     }
