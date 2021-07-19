@@ -103,6 +103,11 @@ public abstract class Physics extends Box {
     private float deltaTime;
 
     /**
+     * temp variable used in special cases of momentum
+     */
+    private Set<Vector.Axis> skipMomentum;
+
+    /**
      * create a new aabb entity with default values
      */
     public Physics() {
@@ -120,6 +125,7 @@ public abstract class Physics extends Box {
         overlapping = false;
         kinematic = true;
         pushable = new boolean[]{true, true, true};
+        skipMomentum = new HashSet<>();
         updatable = true;
         deltaTime = 0;
         mass = 1;
@@ -150,6 +156,7 @@ public abstract class Physics extends Box {
         pushable = physics.pushable;
         updatable = physics.updatable;
         deltaTime = physics.deltaTime;
+        skipMomentum = new HashSet<>();
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>(physics.overlappingEntities);
         entities = physics.entities;
@@ -241,7 +248,7 @@ public abstract class Physics extends Box {
                 Side opposite = getSide(axis, -v);
                 if (opposite != null && collidesOn(opposite)) {
                     for (Physics physics : collidingEntities.get(opposite)) {
-                        if(Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
+                        if (Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
                             f += physics.roughness.get(axis) * Math.abs(physics.getVelocity().get(axis));
                             count++;
                         }
@@ -316,6 +323,7 @@ public abstract class Physics extends Box {
      * apply the effects of momentum to the velocity
      */
     private void applyMomentum() {
+        skipMomentum.clear();
         for (Vector.Axis axis : Vector.Axis.values()) {
             float v = velocity.get(axis);
 
@@ -334,10 +342,14 @@ public abstract class Physics extends Box {
                                 float v1 = v;
                                 float v2 = physics.velocity.get(axis);
                                 v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                                physics.velocity =
-                                        physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                                if (!physics.skipMomentum.contains(axis))
+                                    physics.velocity =
+                                            physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
 
-                            } else v = 0;
+                            } else {
+                                v = 0;
+                                skipMomentum.add(axis);
+                            }
                         }
                     }
                 }
