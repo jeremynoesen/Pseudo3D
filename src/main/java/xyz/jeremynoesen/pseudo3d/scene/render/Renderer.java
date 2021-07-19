@@ -151,7 +151,7 @@ public class Renderer {
         Affine transform = new Affine();
 
         if (camera.getRotation() != 0 || sprite.getRotation() != 0) {
-            float spriteRotation = sprite.getRotation();
+            float spriteRotation = -sprite.getRotation();
             float cameraRotation = -camera.getRotation();
             transform.appendRotation(cameraRotation, renderPos.getX(), renderPos.getY());
             transform.appendRotation(spriteRotation, x, y);
