@@ -673,6 +673,28 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * get all the sides the entity is colliding on
+     *
+     * @return set of all colliding sides
+     */
+    public HashSet<Side> getCollidingSides() {
+        HashSet<Side> sides = new HashSet();
+        for (Side side : Side.values()) if (collidesOn(side)) sides.add(side);
+        return sides;
+    }
+
+    /**
+     * get all the axes the entity is colliding on
+     *
+     * @return set of all colliding azes
+     */
+    public HashSet<Vector.Axis> getCollidingAxes() {
+        HashSet<Vector.Axis> axes = new HashSet();
+        for (Vector.Axis axis : Vector.Axis.values()) if (collidesOn(axis)) axes.add(axis);
+        return axes;
+    }
+
+    /**
      * see if this entity is overlapping any entity
      *
      * @return true if overlapping
