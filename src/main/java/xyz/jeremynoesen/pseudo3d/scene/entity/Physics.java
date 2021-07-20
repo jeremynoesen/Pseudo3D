@@ -103,9 +103,14 @@ public abstract class Physics extends Box {
     private float deltaTime;
 
     /**
-     * temp variable used in special cases of momentum
+     * temp set used in special cases of momentum
      */
     private final Set<Vector.Axis> skipMomentum;
+
+    /**
+     * temp set used in special cases of collisions
+     */
+    private final Set<Physics> specialCollisions;
 
     /**
      * create a new aabb entity with default values
@@ -126,6 +131,7 @@ public abstract class Physics extends Box {
         kinematic = true;
         pushable = new boolean[]{true, true, true};
         skipMomentum = new HashSet<>();
+        specialCollisions = new HashSet<>();
         updatable = true;
         deltaTime = 0;
         mass = 1;
@@ -157,6 +163,7 @@ public abstract class Physics extends Box {
         updatable = physics.updatable;
         deltaTime = physics.deltaTime;
         skipMomentum = new HashSet<>();
+        specialCollisions = new HashSet<>();
         collidingEntities = new HashMap<>();
         overlappingEntities = new HashSet<>(physics.overlappingEntities);
         entities = physics.entities;
@@ -385,6 +392,7 @@ public abstract class Physics extends Box {
         overlapping = false;
         collidingEntities.values().forEach(HashSet::clear);
         overlappingEntities.clear();
+        specialCollisions.clear();
     }
 
     /**
@@ -422,8 +430,11 @@ public abstract class Physics extends Box {
         if (zeros > 1) return;
 
         if (kinematic && velocity.get(axis) * dir > 0) {
-            if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis)))
+            if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
+                    && !physics.specialCollisions.contains(this)) {
                 distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
+                specialCollisions.add(physics);
+            }
             setPosition(position.set(axis, position.get(axis) - (distance * dir)));
         }
 
