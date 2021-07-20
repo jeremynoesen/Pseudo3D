@@ -105,7 +105,7 @@ public abstract class Physics extends Box {
     /**
      * temp variable used in special cases of momentum
      */
-    private Set<Vector.Axis> skipMomentum;
+    private final Set<Vector.Axis> skipMomentum;
 
     /**
      * create a new aabb entity with default values
@@ -234,7 +234,7 @@ public abstract class Physics extends Box {
 
                 if (side != null && collidesOn(side)) {
                     for (Physics physics : collidingEntities.get(side)) {
-                        f += physics.roughness.get(axis) * Math.abs(v);
+                        f += physics.roughness.get(axis) * Math.abs(v - physics.getVelocity().get(axis));
                         count++;
                     }
                 }
@@ -249,7 +249,7 @@ public abstract class Physics extends Box {
                 if (opposite != null && collidesOn(opposite)) {
                     for (Physics physics : collidingEntities.get(opposite)) {
                         if (Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
-                            f += physics.roughness.get(axis) * Math.abs(physics.getVelocity().get(axis));
+                            f += physics.roughness.get(axis) * Math.abs(physics.getVelocity().get(axis) - v);
                             count++;
                         }
                     }
@@ -686,7 +686,7 @@ public abstract class Physics extends Box {
     /**
      * get all the axes the entity is colliding on
      *
-     * @return set of all colliding azes
+     * @return set of all colliding axes
      */
     public HashSet<Vector.Axis> getCollidingAxes() {
         HashSet<Vector.Axis> axes = new HashSet();
