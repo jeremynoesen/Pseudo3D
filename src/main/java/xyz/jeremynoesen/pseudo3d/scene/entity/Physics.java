@@ -689,7 +689,7 @@ public abstract class Physics extends Box {
      * @return set of all colliding sides
      */
     public HashSet<Side> getCollidingSides() {
-        HashSet<Side> sides = new HashSet();
+        HashSet<Side> sides = new HashSet<>();
         for (Side side : Side.values()) if (collidesOn(side)) sides.add(side);
         return sides;
     }
@@ -700,7 +700,7 @@ public abstract class Physics extends Box {
      * @return set of all colliding axes
      */
     public HashSet<Vector.Axis> getCollidingAxes() {
-        HashSet<Vector.Axis> axes = new HashSet();
+        HashSet<Vector.Axis> axes = new HashSet<>();
         for (Vector.Axis axis : Vector.Axis.values()) if (collidesOn(axis)) axes.add(axis);
         return axes;
     }
