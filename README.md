@@ -11,13 +11,13 @@ Pseudo3D started off as an insignificant 2D game I was working on as my first pr
 ## Usage
 ***Wiki coming soon!***
 
-For now, view the Example class in `src/test/java` for a basic idea of how to create a simple scene. More documentation and examples will be given upon creation of the wiki.
+For now, view the [Example class](src/test/java/Example.java) for a basic idea of how to create a simple scene. More documentation and examples will be given upon creation of the wiki.
 
 ## Building
 This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. Then, in the folder of the project, you can open terminal and run `./gradlew build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency to your project.
 
 ## Demonstration
-The following are recordings of the Pseudo3D renderer and physics in action. You can also try these out for yourself by running the `Example` class in `src/test/java`.
+The following are recordings of the Pseudo3D renderer and physics in action. You can also try these out for yourself by running the [Example class](src/test/java/Example.java).
 
 ### Orthographic
 This is what an orthographic, or zero-degree field-of-view, render looks like. This is the style used for 2D sprite-based games. There is no depth whatsoever, making it difficult to decipher the exact positioning of the character with respect to the other character or the ground. In this, the character can only move in 2D space. Sprites are only drawn in 2D.
