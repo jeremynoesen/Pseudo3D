@@ -11,7 +11,9 @@ Pseudo3D started off as an insignificant 2D game I was working on as my first pr
 ## Usage
 ***Wiki coming soon!***
 
-For now, view the [Example class](src/test/java/Example.java) for a basic idea of how to create a simple scene. More documentation and examples will be given upon creation of the wiki.
+For now, view the [Example class](src/test/java/Example.java) for a basic idea of how to create a simple scene.
+
+There are also [JavaDocs](https://jeremynoesen.github.io/Pseudo3D/javadoc) available.
 
 ## Building
 This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. Then, in the folder of the project, you can open terminal and run `./gradlew build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency to your project.
