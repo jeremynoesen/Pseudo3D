@@ -32,5 +32,8 @@ This is what the Pseudo3D rendering looks like. Sprites scale based on distance 
 
 <div align="center" ><img src="img/Perspective.gif" alt="Perspective example" title="Perspective example" /></div>
 
+## Contributing
+This is a solo project of mine at the moment, so I am not looking to allow any other contributors. You are welcome to create an issue if something is not working right.
+
 ## Notice
 This project is incomplete. You can view the project boards to see what is planned for the future. A wiki will eventually be made with documentation and examples, but until then, there are no direct explanations available. Not everything is implemented yet, so use at your own risk.
