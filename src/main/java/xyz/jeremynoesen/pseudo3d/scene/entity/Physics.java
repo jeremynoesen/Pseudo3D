@@ -6,114 +6,118 @@ import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 import java.util.*;
 
 /**
- * axis-aligned bounding box physics entity
+ * Axis-aligned bounding box physics
  *
  * @author Jeremy Noesen
  */
 public abstract class Physics extends Box {
 
     /**
-     * entities this entity is in a scene with
+     * Entities this Entity is in a Scene with
      */
     private LinkedList<Physics> entities;
 
     /**
-     * gravity applied to the entity (meters / second ^ 2)
+     * Gravity applied to the Entity (meters / second ^ 2)
      */
     private Vector gravity;
 
     /**
-     * position of entity (meters)
+     * Position of the Entity (meters)
      */
     private Vector position;
 
     /**
-     * velocity of entity, or rate of change of position (meters / second)
+     * Velocity of the Entity (meters / second)
      */
     private Vector velocity;
 
     /**
-     * +/- terminal velocity of gravity acceleration of entity (meters / second)
+     * Terminal velocity of the Entity (meters / second)
+     * <p>
+     * This will limit how fast the Entity can go based on gravity and acceleration
      */
     private Vector terminalVelocity;
 
     /**
-     * acceleration of entity, or rate of change of velocity (meters / second ^ 2)
+     * Acceleration of the Entity (meters / second ^ 2)
      */
     private Vector acceleration;
 
     /**
-     * coefficient of drag per axis
+     * Coefficient of drag per axis
      */
     private Vector drag;
 
     /**
-     * roughness of entity per axis, used for friction
+     * Roughness of the Entity per axis, used for friction
      */
     private Vector roughness;
 
     /**
-     * if an entity is solid, allowing collision
+     * Solid status of the Entity
+     * <p>
+     * Being solid allows for collision
      */
     private boolean solid;
 
     /**
-     * list of entities colliding with per side
+     * List of Entities colliding with this Entity with per Side
      */
     private final HashMap<Side, HashSet<Physics>> collidingEntities;
 
     /**
-     * list of entities overlapping this one
+     * List of Entities overlapping this one
      */
     private final HashSet<Physics> overlappingEntities;
 
     /**
-     * entity's collision status
+     * Entity's collision status
      */
     private boolean colliding;
 
     /**
-     * entity's overlapping status
+     * Entity's overlapping status
      */
     private boolean overlapping;
 
     /**
-     * whether this entity can have motion or not
+     * Whether this Entity can have motion or not
      */
     private boolean kinematic;
 
     /**
-     * whether this entity can be pushed by other entities
+     * Whether this Entity can be pushed by other Entities or not per axis
      */
     private final boolean[] pushable;
 
     /**
-     * mass of an entity used for calculations, such as momentum conservation
+     * Mass of the Entity
      */
     private float mass;
 
     /**
-     * whether the entity can update or not
+     * Whether the Entity can update or not
      */
     private boolean updatable;
 
     /**
-     * time elapsed in the previous tick
+     * Time elapsed in the previous tick
      */
     private float deltaTime;
 
     /**
-     * temp set used in special cases of momentum
+     * Temporary Set used in special cases of momentum
      */
     private final Set<Vector.Axis> skipMomentum;
 
     /**
-     * temp set used in special cases of collisions
+     * Temporary Set used in special cases of collisions
      */
     private final Set<Physics> specialCollisions;
 
     /**
-     * create a new aabb entity with default values
+     * Create new default Physics
      */
     public Physics() {
         super();
@@ -141,9 +145,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * copy constructor for aabb entities
+     * Copy constructor for Physics
      *
-     * @param physics aabb entity to copy
+     * @param physics Physics to copy
      */
     public Physics(Physics physics) {
         super(physics);
@@ -171,9 +175,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * update the motion of the entity
+     * Update the motion of the Entity
      *
-     * @param deltaTime time elapsed to use in calculation
+     * @param deltaTime Time elapsed in the previous tick
      */
     public void tickMotion(float deltaTime) {
         if (!updatable || !kinematic) return;
@@ -189,7 +193,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * apply acceleration and gravity to the velocity
+     * Apply acceleration and gravity to the velocity
      */
     private void applyAcceleration() {
         for (Vector.Axis axis : Vector.Axis.values()) {
@@ -205,7 +209,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * apply the effect of friction to the velocity
+     * Apply the effect of friction to the velocity
      */
     private void applyFriction() {
         Vector friction = calculateFriction();
@@ -224,9 +228,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the friction vector for the entity
+     * Get the friction Vector for the Entity
      *
-     * @return friction vector
+     * @return Friction Vector
      */
     private Vector calculateFriction() {
         Vector output = new Vector();
@@ -272,11 +276,11 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * sum masses of stacked entities
+     * Sum the masses of stacked Entities
      *
-     * @param velocity input velocity
-     * @param axis     axis of motion
-     * @return sum of masses
+     * @param velocity Input velocity
+     * @param axis     Axis of motion
+     * @return Sum of masses
      */
     private float calculateStackedMass(float velocity, Vector.Axis axis) {
         float totalMass = 0;
@@ -301,7 +305,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * apply the effect of drag to the velocity
+     * Apply the effect of drag to the velocity
      */
     private void applyDrag() {
         Vector drag = calculateDrag();
@@ -320,9 +324,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the drag vector based on velocity and dimensions
+     * Get the drag Vector based on velocity and dimensions
      *
-     * @return drag vector
+     * @return Drag Vector
      */
     private Vector calculateDrag() {
         float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(velocity.getX());
@@ -332,7 +336,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * apply the effects of momentum to the velocity
+     * Apply the effects of momentum to the velocity
      */
     private void applyMomentum() {
         skipMomentum.clear();
@@ -347,8 +351,8 @@ public abstract class Physics extends Box {
                         if (physics.updatable) {
                             if (physics.kinematic &&
                                     ((axis == Vector.Axis.X && physics.pushable[0]) ||
-                                    (axis == Vector.Axis.Y && physics.pushable[1]) ||
-                                    (axis == Vector.Axis.Z && physics.pushable[2]))) {
+                                            (axis == Vector.Axis.Y && physics.pushable[1]) ||
+                                            (axis == Vector.Axis.Z && physics.pushable[2]))) {
 
                                 float sum = mass + physics.mass;
                                 float diff = mass - physics.mass;
@@ -372,7 +376,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * check if a entity has collided with this entity
+     * Check if an Entity has collided with this Entity
      */
     public void tickCollisions() {
         if (!updatable || entities == null) return;
@@ -391,7 +395,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * resets all collision data
+     * Reset all collision data
      */
     private void resetCollisions() {
         colliding = false;
@@ -402,9 +406,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * fix the position of this entity to make a collision occur
+     * Fix the position of this Entity to make a collision occur
      *
-     * @param physics entity colliding with this entity
+     * @param physics Entity colliding with this Entity
      */
     private void collideWith(Physics physics) {
         float[] overlaps = new float[6];
@@ -449,9 +453,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * set this entity as overlapping another
+     * Set this Entity as overlapping another
      *
-     * @param physics entity to overlap with
+     * @param physics Entity to overlap with
      */
     private void overlapWith(Physics physics) {
         overlapping = true;
@@ -459,18 +463,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the position vector of the entity
+     * Get the position of the Entity
      *
-     * @return position vector of entity
+     * @return Position Vector of the Entity
      */
     public Vector getPosition() {
         return position;
     }
 
     /**
-     * set the position of the entity
+     * Set the position of the Entity
      *
-     * @param position position vector
+     * @param position Position Vector
+     * @return this Physics
      */
     public Physics setPosition(Vector position) {
         this.position = position;
@@ -479,18 +484,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the velocity vector of the entity
+     * Get the velocity of the Entity
      *
-     * @return velocity vector of an entity
+     * @return Velocity Vector of the Entity
      */
     public Vector getVelocity() {
         return velocity;
     }
 
     /**
-     * set the velocity of the entity
+     * Set the velocity of the Entity
      *
-     * @param velocity velocity vector
+     * @param velocity Velocity Vector
+     * @return this Physics
      */
     public Physics setVelocity(Vector velocity) {
         this.velocity = velocity;
@@ -498,18 +504,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the acceleration vector of the entity
+     * Get the acceleration of the Entity
      *
-     * @return acceleration vector of an entity
+     * @return Acceleration Vector of the Entity
      */
     public Vector getAcceleration() {
         return acceleration;
     }
 
     /**
-     * set the acceleration of the entity
+     * Set the acceleration of the Entity
      *
-     * @param acceleration acceleration vector
+     * @param acceleration Acceleration Vector
+     * @return this Physics
      */
     public Physics setAcceleration(Vector acceleration) {
         this.acceleration = acceleration;
@@ -517,18 +524,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the gravity applied to the entity
+     * Get the gravity applied to the Entity
      *
-     * @return gravity vector
+     * @return Gravity Vector
      */
     public Vector getGravity() {
         return gravity;
     }
 
     /**
-     * set the gravity applied to the entity
+     * Set the gravity applied to the Entity
      *
-     * @param gravity gravity vector
+     * @param gravity Gravity Vector
+     * @return this Physics
      */
     public Physics setGravity(Vector gravity) {
         this.gravity = gravity;
@@ -536,18 +544,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get terminal velocity for this entity
+     * Get the terminal velocity for this Entity
      *
-     * @return terminal velocity vector
+     * @return Terminal velocity Vector
      */
     public Vector getTerminalVelocity() {
         return terminalVelocity;
     }
 
     /**
-     * set the terminal velocity for this entity to limit maximum velocity due to accelerations
+     * Set the terminal velocity for this Entity
      *
-     * @param terminalVelocity terminal velocity vector
+     * @param terminalVelocity Terminal velocity Vector
+     * @return this Physics
      */
     public Physics setTerminalVelocity(Vector terminalVelocity) {
         this.terminalVelocity = terminalVelocity;
@@ -555,18 +564,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the drag coefficient vector of the entity
+     * Get the drag coefficient of the Entity
      *
-     * @return drag coefficient vector of an entity
+     * @return Drag coefficient Vector of the Entity
      */
     public Vector getDrag() {
         return drag;
     }
 
     /**
-     * set the drag for the entity
+     * Set the drag coefficient for the Entity
      *
-     * @param drag drag of entity
+     * @param drag Drag coefficient Vector
+     * @return this Physics
      */
     public Physics setDrag(Vector drag) {
         this.drag = drag;
@@ -574,18 +584,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the roughness of the entity
+     * Get the roughness of the Entity
      *
-     * @return roughness vector
+     * @return Roughness per axis as a Vector
      */
     public Vector getRoughness() {
         return roughness;
     }
 
     /**
-     * set the roughness of the entity
+     * Set the roughness of the Entity
      *
-     * @param roughness roughness vector
+     * @param roughness Roughness per axis as a Vector
+     * @return this Physics
      */
     public Physics setRoughness(Vector roughness) {
         this.roughness = roughness;
@@ -593,18 +604,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * check if an entity can be collided with
+     * Check if an Entity can be collided with
      *
-     * @return true if able to be collided with
+     * @return True if able to be collided with
      */
     public boolean isSolid() {
         return solid;
     }
 
     /**
-     * enable or disable collisions for the entity
+     * Set the Entity to be solid or not
      *
-     * @param solid true to allow collisions
+     * @param solid True to make the Entity solid
+     * @return this Physics
      */
     public Physics setSolid(boolean solid) {
         this.solid = solid;
@@ -612,19 +624,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * check if the entity is currently colliding with another entity
+     * Check if the Entity is currently colliding with another Entity
      *
-     * @return true if the entity is colliding with another entity
+     * @return True if the Entity is colliding with another Entity
      */
     public boolean isColliding() {
         return colliding;
     }
 
     /**
-     * check if an entity collides with this entity
+     * Check if an Entity collides with this Entity
      *
-     * @param physics entity to check if colliding with
-     * @return true if this entity collides with the other entity
+     * @param physics Entity to check if colliding with
+     * @return True if this Entity collides with the other Entity
      */
     public boolean collidesWith(Physics physics) {
         for (HashSet<Physics> list : collidingEntities.values()) {
@@ -634,20 +646,20 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * check if this entity is colliding on the specified side
+     * Check if this Entity is colliding on the specified Side
      *
-     * @param side side of the entity
-     * @return true if the entity is colliding on the side
+     * @param side Side of the Entity
+     * @return True if the Entity is colliding on the Side
      */
     public boolean collidesOn(Side side) {
         return !collidingEntities.get(side).isEmpty();
     }
 
     /**
-     * check if this entity is colliding on the specified sides perpendicular to the axis
+     * Check if this Entity is colliding on the specified Sides perpendicular to the Axis
      *
-     * @param axis axis of collision
-     * @return true if the entity is colliding on the axis
+     * @param axis Axis of collision
+     * @return True if the Entity is colliding on the Axis
      */
     public boolean collidesOn(Vector.Axis axis) {
         return switch (axis) {
@@ -658,30 +670,30 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * check if an entity collides with this one on a specific side
+     * Check if an Entity collides with this one on a specific Side
      *
-     * @param physics entity to check if colliding with
-     * @param side    side of entity
-     * @return true if the entity is colliding with the other entity on the specified side
+     * @param physics Entity to check if colliding with
+     * @param side    Side of Entity
+     * @return True if the Entity is colliding with the other Entity on the specified Side
      */
     public boolean collidesWithOn(Physics physics, Side side) {
         return collidingEntities.get(side).contains(physics);
     }
 
     /**
-     * get all entities colliding on the specified side
+     * Get all Entities colliding on the specified Side
      *
-     * @param side side to get colliding entities of
-     * @return set of all entities colliding on the side
+     * @param side Side to get colliding Entities of
+     * @return Set of all Entities colliding on the Side
      */
     public HashSet<Physics> getCollidingEntities(Side side) {
         return collidingEntities.get(side);
     }
 
     /**
-     * get a set of all entities colliding with this one
+     * Get a Set of all Entities colliding with this one
      *
-     * @return all colliding entities
+     * @return Set of all colliding Entities
      */
     public HashSet<Physics> getCollidingEntities() {
         HashSet<Physics> allEntities = new HashSet<>();
@@ -690,9 +702,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get all the sides the entity is colliding on
+     * Get all the Sides the Entity is colliding on
      *
-     * @return set of all colliding sides
+     * @return Set of all colliding Sides
      */
     public HashSet<Side> getCollidingSides() {
         HashSet<Side> sides = new HashSet<>();
@@ -701,9 +713,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get all the axes the entity is colliding on
+     * Get all the axes the Entity is colliding on
      *
-     * @return set of all colliding axes
+     * @return Set of all colliding axes
      */
     public HashSet<Vector.Axis> getCollidingAxes() {
         HashSet<Vector.Axis> axes = new HashSet<>();
@@ -712,46 +724,47 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * see if this entity is overlapping any entity
+     * See if this Entity is overlapping any Entity
      *
-     * @return true if overlapping
+     * @return True if overlapping
      */
     public boolean isOverlapping() {
         return overlapping;
     }
 
     /**
-     * check if this entity overlaps another
+     * Check if this Entity overlaps another
      *
-     * @param physics entity to check with
-     * @return true if this entity overlaps the specified entity
+     * @param physics Entity to check with
+     * @return True if this Entity overlaps the specified Entity
      */
     public boolean overlaps(Physics physics) {
         return overlappingEntities.contains(physics);
     }
 
     /**
-     * get the set of all entities overlapping this one
+     * Get the set of all Entities overlapping this one
      *
-     * @return set of overlapping entities
+     * @return Set of overlapping Entities
      */
     public HashSet<Physics> getOverlappingEntities() {
         return overlappingEntities;
     }
 
     /**
-     * check if the entity is kinematic
+     * Check if the Entity is kinematic
      *
-     * @return true if entity is kinematic
+     * @return True if the Entity is kinematic
      */
     public boolean isKinematic() {
         return kinematic;
     }
 
     /**
-     * set an entity to be kinematic or not
+     * Set an Entity to be kinematic or not
      *
-     * @param kinematic true to allow entity motion
+     * @param kinematic True to allow Entity motion
+     * @return this Physics
      */
     public Physics setKinematic(boolean kinematic) {
         this.kinematic = kinematic;
@@ -759,47 +772,48 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * check if the entity is pushable on any axis
+     * Check if the Entity is pushable on any Axis
      *
-     * @return true if an entity is pushable on any axis
+     * @return True if the Entity is pushable on any axis
      */
     public boolean isPushable() {
         return pushable[0] || pushable[1] || pushable[2];
     }
 
     /**
-     * check if the entity is pushable on the x axis
+     * Check if the Entity is pushable on the x Axis
      *
-     * @return true if an entity is pushable on the x axis
+     * @return True if the Entity is pushable on the x axis
      */
     public boolean isPushableX() {
         return pushable[0];
     }
 
     /**
-     * check if the entity is pushable on the y axis
+     * Check if the Entity is pushable on the y Axis
      *
-     * @return true if an entity is pushable on the y axis
+     * @return True if the Entity is pushable on the y axis
      */
     public boolean isPushableY() {
         return pushable[1];
     }
 
     /**
-     * check if the entity is pushable on the z axis
+     * Check if the Entity is pushable on the z Axis
      *
-     * @return true if an entity is pushable on the z axis
+     * @return True if the Entity is pushable on the z axis
      */
     public boolean isPushableZ() {
         return pushable[2];
     }
 
     /**
-     * set whether the entity can be pushed or not per axis
+     * Set whether the Entity can be pushed or not per Axis
      *
-     * @param x true to allow pushing on the x axis
-     * @param y true to allow pushing on the y axis
-     * @param z true to allow pushing on the z axis
+     * @param x True to allow pushing on the x Axis
+     * @param y True to allow pushing on the y Axis
+     * @param z True to allow pushing on the z Axis
+     * @return this Physics
      */
     public Physics setPushable(boolean x, boolean y, boolean z) {
         pushable[0] = x;
@@ -809,10 +823,11 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * set whether the entity can be pushed or not per axis
+     * Set whether the Entity can be pushed or not per Axis
      *
-     * @param x true to allow pushing on the x axis
-     * @param y true to allow pushing on the y axis
+     * @param x True to allow pushing on the x Axis
+     * @param y True to allow pushing on the y Axis
+     * @return this Physics
      */
     public Physics setPushable(boolean x, boolean y) {
         pushable[0] = x;
@@ -822,9 +837,10 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * set whether the entity can be pushed or not for all axes
+     * Set whether the Entity can be pushed or not for all axes
      *
-     * @param pushable true to allow pushing on all axes
+     * @param pushable True to allow pushing on all axes
+     * @return this Physics
      */
     public Physics setPushable(boolean pushable) {
         this.pushable[0] = pushable;
@@ -834,18 +850,19 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * get the mass of the entity
+     * Get the mass of the Entity
      *
-     * @return mass of the entity
+     * @return Mass of the Entity
      */
     public float getMass() {
         return mass;
     }
 
     /**
-     * set the mass of the entity
+     * Set the mass of the Entity
      *
-     * @param mass new mass for entity
+     * @param mass New mass for the Entity
+     * @return this Physics
      */
     public Physics setMass(float mass) {
         this.mass = mass;
@@ -853,9 +870,11 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * set the entities the object is in a scene with, only callable by parent class
+     * Set the Entities this Entity is in a Scene with
+     * <p>
+     * This is only able to be called by the parent class
      *
-     * @param entities list of physics objects
+     * @param entities List of Physics objects
      */
     @SuppressWarnings("unchecked")
     protected void setEntities(LinkedList<? extends Physics> entities) {
@@ -863,28 +882,32 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * set if the entity can update, called by parent class for special function
+     * Set if the Entity can update
+     * <p>
+     * This is only able to be called by the parent class
      *
-     * @param updatable true to allow updating
+     * @param updatable True to allow updating
      */
     protected void setUpdatable(boolean updatable) {
         this.updatable = updatable;
     }
 
     /**
-     * check if the entity can update, called by parent class for special function
+     * Check if the Entity can update
+     * <p>
+     * This is only able to be called by the parent class
      *
-     * @return true if entity can update
+     * @return True if Entity can update
      */
     protected boolean isUpdatable() {
         return updatable;
     }
 
     /**
-     * check if another set of physics data is equal to this one
+     * Check if another set of Physics data is equal to this one
      *
-     * @param o object to check for equality
-     * @return true if physics data is equivalent to this
+     * @param o Physics to check for equality
+     * @return True if other Physics data is equivalent to this
      */
     @Override
     public boolean equals(Object o) {

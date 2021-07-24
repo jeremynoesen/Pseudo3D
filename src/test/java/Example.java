@@ -11,16 +11,16 @@ import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 import java.io.FileNotFoundException;
 
 /**
- * example usage of the Pseudo3D API
+ * Example usage of the Pseudo3D API
  *
  * @author Jeremy Noesen
  */
 public class Example {
     
     /**
-     * run the example scene
+     * Run the example Scene
      *
-     * @param args program arguments
+     * @param args Program arguments
      */
     public static void main(String[] args) throws FileNotFoundException {
         Sprite playerFront = new Sprite(0.85f, 2, "src/test/resources/images/player/front.png");
@@ -29,20 +29,20 @@ public class Example {
         Sprite playerRight = new Sprite(0.6f, 2, "src/test/resources/images/player/right.png");
         Sprite floor = new Sprite(1, 1, "src/test/resources/images/floor.png");
         Sprite background = new Sprite(16, 16, "src/test/resources/images/background.png");
-        //load all sprites
+        //Load all Sprites
         
         Entity player = (Entity) new Entity()
                 .setUpdateOffScreen(true)
                 .setSprite(playerFront)
                 .setTerminalVelocity(new Vector(2, 10, 2))
                 .setDimensions(new Vector(0.8f, 2, 0.8f));
-        //create player entity
-        
+        //Create player Entity
+
         Entity dummy = new Entity(player).setUpdateOffScreen(false);
-        //create dummy entity
+        //Create dummy Entity
         
         Camera camera = new Camera().setFieldOfView(49);
-        //create camera
+        //Create Camera
         
         Scene scene = new Scene()
                 .setGridScale(new Vector(48, 48, 48))
@@ -50,7 +50,7 @@ public class Example {
                 .addEntity(player)
                 .addEntity(dummy)
                 .setCamera(camera);
-        //init scene
+        //Create and initialize Scene
         
         for (int j = -8; j <= 8; j++) {
             for (int i = -3; i <= 0; i++) {
@@ -62,15 +62,15 @@ public class Example {
                 scene.addEntity(block);
             }
         }
-        //generate floor
+        //Generate floor
         
         Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
-        //launch program
+        //Launch program
         
         Pseudo3D.setActiveScene(scene);
-        //set active scene
+        //Set active Scene
         
-        //scene keyboard controls
+        //Scene Keyboard controls
         scene.addTickRunnable(() -> {
     
             Vector accel = new Vector();
@@ -81,52 +81,52 @@ public class Example {
                 accel = accel.subtract(new Vector(0, 0, 20));
                 player.setSprite(playerBack);
             }
-            //accelerate forward
+            //Accelerate forward
             
             if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
                 accel = accel.add(new Vector(0, 0, 20));
                 player.setSprite(playerFront);
             }
-            //accelerate backward
+            //Accelerate backward
             
             if (Keyboard.isPressed(KeyCode.A)) {
                 accel = accel.subtract(new Vector(20, 0, 0));
                 player.setSprite(playerLeft);
             }
-            //accelerate left
+            //Accelerate left
             
             if (Keyboard.isPressed(KeyCode.D)) {
                 accel = accel.add(new Vector(20, 0, 0));
                 player.setSprite(playerRight);
             }
-            //accelerate right
+            //Accelerate right
     
             player.setAcceleration(accel);
     
             if (Keyboard.isPressed(KeyCode.SPACE) && player.collidesOn(Box.Side.BOTTOM)) {
                 player.setVelocity(player.getVelocity().setY(7.5f));
             }
-            //jump
+            //Jump
     
             if (Keyboard.isPressed(KeyCode.UP)) {
                 camera.setFieldOfView(camera.getFieldOfView() + 0.5f);
             }
-            //increase camera fov
+            //Increase Camera FOV
             
             if (Keyboard.isPressed(KeyCode.DOWN)) {
                 camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.5f, 0));
             }
-            //decrease camera fov
+            //Decrease Camera FOV
             
             if (Keyboard.isPressed(KeyCode.LEFT)) {
                 camera.setRotation(camera.getRotation() + 0.5f);
             }
-            //rotate camera counter clockwise
+            //Rotate Camera counter-clock-wise
             
             if (Keyboard.isPressed(KeyCode.RIGHT)) {
                 camera.setRotation(camera.getRotation() - 0.5f);
             }
-            //rotate camera clockwise
+            //Rotate Camera clock-wise
             
             if (Keyboard.isPressed(KeyCode.R)) {
                 camera.setOffset(new Vector());
@@ -139,7 +139,7 @@ public class Example {
                 dummy.setAcceleration(new Vector());
                 camera.setFieldOfView(49);
             }
-            //reset scene
+            //Reset Scene
         });
     }
 }

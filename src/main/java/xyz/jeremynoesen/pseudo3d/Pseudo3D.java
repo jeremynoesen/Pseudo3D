@@ -13,56 +13,56 @@ import xyz.jeremynoesen.pseudo3d.input.Keyboard;
 import xyz.jeremynoesen.pseudo3d.input.Mouse;
 
 /**
- * main application for any project using Pseudo3D
+ * Starting point of all functions of Pseudo3D
  *
  * @author Jeremy Noesen
  */
 public class Pseudo3D extends Application {
 
     /**
-     * canvas for root pane
+     * Canvas for root Pane
      */
     private static Canvas canvas;
 
     /**
-     * javafx scene for the stage
+     * JavaFX Scene for the Stage
      */
     private static Scene scene;
 
     /**
-     * active scene to render and tick
+     * Active Pseudo3D Scene to render and tick
      */
     private static xyz.jeremynoesen.pseudo3d.scene.Scene activeScene;
 
     /**
-     * whether the window can be resized
+     * Whether the window can be resized or not
      */
     private static boolean resizable;
 
     /**
-     * title of window
+     * Title of window
      */
     private static String title;
 
     /**
-     * timeline loop for ticking operations
+     * Timeline loop for ticking
      */
     private static final Timeline tickLoop = new Timeline();
 
     /**
-     * timeline loop for rendering
+     * Timeline loop for rendering
      */
     private static final Timeline renderLoop = new Timeline();
 
     /**
-     * launch the instance of the application
+     * Launch the instance of the Application
      *
-     * @param width     width of window
-     * @param height    height of window
-     * @param framerate framerate of window (hertz)
-     * @param tickSpeed tick speed for physics (hertz)
-     * @param resizable resizable status
-     * @param title     window title
+     * @param width     Width of window
+     * @param height    Height of window
+     * @param framerate Framerate for rendering in frames per second
+     * @param tickSpeed Tick speed for physics in hertz
+     * @param resizable Resizable status
+     * @param title     Window title
      */
     public static void launch(int width, int height, int framerate, int tickSpeed, boolean resizable, String title) {
         Pseudo3D.resizable = resizable;
@@ -81,9 +81,9 @@ public class Pseudo3D extends Application {
     }
 
     /**
-     * start the application
+     * Start the application
      *
-     * @param primaryStage primary stage of application
+     * @param primaryStage Primary Stage of the Application
      */
     @Override
     public void start(Stage primaryStage) {
@@ -104,9 +104,9 @@ public class Pseudo3D extends Application {
     }
 
     /**
-     * stop the application
+     * Stop the Application
      *
-     * @throws Exception if stop fails
+     * @throws Exception If stopping fails
      */
     @Override
     public void stop() throws Exception {
@@ -117,9 +117,9 @@ public class Pseudo3D extends Application {
     }
 
     /**
-     * pause or unpause the game loops
+     * Pause or unpause the game loops
      *
-     * @param paused true to pause
+     * @param paused True to pause
      */
     public static void setPaused(boolean paused) {
         if (paused) {
@@ -133,45 +133,45 @@ public class Pseudo3D extends Application {
     }
 
     /**
-     * get the main canvas
+     * Get the main Canvas
      *
-     * @return main canvas
+     * @return Main Canvas
      */
     public static Canvas getCanvas() {
         return canvas;
     }
 
     /**
-     * get the JavaFX scene the main canvas is placed on
+     * Get the JavaFX Scene the main Canvas is placed on
      *
-     * @return JavaFX scene the main canvas is placed on
+     * @return JavaFX Scene the main Canvas is placed on
      */
     public static Scene getScene() {
         return scene;
     }
 
     /**
-     * check if the main window is resizable
+     * Check if the main window is resizable
      *
-     * @return true if the main window is resizable
+     * @return True if the main window is resizable
      */
     public static boolean isResizable() {
         return resizable;
     }
 
     /**
-     * get the active Pseudo3D scene
+     * Get the active Pseudo3D Scene
      *
-     * @return active Pseudo3D scene
+     * @return Active Pseudo3D Scene
      */
     public static xyz.jeremynoesen.pseudo3d.scene.Scene getActiveScene() {
         return activeScene;
     }
 
     /**
-     * set a new Pseudo3D scene to be active
+     * Set a new Pseudo3D Scene to be active
      *
-     * @param activeScene Pseudo3D scene
+     * @param activeScene Pseudo3D Scene
      */
     public static void setActiveScene(xyz.jeremynoesen.pseudo3d.scene.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
