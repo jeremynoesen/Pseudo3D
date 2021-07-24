@@ -292,7 +292,7 @@ public abstract class Physics extends Box {
                 Side side = getSide(axis, -velocity);
                 if (side != null) {
                     for (Physics colliding : physics.getCollidingEntities(side))
-                        if (colliding.updatable) current.add(colliding);
+                        if (colliding.updatable && colliding.kinematic) current.add(colliding);
                 }
                 visited.add(physics);
             }
@@ -345,7 +345,8 @@ public abstract class Physics extends Box {
                     for (Physics physics : collidingEntities.get(side)) {
 
                         if (physics.updatable) {
-                            if (physics.kinematic && ((axis == Vector.Axis.X && physics.pushable[0]) ||
+                            if (physics.kinematic &&
+                                    ((axis == Vector.Axis.X && physics.pushable[0]) ||
                                     (axis == Vector.Axis.Y && physics.pushable[1]) ||
                                     (axis == Vector.Axis.Z && physics.pushable[2]))) {
 
