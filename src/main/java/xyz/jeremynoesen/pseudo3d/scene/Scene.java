@@ -52,6 +52,16 @@ public class Scene {
      * scene renderer
      */
     private final Renderer renderer;
+
+    /**
+     * delta time for tick loop
+     */
+    private float tickDeltaTime;
+
+    /**
+     * delta time for render loop
+     */
+    private float renderDeltaTime;
     
     /**
      * last time a tick finished in nanoseconds
@@ -119,6 +129,8 @@ public class Scene {
         renderer = new Renderer(this);
         lastRender = 0;
         lastTick = 0;
+        tickDeltaTime = 0;
+        renderDeltaTime = 0;
         speed = scene.speed;
     }
     
@@ -127,13 +139,13 @@ public class Scene {
      * injections
      */
     public void tick() {
-        float deltaTime = 0;
-        if (lastTick > 0) deltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
+        tickDeltaTime = 0;
+        if (lastTick > 0) tickDeltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
 
         tickRunnables.forEach(Runnable::run);
 
         for (Entity entity : entities) {
-            entity.tickMotion(deltaTime * speed);
+            entity.tickMotion(tickDeltaTime * speed);
         }
 
         for (Entity entity : entities) {
@@ -149,11 +161,11 @@ public class Scene {
      * @param graphicsContext graphics context to render to
      */
     public void render(GraphicsContext graphicsContext) {
-        float deltaTime = 0;
-        if (lastRender > 0) deltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
+        renderDeltaTime = 0;
+        if (lastRender > 0) renderDeltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
 
         renderRunnables.forEach(Runnable::run);
-        renderer.render(graphicsContext, deltaTime * speed);
+        renderer.render(graphicsContext, renderDeltaTime * speed);
 
         lastRender = System.nanoTime();
     }
@@ -332,7 +344,25 @@ public class Scene {
         this.speed = speed;
         return this;
     }
-    
+
+    /**
+     * get the delta time for the latest iteration of the tick loop
+     *
+     * @return delta time in seconds
+     */
+    public float getTickDeltaTime() {
+        return tickDeltaTime;
+    }
+
+    /**
+     * get the delta time for the latest iteration of the render loop
+     *
+     * @return delta time in seconds
+     */
+    public float getRenderDeltaTime() {
+        return renderDeltaTime;
+    }
+
     /**
      * check if a scene is identical to this scene
      *
