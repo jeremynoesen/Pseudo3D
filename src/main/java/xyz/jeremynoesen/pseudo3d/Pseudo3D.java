@@ -18,42 +18,42 @@ import xyz.jeremynoesen.pseudo3d.input.Mouse;
  * @author Jeremy Noesen
  */
 public class Pseudo3D extends Application {
-    
+
     /**
      * canvas for root pane
      */
     private static Canvas canvas;
-    
+
     /**
      * javafx scene for the stage
      */
     private static Scene scene;
-    
+
     /**
      * active scene to render and tick
      */
     private static xyz.jeremynoesen.pseudo3d.scene.Scene activeScene;
-    
+
     /**
      * whether the window can be resized
      */
     private static boolean resizable;
-    
+
     /**
      * title of window
      */
     private static String title;
-    
+
     /**
      * timeline loop for ticking operations
      */
     private static final Timeline tickLoop = new Timeline();
-    
+
     /**
      * timeline loop for rendering
      */
     private static final Timeline renderLoop = new Timeline();
-    
+
     /**
      * launch the instance of the application
      *
@@ -67,21 +67,19 @@ public class Pseudo3D extends Application {
     public static void launch(int width, int height, int framerate, int tickSpeed, boolean resizable, String title) {
         Pseudo3D.resizable = resizable;
         Pseudo3D.title = title;
-        
-        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickSpeed),
-                ae -> activeScene.tick()));
-        renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / framerate),
-                ae -> {
-                    canvas.setWidth(scene.getWidth());
-                    canvas.setHeight(scene.getHeight());
-                    activeScene.render(canvas.getGraphicsContext2D());
-                }));
-        
+
+        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickSpeed), ae -> activeScene.tick()));
+        renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / framerate), ae -> {
+            canvas.setWidth(scene.getWidth());
+            canvas.setHeight(scene.getHeight());
+            activeScene.render(canvas.getGraphicsContext2D());
+        }));
+
         canvas = new Canvas(width, height);
-    
+
         new Thread(Application::launch).start();
     }
-    
+
     /**
      * start the application
      *
@@ -104,7 +102,7 @@ public class Pseudo3D extends Application {
         renderLoop.setCycleCount(Animation.INDEFINITE);
         setPaused(false);
     }
-    
+
     /**
      * stop the application
      *
@@ -117,7 +115,7 @@ public class Pseudo3D extends Application {
         activeScene.clearDeltaTime();
         super.stop();
     }
-    
+
     /**
      * pause or unpause the game loops
      *
@@ -133,7 +131,7 @@ public class Pseudo3D extends Application {
             tickLoop.play();
         }
     }
-    
+
     /**
      * get the main canvas
      *
@@ -142,20 +140,38 @@ public class Pseudo3D extends Application {
     public static Canvas getCanvas() {
         return canvas;
     }
-    
+
     /**
-     * get the active scene
+     * get the JavaFX scene the main canvas is placed on
      *
-     * @return active scene
+     * @return JavaFX scene the main canvas is placed on
+     */
+    public static Scene getScene() {
+        return scene;
+    }
+
+    /**
+     * check if the main window is resizable
+     *
+     * @return true if the main window is resizable
+     */
+    public static boolean isResizable() {
+        return resizable;
+    }
+
+    /**
+     * get the active Pseudo3D scene
+     *
+     * @return active Pseudo3D scene
      */
     public static xyz.jeremynoesen.pseudo3d.scene.Scene getActiveScene() {
         return activeScene;
     }
-    
+
     /**
-     * set a new scene to be active
+     * set a new Pseudo3D scene to be active
      *
-     * @param activeScene pseudo3d scene
+     * @param activeScene Pseudo3D scene
      */
     public static void setActiveScene(xyz.jeremynoesen.pseudo3d.scene.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
