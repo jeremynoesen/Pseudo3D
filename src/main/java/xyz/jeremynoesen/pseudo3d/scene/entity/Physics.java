@@ -241,8 +241,10 @@ public abstract class Physics extends Box {
 
                 if (side != null && collidesOn(side)) {
                     for (Physics physics : collidingEntities.get(side)) {
-                        f += physics.roughness.get(axis) * Math.abs(v - physics.getVelocity().get(axis));
-                        count++;
+                        if (physics.updatable) {
+                            f += physics.roughness.get(axis) * Math.abs(v - physics.getVelocity().get(axis));
+                            count++;
+                        }
                     }
                 }
 
@@ -255,7 +257,7 @@ public abstract class Physics extends Box {
                 Side opposite = getSide(axis, -v);
                 if (opposite != null && collidesOn(opposite)) {
                     for (Physics physics : collidingEntities.get(opposite)) {
-                        if (Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
+                        if (physics.updatable && Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
                             f += physics.roughness.get(axis) * Math.abs(physics.getVelocity().get(axis) - v);
                             count++;
                         }
@@ -288,7 +290,10 @@ public abstract class Physics extends Box {
             if (!visited.contains(physics)) {
                 totalMass += physics.mass;
                 Side side = getSide(axis, -velocity);
-                if (side != null) current.addAll(physics.getCollidingEntities(side));
+                if (side != null) {
+                    for (Physics colliding : physics.getCollidingEntities(side))
+                        if (colliding.updatable) current.add(colliding);
+                }
                 visited.add(physics);
             }
         }
