@@ -378,12 +378,12 @@ public abstract class Physics extends Box {
 
         resetCollisions();
 
-        for (Physics entity : entities) {
-            if (entity != this && entity.updatable && super.overlaps(entity)) {
-                if (solid && entity.isSolid()) {
-                    collideWith(entity);
+        for (Physics physics : entities) {
+            if (physics != this && physics.updatable && super.overlaps(physics)) {
+                if (solid && physics.isSolid()) {
+                    collideWith(physics);
                 } else {
-                    overlapWith(entity);
+                    overlapWith(physics);
                 }
             }
         }
