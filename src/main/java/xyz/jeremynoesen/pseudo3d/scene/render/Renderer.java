@@ -12,14 +12,14 @@ import java.util.Comparator;
 import java.util.Objects;
 
 /**
- * scene renderer, will turn a scene into a render on a javafx canvas
+ * Scene renderer which will render a Scene onto a JavaFX Canvas
  *
  * @author Jeremy Noesen
  */
 public class Renderer {
 
     /**
-     * comparator used to sort scene entities from lowest to highest z position for draw order
+     * Comparator used to sort Scene Entities from lowest to highest z position for draw order
      */
     private static final Comparator<Entity> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
@@ -27,44 +27,44 @@ public class Renderer {
     };
 
     /**
-     * scene being rendered by this renderer
+     * Scene being rendered by this Renderer
      */
     private final Scene scene;
 
     /**
-     * reference to scene's camera
+     * Reference to the Scene's Camera
      */
     private Camera camera;
 
     /**
-     * position on the canvas to render from
+     * Position on the Canvas to render from
      */
     private Vector renderPos;
 
     /**
-     * javafx canvas graphics context to render to
+     * JavaFX Canvas GraphicsContext to render to
      */
     private GraphicsContext graphicsContext;
 
     /**
-     * time elapsed in the last render frame
+     * Time elapsed in the previous render frame
      */
     private float deltaTime;
 
     /**
-     * create a new renderer for the specified scene
+     * Create a new Renderer for the specified Scene
      *
-     * @param scene scene to render
+     * @param scene Scene to render
      */
     public Renderer(Scene scene) {
         this.scene = scene;
     }
 
     /**
-     * render the next full frame
+     * Render the next full frame
      *
-     * @param graphicsContext graphics context to draw to
-     * @param deltaTime       time elapsed in last frame, used for sprite updating
+     * @param graphicsContext GraphicsContext to draw to
+     * @param deltaTime       Time elapsed in last frame, used for Sprite updating
      */
     public void render(GraphicsContext graphicsContext, float deltaTime) {
         this.graphicsContext = graphicsContext;
@@ -75,7 +75,7 @@ public class Renderer {
     }
 
     /**
-     * initialize a few variables and sort the scene entities before starting with the render
+     * Initialize the render and sort the Scene Entities before starting with the render
      */
     private void init() {
         scene.getEntities().sort(zComparator);
@@ -86,7 +86,7 @@ public class Renderer {
     }
 
     /**
-     * draw the background image
+     * Draw the background Sprite
      */
     private void drawBackground() {
         if (scene.getBackground() != null) {
@@ -112,9 +112,9 @@ public class Renderer {
     }
 
     /**
-     * draw an entity to the canvas
+     * Draw an Entity to the Canvas
      *
-     * @param entity entity to draw to the canvas
+     * @param entity Entity to draw to the Canvas
      */
     private void drawEntity(Entity entity) {
         Vector objPos = entity.getPosition().multiply(scene.getGridScale());
@@ -189,10 +189,10 @@ public class Renderer {
     }
 
     /**
-     * check if two renderer objects are equal
+     * Check if two Renderer objects are equal
      *
-     * @param o object to check
-     * @return true if equal
+     * @param o Renderer to check
+     * @return True if equal
      */
     @Override
     public boolean equals(Object o) {

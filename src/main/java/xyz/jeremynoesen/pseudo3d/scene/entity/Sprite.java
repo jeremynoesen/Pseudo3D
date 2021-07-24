@@ -11,63 +11,63 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * sprites to be rendered in game
+ * Sprites to be rendered in game
  *
  * @author Jeremy Noesen
  */
 public class Sprite {
 
     /**
-     * image used for sprite
+     * Image used for the Sprite
      */
     private Image image;
 
     /**
-     * width of the sprite in grid units
+     * Width of the Sprite in grid units
      */
     private float width;
 
     /**
-     * height of the sprite in grid units
+     * Height of the Sprite in grid units
      */
     private float height;
 
     /**
-     * counter-clock-wise rotation of sprite in degrees
+     * Counter-clock-wise rotation of the Sprite in degrees
      */
     private float rotation;
 
     /**
-     * current frame number
+     * Current frame of animation
      */
     private float currentFrame;
 
     /**
-     * all images of the animated sprite
+     * All images of the animation
      */
     private ArrayList<Image> images;
 
     /**
-     * time between frames
+     * Time between frames
      */
     private float frameStep;
 
     /**
-     * whether the sprite animation should loop or not
+     * Whether the Sprite animation should loop or not
      */
     private boolean loop;
 
     /**
-     * whether the sprite animation is paused or not
+     * Whether the Sprite animation is paused or not
      */
     private boolean paused;
 
     /**
-     * create a new image sprite
+     * Create a new image Sprite
      *
-     * @param width  sprite width in grid units
-     * @param height sprite height in grid units
-     * @param src    path to image to use for sprite
+     * @param width  Sprite width in grid units
+     * @param height Sprite height in grid units
+     * @param src    Path to image to use for Sprite
      */
     public Sprite(float width, float height, String src) throws FileNotFoundException {
         this.image = new Image(new FileInputStream(src));
@@ -77,11 +77,11 @@ public class Sprite {
     }
 
     /**
-     * create a new color sprite with specified dimensions and color
+     * Create a new color Sprite with specified dimensions and color
      *
-     * @param width  sprite width in grid units
-     * @param height sprite height in grid units
-     * @param color  sprite color
+     * @param width  Sprite width in grid units
+     * @param height Sprite height in grid units
+     * @param color  Sprite Color
      */
     public Sprite(float width, float height, Color color) {
         this.image = new WritableImage(1, 1);
@@ -92,13 +92,13 @@ public class Sprite {
     }
 
     /**
-     * create a new animated sprite with a list of images and frame rate
+     * Create a new animated Sprite from a list of images and specified frame rate, width, height, and loop status
      *
-     * @param src       path to all images of the animated sprite
-     * @param frameRate frames per second of the sprite
-     * @param width     sprite width in grid units
-     * @param height    sprite height in grid units
-     * @param loop      true to allow sprite to loop
+     * @param src       Path to all images of the animated Sprite
+     * @param frameRate Frames per second of the Sprite
+     * @param width     Sprite width in grid units
+     * @param height    Sprite height in grid units
+     * @param loop      True to allow Sprite to loop
      */
     public Sprite(float width, float height, float frameRate, boolean loop, String[] src) throws FileNotFoundException {
         ArrayList<Image> images = new ArrayList<>();
@@ -116,9 +116,9 @@ public class Sprite {
     }
 
     /**
-     * copy constructor for sprites
+     * Copy constructor for Sprites
      *
-     * @param sprite sprite to copy
+     * @param sprite Sprite to copy
      */
     public Sprite(Sprite sprite) {
         image = sprite.image;
@@ -133,18 +133,19 @@ public class Sprite {
     }
 
     /**
-     * get the sprite image
+     * Get the Sprite Image
      *
-     * @return sprite image
+     * @return Sprite Image
      */
     public Image getImage() {
         return image;
     }
 
     /**
-     * set the dimensions of the sprite
+     * Set the dimensions of the Sprite
      *
-     * @param dimensions 2D vector for dimensions
+     * @param dimensions 2D Vector for dimensions
+     * @return this Sprite
      */
     public Sprite setDimensions(Vector dimensions) {
         setWidth(dimensions.getX());
@@ -153,27 +154,28 @@ public class Sprite {
     }
 
     /**
-     * get the width of the sprite image in grid units
+     * Get the width of the Sprite in grid units
      *
-     * @return width of sprite
+     * @return Width of the Sprite
      */
     public float getWidth() {
         return width;
     }
 
     /**
-     * get the height of the sprite image in grid units
+     * Get the height of the Sprite in grid units
      *
-     * @return height of sprite
+     * @return Height of the Sprite
      */
     public float getHeight() {
         return height;
     }
 
     /**
-     * set the width of the sprite, which the image will stretch to fit
+     * Set the width of the Sprite
      *
-     * @param width new sprite width in grid units
+     * @param width New width in grid units
+     * @return this Sprite
      */
     public Sprite setWidth(float width) {
         this.width = width;
@@ -181,9 +183,10 @@ public class Sprite {
     }
 
     /**
-     * set the height of the sprite, which the image will stretch to fit
+     * Set the height of the Sprite
      *
-     * @param height new sprite height in grid units
+     * @param height New height in grid units
+     * @return this Sprite
      */
     public Sprite setHeight(float height) {
         this.height = height;
@@ -191,9 +194,10 @@ public class Sprite {
     }
 
     /**
-     * set the rotation of the sprite
+     * Set the rotation of the Sprite
      *
-     * @param rotation rotation of sprite in degrees counter-clock-wise
+     * @param rotation Rotation in degrees counter-clock-wise
+     * @return this Sprite
      */
     public Sprite setRotation(float rotation) {
         this.rotation = rotation;
@@ -201,27 +205,28 @@ public class Sprite {
     }
 
     /**
-     * get the rotation of the sprite
+     * Get the rotation of the Sprite
      *
-     * @return rotation of sprite in degrees counter-clock-wise
+     * @return Rotation in degrees counter-clock-wise
      */
     public float getRotation() {
         return rotation;
     }
 
     /**
-     * get the framerate of the sprite
+     * Get the framerate of the Sprite
      *
-     * @return framerate of sprite
+     * @return Animation framerate
      */
     public float getFramerate() {
         return 1 / frameStep;
     }
 
     /**
-     * set the framerate for the sprite
+     * Set the framerate for the Sprite
      *
-     * @param framerate frames per second
+     * @param framerate New framerate
+     * @return this Sprite
      */
     public Sprite setFramerate(float framerate) {
         frameStep = 1 / framerate;
@@ -229,9 +234,10 @@ public class Sprite {
     }
 
     /**
-     * set the sprite to loop or not
+     * Set the Sprite animation to loop or not
      *
-     * @param loop true to allow animation loop
+     * @param loop True to allow animation loop
+     * @return this Sprite
      */
     public Sprite setLoop(boolean loop) {
         this.loop = loop;
@@ -239,18 +245,19 @@ public class Sprite {
     }
 
     /**
-     * check if the sprite can loop animation
+     * Check if the Sprite can loop animation
      *
-     * @return true if the animation can loop
+     * @return True if the animation can loop
      */
     public boolean canLoop() {
         return loop;
     }
 
     /**
-     * set the animation to be paused
+     * Set the animation to be paused
      *
-     * @param paused true to pause the animation
+     * @param paused True to pause the animation
+     * @return this Sprite
      */
     public Sprite setPaused(boolean paused) {
         this.paused = paused;
@@ -258,18 +265,20 @@ public class Sprite {
     }
 
     /**
-     * check if the animation is paused
+     * Check if the animation is paused
      *
-     * @return true if paused
+     * @return True if paused
      */
     public boolean isPaused() {
         return paused;
     }
 
     /**
-     * set the current frame to the next available frame based on elapsed time, usually called by the renderer
+     * Set the current frame to the next available frame based on elapsed time
+     * <p>
+     * This is usually called by the renderer
      *
-     * @param deltaTime time elapsed for the render frame
+     * @param deltaTime Time elapsed for the render frame
      */
     public void update(float deltaTime) {
         if (!paused && images != null && !images.isEmpty() && frameStep != 0) {
@@ -289,7 +298,9 @@ public class Sprite {
     }
 
     /**
-     * set the current frame to the next frame
+     * Set the current frame to the next frame
+     *
+     * @return this Sprite
      */
     public Sprite nextFrame() {
         boolean paused = this.paused;
@@ -300,7 +311,9 @@ public class Sprite {
     }
 
     /**
-     * set the current frame to the previous frame
+     * Set the current frame to the previous frame
+     *
+     * @return this Sprite
      */
     public Sprite previousFrame() {
         boolean paused = this.paused;
@@ -314,18 +327,19 @@ public class Sprite {
     }
 
     /**
-     * get the current frame of the animation
+     * Get the current frame of the animation
      *
-     * @return current frame of the animation
+     * @return Current frame of the animation
      */
     public int getFrame() {
         return frameStep > 0 ? (int) Math.floor(currentFrame) : (int) Math.ceil(currentFrame);
     }
 
     /**
-     * set the current frame in the animation
+     * Set the current frame in the animation
      *
-     * @param frame frame number
+     * @param frame Frame number
+     * @return this Sprite
      */
     public Sprite setFrame(int frame) {
         currentFrame = frame;
@@ -334,10 +348,10 @@ public class Sprite {
     }
 
     /**
-     * check if two sprites are similar to each other
+     * Check if two Sprites are similar to each other
      *
-     * @param o object to check
-     * @return true if the two sprites are equal
+     * @param o Sprite to check
+     * @return True if the two Sprites are equal
      */
     @Override
     public boolean equals(Object o) {
