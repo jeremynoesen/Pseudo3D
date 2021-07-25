@@ -8,11 +8,6 @@ package xyz.jeremynoesen.pseudo3d.scene.util;
 public class Vector {
 
     /**
-     * Axes of Vectors
-     */
-    public enum Axis {X, Y, Z}
-
-    /**
      * X component of Vector
      */
     private final float x;

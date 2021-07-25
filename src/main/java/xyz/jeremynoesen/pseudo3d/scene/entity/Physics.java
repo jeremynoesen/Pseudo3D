@@ -1,6 +1,8 @@
 package xyz.jeremynoesen.pseudo3d.scene.entity;
 
+import xyz.jeremynoesen.pseudo3d.scene.util.Axis;
 import xyz.jeremynoesen.pseudo3d.scene.util.Box;
+import xyz.jeremynoesen.pseudo3d.scene.util.Side;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.util.*;
@@ -109,7 +111,7 @@ public abstract class Physics extends Box {
     /**
      * Temporary Set used in special cases of momentum
      */
-    private final Set<Vector.Axis> skipMomentum;
+    private final Set<Axis> skipMomentum;
 
     /**
      * Temporary Set used in special cases of collisions
@@ -196,7 +198,7 @@ public abstract class Physics extends Box {
      * Apply acceleration and gravity to the velocity
      */
     private void applyAcceleration() {
-        for (Vector.Axis axis : Vector.Axis.values()) {
+        for (Axis axis : Axis.values()) {
             float v = velocity.get(axis);
             float a = acceleration.get(axis) + gravity.get(axis);
             float vt = terminalVelocity.get(axis);
@@ -234,7 +236,7 @@ public abstract class Physics extends Box {
      */
     private Vector calculateFriction() {
         Vector output = new Vector();
-        for (Vector.Axis axis : Vector.Axis.values()) {
+        for (Axis axis : Axis.values()) {
             float v = velocity.get(axis);
 
             if (colliding) {
@@ -282,7 +284,7 @@ public abstract class Physics extends Box {
      * @param axis     Axis of motion
      * @return Sum of masses
      */
-    private float calculateStackedMass(float velocity, Vector.Axis axis) {
+    private float calculateStackedMass(float velocity, Axis axis) {
         float totalMass = 0;
         Queue<Physics> current = new ArrayDeque<>();
         Set<Physics> visited = new HashSet<>();
@@ -340,7 +342,7 @@ public abstract class Physics extends Box {
      */
     private void applyMomentum() {
         skipMomentum.clear();
-        for (Vector.Axis axis : Vector.Axis.values()) {
+        for (Axis axis : Axis.values()) {
             float v = velocity.get(axis);
 
             if (colliding) {
@@ -350,9 +352,9 @@ public abstract class Physics extends Box {
 
                         if (physics.updatable) {
                             if (physics.kinematic &&
-                                    ((axis == Vector.Axis.X && physics.pushable[0]) ||
-                                            (axis == Vector.Axis.Y && physics.pushable[1]) ||
-                                            (axis == Vector.Axis.Z && physics.pushable[2]))) {
+                                    ((axis == Axis.X && physics.pushable[0]) ||
+                                            (axis == Axis.Y && physics.pushable[1]) ||
+                                            (axis == Axis.Z && physics.pushable[2]))) {
 
                                 float sum = mass + physics.mass;
                                 float diff = mass - physics.mass;
@@ -419,7 +421,7 @@ public abstract class Physics extends Box {
         overlaps[4] = Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()); //back overlap
         overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front overlap
 
-        Vector.Axis axis = Vector.Axis.X;
+        Axis axis = Axis.X;
         byte dir = -1;
         byte zeros = 0;
         float distance = overlaps[0];
@@ -429,9 +431,9 @@ public abstract class Physics extends Box {
                 distance = overlaps[i];
                 dir = (byte) -Math.pow(-1, i);
                 switch (i) {
-                    case 0, 1 -> axis = Vector.Axis.X;
-                    case 2, 3 -> axis = Vector.Axis.Y;
-                    case 4, 5 -> axis = Vector.Axis.Z;
+                    case 0, 1 -> axis = Axis.X;
+                    case 2, 3 -> axis = Axis.Y;
+                    case 4, 5 -> axis = Axis.Z;
                 }
             }
             if (overlaps[i] == 0) zeros++;
@@ -661,7 +663,7 @@ public abstract class Physics extends Box {
      * @param axis Axis of collision
      * @return True if the Entity is colliding on the Axis
      */
-    public boolean collidesOn(Vector.Axis axis) {
+    public boolean collidesOn(Axis axis) {
         return switch (axis) {
             case X -> collidesOn(Side.LEFT) || collidesOn(Side.RIGHT);
             case Y -> collidesOn(Side.BOTTOM) || collidesOn(Side.TOP);
@@ -717,9 +719,9 @@ public abstract class Physics extends Box {
      *
      * @return Set of all colliding axes
      */
-    public HashSet<Vector.Axis> getCollidingAxes() {
-        HashSet<Vector.Axis> axes = new HashSet<>();
-        for (Vector.Axis axis : Vector.Axis.values()) if (collidesOn(axis)) axes.add(axis);
+    public HashSet<Axis> getCollidingAxes() {
+        HashSet<Axis> axes = new HashSet<>();
+        for (Axis axis : Axis.values()) if (collidesOn(axis)) axes.add(axis);
         return axes;
     }
 

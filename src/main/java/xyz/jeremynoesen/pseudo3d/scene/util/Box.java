@@ -8,11 +8,6 @@ package xyz.jeremynoesen.pseudo3d.scene.util;
 public class Box {
 
     /**
-     * Sides of the Box
-     */
-    public enum Side {LEFT, RIGHT, TOP, BOTTOM, BACK, FRONT}
-
-    /**
      * Width of the Box
      */
     private float width;
@@ -287,7 +282,7 @@ public class Box {
      * @param dir  Direction
      * @return Side based on direction and Axis
      */
-    public Side getSide(Vector.Axis axis, float dir) {
+    public Side getSide(Axis axis, float dir) {
         if (dir == 0) return null;
         return switch (axis) {
             case X -> dir < 0 ? Side.LEFT : Side.RIGHT;
