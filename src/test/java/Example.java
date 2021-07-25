@@ -5,7 +5,7 @@ import xyz.jeremynoesen.pseudo3d.scene.Scene;
 import xyz.jeremynoesen.pseudo3d.scene.entity.Entity;
 import xyz.jeremynoesen.pseudo3d.scene.render.Sprite;
 import xyz.jeremynoesen.pseudo3d.scene.render.Camera;
-import xyz.jeremynoesen.pseudo3d.scene.util.Box;
+import xyz.jeremynoesen.pseudo3d.scene.util.Side;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.io.FileNotFoundException;
@@ -103,7 +103,7 @@ public class Example {
     
             player.setAcceleration(accel);
     
-            if (Keyboard.isPressed(KeyCode.SPACE) && player.collidesOn(Box.Side.BOTTOM)) {
+            if (Keyboard.isPressed(KeyCode.SPACE) && player.collidesOn(Side.BOTTOM)) {
                 player.setVelocity(player.getVelocity().setY(7.5f));
             }
             //Jump
