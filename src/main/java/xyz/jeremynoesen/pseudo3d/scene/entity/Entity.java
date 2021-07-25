@@ -1,6 +1,7 @@
 package xyz.jeremynoesen.pseudo3d.scene.entity;
 
 import xyz.jeremynoesen.pseudo3d.scene.Scene;
+import xyz.jeremynoesen.pseudo3d.scene.render.Sprite;
 
 import java.util.Objects;
 

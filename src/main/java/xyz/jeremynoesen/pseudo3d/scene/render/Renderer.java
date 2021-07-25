@@ -4,7 +4,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
 import xyz.jeremynoesen.pseudo3d.scene.Scene;
 import xyz.jeremynoesen.pseudo3d.scene.entity.Entity;
-import xyz.jeremynoesen.pseudo3d.scene.entity.Sprite;
 import xyz.jeremynoesen.pseudo3d.scene.util.Box;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
