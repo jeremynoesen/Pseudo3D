@@ -64,7 +64,7 @@ public class Example {
         }
         //Generate floor
         
-        Pseudo3D.launch(500, 500, 60, 120, true, "Sandbox");
+        Pseudo3D.launch(500, 500, 60, 120, false, true, "Sandbox");
         //Launch program
         
         Pseudo3D.setActiveScene(scene);
@@ -72,6 +72,7 @@ public class Example {
         
         //Scene Keyboard controls
         scene.addTickRunnable(() -> {
+            System.out.println(Pseudo3D.getRenderDeltaTime());
     
             Vector accel = new Vector();
             

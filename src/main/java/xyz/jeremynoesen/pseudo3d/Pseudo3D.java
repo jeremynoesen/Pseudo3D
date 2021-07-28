@@ -55,24 +55,64 @@ public class Pseudo3D extends Application {
     private static final Timeline renderLoop = new Timeline();
 
     /**
+     * Delta time for the tick loop
+     */
+    private static float tickDeltaTime = 0;
+
+    /**
+     * Delta time for the render loop
+     */
+    private static float renderDeltaTime = 0;
+
+    /**
+     * Previous time a tick finished in nanoseconds
+     */
+    private static long lastTick = 0;
+
+    /**
+     * Previous time a render finished in nanoseconds
+     */
+    private static long lastRender = 0;
+
+    /**
      * Launch the instance of the Application
      *
-     * @param width     Width of window
-     * @param height    Height of window
-     * @param framerate Framerate for rendering in frames per second
-     * @param tickSpeed Tick speed for physics in hertz
-     * @param resizable Resizable status
-     * @param title     Window title
+     * @param width          Width of window
+     * @param height         Height of window
+     * @param framerate      Framerate for rendering in frames per second
+     * @param tickSpeed      Tick speed for physics in hertz
+     * @param fixedDeltaTime Whether the delta time is a fixed value
+     * @param resizable      Resizable status
+     * @param title          Window title
      */
-    public static void launch(int width, int height, int framerate, int tickSpeed, boolean resizable, String title) {
+    public static void launch(int width, int height, int framerate, int tickSpeed,
+                              boolean fixedDeltaTime, boolean resizable, String title) {
         Pseudo3D.resizable = resizable;
         Pseudo3D.title = title;
 
-        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickSpeed), ae -> activeScene.tick()));
+        tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickSpeed), ae -> {
+            if (!fixedDeltaTime && lastTick > 0) tickDeltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
+            else if (fixedDeltaTime) tickDeltaTime = 1f / tickSpeed;
+            else tickDeltaTime = 0;
+
+            activeScene.tick(tickDeltaTime);
+
+            lastTick = System.nanoTime();
+        }));
+
         renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / framerate), ae -> {
-            canvas.setWidth(scene.getWidth());
-            canvas.setHeight(scene.getHeight());
-            activeScene.render(canvas.getGraphicsContext2D());
+            if (!fixedDeltaTime && lastRender > 0) renderDeltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
+            else if (fixedDeltaTime) renderDeltaTime = 1f / framerate;
+            else renderDeltaTime = 0;
+
+            if (resizable) {
+                canvas.setWidth(scene.getWidth());
+                canvas.setHeight(scene.getHeight());
+            }
+
+            activeScene.render(canvas.getGraphicsContext2D(), renderDeltaTime);
+
+            lastRender = System.nanoTime();
         }));
 
         canvas = new Canvas(width, height);
@@ -112,7 +152,8 @@ public class Pseudo3D extends Application {
     public void stop() throws Exception {
         renderLoop.stop();
         tickLoop.stop();
-        activeScene.clearDeltaTime();
+        lastRender = 0;
+        lastTick = 0;
         super.stop();
     }
 
@@ -125,7 +166,8 @@ public class Pseudo3D extends Application {
         if (paused) {
             renderLoop.pause();
             tickLoop.pause();
-            activeScene.clearDeltaTime();
+            lastRender = 0;
+            lastTick = 0;
         } else {
             renderLoop.play();
             tickLoop.play();
@@ -175,5 +217,23 @@ public class Pseudo3D extends Application {
      */
     public static void setActiveScene(xyz.jeremynoesen.pseudo3d.scene.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
+    }
+
+    /**
+     * Get the delta time for the previous iteration of the tick loop
+     *
+     * @return Delta time in seconds
+     */
+    public static float getTickDeltaTime() {
+        return tickDeltaTime;
+    }
+
+    /**
+     * Get the delta time for the previous iteration of the render loop
+     *
+     * @return Delta time in seconds
+     */
+    public static float getRenderDeltaTime() {
+        return renderDeltaTime;
     }
 }

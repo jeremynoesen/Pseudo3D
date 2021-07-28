@@ -56,26 +56,6 @@ public class Scene {
     private final Renderer renderer;
 
     /**
-     * Delta time for the tick loop
-     */
-    private float tickDeltaTime;
-
-    /**
-     * Delta time for the render loop
-     */
-    private float renderDeltaTime;
-
-    /**
-     * Previous time a tick finished in nanoseconds
-     */
-    private long lastTick;
-
-    /**
-     * Previous time a render finished in nanoseconds
-     */
-    private long lastRender;
-
-    /**
      * Speed modifier for physics and rendering
      */
     private float speed;
@@ -129,10 +109,6 @@ public class Scene {
         renderRunnables = scene.renderRunnables;
         gridScale = scene.gridScale;
         renderer = new Renderer(this);
-        lastRender = 0;
-        lastTick = 0;
-        tickDeltaTime = 0;
-        renderDeltaTime = 0;
         speed = scene.speed;
     }
 
@@ -141,47 +117,24 @@ public class Scene {
      * <p>
      * Ticking will do the following in order: run any Runnables, update motion for all Entities, then update collisions
      * for all Entities
+     *
+     * @param deltaTime How long the previous tick took in seconds
      */
-    public void tick() {
-        tickDeltaTime = 0;
-        if (lastTick > 0) tickDeltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
-
+    public void tick(float deltaTime) {
         tickRunnables.forEach(Runnable::run);
-
-        for (Entity entity : entities) {
-            entity.tickMotion(tickDeltaTime * speed);
-        }
-
-        for (Entity entity : entities) {
-            entity.tickCollisions();
-        }
-
-        lastTick = System.nanoTime();
+        for (Entity entity : entities) entity.tickMotion(deltaTime * speed);
+        for (Entity entity : entities) entity.tickCollisions();
     }
 
     /**
      * Render this Scene to the main Canvas, as well as run any Runnables
      *
      * @param graphicsContext GraphicsContext to render to
+     * @param deltaTime       How long the previous render took in seconds
      */
-    public void render(GraphicsContext graphicsContext) {
-        renderDeltaTime = 0;
-        if (lastRender > 0) renderDeltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
-
+    public void render(GraphicsContext graphicsContext, float deltaTime) {
         renderRunnables.forEach(Runnable::run);
-        renderer.render(graphicsContext, renderDeltaTime * speed);
-
-        lastRender = System.nanoTime();
-    }
-
-    /**
-     * Reset the last ticking and rendering times
-     * <p>
-     * This should only be called if the game loop is paused
-     */
-    public void clearDeltaTime() {
-        lastRender = 0;
-        lastTick = 0;
+        renderer.render(graphicsContext, deltaTime * speed);
     }
 
     /**
@@ -361,24 +314,6 @@ public class Scene {
     public Scene setSpeed(float speed) {
         this.speed = speed;
         return this;
-    }
-
-    /**
-     * Get the delta time for the previous iteration of the tick loop
-     *
-     * @return Delta time in seconds
-     */
-    public float getTickDeltaTime() {
-        return tickDeltaTime;
-    }
-
-    /**
-     * Get the delta time for the previous iteration of the render loop
-     *
-     * @return Delta time in seconds
-     */
-    public float getRenderDeltaTime() {
-        return renderDeltaTime;
     }
 
     /**
