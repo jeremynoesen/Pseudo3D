@@ -329,12 +329,10 @@ public abstract class Physics extends Box {
             else if (vx > 0) vx = Math.max(vx - dx, 0);
         }
         if (isKinematicY()) {
-
             if (vy < 0) vy = Math.min(vy + dy, 0);
             else if (vy > 0) vy = Math.max(vy - dy, 0);
         }
         if (isKinematicZ()) {
-
             if (vz < 0) vz = Math.min(vz + dz, 0);
             else if (vz > 0) vz = Math.max(vz - dz, 0);
         }
@@ -918,6 +916,39 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * Set whether the Entity can move or not for the x axis
+     *
+     * @param kinematic True to allow motion on the x axis
+     * @return This Physics
+     */
+    public Physics setKinematicX(boolean kinematic) {
+        this.kinematic[0] = kinematic;
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can move or not for the y axis
+     *
+     * @param kinematic True to allow motion on the y axis
+     * @return This Physics
+     */
+    public Physics setKinematicY(boolean kinematic) {
+        this.kinematic[1] = kinematic;
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can move or not for the z axis
+     *
+     * @param kinematic True to allow motion on the z axis
+     * @return This Physics
+     */
+    public Physics setKinematicZ(boolean kinematic) {
+        this.kinematic[2] = kinematic;
+        return this;
+    }
+
+    /**
      * Check if the Entity is pushable on any axis
      *
      * @return True if the Entity is pushable on any axis
@@ -1020,6 +1051,39 @@ public abstract class Physics extends Box {
             case Y -> this.pushable[1] = pushable;
             case Z -> this.pushable[2] = pushable;
         }
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can be pushed or not for the x axis
+     *
+     * @param pushable True to allow pushing on the x Axis
+     * @return This Physics
+     */
+    public Physics setPushableX(boolean pushable) {
+        this.pushable[0] = pushable;
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can be pushed or not for the y axis
+     *
+     * @param pushable True to allow pushing on the y Axis
+     * @return This Physics
+     */
+    public Physics setPushableY(boolean pushable) {
+        this.pushable[1] = pushable;
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can be pushed or not for the z axis
+     *
+     * @param pushable True to allow pushing on the z Axis
+     * @return This Physics
+     */
+    public Physics setPushableZ(boolean pushable) {
+        this.pushable[2] = pushable;
         return this;
     }
 
