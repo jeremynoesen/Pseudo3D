@@ -810,12 +810,21 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Check if the Entity is kinematic an any axis
+     * Check if the Entity is kinematic on any axis
      *
      * @return True if the Entity is kinematic on any axis
      */
     public boolean isKinematic() {
         return kinematic[0] || kinematic[1] || kinematic[2];
+    }
+
+    /**
+     * Check if the Entity is kinematic on every axis
+     *
+     * @return True if the Entity is kinematic on any axis
+     */
+    public boolean isFullyKinematic() {
+        return kinematic[0] && kinematic[1] && kinematic[2];
     }
 
     /**
@@ -955,6 +964,15 @@ public abstract class Physics extends Box {
      */
     public boolean isPushable() {
         return pushable[0] || pushable[1] || pushable[2];
+    }
+
+    /**
+     * Check if the Entity is pushable on every axis
+     *
+     * @return True if the Entity is pushable on every axis
+     */
+    public boolean isFullyPushable() {
+        return pushable[0] && pushable[1] && pushable[2];
     }
 
     /**
