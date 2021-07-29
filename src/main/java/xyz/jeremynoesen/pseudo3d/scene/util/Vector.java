@@ -176,7 +176,7 @@ public class Vector {
      * Increase the magnitude of this Vector by a specific value
      *
      * @param magnitude Magnitude to add
-     * @return Vector from the sum of two Vectors
+     * @return Vector from the sum of the magnitude
      */
     public Vector add(float magnitude) {
         return add(normalize().multiply(magnitude));
@@ -196,7 +196,7 @@ public class Vector {
      * Decrease the magnitude of this Vector by a specific value
      *
      * @param magnitude Magnitude to subtract
-     * @return Vector from the subtraction of two Vectors
+     * @return Vector from the subtraction of the magnitude
      */
     public Vector subtract(float magnitude) {
         return subtract(normalize().multiply(magnitude));
