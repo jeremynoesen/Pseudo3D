@@ -72,8 +72,6 @@ public class Example {
         
         //Scene Keyboard controls
         scene.addTickRunnable(() -> {
-            System.out.println(Pseudo3D.getRenderDeltaTime());
-    
             Vector accel = new Vector();
             
             player.setAcceleration(accel);
