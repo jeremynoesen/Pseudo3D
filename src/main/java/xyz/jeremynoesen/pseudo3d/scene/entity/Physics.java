@@ -331,10 +331,11 @@ public abstract class Physics extends Box {
      * @return Drag Vector
      */
     private Vector calculateDrag() {
-        float dx = drag.getX() * getHeight() * getDepth() * deltaTime * Math.abs(velocity.getX());
-        float dy = drag.getY() * getWidth() * getDepth() * deltaTime * Math.abs(velocity.getY());
-        float dz = drag.getZ() * getHeight() * getWidth() * deltaTime * Math.abs(velocity.getZ());
-        return new Vector(dx, dy, dz);
+        Vector output = new Vector();
+        for (Axis axis : Axis.values()) {
+            output = output.set(axis, drag.get(axis) * getFaceArea(axis) * deltaTime * Math.abs(velocity.get(axis)));
+        }
+        return output;
     }
 
     /**

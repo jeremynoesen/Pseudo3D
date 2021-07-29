@@ -276,6 +276,47 @@ public class Box {
     }
 
     /**
+     * Get the face area for a side perpendicular to the x axis
+     *
+     * @return Face area for a side perpendicular to the x axis
+     */
+    public float getFaceAreaX() {
+        return height * depth;
+    }
+
+    /**
+     * Get the face area for a side perpendicular to the y axis
+     *
+     * @return Face area for a side perpendicular to the y axis
+     */
+    public float getFaceAreaY() {
+        return width * depth;
+    }
+
+    /**
+     * Get the face area for a side perpendicular to the z axis
+     *
+     * @return Face area for a side perpendicular to the z axis
+     */
+    public float getFaceAreaZ() {
+        return width * height;
+    }
+
+    /**
+     * Get the face area for a side perpendicular to the specified axis
+     *
+     * @param axis Axis to get face area for
+     * @return Face area for a side perpendicular to the specified axis
+     */
+    public float getFaceArea(Axis axis) {
+        return switch (axis) {
+            case X -> getFaceAreaX();
+            case Y -> getFaceAreaY();
+            case Z -> getFaceAreaZ();
+        };
+    }
+
+    /**
      * Get the side of the Box based on direction and Axis
      *
      * @param axis Axis of motion
