@@ -811,6 +811,19 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * Check if the Entity is pushable on the specified Axis
+     *
+     * @return True if the Entity is pushable on the specified axis
+     */
+    public boolean isPushable(Axis axis) {
+        return switch (axis) {
+            case X -> isPushableX();
+            case Y -> isPushableY();
+            case Z -> isPushableZ();
+        };
+    }
+
+    /**
      * Set whether the Entity can be pushed or not per Axis
      *
      * @param x True to allow pushing on the x Axis
@@ -849,6 +862,21 @@ public abstract class Physics extends Box {
         this.pushable[0] = pushable;
         this.pushable[1] = pushable;
         this.pushable[2] = pushable;
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can be pushed or not for a specific axis
+     *
+     * @param pushable True to allow pushing on a specific axis
+     * @return This Physics
+     */
+    public Physics setPushable(Axis axis, boolean pushable) {
+        switch (axis) {
+            case X -> this.pushable[0] = pushable;
+            case Y -> this.pushable[1] = pushable;
+            case Z -> this.pushable[2] = pushable;
+        }
         return this;
     }
 
