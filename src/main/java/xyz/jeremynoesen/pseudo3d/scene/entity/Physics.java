@@ -84,9 +84,9 @@ public abstract class Physics extends Box {
     private boolean overlapping;
 
     /**
-     * Whether this Entity can have motion or not
+     * Whether this Entity can have motion or not per axis
      */
-    private boolean kinematic;
+    private final boolean[] kinematic;
 
     /**
      * Whether this Entity can be pushed by other Entities or not per axis
@@ -134,7 +134,7 @@ public abstract class Physics extends Box {
         solid = true;
         colliding = false;
         overlapping = false;
-        kinematic = true;
+        kinematic = new boolean[]{true, true, true};
         pushable = new boolean[]{true, true, true};
         skipMomentum = new HashSet<>();
         specialCollisions = new HashSet<>();
@@ -164,8 +164,8 @@ public abstract class Physics extends Box {
         colliding = physics.colliding;
         overlapping = physics.overlapping;
         mass = physics.mass;
-        kinematic = physics.kinematic;
-        pushable = physics.pushable;
+        kinematic = Arrays.copyOf(physics.kinematic, 3);
+        pushable = Arrays.copyOf(physics.pushable, 3);
         updatable = physics.updatable;
         deltaTime = physics.deltaTime;
         skipMomentum = new HashSet<>();
@@ -182,7 +182,7 @@ public abstract class Physics extends Box {
      * @param deltaTime Time elapsed in the previous tick
      */
     public void tickMotion(float deltaTime) {
-        if (!updatable || !kinematic) return;
+        if (!updatable || !isKinematic()) return;
 
         this.deltaTime = deltaTime;
 
@@ -199,6 +199,7 @@ public abstract class Physics extends Box {
      */
     private void applyAcceleration() {
         for (Axis axis : Axis.values()) {
+            if (!isKinematic(axis)) continue;
             float v = velocity.get(axis);
             float a = acceleration.get(axis) + gravity.get(axis);
             float vt = terminalVelocity.get(axis);
@@ -219,12 +220,18 @@ public abstract class Physics extends Box {
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
 
-        if (vx < 0) vx = Math.min(vx + fy + fz, 0);
-        else if (vx > 0) vx = Math.max(vx - fy - fz, 0);
-        if (vy < 0) vy = Math.min(vy + fx + fz, 0);
-        else if (vy > 0) vy = Math.max(vy - fx - fz, 0);
-        if (vz < 0) vz = Math.min(vz + fx + fy, 0);
-        else if (vz > 0) vz = Math.max(vz - fx - fy, 0);
+        if (isKinematicX()) {
+            if (vx < 0) vx = Math.min(vx + fy + fz, 0);
+            else if (vx > 0) vx = Math.max(vx - fy - fz, 0);
+        }
+        if (isKinematicY()) {
+            if (vy < 0) vy = Math.min(vy + fx + fz, 0);
+            else if (vy > 0) vy = Math.max(vy - fx - fz, 0);
+        }
+        if (isKinematicZ()) {
+            if (vz < 0) vz = Math.min(vz + fx + fy, 0);
+            else if (vz > 0) vz = Math.max(vz - fx - fy, 0);
+        }
 
         velocity = new Vector(vx, vy, vz);
     }
@@ -237,6 +244,8 @@ public abstract class Physics extends Box {
     private Vector calculateFriction() {
         Vector output = new Vector();
         for (Axis axis : Axis.values()) {
+            if (!isKinematic(axis)) continue;
+
             float v = velocity.get(axis);
 
             if (colliding) {
@@ -298,7 +307,7 @@ public abstract class Physics extends Box {
                 Side side = getSide(axis, -velocity);
                 if (side != null) {
                     for (Physics colliding : physics.getCollidingEntities(side))
-                        if (colliding.updatable && colliding.kinematic) current.add(colliding);
+                        if (colliding.updatable && colliding.isKinematic(axis)) current.add(colliding);
                 }
                 visited.add(physics);
             }
@@ -315,12 +324,20 @@ public abstract class Physics extends Box {
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float dx = drag.getX(), dy = drag.getY(), dz = drag.getZ();
 
-        if (vx < 0) vx = Math.min(vx + dx, 0);
-        else if (vx > 0) vx = Math.max(vx - dx, 0);
-        if (vy < 0) vy = Math.min(vy + dy, 0);
-        else if (vy > 0) vy = Math.max(vy - dy, 0);
-        if (vz < 0) vz = Math.min(vz + dz, 0);
-        else if (vz > 0) vz = Math.max(vz - dz, 0);
+        if (isKinematicX()) {
+            if (vx < 0) vx = Math.min(vx + dx, 0);
+            else if (vx > 0) vx = Math.max(vx - dx, 0);
+        }
+        if (isKinematicY()) {
+
+            if (vy < 0) vy = Math.min(vy + dy, 0);
+            else if (vy > 0) vy = Math.max(vy - dy, 0);
+        }
+        if (isKinematicZ()) {
+
+            if (vz < 0) vz = Math.min(vz + dz, 0);
+            else if (vz > 0) vz = Math.max(vz - dz, 0);
+        }
 
         velocity = new Vector(vx, vy, vz);
     }
@@ -333,6 +350,7 @@ public abstract class Physics extends Box {
     private Vector calculateDrag() {
         Vector output = new Vector();
         for (Axis axis : Axis.values()) {
+            if (!isKinematic(axis)) continue;
             output = output.set(axis, drag.get(axis) * getFaceArea(axis) * deltaTime * Math.abs(velocity.get(axis)));
         }
         return output;
@@ -344,6 +362,8 @@ public abstract class Physics extends Box {
     private void applyMomentum() {
         skipMomentum.clear();
         for (Axis axis : Axis.values()) {
+            if (!isKinematic(axis)) continue;
+
             float v = velocity.get(axis);
 
             if (colliding) {
@@ -352,10 +372,7 @@ public abstract class Physics extends Box {
                     for (Physics physics : collidingEntities.get(side)) {
 
                         if (physics.updatable) {
-                            if (physics.kinematic &&
-                                    ((axis == Axis.X && physics.pushable[0]) ||
-                                            (axis == Axis.Y && physics.pushable[1]) ||
-                                            (axis == Axis.Z && physics.pushable[2]))) {
+                            if (physics.isKinematic(axis) && physics.isPushable(axis)) {
 
                                 float sum = mass + physics.mass;
                                 float diff = mass - physics.mass;
@@ -442,7 +459,7 @@ public abstract class Physics extends Box {
 
         if (zeros > 1) return;
 
-        if (kinematic && velocity.get(axis) * dir > 0) {
+        if (isKinematic(axis) && velocity.get(axis) * dir > 0) {
             if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
                     && !physics.specialCollisions.contains(this)) {
                 distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
@@ -795,27 +812,113 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Check if the Entity is kinematic
+     * Check if the Entity is kinematic an any axis
      *
-     * @return True if the Entity is kinematic
+     * @return True if the Entity is kinematic on any axis
      */
     public boolean isKinematic() {
-        return kinematic;
+        return kinematic[0] || kinematic[1] || kinematic[2];
     }
 
     /**
-     * Set an Entity to be kinematic or not
+     * Check if the Entity is kinematic on the x axis
      *
-     * @param kinematic True to allow Entity motion
+     * @return True if the Entity is kinematic on the x axis
+     */
+    public boolean isKinematicX() {
+        return kinematic[0];
+    }
+
+    /**
+     * Check if the Entity is kinematic on the y axis
+     *
+     * @return True if the Entity is kinematic on the y axis
+     */
+    public boolean isKinematicY() {
+        return kinematic[1];
+    }
+
+    /**
+     * Check if the Entity is kinematic on the z axis
+     *
+     * @return True if the Entity is kinematic on the z axis
+     */
+    public boolean isKinematicZ() {
+        return kinematic[2];
+    }
+
+    /**
+     * Check if the Entity is kinematic on the specified Axis
+     *
+     * @return True if the Entity is kinematic on the specified Axis
+     */
+    public boolean isKinematic(Axis axis) {
+        return switch (axis) {
+            case X -> isKinematicX();
+            case Y -> isKinematicY();
+            case Z -> isKinematicZ();
+        };
+    }
+
+    /**
+     * Set whether the Entity can move or not per axis
+     *
+     * @param x True to allow motion on the x axis
+     * @param y True to allow motion on the y axis
+     * @param z True to allow motion on the z axis
      * @return This Physics
      */
-    public Physics setKinematic(boolean kinematic) {
-        this.kinematic = kinematic;
+    public Physics setKinematic(boolean x, boolean y, boolean z) {
+        kinematic[0] = x;
+        kinematic[1] = y;
+        kinematic[2] = z;
         return this;
     }
 
     /**
-     * Check if the Entity is pushable on any Axis
+     * Set whether the Entity can move or not per axis
+     *
+     * @param x True to allow motion on the x axis
+     * @param y True to allow motion on the y axis
+     * @return This Physics
+     */
+    public Physics setKinematic(boolean x, boolean y) {
+        kinematic[0] = x;
+        kinematic[1] = y;
+        kinematic[2] = false;
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can move or not for all axes
+     *
+     * @param kinematic True to allow motion on all axes
+     * @return This Physics
+     */
+    public Physics setKinematic(boolean kinematic) {
+        this.kinematic[0] = kinematic;
+        this.kinematic[1] = kinematic;
+        this.kinematic[2] = kinematic;
+        return this;
+    }
+
+    /**
+     * Set whether the Entity can move or not for a specific Axis
+     *
+     * @param kinematic True to allow motion on a specific Axis
+     * @return This Physics
+     */
+    public Physics setKinematic(Axis axis, boolean kinematic) {
+        switch (axis) {
+            case X -> this.kinematic[0] = kinematic;
+            case Y -> this.kinematic[1] = kinematic;
+            case Z -> this.kinematic[2] = kinematic;
+        }
+        return this;
+    }
+
+    /**
+     * Check if the Entity is pushable on any axis
      *
      * @return True if the Entity is pushable on any axis
      */
@@ -824,7 +927,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Check if the Entity is pushable on the x Axis
+     * Check if the Entity is pushable on the x axis
      *
      * @return True if the Entity is pushable on the x axis
      */
@@ -833,7 +936,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Check if the Entity is pushable on the y Axis
+     * Check if the Entity is pushable on the y axis
      *
      * @return True if the Entity is pushable on the y axis
      */
@@ -842,7 +945,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Check if the Entity is pushable on the z Axis
+     * Check if the Entity is pushable on the z axis
      *
      * @return True if the Entity is pushable on the z axis
      */
@@ -864,11 +967,11 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Set whether the Entity can be pushed or not per Axis
+     * Set whether the Entity can be pushed or not per axis
      *
-     * @param x True to allow pushing on the x Axis
-     * @param y True to allow pushing on the y Axis
-     * @param z True to allow pushing on the z Axis
+     * @param x True to allow pushing on the x axis
+     * @param y True to allow pushing on the y axis
+     * @param z True to allow pushing on the z axis
      * @return This Physics
      */
     public Physics setPushable(boolean x, boolean y, boolean z) {
@@ -879,10 +982,10 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Set whether the Entity can be pushed or not per Axis
+     * Set whether the Entity can be pushed or not per axis
      *
-     * @param x True to allow pushing on the x Axis
-     * @param y True to allow pushing on the y Axis
+     * @param x True to allow pushing on the x axis
+     * @param y True to allow pushing on the y axis
      * @return This Physics
      */
     public Physics setPushable(boolean x, boolean y) {
@@ -989,8 +1092,8 @@ public abstract class Physics extends Box {
         return solid == physics.solid &&
                 colliding == physics.colliding &&
                 overlapping == physics.overlapping &&
-                kinematic == physics.kinematic &&
-                pushable == physics.pushable &&
+                Arrays.equals(kinematic, physics.kinematic) &&
+                Arrays.equals(pushable, physics.pushable) &&
                 Float.compare(physics.mass, mass) == 0 &&
                 updatable == physics.updatable &&
                 Objects.equals(gravity, physics.gravity) &&
