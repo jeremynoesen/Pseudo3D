@@ -813,7 +813,7 @@ public abstract class Physics extends Box {
     /**
      * Check if the Entity is pushable on the specified Axis
      *
-     * @return True if the Entity is pushable on the specified axis
+     * @return True if the Entity is pushable on the specified Axis
      */
     public boolean isPushable(Axis axis) {
         return switch (axis) {
@@ -866,9 +866,9 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Set whether the Entity can be pushed or not for a specific axis
+     * Set whether the Entity can be pushed or not for a specific Axis
      *
-     * @param pushable True to allow pushing on a specific axis
+     * @param pushable True to allow pushing on a specific Axis
      * @return This Physics
      */
     public Physics setPushable(Axis axis, boolean pushable) {
