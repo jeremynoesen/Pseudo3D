@@ -477,7 +477,7 @@ public abstract class Physics extends Box {
      * Set the position of the Entity
      *
      * @param position Position Vector
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setPosition(Vector position) {
         this.position = position;
@@ -498,7 +498,7 @@ public abstract class Physics extends Box {
      * Set the velocity of the Entity
      *
      * @param velocity Velocity Vector
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setVelocity(Vector velocity) {
         this.velocity = velocity;
@@ -518,7 +518,7 @@ public abstract class Physics extends Box {
      * Set the acceleration of the Entity
      *
      * @param acceleration Acceleration Vector
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setAcceleration(Vector acceleration) {
         this.acceleration = acceleration;
@@ -538,7 +538,7 @@ public abstract class Physics extends Box {
      * Set the gravity applied to the Entity
      *
      * @param gravity Gravity Vector
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setGravity(Vector gravity) {
         this.gravity = gravity;
@@ -558,7 +558,7 @@ public abstract class Physics extends Box {
      * Set the terminal velocity for this Entity
      *
      * @param terminalVelocity Terminal velocity Vector
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setTerminalVelocity(Vector terminalVelocity) {
         this.terminalVelocity = terminalVelocity;
@@ -578,7 +578,7 @@ public abstract class Physics extends Box {
      * Set the drag coefficient for the Entity
      *
      * @param drag Drag coefficient Vector
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setDrag(Vector drag) {
         this.drag = drag;
@@ -598,7 +598,7 @@ public abstract class Physics extends Box {
      * Set the roughness of the Entity
      *
      * @param roughness Roughness per axis as a Vector
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setRoughness(Vector roughness) {
         this.roughness = roughness;
@@ -618,7 +618,7 @@ public abstract class Physics extends Box {
      * Set the Entity to be solid or not
      *
      * @param solid True to make the Entity solid
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setSolid(boolean solid) {
         this.solid = solid;
@@ -766,7 +766,7 @@ public abstract class Physics extends Box {
      * Set an Entity to be kinematic or not
      *
      * @param kinematic True to allow Entity motion
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setKinematic(boolean kinematic) {
         this.kinematic = kinematic;
@@ -815,7 +815,7 @@ public abstract class Physics extends Box {
      * @param x True to allow pushing on the x Axis
      * @param y True to allow pushing on the y Axis
      * @param z True to allow pushing on the z Axis
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setPushable(boolean x, boolean y, boolean z) {
         pushable[0] = x;
@@ -829,7 +829,7 @@ public abstract class Physics extends Box {
      *
      * @param x True to allow pushing on the x Axis
      * @param y True to allow pushing on the y Axis
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setPushable(boolean x, boolean y) {
         pushable[0] = x;
@@ -842,7 +842,7 @@ public abstract class Physics extends Box {
      * Set whether the Entity can be pushed or not for all axes
      *
      * @param pushable True to allow pushing on all axes
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setPushable(boolean pushable) {
         this.pushable[0] = pushable;
@@ -864,7 +864,7 @@ public abstract class Physics extends Box {
      * Set the mass of the Entity
      *
      * @param mass New mass for the Entity
-     * @return this Physics
+     * @return This Physics
      */
     public Physics setMass(float mass) {
         this.mass = mass;

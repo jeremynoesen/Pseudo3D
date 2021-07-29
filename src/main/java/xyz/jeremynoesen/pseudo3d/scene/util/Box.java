@@ -104,7 +104,7 @@ public class Box {
      * Set the dimensions of the Box
      *
      * @param dimensions Dimensions of the Box
-     * @return this Box
+     * @return This Box
      */
     public Box setDimensions(Vector dimensions) {
         setWidth(dimensions.getX());
@@ -126,7 +126,7 @@ public class Box {
      * Set a new width of the Box and recalculate its min and max in the x axis
      *
      * @param width New width of Box
-     * @return this Box
+     * @return This Box
      */
     public Box setWidth(float width) {
         this.width = Math.abs(width);
@@ -148,7 +148,7 @@ public class Box {
      * Set a new height of the Box and recalculate its min and max in the y axis
      *
      * @param height New height of the Box
-     * @return this Box
+     * @return This Box
      */
     public Box setHeight(float height) {
         this.height = Math.abs(height);
@@ -170,7 +170,7 @@ public class Box {
      * Set a new depth of the Box and recalculate its min and max in the z axis
      *
      * @param depth New depth of the Box
-     * @return this Box
+     * @return This Box
      */
     public Box setDepth(float depth) {
         this.depth = depth;
@@ -192,7 +192,7 @@ public class Box {
      * Set the position of the Box and recalculate its min and max
      *
      * @param position New position
-     * @return this Box
+     * @return This Box
      */
     public Box setPosition(Vector position) {
         this.position = position;
@@ -215,7 +215,7 @@ public class Box {
     /**
      * Get the maximum of the Box
      *
-     * @return maximum location
+     * @return Maximum location
      */
     public Vector getMaximum() {
         return max;

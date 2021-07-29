@@ -145,7 +145,7 @@ public class Sprite {
      * Set the dimensions of the Sprite
      *
      * @param dimensions 2D Vector for dimensions
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setDimensions(Vector dimensions) {
         setWidth(dimensions.getX());
@@ -175,7 +175,7 @@ public class Sprite {
      * Set the width of the Sprite
      *
      * @param width New width in grid units
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setWidth(float width) {
         this.width = width;
@@ -186,7 +186,7 @@ public class Sprite {
      * Set the height of the Sprite
      *
      * @param height New height in grid units
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setHeight(float height) {
         this.height = height;
@@ -197,7 +197,7 @@ public class Sprite {
      * Set the rotation of the Sprite
      *
      * @param rotation Rotation in degrees counter-clock-wise
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setRotation(float rotation) {
         this.rotation = rotation;
@@ -226,7 +226,7 @@ public class Sprite {
      * Set the framerate for the Sprite
      *
      * @param framerate New framerate
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setFramerate(float framerate) {
         frameStep = 1 / framerate;
@@ -237,7 +237,7 @@ public class Sprite {
      * Set the Sprite animation to loop or not
      *
      * @param loop True to allow animation loop
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setLoop(boolean loop) {
         this.loop = loop;
@@ -257,7 +257,7 @@ public class Sprite {
      * Set the animation to be paused
      *
      * @param paused True to pause the animation
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setPaused(boolean paused) {
         this.paused = paused;
@@ -300,7 +300,7 @@ public class Sprite {
     /**
      * Set the current frame to the next frame
      *
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite nextFrame() {
         boolean paused = this.paused;
@@ -313,7 +313,7 @@ public class Sprite {
     /**
      * Set the current frame to the previous frame
      *
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite previousFrame() {
         boolean paused = this.paused;
@@ -339,7 +339,7 @@ public class Sprite {
      * Set the current frame in the animation
      *
      * @param frame Frame number
-     * @return this Sprite
+     * @return This Sprite
      */
     public Sprite setFrame(int frame) {
         currentFrame = frame;

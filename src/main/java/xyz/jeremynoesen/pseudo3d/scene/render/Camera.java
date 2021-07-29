@@ -113,7 +113,7 @@ public class Camera {
      * Set the Camera's field of view
      *
      * @param fieldOfView Field of view in degrees
-     * @return this Camera
+     * @return This Camera
      */
     public Camera setFieldOfView(float fieldOfView) {
         this.fieldOfView = fieldOfView;
@@ -133,7 +133,7 @@ public class Camera {
      * Set the Camera's position in the Scene
      *
      * @param position Position Vector
-     * @return this Camera
+     * @return This Camera
      */
     public Camera setPosition(Vector position) {
         this.position = position;
@@ -153,7 +153,7 @@ public class Camera {
      * Set the offset of the render from the center of the window
      *
      * @param offset Render offset in pixels
-     * @return this Camera
+     * @return This Camera
      */
     public Camera setOffset(Vector offset) {
         this.offset = offset;
@@ -173,7 +173,7 @@ public class Camera {
      * Set the Camera sensor size in pixels
      *
      * @param sensorSize New sensor size
-     * @return this Camera
+     * @return This Camera
      */
     public Camera setSensorSize(float sensorSize) {
         this.sensorSize = sensorSize;
@@ -193,7 +193,7 @@ public class Camera {
      * Set the view distance for the Camera
      *
      * @param viewDistance New view distance
-     * @return this Camera
+     * @return This Camera
      */
     public Camera setViewDistance(float viewDistance) {
         this.viewDistance = viewDistance;
@@ -213,7 +213,7 @@ public class Camera {
      * Set the zoom for the Camera
      *
      * @param zoom New zoom
-     * @return this Camera
+     * @return This Camera
      */
     public Camera setZoom(float zoom) {
         this.zoom = zoom;
@@ -233,7 +233,7 @@ public class Camera {
      * Set the rotation of the Camera
      *
      * @param rotation Rotation of Camera in degrees counter-clock-wise
-     * @return this Camera
+     * @return This Camera
      */
     public Camera setRotation(float rotation) {
         this.rotation = rotation;
