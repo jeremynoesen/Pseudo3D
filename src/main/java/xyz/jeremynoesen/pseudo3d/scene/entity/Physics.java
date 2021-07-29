@@ -684,6 +684,21 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * Check if an Entity collides with this one on a specific Axis
+     *
+     * @param physics Entity to check if colliding with
+     * @param axis    Axis of the grid
+     * @return True if the Entity is colliding with the other Entity on the specified Axis
+     */
+    public boolean collidesWithOn(Physics physics, Axis axis) {
+        return switch (axis) {
+            case X -> collidesWithOn(physics, Side.LEFT) || collidesWithOn(physics, Side.RIGHT);
+            case Y -> collidesWithOn(physics, Side.BOTTOM) || collidesWithOn(physics, Side.TOP);
+            case Z -> collidesWithOn(physics, Side.BACK) || collidesWithOn(physics, Side.FRONT);
+        };
+    }
+
+    /**
      * Get all Entities colliding on the specified Side
      *
      * @param side Side to get colliding Entities of
