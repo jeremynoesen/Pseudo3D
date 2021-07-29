@@ -114,6 +114,36 @@ public class Box {
     }
 
     /**
+     * Set the dimensions of the Box for a specific Axis
+     *
+     * @param axis      Axis to set dimension for
+     * @param dimension Dimension in grid units
+     * @return This Box
+     */
+    public Box setDimensions(Axis axis, float dimension) {
+        switch (axis) {
+            case X -> setWidth(dimension);
+            case Y -> setHeight(dimension);
+            case Z -> setDepth(dimension);
+        }
+        return this;
+    }
+
+    /**
+     * Get the dimensions of the Box for a specific Axis
+     *
+     * @param axis Axis to get dimension for
+     * @return Dimension of the specified Axis
+     */
+    public float getDimensions(Axis axis) {
+        return switch (axis) {
+            case X -> getWidth();
+            case Y -> getHeight();
+            case Z -> getDepth();
+        };
+    }
+
+    /**
      * Get the width of the Box
      *
      * @return Width of the Box
@@ -303,10 +333,10 @@ public class Box {
     }
 
     /**
-     * Get the face area for a side perpendicular to the specified axis
+     * Get the face area for a side perpendicular to the specified Axis
      *
      * @param axis Axis to get face area for
-     * @return Face area for a side perpendicular to the specified axis
+     * @return Face area for a side perpendicular to the specified Axis
      */
     public float getFaceArea(Axis axis) {
         return switch (axis) {
