@@ -152,7 +152,7 @@ public class Scene {
      * Add an Entity to this Scene
      *
      * @param entity Entity to add
-     * @return this Scene
+     * @return This Scene
      */
     public Scene addEntity(Entity entity) {
         entities.add(entity);
@@ -164,7 +164,7 @@ public class Scene {
      * Remove an Entity from this Scene
      *
      * @param entity Entity to remove
-     * @return this Scene
+     * @return This Scene
      */
     public Scene removeEntity(Entity entity) {
         if (entities.contains(entity)) {
@@ -187,7 +187,7 @@ public class Scene {
      * Give this Scene a different Camera
      *
      * @param camera New Camera
-     * @return this Scene
+     * @return This Scene
      */
     public Scene setCamera(Camera camera) {
         this.camera = camera;
@@ -207,7 +207,7 @@ public class Scene {
      * Set the background Sprite for the Scene
      *
      * @param background Background Sprite
-     * @return this Scene
+     * @return This Scene
      */
     public Scene setBackground(Sprite background) {
         this.background = background;
@@ -218,7 +218,7 @@ public class Scene {
      * Add a Runnable to the tick loop for this Scene
      *
      * @param runnable Runnable
-     * @return this Scene
+     * @return This Scene
      */
     public Scene addTickRunnable(Runnable runnable) {
         tickRunnables.add(runnable);
@@ -229,7 +229,7 @@ public class Scene {
      * Remove a Runnable from the tick loop for the Scene
      *
      * @param runnable Runnable
-     * @return this Scene
+     * @return This Scene
      */
     public Scene removeTickRunnable(Runnable runnable) {
         tickRunnables.remove(runnable);
@@ -249,7 +249,7 @@ public class Scene {
      * Add a Runnable to the render loop for this Scene
      *
      * @param runnable Runnable
-     * @return this Scene
+     * @return This Scene
      */
     public Scene addRenderRunnable(Runnable runnable) {
         renderRunnables.add(runnable);
@@ -260,7 +260,7 @@ public class Scene {
      * Remove a Runnable from the render loop for the Scene
      *
      * @param runnable Runnable
-     * @return this Scene
+     * @return This Scene
      */
     public Scene removeRenderRunnable(Runnable runnable) {
         renderRunnables.remove(runnable);
@@ -289,7 +289,7 @@ public class Scene {
      * Set a new grid scale for the Scene
      *
      * @param gridScale Grid scales
-     * @return this Scene
+     * @return This Scene
      */
     public Scene setGridScale(Vector gridScale) {
         this.gridScale = gridScale;
@@ -309,7 +309,7 @@ public class Scene {
      * Set the speed modifier for the Scene
      *
      * @param speed Speed modifier
-     * @return this Scene
+     * @return This Scene
      */
     public Scene setSpeed(float speed) {
         this.speed = speed;

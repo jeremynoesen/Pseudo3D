@@ -97,7 +97,7 @@ public class Entity extends Physics {
      * Set the Sprite for the Entity
      *
      * @param sprite New Sprite
-     * @return this Entity
+     * @return This Entity
      */
     public Entity setSprite(Sprite sprite) {
         this.sprite = sprite;
@@ -140,7 +140,7 @@ public class Entity extends Physics {
      * Set whether the Entity can update when not visible on-screen
      *
      * @param updateOffScreen True to allow updating off-screen
-     * @return this Entity
+     * @return This Entity
      */
     public Entity setUpdateOffScreen(boolean updateOffScreen) {
         this.updateOffScreen = updateOffScreen;
@@ -151,7 +151,7 @@ public class Entity extends Physics {
      * Set the Scene the Entity is in
      *
      * @param scene Scene to place Entity in
-     * @return this Entity
+     * @return This Entity
      */
     public Entity setScene(Scene scene) {
         if (scene != null) {
@@ -185,7 +185,7 @@ public class Entity extends Physics {
      * Set the speed modifier for the Entity
      *
      * @param speed New speed modifier value
-     * @return this Entity
+     * @return This Entity
      */
     public Entity setSpeed(float speed) {
         this.speed = speed;
@@ -215,7 +215,7 @@ public class Entity extends Physics {
      * Set the Entity to be visible in the Scene and updatable in Physics
      *
      * @param enabled True to enable Entity in Scene
-     * @return this Entity
+     * @return This Entity
      */
     public Entity setEnabled(boolean enabled) {
         this.enabled = enabled;
@@ -235,7 +235,7 @@ public class Entity extends Physics {
     /**
      * Set the Entity to be visible in rendering
      *
-     * @return this Entity
+     * @return This Entity
      */
     public Entity setVisible(boolean visible) {
         this.visible = visible;
@@ -255,7 +255,7 @@ public class Entity extends Physics {
      * Set the Entity to have physics or not
      *
      * @param enabled True to enable physics
-     * @return this Entity
+     * @return This Entity
      */
     public Entity setPhysics(boolean enabled) {
         this.physics = enabled;
