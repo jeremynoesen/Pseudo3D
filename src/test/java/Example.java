@@ -69,20 +69,20 @@ public class Example {
         
         Pseudo3D.setActiveScene(scene);
         //Set active Scene
-        
+
         //Scene Keyboard controls
         scene.addTickRunnable(() -> {
             Vector accel = new Vector();
             
             player.setAcceleration(accel);
             
-            if (Keyboard.isPressed(KeyCode.W) && camera.getFieldOfView() > 0) {
+            if (Keyboard.isPressed(KeyCode.W)) {
                 accel = accel.subtract(new Vector(0, 0, 20));
                 player.setSprite(playerBack);
             }
             //Accelerate forward
             
-            if (Keyboard.isPressed(KeyCode.S) && camera.getFieldOfView() > 0) {
+            if (Keyboard.isPressed(KeyCode.S)) {
                 accel = accel.add(new Vector(0, 0, 20));
                 player.setSprite(playerFront);
             }
@@ -101,6 +101,8 @@ public class Example {
             //Accelerate right
     
             player.setAcceleration(accel);
+
+            player.setKinematicZ(camera.getFieldOfView() > 0);
     
             if (Keyboard.isPressed(KeyCode.SPACE) && player.collidesOn(Side.BOTTOM)) {
                 player.setVelocity(player.getVelocity().setY(7.5f));

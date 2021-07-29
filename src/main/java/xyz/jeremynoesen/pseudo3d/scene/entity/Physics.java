@@ -183,15 +183,23 @@ public abstract class Physics extends Box {
      */
     public void tickMotion(float deltaTime) {
         if (!updatable || !isKinematic()) return;
-
         this.deltaTime = deltaTime;
-
         applyAcceleration();
         applyFriction();
         applyDrag();
         applyMomentum();
+        updatePosition();
+    }
 
-        setPosition(position.add(velocity.multiply(deltaTime)));
+    /**
+     * Update the position of the Entity based on the velocity
+     */
+    private void updatePosition() {
+        for (Axis axis : Axis.values()) {
+            if (!isKinematic(axis)) continue;
+            position = position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis));
+        }
+        super.setPosition(position);
     }
 
     /**
@@ -200,6 +208,7 @@ public abstract class Physics extends Box {
     private void applyAcceleration() {
         for (Axis axis : Axis.values()) {
             if (!isKinematic(axis)) continue;
+
             float v = velocity.get(axis);
             float a = acceleration.get(axis) + gravity.get(axis);
             float vt = terminalVelocity.get(axis);
