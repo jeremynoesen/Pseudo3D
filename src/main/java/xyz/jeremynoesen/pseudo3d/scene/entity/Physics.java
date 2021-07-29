@@ -709,6 +709,31 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * Get all Entities colliding on the specified Axis
+     *
+     * @param axis Axis to get colliding Entities of
+     * @return Set of all Entities colliding on the Axis
+     */
+    public HashSet<Physics> getCollidingEntities(Axis axis) {
+        HashSet<Physics> colliding = new HashSet<>();
+        switch (axis) {
+            case X -> {
+                colliding.addAll(getCollidingEntities(Side.LEFT));
+                colliding.addAll(getCollidingEntities(Side.RIGHT));
+            }
+            case Y -> {
+                colliding.addAll(getCollidingEntities(Side.BOTTOM));
+                colliding.addAll(getCollidingEntities(Side.TOP));
+            }
+            case Z -> {
+                colliding.addAll(getCollidingEntities(Side.BACK));
+                colliding.addAll(getCollidingEntities(Side.FRONT));
+            }
+        }
+        return colliding;
+    }
+
+    /**
      * Get a Set of all Entities colliding with this one
      *
      * @return Set of all colliding Entities
