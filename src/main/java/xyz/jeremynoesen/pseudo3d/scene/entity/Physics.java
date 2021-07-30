@@ -196,10 +196,9 @@ public abstract class Physics extends Box {
      */
     private void updatePosition() {
         for (Axis axis : Axis.values()) {
-            if (!isKinematic(axis)) continue;
-            position = position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis));
+            if (isKinematic(axis))
+                setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));
         }
-        super.setPosition(position);
     }
 
     /**
@@ -357,8 +356,8 @@ public abstract class Physics extends Box {
     private Vector calculateDrag() {
         Vector output = new Vector();
         for (Axis axis : Axis.values()) {
-            if (!isKinematic(axis)) continue;
-            output = output.set(axis, drag.get(axis) * getFaceArea(axis) * deltaTime * Math.abs(velocity.get(axis)));
+            if (isKinematic(axis))
+                output = output.set(axis, drag.get(axis) * getFaceArea(axis) * deltaTime * Math.abs(velocity.get(axis)));
         }
         return output;
     }
@@ -407,9 +406,7 @@ public abstract class Physics extends Box {
      */
     public void tickCollisions() {
         if (!updatable || entities == null) return;
-
         resetCollisions();
-
         for (Physics physics : entities) {
             if (physics != this && physics.updatable && super.overlaps(physics)) {
                 if (solid && physics.isSolid()) {
