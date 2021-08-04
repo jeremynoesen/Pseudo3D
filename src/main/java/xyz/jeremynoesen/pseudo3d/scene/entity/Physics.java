@@ -369,7 +369,7 @@ public abstract class Physics extends Box {
                                 float v1 = v;
                                 float v2 = physics.velocity.get(axis);
                                 v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                                if (!physics.skipMomentum.contains(axis))
+                                if (!physics.skipMomentum.contains(axis) || velocity.get(axis) != 0)
                                     physics.velocity =
                                             physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
 
