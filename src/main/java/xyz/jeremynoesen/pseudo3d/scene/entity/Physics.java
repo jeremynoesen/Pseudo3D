@@ -176,16 +176,6 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Update the position of the Entity based on the velocity
-     */
-    private void updatePosition() {
-        for (Axis axis : Axis.values()) {
-            if (isKinematicOn(axis))
-                setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));
-        }
-    }
-
-    /**
      * Apply acceleration and gravity to the velocity
      */
     private void applyAcceleration() {
@@ -382,6 +372,16 @@ public abstract class Physics extends Box {
                 }
             }
             velocity = velocity.set(axis, v);
+        }
+    }
+
+    /**
+     * Update the position of the Entity based on the velocity
+     */
+    private void updatePosition() {
+        for (Axis axis : Axis.values()) {
+            if (isKinematicOn(axis))
+                setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));
         }
     }
 
