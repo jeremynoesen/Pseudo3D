@@ -3,7 +3,6 @@ package xyz.jeremynoesen.pseudo3d.scene.render;
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import xyz.jeremynoesen.pseudo3d.scene.util.Axis;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
 import java.io.FileInputStream;
@@ -152,35 +151,6 @@ public class Sprite {
         setWidth(dimensions.getX());
         setHeight(dimensions.getY());
         return this;
-    }
-
-    /**
-     * Set the dimensions of the Sprite for a specific Axis
-     *
-     * @param axis      Axis to set dimension for
-     * @param dimension Dimension in grid units
-     * @return This Sprite
-     */
-    public Sprite setDimensions(Axis axis, float dimension) {
-        switch (axis) {
-            case X -> setWidth(dimension);
-            case Y -> setHeight(dimension);
-        }
-        return this;
-    }
-
-    /**
-     * Get the dimensions of the Sprite for a specific Axis
-     *
-     * @param axis Axis to get dimension for
-     * @return Dimension of the specified Axis
-     */
-    public float getDimensions(Axis axis) {
-        return switch (axis) {
-            case X -> getWidth();
-            case Y -> getHeight();
-            case Z -> 0;
-        };
     }
 
     /**
