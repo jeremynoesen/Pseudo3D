@@ -74,11 +74,6 @@ public abstract class Physics extends Box {
     private final HashSet<Physics> overlappingEntities;
 
     /**
-     * Entity's collision status
-     */
-    private boolean colliding;
-
-    /**
      * Whether this Entity can have motion or not per axis
      */
     private final boolean[] kinematic;
@@ -127,7 +122,6 @@ public abstract class Physics extends Box {
         roughness = new Vector(5, 5, 5);
         entities = null;
         solid = true;
-        colliding = false;
         kinematic = new boolean[]{true, true, true};
         pushable = new boolean[]{true, true, true};
         skipMomentum = new HashSet<>();
@@ -155,7 +149,6 @@ public abstract class Physics extends Box {
         drag = physics.drag;
         roughness = physics.roughness;
         solid = physics.solid;
-        colliding = physics.colliding;
         mass = physics.mass;
         kinematic = Arrays.copyOf(physics.kinematic, 3);
         pushable = Arrays.copyOf(physics.pushable, 3);
@@ -249,7 +242,7 @@ public abstract class Physics extends Box {
 
             float v = velocity.get(axis);
 
-            if (colliding) {
+            if (collidesOn(axis)) {
                 float f = 0;
                 int count = 0;
                 Side side = getSide(axis, v);
@@ -365,7 +358,7 @@ public abstract class Physics extends Box {
 
             float v = velocity.get(axis);
 
-            if (colliding) {
+            if (collidesOn(axis)) {
                 Side side = getSide(axis, v);
                 if (side != null && collidesOn(side)) {
                     for (Physics physics : collidingEntities.get(side)) {
@@ -415,7 +408,6 @@ public abstract class Physics extends Box {
      * Reset all collision data
      */
     private void resetCollisions() {
-        colliding = false;
         collidingEntities.values().forEach(HashSet::clear);
         overlappingEntities.clear();
         specialCollisions.clear();
@@ -464,7 +456,6 @@ public abstract class Physics extends Box {
             setPosition(position.set(axis, position.get(axis) - (distance * dir)));
         }
 
-        colliding = true;
         collidingEntities.get(getSide(axis, dir)).add(physics);
     }
 
@@ -644,7 +635,10 @@ public abstract class Physics extends Box {
      * @return True if the Entity is colliding with another Entity
      */
     public boolean isColliding() {
-        return colliding;
+        for (Side side : Side.values()) {
+            if (collidesOn(side)) return true;
+        }
+        return false;
     }
 
     /**
@@ -1169,7 +1163,6 @@ public abstract class Physics extends Box {
         if (!super.equals(o)) return false;
         Physics physics = (Physics) o;
         return solid == physics.solid &&
-                colliding == physics.colliding &&
                 Arrays.equals(kinematic, physics.kinematic) &&
                 Arrays.equals(pushable, physics.pushable) &&
                 Float.compare(physics.mass, mass) == 0 &&
