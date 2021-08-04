@@ -57,11 +57,9 @@ public abstract class Physics extends Box {
     private Vector roughness;
 
     /**
-     * Solid status of the Entity
-     * <p>
-     * Being solid allows for collision
+     * Set Entity to be collideable per side
      */
-    private boolean solid;
+    private final HashSet<Side> collidableSides;
 
     /**
      * List of Entities colliding with this Entity with per Side
@@ -121,7 +119,7 @@ public abstract class Physics extends Box {
         drag = new Vector(0.5f, 0.5f, 0.5f);
         roughness = new Vector(5, 5, 5);
         entities = null;
-        solid = true;
+        collidableSides = new HashSet<>(Arrays.asList(Side.values()));
         kinematic = new boolean[]{true, true, true};
         pushable = new boolean[]{true, true, true};
         skipMomentum = new HashSet<>();
@@ -148,8 +146,8 @@ public abstract class Physics extends Box {
         terminalVelocity = physics.terminalVelocity;
         drag = physics.drag;
         roughness = physics.roughness;
-        solid = physics.solid;
         mass = physics.mass;
+        collidableSides = new HashSet<>(physics.collidableSides);
         kinematic = Arrays.copyOf(physics.kinematic, 3);
         pushable = Arrays.copyOf(physics.pushable, 3);
         updatable = physics.updatable;
@@ -395,7 +393,7 @@ public abstract class Physics extends Box {
         resetCollisions();
         for (Physics physics : entities) {
             if (physics != this && physics.updatable && super.overlaps(physics)) {
-                if (solid && physics.isSolid()) {
+                if (isCollideable()) {
                     collideWith(physics);
                 } else {
                     overlapWith(physics);
@@ -444,19 +442,23 @@ public abstract class Physics extends Box {
             }
             if (overlaps[i] == 0) zeros++;
         }
-
         if (zeros > 1) return;
 
-        if (isKinematic(axis) && velocity.get(axis) * dir > 0) {
-            if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
-                    && !physics.specialCollisions.contains(this)) {
-                distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
-                specialCollisions.add(physics);
-            }
-            setPosition(position.set(axis, position.get(axis) - (distance * dir)));
-        }
+        Side side = getSide(axis, dir);
 
-        collidingEntities.get(getSide(axis, dir)).add(physics);
+        if (collidableSides.contains(side) && physics.collidableSides.contains(getSide(axis, -dir))) {
+            if (isKinematic(axis) && velocity.get(axis) * dir > 0) {
+                if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
+                        && !physics.specialCollisions.contains(this)) {
+                    distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
+                    specialCollisions.add(physics);
+                }
+                setPosition(position.set(axis, position.get(axis) - (distance * dir)));
+            }
+            collidingEntities.get(side).add(physics);
+        } else {
+            overlapWith(physics);
+        }
     }
 
     /**
@@ -610,22 +612,65 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Check if an Entity can be collided with
+     * Check if an Entity can be collided with on any side
      *
-     * @return True if able to be collided with
+     * @return True if able to be collided with on any side
      */
-    public boolean isSolid() {
-        return solid;
+    public boolean isCollideable() {
+        return !collidableSides.isEmpty();
     }
 
     /**
-     * Set the Entity to be solid or not
+     * Check if an Entity can be collided with on all sides
      *
-     * @param solid True to make the Entity solid
+     * @return True if able to be collided with on all sides
+     */
+    public boolean isFullyCollideable() {
+        return collidableSides.size() == 6;
+    }
+
+    /**
+     * Get the Sides the Entity can collide on
+     *
+     * @return HashSet of Sides the Entity can collide on
+     */
+    public HashSet<Side> getCollideableSides() {
+        return collidableSides;
+    }
+
+    /**
+     * Set the Entity to be collideable on all sides or no sides
+     *
+     * @param collideable True to allow colliding on all sides, false for no sides
      * @return This Physics
      */
-    public Physics setSolid(boolean solid) {
-        this.solid = solid;
+    public Physics setCollideable(boolean collideable) {
+        collidableSides.clear();
+        if (collideable) collidableSides.addAll(Arrays.asList(Side.values()));
+        return this;
+    }
+
+    /**
+     * Set the Entity to be collideable per Side
+     *
+     * @param sides Variable amount of Sides
+     * @return This Physics
+     */
+    public Physics setCollidableSides(Side... sides) {
+        collidableSides.clear();
+        collidableSides.addAll(Arrays.asList(sides));
+        return this;
+    }
+
+    /**
+     * Set the Entity to be collideable per Side
+     *
+     * @param sides HashSet of Sides
+     * @return This Physics
+     */
+    public Physics setCollidableSides(HashSet<Side> sides) {
+        collidableSides.clear();
+        collidableSides.addAll(sides);
         return this;
     }
 
@@ -1162,7 +1207,7 @@ public abstract class Physics extends Box {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Physics physics = (Physics) o;
-        return solid == physics.solid &&
+        return collidableSides == physics.collidableSides &&
                 Arrays.equals(kinematic, physics.kinematic) &&
                 Arrays.equals(pushable, physics.pushable) &&
                 Float.compare(physics.mass, mass) == 0 &&
