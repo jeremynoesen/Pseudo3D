@@ -79,11 +79,6 @@ public abstract class Physics extends Box {
     private boolean colliding;
 
     /**
-     * Entity's overlapping status
-     */
-    private boolean overlapping;
-
-    /**
      * Whether this Entity can have motion or not per axis
      */
     private final boolean[] kinematic;
@@ -133,7 +128,6 @@ public abstract class Physics extends Box {
         entities = null;
         solid = true;
         colliding = false;
-        overlapping = false;
         kinematic = new boolean[]{true, true, true};
         pushable = new boolean[]{true, true, true};
         skipMomentum = new HashSet<>();
@@ -162,7 +156,6 @@ public abstract class Physics extends Box {
         roughness = physics.roughness;
         solid = physics.solid;
         colliding = physics.colliding;
-        overlapping = physics.overlapping;
         mass = physics.mass;
         kinematic = Arrays.copyOf(physics.kinematic, 3);
         pushable = Arrays.copyOf(physics.pushable, 3);
@@ -423,7 +416,6 @@ public abstract class Physics extends Box {
      */
     private void resetCollisions() {
         colliding = false;
-        overlapping = false;
         collidingEntities.values().forEach(HashSet::clear);
         overlappingEntities.clear();
         specialCollisions.clear();
@@ -482,7 +474,6 @@ public abstract class Physics extends Box {
      * @param physics Entity to overlap with
      */
     private void overlapWith(Physics physics) {
-        overlapping = true;
         overlappingEntities.add(physics);
     }
 
@@ -793,7 +784,7 @@ public abstract class Physics extends Box {
      * @return True if overlapping
      */
     public boolean isOverlapping() {
-        return overlapping;
+        return !overlappingEntities.isEmpty();
     }
 
     /**
@@ -1179,7 +1170,6 @@ public abstract class Physics extends Box {
         Physics physics = (Physics) o;
         return solid == physics.solid &&
                 colliding == physics.colliding &&
-                overlapping == physics.overlapping &&
                 Arrays.equals(kinematic, physics.kinematic) &&
                 Arrays.equals(pushable, physics.pushable) &&
                 Float.compare(physics.mass, mass) == 0 &&
