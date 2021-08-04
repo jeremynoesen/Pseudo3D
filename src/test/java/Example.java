@@ -5,6 +5,7 @@ import xyz.jeremynoesen.pseudo3d.scene.Scene;
 import xyz.jeremynoesen.pseudo3d.scene.entity.Entity;
 import xyz.jeremynoesen.pseudo3d.scene.render.Sprite;
 import xyz.jeremynoesen.pseudo3d.scene.render.Camera;
+import xyz.jeremynoesen.pseudo3d.scene.util.Axis;
 import xyz.jeremynoesen.pseudo3d.scene.util.Side;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
@@ -43,7 +44,7 @@ public class Example {
         
         Camera camera = new Camera().setFieldOfView(49);
         //Create Camera
-        
+
         Scene scene = new Scene()
                 .setGridScale(new Vector(48, 48, 48))
                 .setBackground(background)
@@ -57,7 +58,7 @@ public class Example {
                 Entity block = (Entity) new Entity()
                         .setSprite(floor)
                         .setPosition(new Vector(j, -4.75f, i))
-                        .setKinematic(false)
+                        .setFullyKinematic(false)
                         .setDimensions(new Vector(1, 1, 1));
                 scene.addEntity(block);
             }
@@ -102,7 +103,11 @@ public class Example {
     
             player.setAcceleration(accel);
 
-            player.setKinematicZ(camera.getFieldOfView() > 0);
+            if (camera.getFieldOfView() > 0) {
+                player.setFullyKinematic(true);
+            } else {
+                player.setKinematicOn(Axis.X, Axis.Y);
+            }
     
             if (Keyboard.isPressed(KeyCode.SPACE) && player.collidesOn(Side.BOTTOM)) {
                 player.setVelocity(player.getVelocity().setY(7.5f));
