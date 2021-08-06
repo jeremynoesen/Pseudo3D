@@ -105,11 +105,6 @@ public class Pseudo3D extends Application {
             else if (fixedDeltaTime) renderDeltaTime = 1f / framerate;
             else renderDeltaTime = 0;
 
-            if (resizable) {
-                canvas.setWidth(scene.getWidth());
-                canvas.setHeight(scene.getHeight());
-            }
-
             activeScene.render(canvas.getGraphicsContext2D(), renderDeltaTime);
 
             lastRender = System.nanoTime();
@@ -137,6 +132,8 @@ public class Pseudo3D extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(e -> System.exit(0));
+        canvas.widthProperty().bind(root.widthProperty());
+        canvas.heightProperty().bind(root.heightProperty());
         canvas.requestFocus();
         tickLoop.setCycleCount(Animation.INDEFINITE);
         renderLoop.setCycleCount(Animation.INDEFINITE);
