@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.10'
     id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
@@ -17,12 +16,6 @@ javafx {
 repositories {
     mavenCentral()
     mavenLocal()
-}
-
-dependencies {}
-
-application {
-    mainClassName = 'xyz.jeremynoesen.pseudo3d.Pseudo3D'
 }
 
 shadowJar {
