@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":10,"i10":10};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -95,7 +95,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="typeNameLabel">Pseudo3D</span>
 extends javafx.application.Application</pre>
-<div class="block">Starting point of all functions of Pseudo3D</div>
+<div class="block">main application for any project using Pseudo3D</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -172,83 +172,54 @@ extends javafx.application.Application</pre>
 <td class="colFirst"><code>static <a href="scene/Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getActiveScene()">getActiveScene</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the active Pseudo3D Scene</div>
+<div class="block">get the active scene</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>static javafx.scene.canvas.Canvas</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCanvas()">getCanvas</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the main Canvas</div>
+<div class="block">get the main canvas</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
-<td class="colFirst"><code>static float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRenderDeltaTime()">getRenderDeltaTime</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Get the delta time for the previous iteration of the render loop</div>
-</td>
-</tr>
-<tr class="rowColor" id="i3">
-<td class="colFirst"><code>static javafx.scene.Scene</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScene()">getScene</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Get the JavaFX Scene the main Canvas is placed on</div>
-</td>
-</tr>
-<tr class="altColor" id="i4">
-<td class="colFirst"><code>static float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTickDeltaTime()">getTickDeltaTime</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Get the delta time for the previous iteration of the tick loop</div>
-</td>
-</tr>
-<tr class="rowColor" id="i5">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isResizable()">isResizable</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Check if the main window is resizable</div>
-</td>
-</tr>
-<tr class="altColor" id="i6">
 <td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(int,int,int,int,boolean,boolean,java.lang.String)">launch</a></span>&#8203;(int&nbsp;width,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#launch(int,int,int,int,boolean,java.lang.String)">launch</a></span>&#8203;(int&nbsp;width,
 int&nbsp;height,
 int&nbsp;framerate,
 int&nbsp;tickSpeed,
-boolean&nbsp;fixedDeltaTime,
 boolean&nbsp;resizable,
 java.lang.String&nbsp;title)</code></th>
 <td class="colLast">
-<div class="block">Launch the instance of the Application</div>
+<div class="block">launch the instance of the application</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setActiveScene(xyz.jeremynoesen.pseudo3d.scene.Scene)">setActiveScene</a></span>&#8203;(<a href="scene/Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a>&nbsp;activeScene)</code></th>
 <td class="colLast">
-<div class="block">Set a new Pseudo3D Scene to be active</div>
+<div class="block">set a new scene to be active</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="altColor" id="i4">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPaused(boolean)">setPaused</a></span>&#8203;(boolean&nbsp;paused)</code></th>
 <td class="colLast">
-<div class="block">Pause or unpause the game loops</div>
+<div class="block">pause or unpause the game loops</div>
 </td>
 </tr>
-<tr class="rowColor" id="i9">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#start(javafx.stage.Stage)">start</a></span>&#8203;(javafx.stage.Stage&nbsp;primaryStage)</code></th>
 <td class="colLast">
-<div class="block">Start the application</div>
+<div class="block">start the application</div>
 </td>
 </tr>
-<tr class="altColor" id="i10">
+<tr class="altColor" id="i6">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#stop()">stop</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Stop the Application</div>
+<div class="block">stop the application</div>
 </td>
 </tr>
 </tbody>
@@ -296,24 +267,22 @@ java.lang.String&nbsp;title)</code></th>
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="launch(int,int,int,int,boolean,boolean,java.lang.String)">launch</a></h3>
+<h3><a id="launch(int,int,int,int,boolean,java.lang.String)">launch</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">launch</span>&#8203;(<span class="arguments">int&nbsp;width,
 int&nbsp;height,
 int&nbsp;framerate,
 int&nbsp;tickSpeed,
-boolean&nbsp;fixedDeltaTime,
 boolean&nbsp;resizable,
 java.lang.String&nbsp;title)</span></div>
-<div class="block">Launch the instance of the Application</div>
+<div class="block">launch the instance of the application</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>width</code> - Width of window</dd>
-<dd><code>height</code> - Height of window</dd>
-<dd><code>framerate</code> - Framerate for rendering in frames per second</dd>
-<dd><code>tickSpeed</code> - Tick speed for physics in hertz</dd>
-<dd><code>fixedDeltaTime</code> - Whether the delta time is a fixed value</dd>
-<dd><code>resizable</code> - Resizable status</dd>
-<dd><code>title</code> - Window title</dd>
+<dd><code>width</code> - width of window</dd>
+<dd><code>height</code> - height of window</dd>
+<dd><code>framerate</code> - framerate of window (hertz)</dd>
+<dd><code>tickSpeed</code> - tick speed for physics (hertz)</dd>
+<dd><code>resizable</code> - resizable status</dd>
+<dd><code>title</code> - window title</dd>
 </dl>
 </section>
 </li>
@@ -321,12 +290,12 @@ java.lang.String&nbsp;title)</span></div>
 <section class="detail">
 <h3><a id="start(javafx.stage.Stage)">start</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">start</span>&#8203;(<span class="arguments">javafx.stage.Stage&nbsp;primaryStage)</span></div>
-<div class="block">Start the application</div>
+<div class="block">start the application</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>start</code>&nbsp;in class&nbsp;<code>javafx.application.Application</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>primaryStage</code> - Primary Stage of the Application</dd>
+<dd><code>primaryStage</code> - primary stage of application</dd>
 </dl>
 </section>
 </li>
@@ -335,12 +304,12 @@ java.lang.String&nbsp;title)</span></div>
 <h3><a id="stop()">stop</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">stop</span>()
           throws <span class="exceptions">java.lang.Exception</span></div>
-<div class="block">Stop the Application</div>
+<div class="block">stop the application</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>stop</code>&nbsp;in class&nbsp;<code>javafx.application.Application</code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.Exception</code> - If stopping fails</dd>
+<dd><code>java.lang.Exception</code> - if stop fails</dd>
 </dl>
 </section>
 </li>
@@ -348,10 +317,10 @@ java.lang.String&nbsp;title)</span></div>
 <section class="detail">
 <h3><a id="setPaused(boolean)">setPaused</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setPaused</span>&#8203;(<span class="arguments">boolean&nbsp;paused)</span></div>
-<div class="block">Pause or unpause the game loops</div>
+<div class="block">pause or unpause the game loops</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>paused</code> - True to pause</dd>
+<dd><code>paused</code> - true to pause</dd>
 </dl>
 </section>
 </li>
@@ -359,32 +328,10 @@ java.lang.String&nbsp;title)</span></div>
 <section class="detail">
 <h3><a id="getCanvas()">getCanvas</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">javafx.scene.canvas.Canvas</span>&nbsp;<span class="memberName">getCanvas</span>()</div>
-<div class="block">Get the main Canvas</div>
+<div class="block">get the main canvas</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Main Canvas</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getScene()">getScene</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">javafx.scene.Scene</span>&nbsp;<span class="memberName">getScene</span>()</div>
-<div class="block">Get the JavaFX Scene the main Canvas is placed on</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>JavaFX Scene the main Canvas is placed on</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="isResizable()">isResizable</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isResizable</span>()</div>
-<div class="block">Check if the main window is resizable</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the main window is resizable</dd>
+<dd>main canvas</dd>
 </dl>
 </section>
 </li>
@@ -392,10 +339,10 @@ java.lang.String&nbsp;title)</span></div>
 <section class="detail">
 <h3><a id="getActiveScene()">getActiveScene</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="scene/Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">getActiveScene</span>()</div>
-<div class="block">Get the active Pseudo3D Scene</div>
+<div class="block">get the active scene</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Active Pseudo3D Scene</dd>
+<dd>active scene</dd>
 </dl>
 </section>
 </li>
@@ -403,32 +350,10 @@ java.lang.String&nbsp;title)</span></div>
 <section class="detail">
 <h3><a id="setActiveScene(xyz.jeremynoesen.pseudo3d.scene.Scene)">setActiveScene</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setActiveScene</span>&#8203;(<span class="arguments"><a href="scene/Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a>&nbsp;activeScene)</span></div>
-<div class="block">Set a new Pseudo3D Scene to be active</div>
+<div class="block">set a new scene to be active</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>activeScene</code> - Pseudo3D Scene</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getTickDeltaTime()">getTickDeltaTime</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getTickDeltaTime</span>()</div>
-<div class="block">Get the delta time for the previous iteration of the tick loop</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Delta time in seconds</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getRenderDeltaTime()">getRenderDeltaTime</a></h3>
-<div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getRenderDeltaTime</span>()</div>
-<div class="block">Get the delta time for the previous iteration of the render loop</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Delta time in seconds</dd>
+<dd><code>activeScene</code> - pseudo3d scene</dd>
 </dl>
 </section>
 </li>

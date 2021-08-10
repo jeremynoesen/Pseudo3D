@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="typeNameLabel">Vector</span>
 extends java.lang.Object</pre>
-<div class="block">Immutable Vector with vector mathematical operators</div>
+<div class="block">immutable vector with vector mathematical operators</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -116,14 +116,14 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Vector</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Create a new Vector</div>
+<div class="block">create a new zero vector</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(float,float)">Vector</a></span>&#8203;(float&nbsp;x,
 float&nbsp;y)</code></th>
 <td class="colLast">
-<div class="block">Create a new 2D Vector with components x and y</div>
+<div class="block">create a new 2D vector with components x and y</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -131,13 +131,13 @@ float&nbsp;y)</code></th>
 float&nbsp;y,
 float&nbsp;z)</code></th>
 <td class="colLast">
-<div class="block">Create a new 3D Vector with components x, y, and z</div>
+<div class="block">create a new 3D vector with components x, y, and z</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">Vector</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Copy constructor for Vector</div>
+<div class="block">copy constructor for vector</div>
 </td>
 </tr>
 </tbody>
@@ -165,171 +165,142 @@ float&nbsp;z)</code></th>
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(float)">add</a></span>&#8203;(float&nbsp;magnitude)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">add</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Increase the magnitude of this Vector by a specific value</div>
+<div class="block">add together this vector and another vector</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">add</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
-<td class="colLast">
-<div class="block">Add together this Vector and another Vector</div>
-</td>
-</tr>
-<tr class="altColor" id="i2">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#angleBetween(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">angleBetween</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Get the angle between two Vectors in degrees</div>
+<div class="block">get the angle between two vectors in degrees</div>
 </td>
 </tr>
-<tr class="rowColor" id="i3">
+<tr class="altColor" id="i2">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cross(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">cross</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Cross multiply two Vectors</div>
+<div class="block">cross multiply two vectors</div>
 </td>
 </tr>
-<tr class="altColor" id="i4">
+<tr class="rowColor" id="i3">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#distance(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">distance</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Calculate the distance between the ends of two Vectors</div>
+<div class="block">calculate the distance between the ends of two vectors</div>
+</td>
+</tr>
+<tr class="altColor" id="i4">
+<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#divide(float)">divide</a></span>&#8203;(float&nbsp;scale)</code></th>
+<td class="colLast">
+<div class="block">scale a vector's magnitude by a scalar, which divides each component by the scalar</div>
 </td>
 </tr>
 <tr class="rowColor" id="i5">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#divide(float)">divide</a></span>&#8203;(float&nbsp;scale)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#divide(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">divide</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Divide a Vector's magnitude by a scalar, which divides each component by the scalar</div>
+<div class="block">divide vector components by another vector's components</div>
 </td>
 </tr>
 <tr class="altColor" id="i6">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#divide(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">divide</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
-<td class="colLast">
-<div class="block">Divide Vector components by another Vector's components</div>
-</td>
-</tr>
-<tr class="rowColor" id="i7">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dot(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">dot</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Calculate the dot product of two Vectors</div>
+<div class="block">calculate the dot product of two vectors</div>
 </td>
 </tr>
-<tr class="altColor" id="i8">
+<tr class="rowColor" id="i7">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Check if two Vectors are equal</div>
+<div class="block">check if two vectors are equal</div>
+</td>
+</tr>
+<tr class="altColor" id="i8">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMagnitude()">getMagnitude</a></span>()</code></th>
+<td class="colLast">
+<div class="block">get the magnitude (length) of the vector</div>
 </td>
 </tr>
 <tr class="rowColor" id="i9">
 <td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">get</a></span>&#8203;(<a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getX()">getX</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get a specified component of the Vector</div>
+<div class="block">get the x component of the vector</div>
 </td>
 </tr>
 <tr class="altColor" id="i10">
 <td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMagnitude()">getMagnitude</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getY()">getY</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the magnitude of the Vector</div>
+<div class="block">get the y component of the vector</div>
 </td>
 </tr>
 <tr class="rowColor" id="i11">
 <td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getX()">getX</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getZ()">getZ</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the x component of the Vector</div>
+<div class="block">get the z component of the vector</div>
 </td>
 </tr>
 <tr class="altColor" id="i12">
-<td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getY()">getY</a></span>()</code></th>
+<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#multiply(float)">multiply</a></span>&#8203;(float&nbsp;scale)</code></th>
 <td class="colLast">
-<div class="block">Get the y component of the Vector</div>
+<div class="block">scale a vector's magnitude by a scalar, which multiplies each component by the scalar</div>
 </td>
 </tr>
 <tr class="rowColor" id="i13">
-<td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getZ()">getZ</a></span>()</code></th>
+<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#multiply(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">multiply</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Get the z component of the Vector</div>
+<div class="block">multiply vector components by another vector's components</div>
 </td>
 </tr>
 <tr class="altColor" id="i14">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#multiply(float)">multiply</a></span>&#8203;(float&nbsp;scale)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#normalize()">normalize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Multiply a Vector's magnitude by a scalar, which multiplies each component by the scalar</div>
+<div class="block">normalize the vector (vector of magnitude 1)</div>
 </td>
 </tr>
 <tr class="rowColor" id="i15">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#multiply(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">multiply</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setX(float)">setX</a></span>&#8203;(float&nbsp;x)</code></th>
 <td class="colLast">
-<div class="block">Multiply vector Components by another Vector's components</div>
+<div class="block">set the x component of the vector</div>
 </td>
 </tr>
 <tr class="altColor" id="i16">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#normalize()">normalize</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setY(float)">setY</a></span>&#8203;(float&nbsp;y)</code></th>
 <td class="colLast">
-<div class="block">Normalize the Vector (a Vector of magnitude 1)</div>
+<div class="block">set the y component of the vector</div>
 </td>
 </tr>
 <tr class="rowColor" id="i17">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">set</a></span>&#8203;(<a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis,
-float&nbsp;value)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setZ(float)">setZ</a></span>&#8203;(float&nbsp;z)</code></th>
 <td class="colLast">
-<div class="block">Set a specified component of the Vector</div>
+<div class="block">set the z component of the vector</div>
 </td>
 </tr>
 <tr class="altColor" id="i18">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setX(float)">setX</a></span>&#8203;(float&nbsp;x)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#subtract(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">subtract</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
 <td class="colLast">
-<div class="block">Set the x component of the Vector</div>
+<div class="block">subtract vector from this vector</div>
 </td>
 </tr>
 <tr class="rowColor" id="i19">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setY(float)">setY</a></span>&#8203;(float&nbsp;y)</code></th>
-<td class="colLast">
-<div class="block">Set the y component of the Vector</div>
-</td>
-</tr>
-<tr class="altColor" id="i20">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setZ(float)">setZ</a></span>&#8203;(float&nbsp;z)</code></th>
-<td class="colLast">
-<div class="block">Set the z component of the Vector</div>
-</td>
-</tr>
-<tr class="rowColor" id="i21">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#subtract(float)">subtract</a></span>&#8203;(float&nbsp;magnitude)</code></th>
-<td class="colLast">
-<div class="block">Decrease the magnitude of this Vector by a specific value</div>
-</td>
-</tr>
-<tr class="altColor" id="i22">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#subtract(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">subtract</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</code></th>
-<td class="colLast">
-<div class="block">Subtract a Vector from this Vector</div>
-</td>
-</tr>
-<tr class="rowColor" id="i23">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the Vector as a String</div>
+<div class="block">makes the vector into a string</div>
 </td>
 </tr>
 </tbody>
@@ -358,7 +329,7 @@ float&nbsp;value)</code></th>
 <section class="detail">
 <h3><a id="&lt;init&gt;()">Vector</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Vector</span>()</div>
-<div class="block">Create a new Vector</div>
+<div class="block">create a new zero vector</div>
 </section>
 </li>
 <li class="blockList">
@@ -367,12 +338,12 @@ float&nbsp;value)</code></th>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Vector</span>&#8203;(<span class="arguments">float&nbsp;x,
 float&nbsp;y,
 float&nbsp;z)</span></div>
-<div class="block">Create a new 3D Vector with components x, y, and z</div>
+<div class="block">create a new 3D vector with components x, y, and z</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>x</code> - X component of Vector</dd>
-<dd><code>y</code> - Y component of Vector</dd>
-<dd><code>z</code> - Z component of Vector</dd>
+<dd><code>x</code> - x component of vector</dd>
+<dd><code>y</code> - y component of vector</dd>
+<dd><code>z</code> - z component of vector</dd>
 </dl>
 </section>
 </li>
@@ -381,11 +352,11 @@ float&nbsp;z)</span></div>
 <h3><a id="&lt;init&gt;(float,float)">Vector</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Vector</span>&#8203;(<span class="arguments">float&nbsp;x,
 float&nbsp;y)</span></div>
-<div class="block">Create a new 2D Vector with components x and y</div>
+<div class="block">create a new 2D vector with components x and y</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>x</code> - X component of Vector</dd>
-<dd><code>y</code> - Y component of Vector</dd>
+<dd><code>x</code> - x component of vector</dd>
+<dd><code>y</code> - y component of vector</dd>
 </dl>
 </section>
 </li>
@@ -393,10 +364,10 @@ float&nbsp;y)</span></div>
 <section class="detail">
 <h3><a id="&lt;init&gt;(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">Vector</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Vector</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Copy constructor for Vector</div>
+<div class="block">copy constructor for vector</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to copy</dd>
+<dd><code>vector</code> - vector to copy</dd>
 </dl>
 </section>
 </li>
@@ -414,10 +385,10 @@ float&nbsp;y)</span></div>
 <section class="detail">
 <h3><a id="getX()">getX</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getX</span>()</div>
-<div class="block">Get the x component of the Vector</div>
+<div class="block">get the x component of the vector</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>X component</dd>
+<dd>x component</dd>
 </dl>
 </section>
 </li>
@@ -425,12 +396,12 @@ float&nbsp;y)</span></div>
 <section class="detail">
 <h3><a id="setX(float)">setX</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">setX</span>&#8203;(<span class="arguments">float&nbsp;x)</span></div>
-<div class="block">Set the x component of the Vector</div>
+<div class="block">set the x component of the vector</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>x</code> - X component</dd>
+<dd><code>x</code> - x component</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector with modified x component</dd>
+<dd>vector with modified x component</dd>
 </dl>
 </section>
 </li>
@@ -438,10 +409,10 @@ float&nbsp;y)</span></div>
 <section class="detail">
 <h3><a id="getY()">getY</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getY</span>()</div>
-<div class="block">Get the y component of the Vector</div>
+<div class="block">get the y component of the vector</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Y component</dd>
+<dd>y component</dd>
 </dl>
 </section>
 </li>
@@ -449,12 +420,12 @@ float&nbsp;y)</span></div>
 <section class="detail">
 <h3><a id="setY(float)">setY</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">setY</span>&#8203;(<span class="arguments">float&nbsp;y)</span></div>
-<div class="block">Set the y component of the Vector</div>
+<div class="block">set the y component of the vector</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>y</code> - Y component</dd>
+<dd><code>y</code> - y component</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector with modified y component</dd>
+<dd>vector with modified y component</dd>
 </dl>
 </section>
 </li>
@@ -462,10 +433,10 @@ float&nbsp;y)</span></div>
 <section class="detail">
 <h3><a id="getZ()">getZ</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getZ</span>()</div>
-<div class="block">Get the z component of the Vector</div>
+<div class="block">get the z component of the vector</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Z component</dd>
+<dd>z component</dd>
 </dl>
 </section>
 </li>
@@ -473,40 +444,12 @@ float&nbsp;y)</span></div>
 <section class="detail">
 <h3><a id="setZ(float)">setZ</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">setZ</span>&#8203;(<span class="arguments">float&nbsp;z)</span></div>
-<div class="block">Set the z component of the Vector</div>
+<div class="block">set the z component of the vector</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>z</code> - Z component</dd>
+<dd><code>z</code> - z component</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector with modified y component</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="get(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">get</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">get</span>&#8203;(<span class="arguments"><a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Get a specified component of the Vector</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis to get value for</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Component of Vector based on Axis</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="set(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">set</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">set</span>&#8203;(<span class="arguments"><a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis,
-float&nbsp;value)</span></div>
-<div class="block">Set a specified component of the Vector</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis to set value to</dd>
-<dd><code>value</code> - Value to set</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Modified Vector</dd>
+<dd>vector with modified y component</dd>
 </dl>
 </section>
 </li>
@@ -514,10 +457,10 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="getMagnitude()">getMagnitude</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getMagnitude</span>()</div>
-<div class="block">Get the magnitude of the Vector</div>
+<div class="block">get the magnitude (length) of the vector</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Magnitude of Vector</dd>
+<dd>magnitude of vector</dd>
 </dl>
 </section>
 </li>
@@ -525,25 +468,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="add(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">add</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">add</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Add together this Vector and another Vector</div>
+<div class="block">add together this vector and another vector</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to add</dd>
+<dd><code>vector</code> - vector to add</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector from the sum of two Vectors</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="add(float)">add</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">add</span>&#8203;(<span class="arguments">float&nbsp;magnitude)</span></div>
-<div class="block">Increase the magnitude of this Vector by a specific value</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>magnitude</code> - Magnitude to add</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector from the sum of the magnitude</dd>
+<dd>vector from the sum of two vectors</dd>
 </dl>
 </section>
 </li>
@@ -551,25 +481,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="subtract(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">subtract</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">subtract</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Subtract a Vector from this Vector</div>
+<div class="block">subtract vector from this vector</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to subtract</dd>
+<dd><code>vector</code> - vector to subtract</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector from subtraction of two Vectors</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="subtract(float)">subtract</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">subtract</span>&#8203;(<span class="arguments">float&nbsp;magnitude)</span></div>
-<div class="block">Decrease the magnitude of this Vector by a specific value</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>magnitude</code> - Magnitude to subtract</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector from the subtraction of the magnitude</dd>
+<dd>vector from subtraction of two vectors</dd>
 </dl>
 </section>
 </li>
@@ -577,12 +494,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="multiply(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">multiply</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">multiply</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Multiply vector Components by another Vector's components</div>
+<div class="block">multiply vector components by another vector's components</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to multiply</dd>
+<dd><code>vector</code> - vector to multiply</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector from multiplication of two Vectors</dd>
+<dd>vector from multiplication of two vectors</dd>
 </dl>
 </section>
 </li>
@@ -590,12 +507,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="multiply(float)">multiply</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">multiply</span>&#8203;(<span class="arguments">float&nbsp;scale)</span></div>
-<div class="block">Multiply a Vector's magnitude by a scalar, which multiplies each component by the scalar</div>
+<div class="block">scale a vector's magnitude by a scalar, which multiplies each component by the scalar</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>scale</code> - What to scale the Vector by</dd>
+<dd><code>scale</code> - what to scale vector by</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Scaled Vector</dd>
+<dd>scaled vector</dd>
 </dl>
 </section>
 </li>
@@ -603,12 +520,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="dot(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">dot</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">dot</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Calculate the dot product of two Vectors</div>
+<div class="block">calculate the dot product of two vectors</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to dot product</dd>
+<dd><code>vector</code> - vector to dot product</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Value of the dot product</dd>
+<dd>value of the dot product</dd>
 </dl>
 </section>
 </li>
@@ -616,12 +533,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="cross(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">cross</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">cross</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Cross multiply two Vectors</div>
+<div class="block">cross multiply two vectors</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to cross multiply</dd>
+<dd><code>vector</code> - vector to cross multiply</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector calculated from cross multiplication</dd>
+<dd>vector calculated from cross multiplication</dd>
 </dl>
 </section>
 </li>
@@ -629,12 +546,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="divide(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">divide</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">divide</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Divide Vector components by another Vector's components</div>
+<div class="block">divide vector components by another vector's components</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to divide</dd>
+<dd><code>vector</code> - vector to divide</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector from division of two Vectors</dd>
+<dd>vector from division of two vectors</dd>
 </dl>
 </section>
 </li>
@@ -642,12 +559,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="divide(float)">divide</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">divide</span>&#8203;(<span class="arguments">float&nbsp;scale)</span></div>
-<div class="block">Divide a Vector's magnitude by a scalar, which divides each component by the scalar</div>
+<div class="block">scale a vector's magnitude by a scalar, which divides each component by the scalar</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>scale</code> - What to scale the Vector by</dd>
+<dd><code>scale</code> - what to scale vector by</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Scaled Vector</dd>
+<dd>scaled vector</dd>
 </dl>
 </section>
 </li>
@@ -655,12 +572,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="distance(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">distance</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">distance</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Calculate the distance between the ends of two Vectors</div>
+<div class="block">calculate the distance between the ends of two vectors</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to calculate distance to</dd>
+<dd><code>vector</code> - vector to calculate distance to</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Distance to location</dd>
+<dd>distance to location</dd>
 </dl>
 </section>
 </li>
@@ -668,10 +585,10 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="normalize()">normalize</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">normalize</span>()</div>
-<div class="block">Normalize the Vector (a Vector of magnitude 1)</div>
+<div class="block">normalize the vector (vector of magnitude 1)</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Normalized Vector</dd>
+<dd>normalized vector</dd>
 </dl>
 </section>
 </li>
@@ -679,12 +596,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="angleBetween(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">angleBetween</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">angleBetween</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;vector)</span></div>
-<div class="block">Get the angle between two Vectors in degrees</div>
+<div class="block">get the angle between two vectors in degrees</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to get angle between</dd>
+<dd><code>vector</code> - vector to get angle between</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Angle between two Vectors</dd>
+<dd>angle between two vectors</dd>
 </dl>
 </section>
 </li>
@@ -692,12 +609,12 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="toString()">toString</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">toString</span>()</div>
-<div class="block">Get the Vector as a String</div>
+<div class="block">makes the vector into a string</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Vector as a String in vector format</dd>
+<dd>vector form of vector</dd>
 </dl>
 </section>
 </li>
@@ -705,14 +622,14 @@ float&nbsp;value)</span></div>
 <section class="detail">
 <h3><a id="equals(java.lang.Object)">equals</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">equals</span>&#8203;(<span class="arguments">java.lang.Object&nbsp;vector)</span></div>
-<div class="block">Check if two Vectors are equal</div>
+<div class="block">check if two vectors are equal</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>vector</code> - Vector to compare to this Vector</dd>
+<dd><code>vector</code> - vector to compare to this vector</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Vectors are equal</dd>
+<dd>true if vectors are equal</dd>
 </dl>
 </section>
 </li>

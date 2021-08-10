@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -55,7 +55,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -99,10 +99,23 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">Physics</span>
 extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></pre>
-<div class="block">Axis-aligned bounding box physics</div>
+<div class="block">axis-aligned bounding box physics entity</div>
 </section>
 <section class="summary">
 <ul class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li class="blockList">
+<section class="nestedClassSummary"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h2>Nested Class Summary</h2>
+<div class="inheritedList">
+<h2>Nested classes/interfaces inherited from class&nbsp;xyz.jeremynoesen.pseudo3d.scene.util.<a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></h2>
+<a id="nested.classes.inherited.from.class.xyz.jeremynoesen.pseudo3d.scene.util.Box">
+<!--   -->
+</a><code><a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a></code></div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li class="blockList">
 <section class="constructorSummary"><a id="constructor.summary">
@@ -122,13 +135,13 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Physics</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Create new default Physics</div>
+<div class="block">create a new aabb entity with default values</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">Physics</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</code></th>
 <td class="colLast">
-<div class="block">Copy constructor for Physics</div>
+<div class="block">copy constructor for aabb entities</div>
 </td>
 </tr>
 </tbody>
@@ -156,417 +169,285 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">collidesOn</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">collidesOn</a></span>&#8203;(<a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a>&nbsp;side)</code></th>
 <td class="colLast">
-<div class="block">Check if this Entity is colliding on the specified Sides perpendicular to the Axis</div>
+<div class="block">check if this entity is colliding on the specified side</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Side)">collidesOn</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesWith(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">collidesWith</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</code></th>
 <td class="colLast">
-<div class="block">Check if this Entity is colliding on the specified Side</div>
+<div class="block">check if an entity collides with this entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesWith(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">collidesWith</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">collidesWithOn</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics,
+<a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a>&nbsp;side)</code></th>
 <td class="colLast">
-<div class="block">Check if an Entity collides with this Entity</div>
+<div class="block">check if an entity collides with this one on a specific side</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Axis)">collidesWithOn</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics,
-<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">
-<div class="block">Check if an Entity collides with this one on a specific Axis</div>
+<div class="block">check if another set of physics data is equal to this one</div>
 </td>
 </tr>
 <tr class="altColor" id="i4">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Side)">collidesWithOn</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics,
-<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</code></th>
-<td class="colLast">
-<div class="block">Check if an Entity collides with this one on a specific Side</div>
-</td>
-</tr>
-<tr class="rowColor" id="i5">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
-<td class="colLast">
-<div class="block">Check if another set of Physics data is equal to this one</div>
-</td>
-</tr>
-<tr class="altColor" id="i6">
 <td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAcceleration()">getAcceleration</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the acceleration of the Entity</div>
+<div class="block">get the acceleration vector of the entity</div>
 </td>
 </tr>
-<tr class="rowColor" id="i7">
-<td class="colFirst"><code>java.util.HashSet&lt;<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollideableSides()">getCollideableSides</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Get the Sides the Entity can collide on</div>
-</td>
-</tr>
-<tr class="altColor" id="i8">
-<td class="colFirst"><code>java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollidingAxes()">getCollidingAxes</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Get all the axes the Entity is colliding on</div>
-</td>
-</tr>
-<tr class="rowColor" id="i9">
+<tr class="rowColor" id="i5">
 <td class="colFirst"><code>java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollidingEntities()">getCollidingEntities</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get a Set of all Entities colliding with this one</div>
+<div class="block">get a set of all entities colliding with this one</div>
+</td>
+</tr>
+<tr class="altColor" id="i6">
+<td class="colFirst"><code>java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">getCollidingEntities</a></span>&#8203;(<a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a>&nbsp;side)</code></th>
+<td class="colLast">
+<div class="block">get all entities colliding on the specified side</div>
+</td>
+</tr>
+<tr class="rowColor" id="i7">
+<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDrag()">getDrag</a></span>()</code></th>
+<td class="colLast">
+<div class="block">get the drag of the entity</div>
+</td>
+</tr>
+<tr class="altColor" id="i8">
+<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGravity()">getGravity</a></span>()</code></th>
+<td class="colLast">
+<div class="block">get the gravity applied to the entity</div>
+</td>
+</tr>
+<tr class="rowColor" id="i9">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMass()">getMass</a></span>()</code></th>
+<td class="colLast">
+<div class="block">get the mass of the entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i10">
 <td class="colFirst"><code>java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getCollidingEntities</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOverlappingEntities()">getOverlappingEntities</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get all Entities colliding on the specified Axis</div>
+<div class="block">get the set of all entities overlapping this one</div>
 </td>
 </tr>
 <tr class="rowColor" id="i11">
-<td class="colFirst"><code>java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getCollidingEntities</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</code></th>
+<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition()">getPosition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get all Entities colliding on the specified Side</div>
+<div class="block">get the position vector of the entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i12">
-<td class="colFirst"><code>java.util.HashSet&lt;<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCollidingSides()">getCollidingSides</a></span>()</code></th>
+<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRoughness()">getRoughness</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get all the Sides the Entity is colliding on</div>
+<div class="block">get the roughness of the entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i13">
 <td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDrag()">getDrag</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTerminalVelocity()">getTerminalVelocity</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the drag coefficient of the Entity</div>
+<div class="block">get terminal velocity for this entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i14">
 <td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGravity()">getGravity</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVelocity()">getVelocity</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the gravity applied to the Entity</div>
+<div class="block">get the velocity vector of the entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i15">
-<td class="colFirst"><code>java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getKinematicAxes()">getKinematicAxes</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isColliding()">isColliding</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the Axes the Entity is kinematic on</div>
+<div class="block">check if the entity is currently colliding with another entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i16">
-<td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMass()">getMass</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isKinematic()">isKinematic</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the mass of the Entity</div>
+<div class="block">check if the entity is kinematic</div>
 </td>
 </tr>
 <tr class="rowColor" id="i17">
-<td class="colFirst"><code>java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOverlappingEntities()">getOverlappingEntities</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isOverlapping()">isOverlapping</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the set of all Entities overlapping this one</div>
+<div class="block">see if this entity is overlapping any entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i18">
-<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition()">getPosition</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPushable()">isPushable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the position of the Entity</div>
+<div class="block">check if the entity is pushable on any axis</div>
 </td>
 </tr>
 <tr class="rowColor" id="i19">
-<td class="colFirst"><code>java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPushableAxes()">getPushableAxes</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPushableX()">isPushableX</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the Axes the Entity is pushable on</div>
+<div class="block">check if the entity is pushable on the x axis</div>
 </td>
 </tr>
 <tr class="altColor" id="i20">
-<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRoughness()">getRoughness</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPushableY()">isPushableY</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the roughness of the Entity</div>
+<div class="block">check if the entity is pushable on the y axis</div>
 </td>
 </tr>
 <tr class="rowColor" id="i21">
-<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTerminalVelocity()">getTerminalVelocity</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPushableZ()">isPushableZ</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the terminal velocity for this Entity</div>
+<div class="block">check if the entity is pushable on the z axis</div>
 </td>
 </tr>
 <tr class="altColor" id="i22">
-<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVelocity()">getVelocity</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSolid()">isSolid</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the velocity of the Entity</div>
+<div class="block">check if an entity can be collided with</div>
 </td>
 </tr>
 <tr class="rowColor" id="i23">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isCollideable()">isCollideable</a></span>()</code></th>
+<td class="colFirst"><code>protected boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isUpdatable()">isUpdatable</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Check if an Entity can be collided with on any side</div>
+<div class="block">check if the entity can update, called by parent class for special function</div>
 </td>
 </tr>
 <tr class="altColor" id="i24">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isCollideableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isCollideableOn</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#overlaps(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">overlaps</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</code></th>
 <td class="colLast">
-<div class="block">Check if an Entity can be collided with on a specific Axis</div>
+<div class="block">check if this entity overlaps another</div>
 </td>
 </tr>
 <tr class="rowColor" id="i25">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isCollideableOn(xyz.jeremynoesen.pseudo3d.scene.util.Side)">isCollideableOn</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAcceleration(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setAcceleration</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;acceleration)</code></th>
 <td class="colLast">
-<div class="block">Check if an Entity can be collided with on a specific Side</div>
+<div class="block">set the acceleration of the entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i26">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isColliding()">isColliding</a></span>()</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;drag)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity is currently colliding with another Entity</div>
+<div class="block">set the drag for the entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i27">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFullyCollideable()">isFullyCollideable</a></span>()</code></th>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntities(java.util.LinkedList)">setEntities</a></span>&#8203;(java.util.LinkedList&lt;? extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;&nbsp;entities)</code></th>
 <td class="colLast">
-<div class="block">Check if an Entity can be collided with on all sides</div>
+<div class="block">set the entities the object is in a scene with, only callable by parent class</div>
 </td>
 </tr>
 <tr class="altColor" id="i28">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFullyKinematic()">isFullyKinematic</a></span>()</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGravity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setGravity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;gravity)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity is kinematic on every axis</div>
+<div class="block">set the gravity applied to the entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i29">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFullyPushable()">isFullyPushable</a></span>()</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setKinematic(boolean)">setKinematic</a></span>&#8203;(boolean&nbsp;kinematic)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity is pushable on every axis</div>
+<div class="block">set an entity to be kinematic or not</div>
 </td>
 </tr>
 <tr class="altColor" id="i30">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isKinematic()">isKinematic</a></span>()</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMass(float)">setMass</a></span>&#8203;(float&nbsp;mass)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity is kinematic on any axis</div>
+<div class="block">set the mass of the entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i31">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isKinematicOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isKinematicOn</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity is kinematic on the specified Axis</div>
+<div class="block">set the position of the entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i32">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isOverlapping()">isOverlapping</a></span>()</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPushable(boolean,boolean,boolean)">setPushable</a></span>&#8203;(boolean&nbsp;x,
+boolean&nbsp;y,
+boolean&nbsp;z)</code></th>
 <td class="colLast">
-<div class="block">See if this Entity is overlapping any Entity</div>
+<div class="block">set whether the entity can be pushed or not per axis</div>
 </td>
 </tr>
 <tr class="rowColor" id="i33">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPushable()">isPushable</a></span>()</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;roughness)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity is pushable on any axis</div>
+<div class="block">set the friction of the entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i34">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPushableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isPushableOn</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSolid(boolean)">setSolid</a></span>&#8203;(boolean&nbsp;solid)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity is pushable on the specified Axis</div>
+<div class="block">enable or disable collisions for the entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i35">
-<td class="colFirst"><code>protected boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isUpdatable()">isUpdatable</a></span>()</code></th>
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTerminalVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setTerminalVelocity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;terminalVelocity)</code></th>
 <td class="colLast">
-<div class="block">Check if the Entity can update</div>
+<div class="block">set the terminal velocity for this entity to limit maximum velocity due to accelerations</div>
 </td>
 </tr>
 <tr class="altColor" id="i36">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#overlaps(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">overlaps</a></span>&#8203;(<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</code></th>
+<td class="colFirst"><code>protected void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpdatable(boolean)">setUpdatable</a></span>&#8203;(boolean&nbsp;updatable)</code></th>
 <td class="colLast">
-<div class="block">Check if this Entity overlaps another</div>
+<div class="block">set if the entity can update, called by parent class for special function</div>
 </td>
 </tr>
 <tr class="rowColor" id="i37">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAcceleration(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setAcceleration</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;acceleration)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setVelocity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;velocity)</code></th>
 <td class="colLast">
-<div class="block">Set the acceleration of the Entity</div>
+<div class="block">set the velocity of the entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i38">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCollidableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setCollidableOn</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axes)</code></th>
-<td class="colLast">
-<div class="block">Set the Entity to be collideable per Axis</div>
-</td>
-</tr>
-<tr class="rowColor" id="i39">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCollidableOn(xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setCollidableOn</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>...&nbsp;sides)</code></th>
-<td class="colLast">
-<div class="block">Set the Entity to be collideable per Side</div>
-</td>
-</tr>
-<tr class="altColor" id="i40">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCollidableSides(java.util.HashSet)">setCollidableSides</a></span>&#8203;(java.util.HashSet&lt;<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&gt;&nbsp;sides)</code></th>
-<td class="colLast">
-<div class="block">Set the Entity to be collideable per Side</div>
-</td>
-</tr>
-<tr class="rowColor" id="i41">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;drag)</code></th>
-<td class="colLast">
-<div class="block">Set the drag coefficient for the Entity</div>
-</td>
-</tr>
-<tr class="altColor" id="i42">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntities(java.util.LinkedList)">setEntities</a></span>&#8203;(java.util.LinkedList&lt;? extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;&nbsp;entities)</code></th>
-<td class="colLast">
-<div class="block">Set the Entities this Entity is in a Scene with</div>
-</td>
-</tr>
-<tr class="rowColor" id="i43">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFullyCollideable(boolean)">setFullyCollideable</a></span>&#8203;(boolean&nbsp;collideable)</code></th>
-<td class="colLast">
-<div class="block">Set the Entity to be collideable on all sides or no sides</div>
-</td>
-</tr>
-<tr class="altColor" id="i44">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFullyKinematic(boolean)">setFullyKinematic</a></span>&#8203;(boolean&nbsp;kinematic)</code></th>
-<td class="colLast">
-<div class="block">Set whether the Entity can move or not for all axes</div>
-</td>
-</tr>
-<tr class="rowColor" id="i45">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFullyPushable(boolean)">setFullyPushable</a></span>&#8203;(boolean&nbsp;pushable)</code></th>
-<td class="colLast">
-<div class="block">Set whether the Entity can be pushed or not for all axes</div>
-</td>
-</tr>
-<tr class="altColor" id="i46">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGravity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setGravity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;gravity)</code></th>
-<td class="colLast">
-<div class="block">Set the gravity applied to the Entity</div>
-</td>
-</tr>
-<tr class="rowColor" id="i47">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setKinematicAxes(java.util.HashSet)">setKinematicAxes</a></span>&#8203;(java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;&nbsp;axes)</code></th>
-<td class="colLast">
-<div class="block">Set the kinematic axes for the Entity</div>
-</td>
-</tr>
-<tr class="altColor" id="i48">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setKinematicOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setKinematicOn</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axes)</code></th>
-<td class="colLast">
-<div class="block">Set whether the Entity can move or not per Axis</div>
-</td>
-</tr>
-<tr class="rowColor" id="i49">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMass(float)">setMass</a></span>&#8203;(float&nbsp;mass)</code></th>
-<td class="colLast">
-<div class="block">Set the mass of the Entity</div>
-</td>
-</tr>
-<tr class="altColor" id="i50">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
-<td class="colLast">
-<div class="block">Set the position of the Entity</div>
-</td>
-</tr>
-<tr class="rowColor" id="i51">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPushableAxes(java.util.HashSet)">setPushableAxes</a></span>&#8203;(java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;&nbsp;axes)</code></th>
-<td class="colLast">
-<div class="block">Set the pushable axes for the Entity</div>
-</td>
-</tr>
-<tr class="altColor" id="i52">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPushableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setPushableOn</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axes)</code></th>
-<td class="colLast">
-<div class="block">Set whether the Entity can be pushed or not per Axis</div>
-</td>
-</tr>
-<tr class="rowColor" id="i53">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;roughness)</code></th>
-<td class="colLast">
-<div class="block">Set the roughness of the Entity</div>
-</td>
-</tr>
-<tr class="altColor" id="i54">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTerminalVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setTerminalVelocity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;terminalVelocity)</code></th>
-<td class="colLast">
-<div class="block">Set the terminal velocity for this Entity</div>
-</td>
-</tr>
-<tr class="rowColor" id="i55">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpdatable(boolean)">setUpdatable</a></span>&#8203;(boolean&nbsp;updatable)</code></th>
-<td class="colLast">
-<div class="block">Set if the Entity can update</div>
-</td>
-</tr>
-<tr class="altColor" id="i56">
-<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setVelocity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;velocity)</code></th>
-<td class="colLast">
-<div class="block">Set the velocity of the Entity</div>
-</td>
-</tr>
-<tr class="rowColor" id="i57">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tickCollisions()">tickCollisions</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Check if an Entity has collided with this Entity</div>
+<div class="block">check if a entity has collided with this entity</div>
 </td>
 </tr>
-<tr class="altColor" id="i58">
+<tr class="rowColor" id="i39">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tickMotion(float)">tickMotion</a></span>&#8203;(float&nbsp;deltaTime)</code></th>
 <td class="colLast">
-<div class="block">Update the motion of the Entity</div>
+<div class="block">update the motion of the entity</div>
 </td>
 </tr>
 </tbody>
@@ -577,7 +458,7 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <h3>Methods inherited from class&nbsp;xyz.jeremynoesen.pseudo3d.scene.util.<a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></h3>
 <a id="methods.inherited.from.class.xyz.jeremynoesen.pseudo3d.scene.util.Box">
 <!--   -->
-</a><code><a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a>, <a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a>, <a href="../util/Box.html#getDepth()">getDepth</a>, <a href="../util/Box.html#getDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getDimensions</a>, <a href="../util/Box.html#getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getFaceArea</a>, <a href="../util/Box.html#getHeight()">getHeight</a>, <a href="../util/Box.html#getMaximum()">getMaximum</a>, <a href="../util/Box.html#getMinimum()">getMinimum</a>, <a href="../util/Box.html#getSide(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">getSide</a>, <a href="../util/Box.html#getSurfaceArea()">getSurfaceArea</a>, <a href="../util/Box.html#getVolume()">getVolume</a>, <a href="../util/Box.html#getWidth()">getWidth</a>, <a href="../util/Box.html#overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a>, <a href="../util/Box.html#setDepth(float)">setDepth</a>, <a href="../util/Box.html#setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">setDimensions</a>, <a href="../util/Box.html#setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDimensions</a>, <a href="../util/Box.html#setHeight(float)">setHeight</a>, <a href="../util/Box.html#setWidth(float)">setWidth</a>, <a href="../util/Box.html#toString()">toString</a></code></div>
+</a><code><a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a>, <a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a>, <a href="../util/Box.html#getDepth()">getDepth</a>, <a href="../util/Box.html#getHeight()">getHeight</a>, <a href="../util/Box.html#getMaximum()">getMaximum</a>, <a href="../util/Box.html#getMinimum()">getMinimum</a>, <a href="../util/Box.html#getSurfaceArea()">getSurfaceArea</a>, <a href="../util/Box.html#getVolume()">getVolume</a>, <a href="../util/Box.html#getWidth()">getWidth</a>, <a href="../util/Box.html#overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a>, <a href="../util/Box.html#setDepth(float)">setDepth</a>, <a href="../util/Box.html#setDimensions(float,float,float)">setDimensions</a>, <a href="../util/Box.html#setHeight(float)">setHeight</a>, <a href="../util/Box.html#setWidth(float)">setWidth</a>, <a href="../util/Box.html#toString()">toString</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <a id="methods.inherited.from.class.java.lang.Object">
@@ -600,17 +481,17 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="&lt;init&gt;()">Physics</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Physics</span>()</div>
-<div class="block">Create new default Physics</div>
+<div class="block">create a new aabb entity with default values</div>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="&lt;init&gt;(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">Physics</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Physics</span>&#8203;(<span class="arguments"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</span></div>
-<div class="block">Copy constructor for Physics</div>
+<div class="block">copy constructor for aabb entities</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>physics</code> - Physics to copy</dd>
+<dd><code>physics</code> - aabb entity to copy</dd>
 </dl>
 </section>
 </li>
@@ -628,10 +509,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="tickMotion(float)">tickMotion</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">tickMotion</span>&#8203;(<span class="arguments">float&nbsp;deltaTime)</span></div>
-<div class="block">Update the motion of the Entity</div>
+<div class="block">update the motion of the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>deltaTime</code> - Time elapsed in the previous tick</dd>
+<dd><code>deltaTime</code> - time elapsed to use in calculation</dd>
 </dl>
 </section>
 </li>
@@ -639,19 +520,19 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="tickCollisions()">tickCollisions</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">tickCollisions</span>()</div>
-<div class="block">Check if an Entity has collided with this Entity</div>
+<div class="block">check if a entity has collided with this entity</div>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="getPosition()">getPosition</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getPosition</span>()</div>
-<div class="block">Get the position of the Entity</div>
+<div class="block">get the position vector of the entity</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../util/Box.html#getPosition()">getPosition</a></code>&nbsp;in class&nbsp;<code><a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Position Vector of the Entity</dd>
+<dd>position vector of entity</dd>
 </dl>
 </section>
 </li>
@@ -659,14 +540,12 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setPosition</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</span></div>
-<div class="block">Set the position of the Entity</div>
+<div class="block">set the position of the entity</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../util/Box.html#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></code>&nbsp;in class&nbsp;<code><a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>position</code> - Position Vector</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>position</code> - position vector</dd>
 </dl>
 </section>
 </li>
@@ -674,10 +553,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getVelocity()">getVelocity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getVelocity</span>()</div>
-<div class="block">Get the velocity of the Entity</div>
+<div class="block">get the velocity vector of the entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Velocity Vector of the Entity</dd>
+<dd>velocity vector of an entity</dd>
 </dl>
 </section>
 </li>
@@ -685,12 +564,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setVelocity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setVelocity</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;velocity)</span></div>
-<div class="block">Set the velocity of the Entity</div>
+<div class="block">set the velocity of the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>velocity</code> - Velocity Vector</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>velocity</code> - velocity vector</dd>
 </dl>
 </section>
 </li>
@@ -698,10 +575,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getAcceleration()">getAcceleration</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getAcceleration</span>()</div>
-<div class="block">Get the acceleration of the Entity</div>
+<div class="block">get the acceleration vector of the entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Acceleration Vector of the Entity</dd>
+<dd>acceleration vector of an entity</dd>
 </dl>
 </section>
 </li>
@@ -709,12 +586,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setAcceleration(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setAcceleration</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setAcceleration</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;acceleration)</span></div>
-<div class="block">Set the acceleration of the Entity</div>
+<div class="block">set the acceleration of the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>acceleration</code> - Acceleration Vector</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>acceleration</code> - acceleration vector</dd>
 </dl>
 </section>
 </li>
@@ -722,10 +597,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getGravity()">getGravity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getGravity</span>()</div>
-<div class="block">Get the gravity applied to the Entity</div>
+<div class="block">get the gravity applied to the entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Gravity Vector</dd>
+<dd>gravity vector</dd>
 </dl>
 </section>
 </li>
@@ -733,12 +608,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setGravity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setGravity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setGravity</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;gravity)</span></div>
-<div class="block">Set the gravity applied to the Entity</div>
+<div class="block">set the gravity applied to the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>gravity</code> - Gravity Vector</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>gravity</code> - gravity vector</dd>
 </dl>
 </section>
 </li>
@@ -746,10 +619,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getTerminalVelocity()">getTerminalVelocity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getTerminalVelocity</span>()</div>
-<div class="block">Get the terminal velocity for this Entity</div>
+<div class="block">get terminal velocity for this entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Terminal velocity Vector</dd>
+<dd>terminal velocity vector</dd>
 </dl>
 </section>
 </li>
@@ -757,12 +630,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setTerminalVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setTerminalVelocity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setTerminalVelocity</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;terminalVelocity)</span></div>
-<div class="block">Set the terminal velocity for this Entity</div>
+<div class="block">set the terminal velocity for this entity to limit maximum velocity due to accelerations</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>terminalVelocity</code> - Terminal velocity Vector</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>terminalVelocity</code> - terminal velocity vector</dd>
 </dl>
 </section>
 </li>
@@ -770,10 +641,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getDrag()">getDrag</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getDrag</span>()</div>
-<div class="block">Get the drag coefficient of the Entity</div>
+<div class="block">get the drag of the entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Drag coefficient Vector of the Entity</dd>
+<dd>drag vector of an entity</dd>
 </dl>
 </section>
 </li>
@@ -781,12 +652,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setDrag</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;drag)</span></div>
-<div class="block">Set the drag coefficient for the Entity</div>
+<div class="block">set the drag for the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>drag</code> - Drag coefficient Vector</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>drag</code> - drag of entity</dd>
 </dl>
 </section>
 </li>
@@ -794,10 +663,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getRoughness()">getRoughness</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getRoughness</span>()</div>
-<div class="block">Get the roughness of the Entity</div>
+<div class="block">get the roughness of the entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Roughness per axis as a Vector</dd>
+<dd>roughness vector</dd>
 </dl>
 </section>
 </li>
@@ -805,119 +674,32 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setRoughness</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;roughness)</span></div>
-<div class="block">Set the roughness of the Entity</div>
+<div class="block">set the friction of the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>roughness</code> - Roughness per axis as a Vector</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>roughness</code> - friction vector</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="isCollideable()">isCollideable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isCollideable</span>()</div>
-<div class="block">Check if an Entity can be collided with on any side</div>
+<h3><a id="isSolid()">isSolid</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isSolid</span>()</div>
+<div class="block">check if an entity can be collided with</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if able to be collided with on any side</dd>
+<dd>true if able to be collided with</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="isCollideableOn(xyz.jeremynoesen.pseudo3d.scene.util.Side)">isCollideableOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isCollideableOn</span>&#8203;(<span class="arguments"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</span></div>
-<div class="block">Check if an Entity can be collided with on a specific Side</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if able to be collided with on a specific Side</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="isCollideableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isCollideableOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isCollideableOn</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Check if an Entity can be collided with on a specific Axis</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if able to be collided with on a specific Axis</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="isFullyCollideable()">isFullyCollideable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isFullyCollideable</span>()</div>
-<div class="block">Check if an Entity can be collided with on all sides</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if able to be collided with on all sides</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getCollideableSides()">getCollideableSides</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&gt;</span>&nbsp;<span class="memberName">getCollideableSides</span>()</div>
-<div class="block">Get the Sides the Entity can collide on</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>HashSet of Sides the Entity can collide on</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setFullyCollideable(boolean)">setFullyCollideable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setFullyCollideable</span>&#8203;(<span class="arguments">boolean&nbsp;collideable)</span></div>
-<div class="block">Set the Entity to be collideable on all sides or no sides</div>
+<h3><a id="setSolid(boolean)">setSolid</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setSolid</span>&#8203;(<span class="arguments">boolean&nbsp;solid)</span></div>
+<div class="block">enable or disable collisions for the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>collideable</code> - True to allow colliding on all sides, false for no sides</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setCollidableOn(xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setCollidableOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setCollidableOn</span>&#8203;(<span class="arguments"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>...&nbsp;sides)</span></div>
-<div class="block">Set the Entity to be collideable per Side</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>sides</code> - Variable amount of Sides</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setCollidableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setCollidableOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setCollidableOn</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axes)</span></div>
-<div class="block">Set the Entity to be collideable per Axis</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axes</code> - Variable amount of Axes</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setCollidableSides(java.util.HashSet)">setCollidableSides</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setCollidableSides</span>&#8203;(<span class="arguments">java.util.HashSet&lt;<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&gt;&nbsp;sides)</span></div>
-<div class="block">Set the Entity to be collideable per Side</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>sides</code> - HashSet of Sides</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>solid</code> - true to allow collisions</dd>
 </dl>
 </section>
 </li>
@@ -925,10 +707,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="isColliding()">isColliding</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isColliding</span>()</div>
-<div class="block">Check if the Entity is currently colliding with another Entity</div>
+<div class="block">check if the entity is currently colliding with another entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is colliding with another Entity</dd>
+<dd>true if the entity is colliding with another entity</dd>
 </dl>
 </section>
 </li>
@@ -936,94 +718,53 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="collidesWith(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">collidesWith</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">collidesWith</span>&#8203;(<span class="arguments"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</span></div>
-<div class="block">Check if an Entity collides with this Entity</div>
+<div class="block">check if an entity collides with this entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>physics</code> - Entity to check if colliding with</dd>
+<dd><code>physics</code> - entity to check if colliding with</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if this Entity collides with the other Entity</dd>
+<dd>true if this entity collides with the other entity</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Side)">collidesOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">collidesOn</span>&#8203;(<span class="arguments"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</span></div>
-<div class="block">Check if this Entity is colliding on the specified Side</div>
+<h3><a id="collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">collidesOn</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">collidesOn</span>&#8203;(<span class="arguments"><a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a>&nbsp;side)</span></div>
+<div class="block">check if this entity is colliding on the specified side</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>side</code> - Side of the Entity</dd>
+<dd><code>side</code> - side of the entity</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is colliding on the Side</dd>
+<dd>true if the entity is colliding on the side</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">collidesOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">collidesOn</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Check if this Entity is colliding on the specified Sides perpendicular to the Axis</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis of collision</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is colliding on the Axis</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Side)">collidesWithOn</a></h3>
+<h3><a id="collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">collidesWithOn</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">collidesWithOn</span>&#8203;(<span class="arguments"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics,
-<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</span></div>
-<div class="block">Check if an Entity collides with this one on a specific Side</div>
+<a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a>&nbsp;side)</span></div>
+<div class="block">check if an entity collides with this one on a specific side</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>physics</code> - Entity to check if colliding with</dd>
-<dd><code>side</code> - Side of Entity</dd>
+<dd><code>physics</code> - entity to check if colliding with</dd>
+<dd><code>side</code> - side of entity</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is colliding with the other Entity on the specified Side</dd>
+<dd>true if the entity is colliding with the other entity on the specified side</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Axis)">collidesWithOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">collidesWithOn</span>&#8203;(<span class="arguments"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics,
-<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Check if an Entity collides with this one on a specific Axis</div>
+<h3><a id="getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">getCollidingEntities</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</span>&nbsp;<span class="memberName">getCollidingEntities</span>&#8203;(<span class="arguments"><a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a>&nbsp;side)</span></div>
+<div class="block">get all entities colliding on the specified side</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>physics</code> - Entity to check if colliding with</dd>
-<dd><code>axis</code> - Axis of the grid</dd>
+<dd><code>side</code> - side to get colliding entities of</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is colliding with the other Entity on the specified Axis</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getCollidingEntities</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</span>&nbsp;<span class="memberName">getCollidingEntities</span>&#8203;(<span class="arguments"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</span></div>
-<div class="block">Get all Entities colliding on the specified Side</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>side</code> - Side to get colliding Entities of</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Set of all Entities colliding on the Side</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getCollidingEntities</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</span>&nbsp;<span class="memberName">getCollidingEntities</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Get all Entities colliding on the specified Axis</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis to get colliding Entities of</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Set of all Entities colliding on the Axis</dd>
+<dd>set of all entities colliding on the side</dd>
 </dl>
 </section>
 </li>
@@ -1031,32 +772,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getCollidingEntities()">getCollidingEntities</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</span>&nbsp;<span class="memberName">getCollidingEntities</span>()</div>
-<div class="block">Get a Set of all Entities colliding with this one</div>
+<div class="block">get a set of all entities colliding with this one</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Set of all colliding Entities</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getCollidingSides()">getCollidingSides</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&gt;</span>&nbsp;<span class="memberName">getCollidingSides</span>()</div>
-<div class="block">Get all the Sides the Entity is colliding on</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Set of all colliding Sides</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getCollidingAxes()">getCollidingAxes</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;</span>&nbsp;<span class="memberName">getCollidingAxes</span>()</div>
-<div class="block">Get all the axes the Entity is colliding on</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Set of all colliding axes</dd>
+<dd>all colliding entities</dd>
 </dl>
 </section>
 </li>
@@ -1064,10 +783,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="isOverlapping()">isOverlapping</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isOverlapping</span>()</div>
-<div class="block">See if this Entity is overlapping any Entity</div>
+<div class="block">see if this entity is overlapping any entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if overlapping</dd>
+<dd>true if overlapping</dd>
 </dl>
 </section>
 </li>
@@ -1075,12 +794,12 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="overlaps(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">overlaps</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">overlaps</span>&#8203;(<span class="arguments"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&nbsp;physics)</span></div>
-<div class="block">Check if this Entity overlaps another</div>
+<div class="block">check if this entity overlaps another</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>physics</code> - Entity to check with</dd>
+<dd><code>physics</code> - entity to check with</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if this Entity overlaps the specified Entity</dd>
+<dd>true if this entity overlaps the specified entity</dd>
 </dl>
 </section>
 </li>
@@ -1088,10 +807,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getOverlappingEntities()">getOverlappingEntities</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;</span>&nbsp;<span class="memberName">getOverlappingEntities</span>()</div>
-<div class="block">Get the set of all Entities overlapping this one</div>
+<div class="block">get the set of all entities overlapping this one</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Set of overlapping Entities</dd>
+<dd>set of overlapping entities</dd>
 </dl>
 </section>
 </li>
@@ -1099,82 +818,21 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="isKinematic()">isKinematic</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isKinematic</span>()</div>
-<div class="block">Check if the Entity is kinematic on any axis</div>
+<div class="block">check if the entity is kinematic</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is kinematic on any axis</dd>
+<dd>true if entity is kinematic</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="isFullyKinematic()">isFullyKinematic</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isFullyKinematic</span>()</div>
-<div class="block">Check if the Entity is kinematic on every axis</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is kinematic on any axis</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="isKinematicOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isKinematicOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isKinematicOn</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Check if the Entity is kinematic on the specified Axis</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is kinematic on the specified Axis</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getKinematicAxes()">getKinematicAxes</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;</span>&nbsp;<span class="memberName">getKinematicAxes</span>()</div>
-<div class="block">Get the Axes the Entity is kinematic on</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>HashSet of Axes the Entity is kinematic on</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setKinematicOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setKinematicOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setKinematicOn</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axes)</span></div>
-<div class="block">Set whether the Entity can move or not per Axis</div>
+<h3><a id="setKinematic(boolean)">setKinematic</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setKinematic</span>&#8203;(<span class="arguments">boolean&nbsp;kinematic)</span></div>
+<div class="block">set an entity to be kinematic or not</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axes</code> - Axes to set kinematic</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setFullyKinematic(boolean)">setFullyKinematic</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setFullyKinematic</span>&#8203;(<span class="arguments">boolean&nbsp;kinematic)</span></div>
-<div class="block">Set whether the Entity can move or not for all axes</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>kinematic</code> - True to allow motion on all axes</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setKinematicAxes(java.util.HashSet)">setKinematicAxes</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setKinematicAxes</span>&#8203;(<span class="arguments">java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;&nbsp;axes)</span></div>
-<div class="block">Set the kinematic axes for the Entity</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axes</code> - HashSet of Axes to set kinematic</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>kinematic</code> - true to allow entity motion</dd>
 </dl>
 </section>
 </li>
@@ -1182,82 +840,58 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="isPushable()">isPushable</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isPushable</span>()</div>
-<div class="block">Check if the Entity is pushable on any axis</div>
+<div class="block">check if the entity is pushable on any axis</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is pushable on any axis</dd>
+<dd>true if an entity is pushable on any axis</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="isFullyPushable()">isFullyPushable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isFullyPushable</span>()</div>
-<div class="block">Check if the Entity is pushable on every axis</div>
+<h3><a id="isPushableX()">isPushableX</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isPushableX</span>()</div>
+<div class="block">check if the entity is pushable on the x axis</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is pushable on every axis</dd>
+<dd>true if an entity is pushable on the x axis</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="isPushableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isPushableOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isPushableOn</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Check if the Entity is pushable on the specified Axis</div>
+<h3><a id="isPushableY()">isPushableY</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isPushableY</span>()</div>
+<div class="block">check if the entity is pushable on the y axis</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Entity is pushable on the specified Axis</dd>
+<dd>true if an entity is pushable on the y axis</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="getPushableAxes()">getPushableAxes</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;</span>&nbsp;<span class="memberName">getPushableAxes</span>()</div>
-<div class="block">Get the Axes the Entity is pushable on</div>
+<h3><a id="isPushableZ()">isPushableZ</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isPushableZ</span>()</div>
+<div class="block">check if the entity is pushable on the z axis</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>HashSet of Axes the Entity is pushable on</dd>
+<dd>true if an entity is pushable on the z axis</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="setPushableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setPushableOn</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setPushableOn</span>&#8203;(<span class="arguments"><a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axes)</span></div>
-<div class="block">Set whether the Entity can be pushed or not per Axis</div>
+<h3><a id="setPushable(boolean,boolean,boolean)">setPushable</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setPushable</span>&#8203;(<span class="arguments">boolean&nbsp;x,
+boolean&nbsp;y,
+boolean&nbsp;z)</span></div>
+<div class="block">set whether the entity can be pushed or not per axis</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axes</code> - Axes to set pushable</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setFullyPushable(boolean)">setFullyPushable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setFullyPushable</span>&#8203;(<span class="arguments">boolean&nbsp;pushable)</span></div>
-<div class="block">Set whether the Entity can be pushed or not for all axes</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pushable</code> - True to allow being pushed on all axes</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setPushableAxes(java.util.HashSet)">setPushableAxes</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setPushableAxes</span>&#8203;(<span class="arguments">java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&gt;&nbsp;axes)</span></div>
-<div class="block">Set the pushable axes for the Entity</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axes</code> - HashSet of Axes to set pushable</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>x</code> - true to allow pushing on the x axis</dd>
+<dd><code>y</code> - true to allow pushing on the y axis</dd>
+<dd><code>z</code> - true to allow pushing on the z axis</dd>
 </dl>
 </section>
 </li>
@@ -1265,10 +899,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="getMass()">getMass</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getMass</span>()</div>
-<div class="block">Get the mass of the Entity</div>
+<div class="block">get the mass of the entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Mass of the Entity</dd>
+<dd>mass of the entity</dd>
 </dl>
 </section>
 </li>
@@ -1276,12 +910,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setMass(float)">setMass</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setMass</span>&#8203;(<span class="arguments">float&nbsp;mass)</span></div>
-<div class="block">Set the mass of the Entity</div>
+<div class="block">set the mass of the entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>mass</code> - New mass for the Entity</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Physics</dd>
+<dd><code>mass</code> - new mass for entity</dd>
 </dl>
 </section>
 </li>
@@ -1289,12 +921,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setEntities(java.util.LinkedList)">setEntities</a></h3>
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setEntities</span>&#8203;(<span class="arguments">java.util.LinkedList&lt;? extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;&nbsp;entities)</span></div>
-<div class="block">Set the Entities this Entity is in a Scene with
- <p>
- This is only able to be called by the parent class</div>
+<div class="block">set the entities the object is in a scene with, only callable by parent class</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>entities</code> - List of Physics objects</dd>
+<dd><code>entities</code> - list of physics objects</dd>
 </dl>
 </section>
 </li>
@@ -1302,12 +932,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="setUpdatable(boolean)">setUpdatable</a></h3>
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setUpdatable</span>&#8203;(<span class="arguments">boolean&nbsp;updatable)</span></div>
-<div class="block">Set if the Entity can update
- <p>
- This is only able to be called by the parent class</div>
+<div class="block">set if the entity can update, called by parent class for special function</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>updatable</code> - True to allow updating</dd>
+<dd><code>updatable</code> - true to allow updating</dd>
 </dl>
 </section>
 </li>
@@ -1315,12 +943,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="isUpdatable()">isUpdatable</a></h3>
 <div class="memberSignature"><span class="modifiers">protected</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isUpdatable</span>()</div>
-<div class="block">Check if the Entity can update
- <p>
- This is only able to be called by the parent class</div>
+<div class="block">check if the entity can update, called by parent class for special function</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if Entity can update</dd>
+<dd>true if entity can update</dd>
 </dl>
 </section>
 </li>
@@ -1328,14 +954,14 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <section class="detail">
 <h3><a id="equals(java.lang.Object)">equals</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">equals</span>&#8203;(<span class="arguments">java.lang.Object&nbsp;o)</span></div>
-<div class="block">Check if another set of Physics data is equal to this one</div>
+<div class="block">check if another set of physics data is equal to this one</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../util/Box.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - Physics to check for equality</dd>
+<dd><code>o</code> - object to check for equality</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if other Physics data is equivalent to this</dd>
+<dd>true if physics data is equivalent to this</dd>
 </dl>
 </section>
 </li>
@@ -1371,7 +997,7 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

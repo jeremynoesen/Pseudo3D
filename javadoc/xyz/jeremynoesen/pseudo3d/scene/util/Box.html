@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -55,7 +55,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -97,10 +97,39 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="typeNameLabel">Box</span>
 extends java.lang.Object</pre>
-<div class="block">Box and related mathematical operators</div>
+<div class="block">simple box with some checks and mathematical operators</div>
 </section>
 <section class="summary">
 <ul class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li class="blockList">
+<section class="nestedClassSummary"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h2>Nested Class Summary</h2>
+<div class="memberSummary">
+<table>
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<thead>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a></span></code></th>
+<td class="colLast">
+<div class="block">sides of box</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li class="blockList">
 <section class="constructorSummary"><a id="constructor.summary">
@@ -120,7 +149,7 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Box</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Create a new default Box</div>
+<div class="block">creates a new box with default 0 values</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -129,7 +158,7 @@ float&nbsp;height,
 float&nbsp;depth,
 <a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">Create a new 3D Box with specified width, height, depth, and location</div>
+<div class="block">create a new 3D box at location with specified width and height and depth</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -137,13 +166,13 @@ float&nbsp;depth,
 float&nbsp;height,
 <a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">Create a new 2D Box with specified width, height, and location</div>
+<div class="block">create a new 2D box at location with specified width and height</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(xyz.jeremynoesen.pseudo3d.scene.util.Box)">Box</a></span>&#8203;(<a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</code></th>
 <td class="colLast">
-<div class="block">Copy constructor for Box</div>
+<div class="block">copy constructor for box</div>
 </td>
 </tr>
 </tbody>
@@ -173,156 +202,128 @@ float&nbsp;height,
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a></span>&#8203;(<a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</code></th>
 <td class="colLast">
-<div class="block">Check if a Box is inside this Box</div>
+<div class="block">check if a box is inside this box</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">Check if this Box contains a position</div>
+<div class="block">check if this box contains a position</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;box)</code></th>
 <td class="colLast">
-<div class="block">Check if another Box is equal to this Box</div>
+<div class="block">check if another box has the same width, height, depth, and position as this box</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDepth()">getDepth</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the depth of the Box</div>
+<div class="block">get the depth of the box</div>
 </td>
 </tr>
 <tr class="altColor" id="i4">
 <td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getDimensions</a></span>&#8203;(<a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHeight()">getHeight</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the dimensions of the Box for a specific Axis</div>
+<div class="block">get the height of the box</div>
 </td>
 </tr>
 <tr class="rowColor" id="i5">
-<td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getFaceArea</a></span>&#8203;(<a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaximum()">getMaximum</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the face area for a side perpendicular to the specified Axis</div>
+<div class="block">get the maximum location of the box</div>
 </td>
 </tr>
 <tr class="altColor" id="i6">
-<td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHeight()">getHeight</a></span>()</code></th>
+<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMinimum()">getMinimum</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the height of the Box</div>
+<div class="block">get the minimum location of the box</div>
 </td>
 </tr>
 <tr class="rowColor" id="i7">
 <td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaximum()">getMaximum</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition()">getPosition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the maximum of the Box</div>
+<div class="block">get a copy of the position vector for the box</div>
 </td>
 </tr>
 <tr class="altColor" id="i8">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMinimum()">getMinimum</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Get the minimum of the Box</div>
-</td>
-</tr>
-<tr class="rowColor" id="i9">
-<td class="colFirst"><code><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition()">getPosition</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Get the position of the Box</div>
-</td>
-</tr>
-<tr class="altColor" id="i10">
-<td class="colFirst"><code><a href="Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSide(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">getSide</a></span>&#8203;(<a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis,
-float&nbsp;dir)</code></th>
-<td class="colLast">
-<div class="block">Get the side of the Box based on direction and Axis</div>
-</td>
-</tr>
-<tr class="rowColor" id="i11">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSurfaceArea()">getSurfaceArea</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the surface area of the Box</div>
+<div class="block">get the surface area of the box</div>
 </td>
 </tr>
-<tr class="altColor" id="i12">
+<tr class="rowColor" id="i9">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVolume()">getVolume</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the volume of the Box</div>
+<div class="block">get the volume of the box</div>
 </td>
 </tr>
-<tr class="rowColor" id="i13">
+<tr class="altColor" id="i10">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWidth()">getWidth</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the width of the Box</div>
+<div class="block">get the width of the box</div>
 </td>
 </tr>
-<tr class="altColor" id="i14">
+<tr class="rowColor" id="i11">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a></span>&#8203;(<a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</code></th>
 <td class="colLast">
-<div class="block">Check if a Box overlaps this Box</div>
+<div class="block">checks if a box overlaps this box</div>
+</td>
+</tr>
+<tr class="altColor" id="i12">
+<td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDepth(float)">setDepth</a></span>&#8203;(float&nbsp;depth)</code></th>
+<td class="colLast">
+<div class="block">set a new depth of the box and recalculate its actual min and max coords in the z axis</div>
+</td>
+</tr>
+<tr class="rowColor" id="i13">
+<td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDimensions(float,float,float)">setDimensions</a></span>&#8203;(float&nbsp;width,
+float&nbsp;height,
+float&nbsp;depth)</code></th>
+<td class="colLast">
+<div class="block">set teh dimensions of the box</div>
+</td>
+</tr>
+<tr class="altColor" id="i14">
+<td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHeight(float)">setHeight</a></span>&#8203;(float&nbsp;height)</code></th>
+<td class="colLast">
+<div class="block">set the height of the box and recalculate its actual min and max coords in the y axis</div>
 </td>
 </tr>
 <tr class="rowColor" id="i15">
 <td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDepth(float)">setDepth</a></span>&#8203;(float&nbsp;depth)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">Set a new depth of the Box and recalculate its min and max in the z axis</div>
+<div class="block">set the position of the box and recalculate its actual min and max coords</div>
 </td>
 </tr>
 <tr class="altColor" id="i16">
 <td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">setDimensions</a></span>&#8203;(<a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis,
-float&nbsp;dimension)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWidth(float)">setWidth</a></span>&#8203;(float&nbsp;width)</code></th>
 <td class="colLast">
-<div class="block">Set the dimensions of the Box for a specific Axis</div>
+<div class="block">set a new width of the box and recalculate its actual min and max coords in the x axis</div>
 </td>
 </tr>
 <tr class="rowColor" id="i17">
-<td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDimensions</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;dimensions)</code></th>
-<td class="colLast">
-<div class="block">Set the dimensions of the Box</div>
-</td>
-</tr>
-<tr class="altColor" id="i18">
-<td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHeight(float)">setHeight</a></span>&#8203;(float&nbsp;height)</code></th>
-<td class="colLast">
-<div class="block">Set a new height of the Box and recalculate its min and max in the y axis</div>
-</td>
-</tr>
-<tr class="rowColor" id="i19">
-<td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
-<td class="colLast">
-<div class="block">Set the position of the Box and recalculate its min and max</div>
-</td>
-</tr>
-<tr class="altColor" id="i20">
-<td class="colFirst"><code><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWidth(float)">setWidth</a></span>&#8203;(float&nbsp;width)</code></th>
-<td class="colLast">
-<div class="block">Set a new width of the Box and recalculate its min and max in the x axis</div>
-</td>
-</tr>
-<tr class="rowColor" id="i21">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get the Box represented as a formatted String</div>
+<div class="block">put the box width, height, depth, and position into a string</div>
 </td>
 </tr>
 </tbody>
@@ -351,7 +352,7 @@ float&nbsp;dimension)</code></th>
 <section class="detail">
 <h3><a id="&lt;init&gt;()">Box</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Box</span>()</div>
-<div class="block">Create a new default Box</div>
+<div class="block">creates a new box with default 0 values</div>
 </section>
 </li>
 <li class="blockList">
@@ -361,13 +362,13 @@ float&nbsp;dimension)</code></th>
 float&nbsp;height,
 float&nbsp;depth,
 <a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</span></div>
-<div class="block">Create a new 3D Box with specified width, height, depth, and location</div>
+<div class="block">create a new 3D box at location with specified width and height and depth</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>width</code> - Width of the Box</dd>
-<dd><code>height</code> - Height of the Box</dd>
-<dd><code>depth</code> - Depth of the Box</dd>
-<dd><code>position</code> - Location of the Box's center</dd>
+<dd><code>width</code> - width of box</dd>
+<dd><code>height</code> - height of box</dd>
+<dd><code>depth</code> - depth of box</dd>
+<dd><code>position</code> - location of the box's center</dd>
 </dl>
 </section>
 </li>
@@ -377,12 +378,12 @@ float&nbsp;depth,
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Box</span>&#8203;(<span class="arguments">float&nbsp;width,
 float&nbsp;height,
 <a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</span></div>
-<div class="block">Create a new 2D Box with specified width, height, and location</div>
+<div class="block">create a new 2D box at location with specified width and height</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>width</code> - Width of the Box</dd>
-<dd><code>height</code> - Height of the Box</dd>
-<dd><code>position</code> - Location of the Box's center</dd>
+<dd><code>width</code> - width of box</dd>
+<dd><code>height</code> - height of box</dd>
+<dd><code>position</code> - location of the box's center</dd>
 </dl>
 </section>
 </li>
@@ -390,10 +391,10 @@ float&nbsp;height,
 <section class="detail">
 <h3><a id="&lt;init&gt;(xyz.jeremynoesen.pseudo3d.scene.util.Box)">Box</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Box</span>&#8203;(<span class="arguments"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</span></div>
-<div class="block">Copy constructor for Box</div>
+<div class="block">copy constructor for box</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>box</code> - Box to copy</dd>
+<dd><code>box</code> - box to copy</dd>
 </dl>
 </section>
 </li>
@@ -409,42 +410,16 @@ float&nbsp;height,
 <ul class="blockList">
 <li class="blockList">
 <section class="detail">
-<h3><a id="setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDimensions</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></span>&nbsp;<span class="memberName">setDimensions</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;dimensions)</span></div>
-<div class="block">Set the dimensions of the Box</div>
+<h3><a id="setDimensions(float,float,float)">setDimensions</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></span>&nbsp;<span class="memberName">setDimensions</span>&#8203;(<span class="arguments">float&nbsp;width,
+float&nbsp;height,
+float&nbsp;depth)</span></div>
+<div class="block">set teh dimensions of the box</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>dimensions</code> - Dimensions of the Box</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Box</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">setDimensions</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></span>&nbsp;<span class="memberName">setDimensions</span>&#8203;(<span class="arguments"><a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis,
-float&nbsp;dimension)</span></div>
-<div class="block">Set the dimensions of the Box for a specific Axis</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis to set dimension for</dd>
-<dd><code>dimension</code> - Dimension in grid units</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Box</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getDimensions</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getDimensions</span>&#8203;(<span class="arguments"><a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Get the dimensions of the Box for a specific Axis</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis to get dimension for</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Dimension of the specified Axis</dd>
+<dd><code>width</code> - width of box</dd>
+<dd><code>height</code> - height of box</dd>
+<dd><code>depth</code> - depth of box</dd>
 </dl>
 </section>
 </li>
@@ -452,10 +427,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getWidth()">getWidth</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getWidth</span>()</div>
-<div class="block">Get the width of the Box</div>
+<div class="block">get the width of the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Width of the Box</dd>
+<dd>width of box</dd>
 </dl>
 </section>
 </li>
@@ -463,12 +438,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="setWidth(float)">setWidth</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></span>&nbsp;<span class="memberName">setWidth</span>&#8203;(<span class="arguments">float&nbsp;width)</span></div>
-<div class="block">Set a new width of the Box and recalculate its min and max in the x axis</div>
+<div class="block">set a new width of the box and recalculate its actual min and max coords in the x axis</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>width</code> - New width of Box</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Box</dd>
+<dd><code>width</code> - width of box</dd>
 </dl>
 </section>
 </li>
@@ -476,10 +449,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getHeight()">getHeight</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getHeight</span>()</div>
-<div class="block">Get the height of the Box</div>
+<div class="block">get the height of the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Height of the Box</dd>
+<dd>height of box</dd>
 </dl>
 </section>
 </li>
@@ -487,12 +460,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="setHeight(float)">setHeight</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></span>&nbsp;<span class="memberName">setHeight</span>&#8203;(<span class="arguments">float&nbsp;height)</span></div>
-<div class="block">Set a new height of the Box and recalculate its min and max in the y axis</div>
+<div class="block">set the height of the box and recalculate its actual min and max coords in the y axis</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>height</code> - New height of the Box</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Box</dd>
+<dd><code>height</code> - height of box</dd>
 </dl>
 </section>
 </li>
@@ -500,10 +471,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getDepth()">getDepth</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getDepth</span>()</div>
-<div class="block">Get the depth of the Box</div>
+<div class="block">get the depth of the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Depth of Box</dd>
+<dd>depth of box</dd>
 </dl>
 </section>
 </li>
@@ -511,12 +482,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="setDepth(float)">setDepth</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></span>&nbsp;<span class="memberName">setDepth</span>&#8203;(<span class="arguments">float&nbsp;depth)</span></div>
-<div class="block">Set a new depth of the Box and recalculate its min and max in the z axis</div>
+<div class="block">set a new depth of the box and recalculate its actual min and max coords in the z axis</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>depth</code> - New depth of the Box</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Box</dd>
+<dd><code>depth</code> - depth of box</dd>
 </dl>
 </section>
 </li>
@@ -524,10 +493,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getPosition()">getPosition</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getPosition</span>()</div>
-<div class="block">Get the position of the Box</div>
+<div class="block">get a copy of the position vector for the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Box position</dd>
+<dd>copy of position</dd>
 </dl>
 </section>
 </li>
@@ -535,12 +504,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></span>&nbsp;<span class="memberName">setPosition</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</span></div>
-<div class="block">Set the position of the Box and recalculate its min and max</div>
+<div class="block">set the position of the box and recalculate its actual min and max coords</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>position</code> - New position</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>This Box</dd>
+<dd><code>position</code> - new position</dd>
 </dl>
 </section>
 </li>
@@ -548,10 +515,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getMinimum()">getMinimum</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getMinimum</span>()</div>
-<div class="block">Get the minimum of the Box</div>
+<div class="block">get the minimum location of the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Minimum location</dd>
+<dd>minimum location</dd>
 </dl>
 </section>
 </li>
@@ -559,10 +526,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getMaximum()">getMaximum</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getMaximum</span>()</div>
-<div class="block">Get the maximum of the Box</div>
+<div class="block">get the maximum location of the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Maximum location</dd>
+<dd>maximum location</dd>
 </dl>
 </section>
 </li>
@@ -570,12 +537,12 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">overlaps</span>&#8203;(<span class="arguments"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</span></div>
-<div class="block">Check if a Box overlaps this Box</div>
+<div class="block">checks if a box overlaps this box</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>box</code> - Box to check for overlap</dd>
+<dd><code>box</code> - box to check for overlaps</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Box overlaps this Box</dd>
+<dd>true if the box overlaps this box</dd>
 </dl>
 </section>
 </li>
@@ -583,12 +550,12 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">contains</span>&#8203;(<span class="arguments"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</span></div>
-<div class="block">Check if a Box is inside this Box</div>
+<div class="block">check if a box is inside this box</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>box</code> - Box to check</dd>
+<dd><code>box</code> - box to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Box is inside this Box</dd>
+<dd>true if the box is inside this box</dd>
 </dl>
 </section>
 </li>
@@ -596,12 +563,12 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">contains</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</span></div>
-<div class="block">Check if this Box contains a position</div>
+<div class="block">check if this box contains a position</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>position</code> - Position to check</dd>
+<dd><code>position</code> - position to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True of the Box contains this position</dd>
+<dd>true of the box contains this position</dd>
 </dl>
 </section>
 </li>
@@ -609,10 +576,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getVolume()">getVolume</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getVolume</span>()</div>
-<div class="block">Get the volume of the Box</div>
+<div class="block">get the volume of the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Volume of the Box</dd>
+<dd>volume of the box</dd>
 </dl>
 </section>
 </li>
@@ -620,38 +587,10 @@ float&nbsp;dimension)</span></div>
 <section class="detail">
 <h3><a id="getSurfaceArea()">getSurfaceArea</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getSurfaceArea</span>()</div>
-<div class="block">Get the surface area of the Box</div>
+<div class="block">get the surface area of the box</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Surface area of the Box</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getFaceArea</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getFaceArea</span>&#8203;(<span class="arguments"><a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Get the face area for a side perpendicular to the specified Axis</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis to get face area for</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Face area for a side perpendicular to the specified Axis</dd>
-</dl>
-</section>
-</li>
-<li class="blockList">
-<section class="detail">
-<h3><a id="getSide(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">getSide</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></span>&nbsp;<span class="memberName">getSide</span>&#8203;(<span class="arguments"><a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis,
-float&nbsp;dir)</span></div>
-<div class="block">Get the side of the Box based on direction and Axis</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis of motion</dd>
-<dd><code>dir</code> - Direction</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Side based on direction and Axis</dd>
+<dd>surface area of box</dd>
 </dl>
 </section>
 </li>
@@ -659,12 +598,12 @@ float&nbsp;dir)</span></div>
 <section class="detail">
 <h3><a id="toString()">toString</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.lang.String</span>&nbsp;<span class="memberName">toString</span>()</div>
-<div class="block">Get the Box represented as a formatted String</div>
+<div class="block">put the box width, height, depth, and position into a string</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>toString</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Box in string format</dd>
+<dd>box in string format</dd>
 </dl>
 </section>
 </li>
@@ -672,14 +611,14 @@ float&nbsp;dir)</span></div>
 <section class="detail">
 <h3><a id="equals(java.lang.Object)">equals</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">equals</span>&#8203;(<span class="arguments">java.lang.Object&nbsp;box)</span></div>
-<div class="block">Check if another Box is equal to this Box</div>
+<div class="block">check if another box has the same width, height, depth, and position as this box</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>box</code> - Box to check for equality</dd>
+<dd><code>box</code> - box to check for equality</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the two Boxes are equal</dd>
+<dd>true if the two boxes are equal</dd>
 </dl>
 </section>
 </li>
@@ -715,7 +654,7 @@ float&nbsp;dir)</span></div>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

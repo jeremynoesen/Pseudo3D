@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="typeNameLabel">Renderer</span>
 extends java.lang.Object</pre>
-<div class="block">Scene renderer which will render a Scene onto a JavaFX Canvas</div>
+<div class="block">scene renderer, will turn a scene into a render on a javafx canvas</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -116,7 +116,7 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(xyz.jeremynoesen.pseudo3d.scene.Scene)">Renderer</a></span>&#8203;(<a href="../Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a>&nbsp;scene)</code></th>
 <td class="colLast">
-<div class="block">Create a new Renderer for the specified Scene</div>
+<div class="block">create a new renderer for the specified scene</div>
 </td>
 </tr>
 </tbody>
@@ -146,7 +146,7 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">
-<div class="block">Check if two Renderer objects are equal</div>
+<div class="block">check if two renderer objects are equal</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
@@ -154,7 +154,7 @@ extends java.lang.Object</pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#render(javafx.scene.canvas.GraphicsContext,float)">render</a></span>&#8203;(javafx.scene.canvas.GraphicsContext&nbsp;graphicsContext,
 float&nbsp;deltaTime)</code></th>
 <td class="colLast">
-<div class="block">Render the next full frame</div>
+<div class="block">render the next full frame</div>
 </td>
 </tr>
 </tbody>
@@ -183,10 +183,10 @@ float&nbsp;deltaTime)</code></th>
 <section class="detail">
 <h3><a id="&lt;init&gt;(xyz.jeremynoesen.pseudo3d.scene.Scene)">Renderer</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Renderer</span>&#8203;(<span class="arguments"><a href="../Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a>&nbsp;scene)</span></div>
-<div class="block">Create a new Renderer for the specified Scene</div>
+<div class="block">create a new renderer for the specified scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>scene</code> - Scene to render</dd>
+<dd><code>scene</code> - scene to render</dd>
 </dl>
 </section>
 </li>
@@ -205,11 +205,11 @@ float&nbsp;deltaTime)</code></th>
 <h3><a id="render(javafx.scene.canvas.GraphicsContext,float)">render</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">render</span>&#8203;(<span class="arguments">javafx.scene.canvas.GraphicsContext&nbsp;graphicsContext,
 float&nbsp;deltaTime)</span></div>
-<div class="block">Render the next full frame</div>
+<div class="block">render the next full frame</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>graphicsContext</code> - GraphicsContext to draw to</dd>
-<dd><code>deltaTime</code> - Time elapsed in last frame, used for Sprite updating</dd>
+<dd><code>graphicsContext</code> - graphics context to draw to</dd>
+<dd><code>deltaTime</code> - time elapsed in last frame, used for sprite updating</dd>
 </dl>
 </section>
 </li>
@@ -217,14 +217,14 @@ float&nbsp;deltaTime)</span></div>
 <section class="detail">
 <h3><a id="equals(java.lang.Object)">equals</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">equals</span>&#8203;(<span class="arguments">java.lang.Object&nbsp;o)</span></div>
-<div class="block">Check if two Renderer objects are equal</div>
+<div class="block">check if two renderer objects are equal</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - Renderer to check</dd>
+<dd><code>o</code> - object to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if equal</dd>
+<dd>true if equal</dd>
 </dl>
 </section>
 </li>
