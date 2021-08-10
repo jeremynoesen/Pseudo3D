@@ -19,7 +19,7 @@
 <script type="text/javascript" src="script-dir/jquery-ui.js"></script>
 </head>
 <body class="all-classes-index">
-<script type="text/javascript">var data = {"i0":2,"i1":4,"i2":2,"i3":2,"i4":2,"i5":2,"i6":2,"i7":2,"i8":2,"i9":2,"i10":2,"i11":2};
+<script type="text/javascript">var data = {"i0":4,"i1":2,"i2":2,"i3":2,"i4":2,"i5":2,"i6":2,"i7":2,"i8":2,"i9":2,"i10":4,"i11":2,"i12":2};
 var tabs = {65535:["t0","All Classes"],2:["t2","Class Summary"],4:["t3","Enum Summary"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -81,75 +81,81 @@ loadScripts(document, 'script');</script>
 </thead>
 <tbody>
 <tr class="altColor" id="i0">
-<td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></td>
+<td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a></td>
 <th class="colLast" scope="row">
-<div class="block">simple box with some checks and mathematical operators</div>
+<div class="block">Axes of the grid</div>
 </th>
 </tr>
 <tr class="rowColor" id="i1">
-<td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a></td>
+<td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></td>
 <th class="colLast" scope="row">
-<div class="block">sides of box</div>
+<div class="block">Box and related mathematical operators</div>
 </th>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/render/Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></td>
 <th class="colLast" scope="row">
-<div class="block">camera used to determine where to render a scene</div>
+<div class="block">Camera used to determine where and how to render a Scene</div>
 </th>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></td>
 <th class="colLast" scope="row">
-<div class="block">entity to be placed in a scene, includes physics and a sprite</div>
+<div class="block">Entity to be placed in a Scene, with Physics and a Sprite</div>
 </th>
 </tr>
 <tr class="altColor" id="i4">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/input/Keyboard.html" title="class in xyz.jeremynoesen.pseudo3d.input">Keyboard</a></td>
 <th class="colLast" scope="row">
-<div class="block">class to keep track of key strokes allowing multiple key presses</div>
+<div class="block">Class to listen for key strokes, allowing multiple key presses</div>
 </th>
 </tr>
 <tr class="rowColor" id="i5">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/input/Mouse.html" title="class in xyz.jeremynoesen.pseudo3d.input">Mouse</a></td>
 <th class="colLast" scope="row">
-<div class="block">class to keep track of mouse buttons and motions</div>
+<div class="block">Class to keep track of mouse clicks and movement</div>
 </th>
 </tr>
 <tr class="altColor" id="i6">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></td>
 <th class="colLast" scope="row">
-<div class="block">axis-aligned bounding box physics entity</div>
+<div class="block">Axis-aligned bounding box physics</div>
 </th>
 </tr>
 <tr class="rowColor" id="i7">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/Pseudo3D.html" title="class in xyz.jeremynoesen.pseudo3d">Pseudo3D</a></td>
 <th class="colLast" scope="row">
-<div class="block">main application for any project using Pseudo3D</div>
+<div class="block">Starting point of all functions of Pseudo3D</div>
 </th>
 </tr>
 <tr class="altColor" id="i8">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/render/Renderer.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Renderer</a></td>
 <th class="colLast" scope="row">
-<div class="block">scene renderer, will turn a scene into a render on a javafx canvas</div>
+<div class="block">Scene renderer which will render a Scene onto a JavaFX Canvas</div>
 </th>
 </tr>
 <tr class="rowColor" id="i9">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></td>
 <th class="colLast" scope="row">
-<div class="block">scene to place entities, a camera, and code injections to modify them</div>
+<div class="block">Scene to place Entities, a Camera, and Runnables in and modify them</div>
 </th>
 </tr>
 <tr class="altColor" id="i10">
-<td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Sprite</a></td>
+<td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></td>
 <th class="colLast" scope="row">
-<div class="block">sprites to be rendered in game</div>
+<div class="block">Sides of the Box</div>
 </th>
 </tr>
 <tr class="rowColor" id="i11">
+<td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/render/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Sprite</a></td>
+<th class="colLast" scope="row">
+<div class="block">Sprites to be rendered in game</div>
+</th>
+</tr>
+<tr class="altColor" id="i12">
 <td class="colFirst"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></td>
 <th class="colLast" scope="row">
-<div class="block">immutable vector with vector mathematical operators</div>
+<div class="block">Immutable Vector with vector mathematical operators</div>
 </th>
 </tr>
 </tbody>

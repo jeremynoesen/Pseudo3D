@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="typeNameLabel">Mouse</span>
 extends java.lang.Object</pre>
-<div class="block">class to keep track of mouse buttons and motions</div>
+<div class="block">Class to keep track of mouse clicks and movement</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -144,35 +144,35 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>static <a href="../scene/util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition()">getPosition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the position of the pointer on screen</div>
+<div class="block">Get the absolute position of the pointer on the screen</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>static java.util.Set&lt;javafx.scene.input.MouseButton&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPressed()">getPressed</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get a list of all buttons pressed with their button codes</div>
+<div class="block">Get a Set of all buttons pressed as MouseButtons</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code>static float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getWheelRotation()">getWheelRotation</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the motion of the scroll wheel with speed and direction</div>
+<div class="block">Get the rotation of the scroll wheel with speed and direction</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initialize(javafx.scene.canvas.Canvas)">initialize</a></span>&#8203;(javafx.scene.canvas.Canvas&nbsp;canvas)</code></th>
 <td class="colLast">
-<div class="block">add the event listeners to the main pane of the program to allow this class to work</div>
+<div class="block">Add the event listeners to the main Canvas of the program</div>
 </td>
 </tr>
 <tr class="altColor" id="i4">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPressed(javafx.scene.input.MouseButton)">isPressed</a></span>&#8203;(javafx.scene.input.MouseButton&nbsp;button)</code></th>
 <td class="colLast">
-<div class="block">check if a button is pressed</div>
+<div class="block">Check if a MouseButton is pressed</div>
 </td>
 </tr>
 </tbody>
@@ -217,10 +217,10 @@ extends java.lang.Object</pre>
 <section class="detail">
 <h3><a id="getPressed()">getPressed</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">java.util.Set&lt;javafx.scene.input.MouseButton&gt;</span>&nbsp;<span class="memberName">getPressed</span>()</div>
-<div class="block">get a list of all buttons pressed with their button codes</div>
+<div class="block">Get a Set of all buttons pressed as MouseButtons</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>set of buttons pressed</dd>
+<dd>Set of MouseButtons pressed</dd>
 </dl>
 </section>
 </li>
@@ -228,12 +228,12 @@ extends java.lang.Object</pre>
 <section class="detail">
 <h3><a id="isPressed(javafx.scene.input.MouseButton)">isPressed</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isPressed</span>&#8203;(<span class="arguments">javafx.scene.input.MouseButton&nbsp;button)</span></div>
-<div class="block">check if a button is pressed</div>
+<div class="block">Check if a MouseButton is pressed</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>button</code> - button to check if pressed (MouseEvent.BUTTON)</dd>
+<dd><code>button</code> - MouseButton to check if pressed</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the button is pressed</dd>
+<dd>True if the MouseButton is pressed</dd>
 </dl>
 </section>
 </li>
@@ -241,10 +241,10 @@ extends java.lang.Object</pre>
 <section class="detail">
 <h3><a id="getWheelRotation()">getWheelRotation</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getWheelRotation</span>()</div>
-<div class="block">get the motion of the scroll wheel with speed and direction</div>
+<div class="block">Get the rotation of the scroll wheel with speed and direction</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>motion of the scroll wheel</dd>
+<dd>Rotation of the scroll wheel</dd>
 </dl>
 </section>
 </li>
@@ -252,10 +252,10 @@ extends java.lang.Object</pre>
 <section class="detail">
 <h3><a id="getPosition()">getPosition</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType"><a href="../scene/util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getPosition</span>()</div>
-<div class="block">get the position of the pointer on screen</div>
+<div class="block">Get the absolute position of the pointer on the screen</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>position of pointer on screen</dd>
+<dd>Absolute position of pointer on the screen</dd>
 </dl>
 </section>
 </li>
@@ -263,10 +263,10 @@ extends java.lang.Object</pre>
 <section class="detail">
 <h3><a id="initialize(javafx.scene.canvas.Canvas)">initialize</a></h3>
 <div class="memberSignature"><span class="modifiers">public static</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">initialize</span>&#8203;(<span class="arguments">javafx.scene.canvas.Canvas&nbsp;canvas)</span></div>
-<div class="block">add the event listeners to the main pane of the program to allow this class to work</div>
+<div class="block">Add the event listeners to the main Canvas of the program</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>canvas</code> - main pane for the program</dd>
+<dd><code>canvas</code> - Main Canvas of the program</dd>
 </dl>
 </section>
 </li>
