@@ -55,7 +55,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -97,23 +97,10 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="typeNameLabel">Entity</span>
 extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></pre>
-<div class="block">entity to be placed in a scene, includes physics and a sprite</div>
+<div class="block">Entity to be placed in a Scene, with Physics and a Sprite</div>
 </section>
 <section class="summary">
 <ul class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<li class="blockList">
-<section class="nestedClassSummary"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h2>Nested Class Summary</h2>
-<div class="inheritedList">
-<h2>Nested classes/interfaces inherited from class&nbsp;xyz.jeremynoesen.pseudo3d.scene.util.<a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></h2>
-<a id="nested.classes.inherited.from.class.xyz.jeremynoesen.pseudo3d.scene.util.Box">
-<!--   -->
-</a><code><a href="../util/Box.Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Box.Side</a></code></div>
-</section>
-</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li class="blockList">
 <section class="constructorSummary"><a id="constructor.summary">
@@ -133,13 +120,13 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Entity</a></span>()</code></th>
 <td class="colLast">
-<div class="block">constructs a new default entity</div>
+<div class="block">Create a new default Entity</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(xyz.jeremynoesen.pseudo3d.scene.entity.Entity)">Entity</a></span>&#8203;(<a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&nbsp;entity)</code></th>
 <td class="colLast">
-<div class="block">copy constructor for entities</div>
+<div class="block">Copy constructor for Entities</div>
 </td>
 </tr>
 </tbody>
@@ -169,126 +156,126 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canUpdateOffScreen()">canUpdateOffScreen</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get whether the entity can update when not visible on screen</div>
+<div class="block">Get whether the Entity can update when not visible on-screen</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">
-<div class="block">check if this entity is identical to another</div>
+<div class="block">Check if this Entity is identical to another</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code><a href="../Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScene()">getScene</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the scene the entity is in</div>
+<div class="block">Get the Scene the Entity is in</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSpeed()">getSpeed</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the speed modifier of the entity</div>
+<div class="block">Get the speed modifier of the Entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i4">
-<td class="colFirst"><code><a href="Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Sprite</a></code></td>
+<td class="colFirst"><code><a href="../render/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Sprite</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSprite()">getSprite</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the sprite assigned to this entity</div>
+<div class="block">Get the Sprite of the Entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i5">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasPhysics()">hasPhysics</a></span>()</code></th>
 <td class="colLast">
-<div class="block">check if the entity has physics enabled</div>
+<div class="block">Check if the Entity has physics enabled</div>
 </td>
 </tr>
 <tr class="altColor" id="i6">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isEnabled()">isEnabled</a></span>()</code></th>
 <td class="colLast">
-<div class="block">check if the entity is enabled in the scene</div>
+<div class="block">Check if the Entity is enabled in the Scene</div>
 </td>
 </tr>
 <tr class="rowColor" id="i7">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isOnScreen()">isOnScreen</a></span>()</code></th>
 <td class="colLast">
-<div class="block">check if the entity is shown on screen.</div>
+<div class="block">Check if the Entity is shown on-screen</div>
 </td>
 </tr>
 <tr class="altColor" id="i8">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isVisible()">isVisible</a></span>()</code></th>
 <td class="colLast">
-<div class="block">check if the entity is visible in rendering</div>
+<div class="block">Check if the Entity is visible in rendering</div>
 </td>
 </tr>
 <tr class="rowColor" id="i9">
 <td class="colFirst"><code><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEnabled(boolean)">setEnabled</a></span>&#8203;(boolean&nbsp;enabled)</code></th>
 <td class="colLast">
-<div class="block">set the entity to be visible in the scene and updatable in physics</div>
+<div class="block">Set the Entity to be visible in the Scene and updatable in Physics</div>
 </td>
 </tr>
 <tr class="altColor" id="i10">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOnScreen(boolean)">setOnScreen</a></span>&#8203;(boolean&nbsp;onScreen)</code></th>
 <td class="colLast">
-<div class="block">set if the entity is on screen.</div>
+<div class="block">Set if the Entity is on-screen</div>
 </td>
 </tr>
 <tr class="rowColor" id="i11">
 <td class="colFirst"><code><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPhysics(boolean)">setPhysics</a></span>&#8203;(boolean&nbsp;enabled)</code></th>
 <td class="colLast">
-<div class="block">set the entity to have physics or not</div>
+<div class="block">Set the Entity to have physics or not</div>
 </td>
 </tr>
 <tr class="altColor" id="i12">
 <td class="colFirst"><code><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setScene(xyz.jeremynoesen.pseudo3d.scene.Scene)">setScene</a></span>&#8203;(<a href="../Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a>&nbsp;scene)</code></th>
 <td class="colLast">
-<div class="block">set the scene the entity is in</div>
+<div class="block">Set the Scene the Entity is in</div>
 </td>
 </tr>
 <tr class="rowColor" id="i13">
 <td class="colFirst"><code><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSpeed(float)">setSpeed</a></span>&#8203;(float&nbsp;speed)</code></th>
 <td class="colLast">
-<div class="block">set the speed modifier for the entity</div>
+<div class="block">Set the speed modifier for the Entity</div>
 </td>
 </tr>
 <tr class="altColor" id="i14">
 <td class="colFirst"><code><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSprite(xyz.jeremynoesen.pseudo3d.scene.entity.Sprite)">setSprite</a></span>&#8203;(<a href="Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Sprite</a>&nbsp;sprite)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSprite(xyz.jeremynoesen.pseudo3d.scene.render.Sprite)">setSprite</a></span>&#8203;(<a href="../render/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Sprite</a>&nbsp;sprite)</code></th>
 <td class="colLast">
-<div class="block">set the sprite for the entity</div>
+<div class="block">Set the Sprite for the Entity</div>
 </td>
 </tr>
 <tr class="rowColor" id="i15">
 <td class="colFirst"><code><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpdateOffScreen(boolean)">setUpdateOffScreen</a></span>&#8203;(boolean&nbsp;updateOffScreen)</code></th>
 <td class="colLast">
-<div class="block">get whether the entity can update when not visible on screen</div>
+<div class="block">Set whether the Entity can update when not visible on-screen</div>
 </td>
 </tr>
 <tr class="altColor" id="i16">
 <td class="colFirst"><code><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVisible(boolean)">setVisible</a></span>&#8203;(boolean&nbsp;visible)</code></th>
 <td class="colLast">
-<div class="block">set the entity to be visible in rendering</div>
+<div class="block">Set the Entity to be visible in rendering</div>
 </td>
 </tr>
 <tr class="rowColor" id="i17">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tickMotion(float)">tickMotion</a></span>&#8203;(float&nbsp;deltaTime)</code></th>
 <td class="colLast">
-<div class="block">update the motion of the entity</div>
+<div class="block">Update the motion of the Entity</div>
 </td>
 </tr>
 </tbody>
@@ -299,12 +286,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <h3>Methods inherited from class&nbsp;xyz.jeremynoesen.pseudo3d.scene.entity.<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></h3>
 <a id="methods.inherited.from.class.xyz.jeremynoesen.pseudo3d.scene.entity.Physics">
 <!--   -->
-</a><code><a href="Physics.html#collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">collidesOn</a>, <a href="Physics.html#collidesWith(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">collidesWith</a>, <a href="Physics.html#collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">collidesWithOn</a>, <a href="Physics.html#getAcceleration()">getAcceleration</a>, <a href="Physics.html#getCollidingEntities()">getCollidingEntities</a>, <a href="Physics.html#getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Box.Side)">getCollidingEntities</a>, <a href="Physics.html#getDrag()">getDrag</a>, <a href="Physics.html#getGravity()">getGravity</a>, <a href="Physics.html#getMass()">getMass</a>, <a href="Physics.html#getOverlappingEntities()">getOverlappingEntities</a>, <a href="Physics.html#getPosition()">getPosition</a>, <a href="Physics.html#getRoughness()">getRoughness</a>, <a href="Physics.html#getTerminalVelocity()">getTerminalVelocity</a>, <a href="Physics.html#getVelocity()">getVelocity</a>, <a href="Physics.html#isColliding()">isColliding</a>, <a href="Physics.html#isKinematic()">isKinematic</a>, <a href="Physics.html#isOverlapping()">isOverlapping</a>, <a href="Physics.html#isPushable()">isPushable</a>, <a href="Physics.html#isPushableX()">isPushableX</a>, <a href="Physics.html#isPushableY()">isPushableY</a>, <a href="Physics.html#isPushableZ()">isPushableZ</a>, <a href="Physics.html#isSolid()">isSolid</a>, <a href="Physics.html#isUpdatable()">isUpdatable</a>, <a href="Physics.html#overlaps(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">overlaps</a>, <a href="Physics.html#setAcceleration(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setAcceleration</a>, <a href="Physics.html#setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag</a>, <a href="Physics.html#setEntities(java.util.LinkedList)">setEntities</a>, <a href="Physics.html#setGravity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setGravity</a>, <a href="Physics.html#setKinematic(boolean)">setKinematic</a>, <a href="Physics.html#setMass(float)">setMass</a>, <a href="Physics.html#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a>, <a href="Physics.html#setPushable(boolean,boolean,boolean)">setPushable</a>, <a href="Physics.html#setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness</a>, <a href="Physics.html#setSolid(boolean)">setSolid</a>, <a href="Physics.html#setTerminalVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setTerminalVelocity</a>, <a href="Physics.html#setUpdatable(boolean)">setUpdatable</a>, <a href="Physics.html#setVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setVelocity</a>, <a href="Physics.html#tickCollisions()">tickCollisions</a></code></div>
+</a><code><a href="Physics.html#collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">collidesOn</a>, <a href="Physics.html#collidesOn(xyz.jeremynoesen.pseudo3d.scene.util.Side)">collidesOn</a>, <a href="Physics.html#collidesWith(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">collidesWith</a>, <a href="Physics.html#collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Axis)">collidesWithOn</a>, <a href="Physics.html#collidesWithOn(xyz.jeremynoesen.pseudo3d.scene.entity.Physics,xyz.jeremynoesen.pseudo3d.scene.util.Side)">collidesWithOn</a>, <a href="Physics.html#getAcceleration()">getAcceleration</a>, <a href="Physics.html#getCollideableSides()">getCollideableSides</a>, <a href="Physics.html#getCollidingAxes()">getCollidingAxes</a>, <a href="Physics.html#getCollidingEntities()">getCollidingEntities</a>, <a href="Physics.html#getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getCollidingEntities</a>, <a href="Physics.html#getCollidingEntities(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getCollidingEntities</a>, <a href="Physics.html#getCollidingSides()">getCollidingSides</a>, <a href="Physics.html#getDrag()">getDrag</a>, <a href="Physics.html#getGravity()">getGravity</a>, <a href="Physics.html#getKinematicAxes()">getKinematicAxes</a>, <a href="Physics.html#getMass()">getMass</a>, <a href="Physics.html#getOverlappingEntities()">getOverlappingEntities</a>, <a href="Physics.html#getPosition()">getPosition</a>, <a href="Physics.html#getPushableAxes()">getPushableAxes</a>, <a href="Physics.html#getRoughness()">getRoughness</a>, <a href="Physics.html#getTerminalVelocity()">getTerminalVelocity</a>, <a href="Physics.html#getVelocity()">getVelocity</a>, <a href="Physics.html#isCollideable()">isCollideable</a>, <a href="Physics.html#isCollideableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isCollideableOn</a>, <a href="Physics.html#isCollideableOn(xyz.jeremynoesen.pseudo3d.scene.util.Side)">isCollideableOn</a>, <a href="Physics.html#isColliding()">isColliding</a>, <a href="Physics.html#isFullyCollideable()">isFullyCollideable</a>, <a href="Physics.html#isFullyKinematic()">isFullyKinematic</a>, <a href="Physics.html#isFullyPushable()">isFullyPushable</a>, <a href="Physics.html#isKinematic()">isKinematic</a>, <a href="Physics.html#isKinematicOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isKinematicOn</a>, <a href="Physics.html#isOverlapping()">isOverlapping</a>, <a href="Physics.html#isPushable()">isPushable</a>, <a href="Physics.html#isPushableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">isPushableOn</a>, <a href="Physics.html#isUpdatable()">isUpdatable</a>, <a href="Physics.html#overlaps(xyz.jeremynoesen.pseudo3d.scene.entity.Physics)">overlaps</a>, <a href="Physics.html#setAcceleration(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setAcceleration</a>, <a href="Physics.html#setCollidableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setCollidableOn</a>, <a href="Physics.html#setCollidableOn(xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setCollidableOn</a>, <a href="Physics.html#setCollidableSides(java.util.HashSet)">setCollidableSides</a>, <a href="Physics.html#setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag</a>, <a href="Physics.html#setEntities(java.util.LinkedList)">setEntities</a>, <a href="Physics.html#setFullyCollideable(boolean)">setFullyCollideable</a>, <a href="Physics.html#setFullyKinematic(boolean)">setFullyKinematic</a>, <a href="Physics.html#setFullyPushable(boolean)">setFullyPushable</a>, <a href="Physics.html#setGravity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setGravity</a>, <a href="Physics.html#setKinematicAxes(java.util.HashSet)">setKinematicAxes</a>, <a href="Physics.html#setKinematicOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setKinematicOn</a>, <a href="Physics.html#setMass(float)">setMass</a>, <a href="Physics.html#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a>, <a href="Physics.html#setPushableAxes(java.util.HashSet)">setPushableAxes</a>, <a href="Physics.html#setPushableOn(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setPushableOn</a>, <a href="Physics.html#setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness</a>, <a href="Physics.html#setTerminalVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setTerminalVelocity</a>, <a href="Physics.html#setUpdatable(boolean)">setUpdatable</a>, <a href="Physics.html#setVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setVelocity</a>, <a href="Physics.html#tickCollisions()">tickCollisions</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;xyz.jeremynoesen.pseudo3d.scene.util.<a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a></h3>
 <a id="methods.inherited.from.class.xyz.jeremynoesen.pseudo3d.scene.util.Box">
 <!--   -->
-</a><code><a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a>, <a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a>, <a href="../util/Box.html#getDepth()">getDepth</a>, <a href="../util/Box.html#getHeight()">getHeight</a>, <a href="../util/Box.html#getMaximum()">getMaximum</a>, <a href="../util/Box.html#getMinimum()">getMinimum</a>, <a href="../util/Box.html#getSurfaceArea()">getSurfaceArea</a>, <a href="../util/Box.html#getVolume()">getVolume</a>, <a href="../util/Box.html#getWidth()">getWidth</a>, <a href="../util/Box.html#overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a>, <a href="../util/Box.html#setDepth(float)">setDepth</a>, <a href="../util/Box.html#setDimensions(float,float,float)">setDimensions</a>, <a href="../util/Box.html#setHeight(float)">setHeight</a>, <a href="../util/Box.html#setWidth(float)">setWidth</a>, <a href="../util/Box.html#toString()">toString</a></code></div>
+</a><code><a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a>, <a href="../util/Box.html#contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a>, <a href="../util/Box.html#getDepth()">getDepth</a>, <a href="../util/Box.html#getDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getDimensions</a>, <a href="../util/Box.html#getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getFaceArea</a>, <a href="../util/Box.html#getHeight()">getHeight</a>, <a href="../util/Box.html#getMaximum()">getMaximum</a>, <a href="../util/Box.html#getMinimum()">getMinimum</a>, <a href="../util/Box.html#getSide(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">getSide</a>, <a href="../util/Box.html#getSurfaceArea()">getSurfaceArea</a>, <a href="../util/Box.html#getVolume()">getVolume</a>, <a href="../util/Box.html#getWidth()">getWidth</a>, <a href="../util/Box.html#overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a>, <a href="../util/Box.html#setDepth(float)">setDepth</a>, <a href="../util/Box.html#setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">setDimensions</a>, <a href="../util/Box.html#setDimensions(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDimensions</a>, <a href="../util/Box.html#setHeight(float)">setHeight</a>, <a href="../util/Box.html#setWidth(float)">setWidth</a>, <a href="../util/Box.html#toString()">toString</a></code></div>
 <div class="inheritedList">
 <h3>Methods inherited from class&nbsp;java.lang.Object</h3>
 <a id="methods.inherited.from.class.java.lang.Object">
@@ -327,17 +314,17 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="&lt;init&gt;()">Entity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Entity</span>()</div>
-<div class="block">constructs a new default entity</div>
+<div class="block">Create a new default Entity</div>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="&lt;init&gt;(xyz.jeremynoesen.pseudo3d.scene.entity.Entity)">Entity</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Entity</span>&#8203;(<span class="arguments"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&nbsp;entity)</span></div>
-<div class="block">copy constructor for entities</div>
+<div class="block">Copy constructor for Entities</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>entity</code> - entity to copy</dd>
+<dd><code>entity</code> - Entity to copy</dd>
 </dl>
 </section>
 </li>
@@ -354,22 +341,24 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <li class="blockList">
 <section class="detail">
 <h3><a id="getSprite()">getSprite</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Sprite</a></span>&nbsp;<span class="memberName">getSprite</span>()</div>
-<div class="block">get the sprite assigned to this entity</div>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../render/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Sprite</a></span>&nbsp;<span class="memberName">getSprite</span>()</div>
+<div class="block">Get the Sprite of the Entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>image sprite of this entity</dd>
+<dd>Sprite of the Entity</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="setSprite(xyz.jeremynoesen.pseudo3d.scene.entity.Sprite)">setSprite</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setSprite</span>&#8203;(<span class="arguments"><a href="Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Sprite</a>&nbsp;sprite)</span></div>
-<div class="block">set the sprite for the entity</div>
+<h3><a id="setSprite(xyz.jeremynoesen.pseudo3d.scene.render.Sprite)">setSprite</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setSprite</span>&#8203;(<span class="arguments"><a href="../render/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Sprite</a>&nbsp;sprite)</span></div>
+<div class="block">Set the Sprite for the Entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>sprite</code> - new image to set as the sprite</dd>
+<dd><code>sprite</code> - New Sprite</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Entity</dd>
 </dl>
 </section>
 </li>
@@ -377,10 +366,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="isOnScreen()">isOnScreen</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isOnScreen</span>()</div>
-<div class="block">check if the entity is shown on screen. if the entity has no sprite, this will always be false</div>
+<div class="block">Check if the Entity is shown on-screen
+ <p>
+ If the Entity has no Sprite, this will always be false</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if shown on screen</dd>
+<dd>True if shown on-screen</dd>
 </dl>
 </section>
 </li>
@@ -388,11 +379,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="setOnScreen(boolean)">setOnScreen</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">setOnScreen</span>&#8203;(<span class="arguments">boolean&nbsp;onScreen)</span></div>
-<div class="block">set if the entity is on screen. manually setting this will do nothing, as this value is automatically updated by
- the renderer</div>
+<div class="block">Set if the Entity is on-screen
+ <p>
+ Manually setting this will do nothing, as this value is automatically updated by the Renderer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>onScreen</code> - true when visible on screen</dd>
+<dd><code>onScreen</code> - True when visible on-screen</dd>
 </dl>
 </section>
 </li>
@@ -400,10 +392,10 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="canUpdateOffScreen()">canUpdateOffScreen</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">canUpdateOffScreen</span>()</div>
-<div class="block">get whether the entity can update when not visible on screen</div>
+<div class="block">Get whether the Entity can update when not visible on-screen</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if can update off screen</dd>
+<dd>True if the Entity can update off-screen</dd>
 </dl>
 </section>
 </li>
@@ -411,10 +403,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="setUpdateOffScreen(boolean)">setUpdateOffScreen</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setUpdateOffScreen</span>&#8203;(<span class="arguments">boolean&nbsp;updateOffScreen)</span></div>
-<div class="block">get whether the entity can update when not visible on screen</div>
+<div class="block">Set whether the Entity can update when not visible on-screen</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>updateOffScreen</code> - true to allow updating off screen</dd>
+<dd><code>updateOffScreen</code> - True to allow updating off-screen</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Entity</dd>
 </dl>
 </section>
 </li>
@@ -422,10 +416,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="setScene(xyz.jeremynoesen.pseudo3d.scene.Scene)">setScene</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setScene</span>&#8203;(<span class="arguments"><a href="../Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a>&nbsp;scene)</span></div>
-<div class="block">set the scene the entity is in</div>
+<div class="block">Set the Scene the Entity is in</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>scene</code> - scene to place entity in</dd>
+<dd><code>scene</code> - Scene to place Entity in</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Entity</dd>
 </dl>
 </section>
 </li>
@@ -433,10 +429,10 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="getScene()">getScene</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">getScene</span>()</div>
-<div class="block">get the scene the entity is in</div>
+<div class="block">Get the Scene the Entity is in</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>scene entity is in</dd>
+<dd>Scene Entity is in</dd>
 </dl>
 </section>
 </li>
@@ -444,10 +440,10 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="getSpeed()">getSpeed</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getSpeed</span>()</div>
-<div class="block">get the speed modifier of the entity</div>
+<div class="block">Get the speed modifier of the Entity</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>speed modifier value</dd>
+<dd>Speed modifier value</dd>
 </dl>
 </section>
 </li>
@@ -455,10 +451,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="setSpeed(float)">setSpeed</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setSpeed</span>&#8203;(<span class="arguments">float&nbsp;speed)</span></div>
-<div class="block">set the speed modifier for the entity</div>
+<div class="block">Set the speed modifier for the Entity</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>speed</code> - speed modifier value</dd>
+<dd><code>speed</code> - New speed modifier value</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Entity</dd>
 </dl>
 </section>
 </li>
@@ -466,12 +464,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="tickMotion(float)">tickMotion</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">tickMotion</span>&#8203;(<span class="arguments">float&nbsp;deltaTime)</span></div>
-<div class="block">update the motion of the entity</div>
+<div class="block">Update the motion of the Entity</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="Physics.html#tickMotion(float)">tickMotion</a></code>&nbsp;in class&nbsp;<code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>deltaTime</code> - time elapsed to use in calculation</dd>
+<dd><code>deltaTime</code> - Time elapsed of the previous tick</dd>
 </dl>
 </section>
 </li>
@@ -479,10 +477,10 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="isEnabled()">isEnabled</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isEnabled</span>()</div>
-<div class="block">check if the entity is enabled in the scene</div>
+<div class="block">Check if the Entity is enabled in the Scene</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if enabled</dd>
+<dd>True if enabled</dd>
 </dl>
 </section>
 </li>
@@ -490,10 +488,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="setEnabled(boolean)">setEnabled</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setEnabled</span>&#8203;(<span class="arguments">boolean&nbsp;enabled)</span></div>
-<div class="block">set the entity to be visible in the scene and updatable in physics</div>
+<div class="block">Set the Entity to be visible in the Scene and updatable in Physics</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>enabled</code> - true to enable entity in scene</dd>
+<dd><code>enabled</code> - True to enable Entity in Scene</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Entity</dd>
 </dl>
 </section>
 </li>
@@ -501,10 +501,10 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="isVisible()">isVisible</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">isVisible</span>()</div>
-<div class="block">check if the entity is visible in rendering</div>
+<div class="block">Check if the Entity is visible in rendering</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if visible</dd>
+<dd>True if visible</dd>
 </dl>
 </section>
 </li>
@@ -512,17 +512,21 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="setVisible(boolean)">setVisible</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setVisible</span>&#8203;(<span class="arguments">boolean&nbsp;visible)</span></div>
-<div class="block">set the entity to be visible in rendering</div>
+<div class="block">Set the Entity to be visible in rendering</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Entity</dd>
+</dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
 <h3><a id="hasPhysics()">hasPhysics</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">hasPhysics</span>()</div>
-<div class="block">check if the entity has physics enabled</div>
+<div class="block">Check if the Entity has physics enabled</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if entity has physics</dd>
+<dd>True if Entity has physics</dd>
 </dl>
 </section>
 </li>
@@ -530,10 +534,12 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="setPhysics(boolean)">setPhysics</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></span>&nbsp;<span class="memberName">setPhysics</span>&#8203;(<span class="arguments">boolean&nbsp;enabled)</span></div>
-<div class="block">set the entity to have physics or not</div>
+<div class="block">Set the Entity to have physics or not</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>enabled</code> - true to enable physics</dd>
+<dd><code>enabled</code> - True to enable physics</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Entity</dd>
 </dl>
 </section>
 </li>
@@ -541,14 +547,14 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <section class="detail">
 <h3><a id="equals(java.lang.Object)">equals</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">equals</span>&#8203;(<span class="arguments">java.lang.Object&nbsp;o)</span></div>
-<div class="block">check if this entity is identical to another</div>
+<div class="block">Check if this Entity is identical to another</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="Physics.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - entity to check</dd>
+<dd><code>o</code> - Entity to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if this entity is identical to the other entity</dd>
+<dd>True if this Entity is identical to the other Entity</dd>
 </dl>
 </section>
 </li>
@@ -584,7 +590,7 @@ extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.e
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

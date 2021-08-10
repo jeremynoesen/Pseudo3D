@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="typeNameLabel">Camera</span>
 extends java.lang.Object</pre>
-<div class="block">camera used to determine where to render a scene</div>
+<div class="block">Camera used to determine where and how to render a Scene</div>
 </section>
 <section class="summary">
 <ul class="blockList">
@@ -116,13 +116,13 @@ extends java.lang.Object</pre>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Camera</a></span>()</code></th>
 <td class="colLast">
-<div class="block">creates a new default camera</div>
+<div class="block">Create a new default Camera</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(xyz.jeremynoesen.pseudo3d.scene.render.Camera)">Camera</a></span>&#8203;(<a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a>&nbsp;camera)</code></th>
 <td class="colLast">
-<div class="block">copies a camera to a new one</div>
+<div class="block">Copy constructor for Camera</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -134,7 +134,7 @@ float&nbsp;viewDistance,
 float&nbsp;zoom,
 float&nbsp;rotation)</code></th>
 <td class="colLast">
-<div class="block">constructs a new camera with set position, sensor res, and field of view</div>
+<div class="block">Create a new Camera with set position, sensor size, field of view, view distance, zoom, rotation, and offset</div>
 </td>
 </tr>
 </tbody>
@@ -164,105 +164,105 @@ float&nbsp;rotation)</code></th>
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">
-<div class="block">check if a camera is equal to this one</div>
+<div class="block">Check if a Camera is equal to this one</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldOfView()">getFieldOfView</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get field of view in degrees</div>
+<div class="block">Get the field of view in degrees</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOffset()">getOffset</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get offset of render center</div>
+<div class="block">Get the offset of the render from the center of the window</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
 <td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPosition()">getPosition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the position of the camera in the scene</div>
+<div class="block">Get the position of the Camera in the Scene</div>
 </td>
 </tr>
 <tr class="altColor" id="i4">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRotation()">getRotation</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the rotation of the camera</div>
+<div class="block">Get the rotation of the Camera</div>
 </td>
 </tr>
 <tr class="rowColor" id="i5">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSensorSize()">getSensorSize</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get sensor size of camera in pixels</div>
+<div class="block">Get the sensor size of the Camera in pixels</div>
 </td>
 </tr>
 <tr class="altColor" id="i6">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewDistance()">getViewDistance</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the view distance for the camera</div>
+<div class="block">Get the view distance for the Camera</div>
 </td>
 </tr>
 <tr class="rowColor" id="i7">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getZoom()">getZoom</a></span>()</code></th>
 <td class="colLast">
-<div class="block">get the zoom for the camera</div>
+<div class="block">Get the zoom for the Camera</div>
 </td>
 </tr>
 <tr class="altColor" id="i8">
 <td class="colFirst"><code><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFieldOfView(float)">setFieldOfView</a></span>&#8203;(float&nbsp;fieldOfView)</code></th>
 <td class="colLast">
-<div class="block">set the camera's field of view</div>
+<div class="block">Set the Camera's field of view</div>
 </td>
 </tr>
 <tr class="rowColor" id="i9">
 <td class="colFirst"><code><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOffset(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setOffset</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;offset)</code></th>
 <td class="colLast">
-<div class="block">set the offset from the center of the camera in the render, in pixels</div>
+<div class="block">Set the offset of the render from the center of the window</div>
 </td>
 </tr>
 <tr class="altColor" id="i10">
 <td class="colFirst"><code><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">set the camera's position in thew scene</div>
+<div class="block">Set the Camera's position in the Scene</div>
 </td>
 </tr>
 <tr class="rowColor" id="i11">
 <td class="colFirst"><code><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRotation(float)">setRotation</a></span>&#8203;(float&nbsp;rotation)</code></th>
 <td class="colLast">
-<div class="block">set the rotation of the camera</div>
+<div class="block">Set the rotation of the Camera</div>
 </td>
 </tr>
 <tr class="altColor" id="i12">
 <td class="colFirst"><code><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSensorSize(float)">setSensorSize</a></span>&#8203;(float&nbsp;sensorSize)</code></th>
 <td class="colLast">
-<div class="block">set the camera sensor size in pixels</div>
+<div class="block">Set the Camera sensor size in pixels</div>
 </td>
 </tr>
 <tr class="rowColor" id="i13">
 <td class="colFirst"><code><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewDistance(float)">setViewDistance</a></span>&#8203;(float&nbsp;viewDistance)</code></th>
 <td class="colLast">
-<div class="block">set how far away the camera is able to view entities</div>
+<div class="block">Set the view distance for the Camera</div>
 </td>
 </tr>
 <tr class="altColor" id="i14">
 <td class="colFirst"><code><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setZoom(float)">setZoom</a></span>&#8203;(float&nbsp;zoom)</code></th>
 <td class="colLast">
-<div class="block">set the zoom for the camera</div>
+<div class="block">Set the zoom for the Camera</div>
 </td>
 </tr>
 </tbody>
@@ -291,7 +291,7 @@ float&nbsp;rotation)</code></th>
 <section class="detail">
 <h3><a id="&lt;init&gt;()">Camera</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Camera</span>()</div>
-<div class="block">creates a new default camera</div>
+<div class="block">Create a new default Camera</div>
 </section>
 </li>
 <li class="blockList">
@@ -304,16 +304,16 @@ float&nbsp;fieldOfView,
 float&nbsp;viewDistance,
 float&nbsp;zoom,
 float&nbsp;rotation)</span></div>
-<div class="block">constructs a new camera with set position, sensor res, and field of view</div>
+<div class="block">Create a new Camera with set position, sensor size, field of view, view distance, zoom, rotation, and offset</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>position</code> - camera position in scene</dd>
-<dd><code>sensorSize</code> - camera sensor size</dd>
-<dd><code>fieldOfView</code> - field of view in degrees</dd>
-<dd><code>viewDistance</code> - z distance camera is able to see in grid units</dd>
-<dd><code>zoom</code> - camera zoom, scales render</dd>
-<dd><code>rotation</code> - rotation of camera in degrees</dd>
-<dd><code>offset</code> - position of camera in window</dd>
+<dd><code>position</code> - Camera position in Scene</dd>
+<dd><code>sensorSize</code> - Camera sensor size</dd>
+<dd><code>fieldOfView</code> - Field of view in degrees</dd>
+<dd><code>viewDistance</code> - View distance in grid units</dd>
+<dd><code>zoom</code> - Camera zoom</dd>
+<dd><code>rotation</code> - Rotation of Camera in degrees</dd>
+<dd><code>offset</code> - Position of Camera in window</dd>
 </dl>
 </section>
 </li>
@@ -321,10 +321,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="&lt;init&gt;(xyz.jeremynoesen.pseudo3d.scene.render.Camera)">Camera</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Camera</span>&#8203;(<span class="arguments"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a>&nbsp;camera)</span></div>
-<div class="block">copies a camera to a new one</div>
+<div class="block">Copy constructor for Camera</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>camera</code> - camera to copy</dd>
+<dd><code>camera</code> - Camera to copy</dd>
 </dl>
 </section>
 </li>
@@ -342,10 +342,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="getFieldOfView()">getFieldOfView</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getFieldOfView</span>()</div>
-<div class="block">get field of view in degrees</div>
+<div class="block">Get the field of view in degrees</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>field of view in degrees</dd>
+<dd>Field of view in degrees</dd>
 </dl>
 </section>
 </li>
@@ -353,10 +353,12 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="setFieldOfView(float)">setFieldOfView</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></span>&nbsp;<span class="memberName">setFieldOfView</span>&#8203;(<span class="arguments">float&nbsp;fieldOfView)</span></div>
-<div class="block">set the camera's field of view</div>
+<div class="block">Set the Camera's field of view</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>fieldOfView</code> - field of view in degrees</dd>
+<dd><code>fieldOfView</code> - Field of view in degrees</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Camera</dd>
 </dl>
 </section>
 </li>
@@ -364,10 +366,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="getPosition()">getPosition</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getPosition</span>()</div>
-<div class="block">get the position of the camera in the scene</div>
+<div class="block">Get the position of the Camera in the Scene</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>vector position of camera in scene</dd>
+<dd>Position of the Camera in the Scene</dd>
 </dl>
 </section>
 </li>
@@ -375,10 +377,12 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></span>&nbsp;<span class="memberName">setPosition</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</span></div>
-<div class="block">set the camera's position in thew scene</div>
+<div class="block">Set the Camera's position in the Scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>position</code> - new position in scene</dd>
+<dd><code>position</code> - Position Vector</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Camera</dd>
 </dl>
 </section>
 </li>
@@ -386,10 +390,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="getOffset()">getOffset</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getOffset</span>()</div>
-<div class="block">get offset of render center</div>
+<div class="block">Get the offset of the render from the center of the window</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>vector render offset of camera</dd>
+<dd>Render offset</dd>
 </dl>
 </section>
 </li>
@@ -397,10 +401,12 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="setOffset(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setOffset</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></span>&nbsp;<span class="memberName">setOffset</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;offset)</span></div>
-<div class="block">set the offset from the center of the camera in the render, in pixels</div>
+<div class="block">Set the offset of the render from the center of the window</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>offset</code> - 2D position vector</dd>
+<dd><code>offset</code> - Render offset in pixels</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Camera</dd>
 </dl>
 </section>
 </li>
@@ -408,10 +414,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="getSensorSize()">getSensorSize</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getSensorSize</span>()</div>
-<div class="block">get sensor size of camera in pixels</div>
+<div class="block">Get the sensor size of the Camera in pixels</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>sensor size</dd>
+<dd>Sensor size in pixels</dd>
 </dl>
 </section>
 </li>
@@ -419,10 +425,12 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="setSensorSize(float)">setSensorSize</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></span>&nbsp;<span class="memberName">setSensorSize</span>&#8203;(<span class="arguments">float&nbsp;sensorSize)</span></div>
-<div class="block">set the camera sensor size in pixels</div>
+<div class="block">Set the Camera sensor size in pixels</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>sensorSize</code> - new sensor size</dd>
+<dd><code>sensorSize</code> - New sensor size</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Camera</dd>
 </dl>
 </section>
 </li>
@@ -430,10 +438,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="getViewDistance()">getViewDistance</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getViewDistance</span>()</div>
-<div class="block">get the view distance for the camera</div>
+<div class="block">Get the view distance for the Camera</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>camera view distance</dd>
+<dd>View distance</dd>
 </dl>
 </section>
 </li>
@@ -441,10 +449,12 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="setViewDistance(float)">setViewDistance</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></span>&nbsp;<span class="memberName">setViewDistance</span>&#8203;(<span class="arguments">float&nbsp;viewDistance)</span></div>
-<div class="block">set how far away the camera is able to view entities</div>
+<div class="block">Set the view distance for the Camera</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>viewDistance</code> - new view distance for camera</dd>
+<dd><code>viewDistance</code> - New view distance</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Camera</dd>
 </dl>
 </section>
 </li>
@@ -452,10 +462,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="getZoom()">getZoom</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getZoom</span>()</div>
-<div class="block">get the zoom for the camera</div>
+<div class="block">Get the zoom for the Camera</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>camera zoom</dd>
+<dd>Zoom</dd>
 </dl>
 </section>
 </li>
@@ -463,10 +473,12 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="setZoom(float)">setZoom</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></span>&nbsp;<span class="memberName">setZoom</span>&#8203;(<span class="arguments">float&nbsp;zoom)</span></div>
-<div class="block">set the zoom for the camera</div>
+<div class="block">Set the zoom for the Camera</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>zoom</code> - camera zoom</dd>
+<dd><code>zoom</code> - New zoom</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Camera</dd>
 </dl>
 </section>
 </li>
@@ -474,10 +486,10 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="getRotation()">getRotation</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getRotation</span>()</div>
-<div class="block">get the rotation of the camera</div>
+<div class="block">Get the rotation of the Camera</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>rotation of camera in degrees counter-clock-wise</dd>
+<dd>Rotation of Camera in degrees counter-clock-wise</dd>
 </dl>
 </section>
 </li>
@@ -485,10 +497,12 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="setRotation(float)">setRotation</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></span>&nbsp;<span class="memberName">setRotation</span>&#8203;(<span class="arguments">float&nbsp;rotation)</span></div>
-<div class="block">set the rotation of the camera</div>
+<div class="block">Set the rotation of the Camera</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>rotation</code> - rotation of camera in degrees counter-clock-wise</dd>
+<dd><code>rotation</code> - Rotation of Camera in degrees counter-clock-wise</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Camera</dd>
 </dl>
 </section>
 </li>
@@ -496,14 +510,14 @@ float&nbsp;rotation)</span></div>
 <section class="detail">
 <h3><a id="equals(java.lang.Object)">equals</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">equals</span>&#8203;(<span class="arguments">java.lang.Object&nbsp;o)</span></div>
-<div class="block">check if a camera is equal to this one</div>
+<div class="block">Check if a Camera is equal to this one</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>equals</code>&nbsp;in class&nbsp;<code>java.lang.Object</code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>o</code> - object to check</dd>
+<dd><code>o</code> - Camera to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true if the object is equal to this camera</dd>
+<dd>True if the Camera is equal to this Camera</dd>
 </dl>
 </section>
 </li>
