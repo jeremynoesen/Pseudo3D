@@ -16,7 +16,7 @@ For now, view the [Example class](src/test/java/Example.java) for a basic idea o
 There are also [JavaDocs](https://jeremynoesen.github.io/Pseudo3D/javadoc) available.
 
 ## Building
-This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. Then, in the folder of the project, you can open terminal and run `./gradlew build`. This should make a jar out of Pseudo3D. With this, you can add the jar as a dependency to your project.
+This project is not complete yet, but if you wish to build it to use it, you can clone or download this repo. Then, in the folder of the project, you can open terminal and run `./gradlew shadowJar`. This will generate `/build/libs/Pseudo3D.jar`. With this, you can add the jar as a dependency to your project.
 
 ## Demonstration
 The following are recordings of the Pseudo3D renderer and physics in action. You can also try these out for yourself by running the [Example class](src/test/java/Example.java).

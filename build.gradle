@@ -16,7 +16,6 @@ javafx {
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 application {
