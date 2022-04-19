@@ -155,9 +155,9 @@ public class Entity extends Physics {
      */
     public Entity setScene(Scene scene) {
         if (scene != null) {
-            super.setEntities(scene.getEntities());
+            super.setOtherObjects(scene.getEntities());
         } else {
-            super.setEntities(null);
+            super.setOtherObjects(null);
         }
         this.scene = scene;
         return this;
