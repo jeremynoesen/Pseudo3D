@@ -114,11 +114,11 @@ extends java.lang.Object</pre>
 </thead>
 <tbody>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(float,float,float,boolean,java.lang.String%5B%5D)">Sprite</a></span>&#8203;(float&nbsp;width,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(float,float,float,boolean,java.lang.String...)">Sprite</a></span>&#8203;(float&nbsp;width,
 float&nbsp;height,
 float&nbsp;frameRate,
 boolean&nbsp;loop,
-java.lang.String[]&nbsp;src)</code></th>
+java.lang.String...&nbsp;src)</code></th>
 <td class="colLast">
 <div class="block">Create a new animated Sprite from a list of images and specified frame rate, width, height, and loop status</div>
 </td>
@@ -320,7 +320,9 @@ float&nbsp;dimension)</code></th>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(float)">update</a></span>&#8203;(float&nbsp;deltaTime)</code></th>
 <td class="colLast">
-<div class="block">Set the current frame to the next available frame based on elapsed time</div>
+<div class="block">Set the current frame to the next available frame based on elapsed time
+ <br>
+ This is usually called by the renderer</div>
 </td>
 </tr>
 </tbody>
@@ -380,12 +382,12 @@ javafx.scene.paint.Color&nbsp;color)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="&lt;init&gt;(float,float,float,boolean,java.lang.String[])">Sprite</a></h3>
+<h3><a id="&lt;init&gt;(float,float,float,boolean,java.lang.String...)">Sprite</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="memberName">Sprite</span>&#8203;(<span class="arguments">float&nbsp;width,
 float&nbsp;height,
 float&nbsp;frameRate,
 boolean&nbsp;loop,
-java.lang.String[]&nbsp;src)</span>
+java.lang.String...&nbsp;src)</span>
        throws <span class="exceptions">java.io.FileNotFoundException</span></div>
 <div class="block">Create a new animated Sprite from a list of images and specified frame rate, width, height, and loop status</div>
 <dl>
@@ -622,7 +624,7 @@ float&nbsp;dimension)</span></div>
 <h3><a id="update(float)">update</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">update</span>&#8203;(<span class="arguments">float&nbsp;deltaTime)</span></div>
 <div class="block">Set the current frame to the next available frame based on elapsed time
- <p>
+ <br>
  This is usually called by the renderer</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

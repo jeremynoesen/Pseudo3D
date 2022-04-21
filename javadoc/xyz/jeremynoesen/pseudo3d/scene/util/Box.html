@@ -171,16 +171,16 @@ float&nbsp;height,
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a></span>&#8203;(<a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#contains(xyz.jeremynoesen.pseudo3d.scene.util.Box...)">contains</a></span>&#8203;(<a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>...&nbsp;box)</code></th>
 <td class="colLast">
-<div class="block">Check if a Box is inside this Box</div>
+<div class="block">Check if Boxes are inside this Box</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector...)">contains</a></span>&#8203;(<a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>...&nbsp;position)</code></th>
 <td class="colLast">
-<div class="block">Check if this Box contains a position</div>
+<div class="block">Check if this Box contains positions</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
@@ -206,9 +206,9 @@ float&nbsp;height,
 </tr>
 <tr class="rowColor" id="i5">
 <td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getFaceArea</a></span>&#8203;(<a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getFaceArea</a></span>&#8203;(<a href="Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</code></th>
 <td class="colLast">
-<div class="block">Get the face area for a side perpendicular to the specified Axis</div>
+<div class="block">Get the face area for a specified Side</div>
 </td>
 </tr>
 <tr class="altColor" id="i6">
@@ -262,9 +262,9 @@ float&nbsp;height,
 </tr>
 <tr class="rowColor" id="i13">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a></span>&#8203;(<a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box...)">overlaps</a></span>&#8203;(<a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>...&nbsp;box)</code></th>
 <td class="colLast">
-<div class="block">Check if a Box overlaps this Box</div>
+<div class="block">Check if Boxes overlap this Box</div>
 </td>
 </tr>
 <tr class="altColor" id="i14">
@@ -560,40 +560,40 @@ float&nbsp;dimension)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box)">overlaps</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">overlaps</span>&#8203;(<span class="arguments"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</span></div>
-<div class="block">Check if a Box overlaps this Box</div>
+<h3><a id="overlaps(xyz.jeremynoesen.pseudo3d.scene.util.Box...)">overlaps</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">overlaps</span>&#8203;(<span class="arguments"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>...&nbsp;box)</span></div>
+<div class="block">Check if Boxes overlap this Box</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>box</code> - Box to check for overlap</dd>
+<dd><code>box</code> - Boxes to check for overlap</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Box overlaps this Box</dd>
+<dd>True if the Boxes overlap this Box</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="contains(xyz.jeremynoesen.pseudo3d.scene.util.Box)">contains</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">contains</span>&#8203;(<span class="arguments"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>&nbsp;box)</span></div>
-<div class="block">Check if a Box is inside this Box</div>
+<h3><a id="contains(xyz.jeremynoesen.pseudo3d.scene.util.Box...)">contains</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">contains</span>&#8203;(<span class="arguments"><a href="Box.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Box</a>...&nbsp;box)</span></div>
+<div class="block">Check if Boxes are inside this Box</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>box</code> - Box to check</dd>
+<dd><code>box</code> - Boxes to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True if the Box is inside this Box</dd>
+<dd>True if the Boxes are inside this Box</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">contains</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">contains</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</span></div>
-<div class="block">Check if this Box contains a position</div>
+<h3><a id="contains(xyz.jeremynoesen.pseudo3d.scene.util.Vector...)">contains</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">boolean</span>&nbsp;<span class="memberName">contains</span>&#8203;(<span class="arguments"><a href="Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>...&nbsp;position)</span></div>
+<div class="block">Check if this Box contains positions</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>position</code> - Position to check</dd>
+<dd><code>position</code> - Positions to check</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>True of the Box contains this position</dd>
+<dd>True of the Box contains these positions</dd>
 </dl>
 </section>
 </li>
@@ -621,14 +621,14 @@ float&nbsp;dimension)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Axis)">getFaceArea</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getFaceArea</span>&#8203;(<span class="arguments"><a href="Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>&nbsp;axis)</span></div>
-<div class="block">Get the face area for a side perpendicular to the specified Axis</div>
+<h3><a id="getFaceArea(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getFaceArea</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getFaceArea</span>&#8203;(<span class="arguments"><a href="Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</span></div>
+<div class="block">Get the face area for a specified Side</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>axis</code> - Axis to get face area for</dd>
+<dd><code>side</code> - Side to get face area for</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Face area for a side perpendicular to the specified Axis</dd>
+<dd>Face area of the Side</dd>
 </dl>
 </section>
 </li>

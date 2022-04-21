@@ -159,23 +159,23 @@ extends java.lang.Object</pre>
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity)">addEntity</a></span>&#8203;(<a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&nbsp;entity)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity...)">addEntity</a></span>&#8203;(<a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>...&nbsp;entity)</code></th>
 <td class="colLast">
-<div class="block">Add an Entity to this Scene</div>
+<div class="block">Add Entities to this Scene</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRenderRunnable(java.lang.Runnable)">addRenderRunnable</a></span>&#8203;(java.lang.Runnable&nbsp;runnable)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRenderRunnable(java.lang.Runnable...)">addRenderRunnable</a></span>&#8203;(java.lang.Runnable...&nbsp;runnable)</code></th>
 <td class="colLast">
 <div class="block">Add a Runnable to the render loop for this Scene</div>
 </td>
 </tr>
 <tr class="altColor" id="i2">
 <td class="colFirst"><code><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTickRunnable(java.lang.Runnable)">addTickRunnable</a></span>&#8203;(java.lang.Runnable&nbsp;runnable)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTickRunnable(java.lang.Runnable...)">addTickRunnable</a></span>&#8203;(java.lang.Runnable...&nbsp;runnable)</code></th>
 <td class="colLast">
-<div class="block">Add a Runnable to the tick loop for this Scene</div>
+<div class="block">Add Runnables to the tick loop for this Scene</div>
 </td>
 </tr>
 <tr class="rowColor" id="i3">
@@ -203,7 +203,9 @@ extends java.lang.Object</pre>
 <td class="colFirst"><code>java.util.LinkedList&lt;<a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntities()">getEntities</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Get all the Entities in this Scene</div>
+<div class="block">Get all the Entities in this Scene
+ <br>
+ Modifying this directly will cause problems</div>
 </td>
 </tr>
 <tr class="rowColor" id="i7">
@@ -236,23 +238,23 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor" id="i11">
 <td class="colFirst"><code><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity)">removeEntity</a></span>&#8203;(<a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&nbsp;entity)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity...)">removeEntity</a></span>&#8203;(<a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>...&nbsp;entity)</code></th>
 <td class="colLast">
-<div class="block">Remove an Entity from this Scene</div>
+<div class="block">Remove Entities from this Scene</div>
 </td>
 </tr>
 <tr class="altColor" id="i12">
 <td class="colFirst"><code><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeRenderRunnable(java.lang.Runnable)">removeRenderRunnable</a></span>&#8203;(java.lang.Runnable&nbsp;runnable)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeRenderRunnable(java.lang.Runnable...)">removeRenderRunnable</a></span>&#8203;(java.lang.Runnable...&nbsp;runnable)</code></th>
 <td class="colLast">
 <div class="block">Remove a Runnable from the render loop for the Scene</div>
 </td>
 </tr>
 <tr class="rowColor" id="i13">
 <td class="colFirst"><code><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTickRunnable(java.lang.Runnable)">removeTickRunnable</a></span>&#8203;(java.lang.Runnable&nbsp;runnable)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTickRunnable(java.lang.Runnable...)">removeTickRunnable</a></span>&#8203;(java.lang.Runnable...&nbsp;runnable)</code></th>
 <td class="colLast">
-<div class="block">Remove a Runnable from the tick loop for the Scene</div>
+<div class="block">Remove Runnables from the tick loop for the Scene</div>
 </td>
 </tr>
 <tr class="altColor" id="i14">
@@ -295,7 +297,10 @@ float&nbsp;deltaTime)</code></th>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tick(float)">tick</a></span>&#8203;(float&nbsp;deltaTime)</code></th>
 <td class="colLast">
-<div class="block">Tick all entities in the Scene</div>
+<div class="block">Tick all entities in the Scene
+ <br>
+ Ticking will do the following in order: run any Runnables, update motion for all Entities, then update collisions
+ for all Entities</div>
 </td>
 </tr>
 </tbody>
@@ -370,7 +375,7 @@ float&nbsp;deltaTime)</code></th>
 <h3><a id="tick(float)">tick</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">void</span>&nbsp;<span class="memberName">tick</span>&#8203;(<span class="arguments">float&nbsp;deltaTime)</span></div>
 <div class="block">Tick all entities in the Scene
- <p>
+ <br>
  Ticking will do the following in order: run any Runnables, update motion for all Entities, then update collisions
  for all Entities</div>
 <dl>
@@ -397,7 +402,7 @@ float&nbsp;deltaTime)</span></div>
 <h3><a id="getEntities()">getEntities</a></h3>
 <div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">java.util.LinkedList&lt;<a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&gt;</span>&nbsp;<span class="memberName">getEntities</span>()</div>
 <div class="block">Get all the Entities in this Scene
- <p>
+ <br>
  Modifying this directly will cause problems</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -407,12 +412,12 @@ float&nbsp;deltaTime)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="addEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity)">addEntity</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">addEntity</span>&#8203;(<span class="arguments"><a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&nbsp;entity)</span></div>
-<div class="block">Add an Entity to this Scene</div>
+<h3><a id="addEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity...)">addEntity</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">addEntity</span>&#8203;(<span class="arguments"><a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>...&nbsp;entity)</span></div>
+<div class="block">Add Entities to this Scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>entity</code> - Entity to add</dd>
+<dd><code>entity</code> - Entities to add</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This Scene</dd>
 </dl>
@@ -420,12 +425,12 @@ float&nbsp;deltaTime)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="removeEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity)">removeEntity</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">removeEntity</span>&#8203;(<span class="arguments"><a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>&nbsp;entity)</span></div>
-<div class="block">Remove an Entity from this Scene</div>
+<h3><a id="removeEntity(xyz.jeremynoesen.pseudo3d.scene.entity.Entity...)">removeEntity</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">removeEntity</span>&#8203;(<span class="arguments"><a href="entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a>...&nbsp;entity)</span></div>
+<div class="block">Remove Entities from this Scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>entity</code> - Entity to remove</dd>
+<dd><code>entity</code> - Entities to remove</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This Scene</dd>
 </dl>
@@ -481,12 +486,12 @@ float&nbsp;deltaTime)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="addTickRunnable(java.lang.Runnable)">addTickRunnable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">addTickRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable&nbsp;runnable)</span></div>
-<div class="block">Add a Runnable to the tick loop for this Scene</div>
+<h3><a id="addTickRunnable(java.lang.Runnable...)">addTickRunnable</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">addTickRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable...&nbsp;runnable)</span></div>
+<div class="block">Add Runnables to the tick loop for this Scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>runnable</code> - Runnable</dd>
+<dd><code>runnable</code> - Runnables</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This Scene</dd>
 </dl>
@@ -494,12 +499,12 @@ float&nbsp;deltaTime)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="removeTickRunnable(java.lang.Runnable)">removeTickRunnable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">removeTickRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable&nbsp;runnable)</span></div>
-<div class="block">Remove a Runnable from the tick loop for the Scene</div>
+<h3><a id="removeTickRunnable(java.lang.Runnable...)">removeTickRunnable</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">removeTickRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable...&nbsp;runnable)</span></div>
+<div class="block">Remove Runnables from the tick loop for the Scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>runnable</code> - Runnable</dd>
+<dd><code>runnable</code> - Runnables</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This Scene</dd>
 </dl>
@@ -518,8 +523,8 @@ float&nbsp;deltaTime)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="addRenderRunnable(java.lang.Runnable)">addRenderRunnable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">addRenderRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable&nbsp;runnable)</span></div>
+<h3><a id="addRenderRunnable(java.lang.Runnable...)">addRenderRunnable</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">addRenderRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable...&nbsp;runnable)</span></div>
 <div class="block">Add a Runnable to the render loop for this Scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -531,8 +536,8 @@ float&nbsp;deltaTime)</span></div>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="removeRenderRunnable(java.lang.Runnable)">removeRenderRunnable</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">removeRenderRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable&nbsp;runnable)</span></div>
+<h3><a id="removeRenderRunnable(java.lang.Runnable...)">removeRenderRunnable</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></span>&nbsp;<span class="memberName">removeRenderRunnable</span>&#8203;(<span class="arguments">java.lang.Runnable...&nbsp;runnable)</span></div>
 <div class="block">Remove a Runnable from the render loop for the Scene</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
