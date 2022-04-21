@@ -9,10 +9,10 @@ public enum Axis {
     X, Y, Z;
 
     /**
-     * Get Axis based on Side
+     * Get Axis of normal for a Side
      *
      * @param side Side of object
-     * @return Axis based on Side
+     * @return Axis of normal for the Side
      */
     public static Axis getAxis(Side side) {
         return switch (side) {

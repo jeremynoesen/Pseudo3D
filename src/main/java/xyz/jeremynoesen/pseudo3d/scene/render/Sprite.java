@@ -102,7 +102,7 @@ public class Sprite {
      * @param height    Sprite height in grid units
      * @param loop      True to allow Sprite to loop
      */
-    public Sprite(float width, float height, float frameRate, boolean loop, String[] src) throws FileNotFoundException {
+    public Sprite(float width, float height, float frameRate, boolean loop, String... src) throws FileNotFoundException {
         ArrayList<Image> images = new ArrayList<>();
         for (String s : src) {
             images.add(new Image(new FileInputStream(s)));
@@ -306,7 +306,7 @@ public class Sprite {
 
     /**
      * Set the current frame to the next available frame based on elapsed time
-     * <p>
+     * <br>
      * This is usually called by the renderer
      *
      * @param deltaTime Time elapsed for the render frame

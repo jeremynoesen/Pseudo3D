@@ -252,39 +252,48 @@ public class Box {
     }
 
     /**
-     * Check if a Box overlaps this Box
+     * Check if Boxes overlap this Box
      *
-     * @param box Box to check for overlap
-     * @return True if the Box overlaps this Box
+     * @param box Boxes to check for overlap
+     * @return True if the Boxes overlap this Box
      */
-    public boolean overlaps(Box box) {
-        return min.getX() <= box.getMaximum().getX() && max.getX() >= box.getMinimum().getX() &&
-                min.getY() <= box.getMaximum().getY() && max.getY() >= box.getMinimum().getY() &&
-                min.getZ() <= box.getMaximum().getZ() && max.getZ() >= box.getMinimum().getZ();
+    public boolean overlaps(Box... box) {
+        for (Box b : box) {
+            if (!(min.getX() <= b.getMaximum().getX() && max.getX() >= b.getMinimum().getX() &&
+                    min.getY() <= b.getMaximum().getY() && max.getY() >= b.getMinimum().getY() &&
+                    min.getZ() <= b.getMaximum().getZ() && max.getZ() >= b.getMinimum().getZ())) return false;
+        }
+        return true;
     }
 
     /**
-     * Check if a Box is inside this Box
+     * Check if Boxes are inside this Box
      *
-     * @param box Box to check
-     * @return True if the Box is inside this Box
+     * @param box Boxes to check
+     * @return True if the Boxes are inside this Box
      */
-    public boolean contains(Box box) {
-        return min.getX() <= box.getMinimum().getX() && max.getX() >= box.getMaximum().getX() &&
-                min.getY() <= box.getMinimum().getY() && max.getY() >= box.getMaximum().getY() &&
-                min.getZ() <= box.getMinimum().getZ() && max.getZ() >= box.getMaximum().getZ();
+    public boolean contains(Box... box) {
+        for (Box b : box) {
+            if (!(min.getX() <= b.getMinimum().getX() && max.getX() >= b.getMaximum().getX() &&
+                    min.getY() <= b.getMinimum().getY() && max.getY() >= b.getMaximum().getY() &&
+                    min.getZ() <= b.getMinimum().getZ() && max.getZ() >= b.getMaximum().getZ())) return false;
+        }
+        return true;
     }
 
     /**
-     * Check if this Box contains a position
+     * Check if this Box contains positions
      *
-     * @param position Position to check
-     * @return True of the Box contains this position
+     * @param position Positions to check
+     * @return True of the Box contains these positions
      */
-    public boolean contains(Vector position) {
-        return min.getX() <= position.getX() && max.getX() >= position.getX() &&
-                min.getY() <= position.getY() && max.getY() >= position.getY() &&
-                min.getZ() <= position.getZ() && max.getZ() >= position.getZ();
+    public boolean contains(Vector... position) {
+        for (Vector v : position) {
+            if (!(min.getX() <= v.getX() && max.getX() >= v.getX() &&
+                    min.getY() <= v.getY() && max.getY() >= v.getY() &&
+                    min.getZ() <= v.getZ() && max.getZ() >= v.getZ())) return false;
+        }
+        return true;
     }
 
     /**
@@ -306,16 +315,16 @@ public class Box {
     }
 
     /**
-     * Get the face area for a side perpendicular to the specified Axis
+     * Get the face area for a specified Side
      *
-     * @param axis Axis to get face area for
-     * @return Face area for a side perpendicular to the specified Axis
+     * @param side Side to get face area for
+     * @return Face area of the Side
      */
-    public float getFaceArea(Axis axis) {
-        return switch (axis) {
-            case X -> height * depth;
-            case Y -> width * depth;
-            case Z -> width * height;
+    public float getFaceArea(Side side) {
+        return switch (side) {
+            case LEFT, RIGHT -> height * depth;
+            case BOTTOM, TOP -> width * depth;
+            case BACK, FRONT -> width * height;
         };
     }
 

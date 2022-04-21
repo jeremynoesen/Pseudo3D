@@ -106,7 +106,7 @@ public class Entity extends Physics {
 
     /**
      * Check if the Entity is shown on-screen
-     * <p>
+     * <br>
      * If the Entity has no Sprite, this will always be false
      *
      * @return True if shown on-screen
@@ -117,7 +117,7 @@ public class Entity extends Physics {
 
     /**
      * Set if the Entity is on-screen
-     * <p>
+     * <br>
      * Manually setting this will do nothing, as this value is automatically updated by the Renderer
      *
      * @param onScreen True when visible on-screen
@@ -155,9 +155,9 @@ public class Entity extends Physics {
      */
     public Entity setScene(Scene scene) {
         if (scene != null) {
-            super.setOtherObjects(scene.getEntities());
+            super.setSceneObjects(scene.getEntities());
         } else {
-            super.setOtherObjects(null);
+            super.setSceneObjects(null);
         }
         this.scene = scene;
         return this;

@@ -7,6 +7,7 @@ import xyz.jeremynoesen.pseudo3d.scene.render.Camera;
 import xyz.jeremynoesen.pseudo3d.scene.render.Renderer;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -35,7 +36,7 @@ public class Scene {
 
     /**
      * Grid scaling for the Scene
-     * <p>
+     * <br>
      * The grid scale is how many pixels represent a meter per axis
      */
     private Vector gridScale;
@@ -114,7 +115,7 @@ public class Scene {
 
     /**
      * Tick all entities in the Scene
-     * <p>
+     * <br>
      * Ticking will do the following in order: run any Runnables, update motion for all Entities, then update collisions
      * for all Entities
      *
@@ -139,7 +140,7 @@ public class Scene {
 
     /**
      * Get all the Entities in this Scene
-     * <p>
+     * <br>
      * Modifying this directly will cause problems
      *
      * @return List of all Entities in this Scene
@@ -149,27 +150,31 @@ public class Scene {
     }
 
     /**
-     * Add an Entity to this Scene
+     * Add Entities to this Scene
      *
-     * @param entity Entity to add
+     * @param entity Entities to add
      * @return This Scene
      */
-    public Scene addEntity(Entity entity) {
-        entities.add(entity);
-        entity.setScene(this);
+    public Scene addEntity(Entity... entity) {
+        for (Entity e : entity) {
+            entities.add(e);
+            e.setScene(this);
+        }
         return this;
     }
 
     /**
-     * Remove an Entity from this Scene
+     * Remove Entities from this Scene
      *
-     * @param entity Entity to remove
+     * @param entity Entities to remove
      * @return This Scene
      */
-    public Scene removeEntity(Entity entity) {
-        if (entities.contains(entity)) {
-            entities.remove(entity);
-            entity.setScene(null);
+    public Scene removeEntity(Entity... entity) {
+        for (Entity e : entity) {
+            if (entities.contains(e)) {
+                entities.remove(e);
+                e.setScene(null);
+            }
         }
         return this;
     }
@@ -215,24 +220,24 @@ public class Scene {
     }
 
     /**
-     * Add a Runnable to the tick loop for this Scene
+     * Add Runnables to the tick loop for this Scene
      *
-     * @param runnable Runnable
+     * @param runnable Runnables
      * @return This Scene
      */
-    public Scene addTickRunnable(Runnable runnable) {
-        tickRunnables.add(runnable);
+    public Scene addTickRunnable(Runnable... runnable) {
+        tickRunnables.addAll(Arrays.asList(runnable));
         return this;
     }
 
     /**
-     * Remove a Runnable from the tick loop for the Scene
+     * Remove Runnables from the tick loop for the Scene
      *
-     * @param runnable Runnable
+     * @param runnable Runnables
      * @return This Scene
      */
-    public Scene removeTickRunnable(Runnable runnable) {
-        tickRunnables.remove(runnable);
+    public Scene removeTickRunnable(Runnable... runnable) {
+        Arrays.asList(runnable).forEach(tickRunnables::remove);
         return this;
     }
 
@@ -251,8 +256,8 @@ public class Scene {
      * @param runnable Runnable
      * @return This Scene
      */
-    public Scene addRenderRunnable(Runnable runnable) {
-        renderRunnables.add(runnable);
+    public Scene addRenderRunnable(Runnable... runnable) {
+        renderRunnables.addAll(Arrays.asList(runnable));
         return this;
     }
 
@@ -262,8 +267,8 @@ public class Scene {
      * @param runnable Runnable
      * @return This Scene
      */
-    public Scene removeRenderRunnable(Runnable runnable) {
-        renderRunnables.remove(runnable);
+    public Scene removeRenderRunnable(Runnable... runnable) {
+        Arrays.asList(runnable).forEach(renderRunnables::remove);
         return this;
     }
 

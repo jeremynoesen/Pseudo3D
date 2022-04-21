@@ -17,7 +17,7 @@ public abstract class Physics extends Box {
     /**
      * Objects this object is in a Scene with
      */
-    private LinkedList<Physics> otherObjects;
+    private LinkedList<Physics> sceneObjects;
 
     /**
      * Gravity applied to the object (meters / second ^ 2)
@@ -35,11 +35,11 @@ public abstract class Physics extends Box {
     private Vector velocity;
 
     /**
-     * Terminal velocity of the object (meters / second)
-     * <p>
+     * Maximum velocity of the object (meters / second)
+     * <br>
      * This will limit how fast the object can go based on gravity and acceleration
      */
-    private Vector terminalVelocity;
+    private Vector maxVelocity;
 
     /**
      * Acceleration of the object (meters / second ^ 2)
@@ -115,10 +115,10 @@ public abstract class Physics extends Box {
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
-        terminalVelocity = new Vector(20, 20, 20);
+        maxVelocity = new Vector(20, 20, 20);
         drag = new Vector(0.5f, 0.5f, 0.5f);
         roughness = new Vector(5, 5, 5);
-        otherObjects = null;
+        sceneObjects = null;
         collidableSides = new HashSet<>(Arrays.asList(Side.values()));
         kinematicAxes = new HashSet<>(Arrays.asList(Axis.values()));
         pushableAxes = new HashSet<>(Arrays.asList(Axis.values()));
@@ -143,7 +143,7 @@ public abstract class Physics extends Box {
         position = physics.position;
         velocity = physics.velocity;
         acceleration = physics.acceleration;
-        terminalVelocity = physics.terminalVelocity;
+        maxVelocity = physics.maxVelocity;
         drag = physics.drag;
         roughness = physics.roughness;
         mass = physics.mass;
@@ -156,7 +156,7 @@ public abstract class Physics extends Box {
         specialCollisions = new HashSet<>();
         collidingObjects = new HashMap<>();
         overlappingObjects = new HashSet<>(physics.overlappingObjects);
-        otherObjects = physics.otherObjects;
+        sceneObjects = physics.sceneObjects;
         for (Side s : Side.values()) collidingObjects.put(s, new HashSet<>(physics.collidingObjects.get(s)));
     }
 
@@ -180,16 +180,16 @@ public abstract class Physics extends Box {
      */
     private void applyAcceleration() {
         for (Axis axis : Axis.values()) {
-            if (!isKinematicOn(axis)) continue;
+            if (!isKinematic(axis)) continue;
 
             float v = velocity.get(axis);
             float a = acceleration.get(axis) + gravity.get(axis);
-            float vt = terminalVelocity.get(axis);
+            float vm = maxVelocity.get(axis);
 
-            if (v > -vt && a < 0)
-                velocity = velocity.set(axis, Math.max(v + (a * deltaTime), -vt));
-            else if (v < vt && a > 0)
-                velocity = velocity.set(axis, Math.min(v + (a * deltaTime), vt));
+            if (v > -vm && a < 0)
+                velocity = velocity.set(axis, Math.max(v + (a * deltaTime), -vm));
+            else if (v < vm && a > 0)
+                velocity = velocity.set(axis, Math.min(v + (a * deltaTime), vm));
         }
     }
 
@@ -202,15 +202,15 @@ public abstract class Physics extends Box {
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
 
-        if (isKinematicOn(Axis.X)) {
+        if (isKinematic(Axis.X)) {
             if (vx < 0) vx = Math.min(vx + fy + fz, 0);
             else if (vx > 0) vx = Math.max(vx - fy - fz, 0);
         }
-        if (isKinematicOn(Axis.Y)) {
+        if (isKinematic(Axis.Y)) {
             if (vy < 0) vy = Math.min(vy + fx + fz, 0);
             else if (vy > 0) vy = Math.max(vy - fx - fz, 0);
         }
-        if (isKinematicOn(Axis.Z)) {
+        if (isKinematic(Axis.Z)) {
             if (vz < 0) vz = Math.min(vz + fx + fy, 0);
             else if (vz > 0) vz = Math.max(vz - fx - fy, 0);
         }
@@ -226,17 +226,17 @@ public abstract class Physics extends Box {
     private Vector calculateFriction() {
         Vector output = new Vector();
         for (Axis axis : Axis.values()) {
-            if (!isKinematicOn(axis)) continue;
+            if (!isKinematic(axis)) continue;
 
             float v = velocity.get(axis);
 
-            if (collidesOn(axis)) {
+            if (isColliding(Side.getSide(axis, -1)) || isColliding(Side.getSide(axis, 1))) {
                 float f = 0;
                 int count = 0;
                 Side side = Side.getSide(axis, v);
                 float stackedMass = calculateStackedMass(v, axis);
 
-                if (side != null && collidesOn(side)) {
+                if (side != null && isColliding(side)) {
                     for (Physics physics : collidingObjects.get(side)) {
                         if (physics.updatable) {
                             f += physics.roughness.get(axis) * Math.abs(v - physics.getVelocity().get(axis));
@@ -252,7 +252,7 @@ public abstract class Physics extends Box {
                 count = 0;
 
                 Side opposite = Side.getSide(axis, -v);
-                if (opposite != null && collidesOn(opposite)) {
+                if (opposite != null && isColliding(opposite)) {
                     for (Physics physics : collidingObjects.get(opposite)) {
                         if (physics.updatable && Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
                             f += physics.roughness.get(axis) * Math.abs(physics.getVelocity().get(axis) - v);
@@ -289,7 +289,7 @@ public abstract class Physics extends Box {
                 Side side = Side.getSide(axis, -velocity);
                 if (side != null) {
                     for (Physics colliding : physics.getCollidingObjects(side))
-                        if (colliding.updatable && colliding.isKinematicOn(axis)) current.add(colliding);
+                        if (colliding.updatable && colliding.isKinematic(axis)) current.add(colliding);
                 }
                 visited.add(physics);
             }
@@ -303,23 +303,17 @@ public abstract class Physics extends Box {
     private void applyDrag() {
         Vector drag = calculateDrag();
 
-        float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
-        float dx = drag.getX(), dy = drag.getY(), dz = drag.getZ();
+        for (Axis axis : Axis.values()) {
+            if (!isKinematic(axis)) continue;
 
-        if (isKinematicOn(Axis.X)) {
-            if (vx < 0) vx = Math.min(vx + dx, 0);
-            else if (vx > 0) vx = Math.max(vx - dx, 0);
-        }
-        if (isKinematicOn(Axis.Y)) {
-            if (vy < 0) vy = Math.min(vy + dy, 0);
-            else if (vy > 0) vy = Math.max(vy - dy, 0);
-        }
-        if (isKinematicOn(Axis.Z)) {
-            if (vz < 0) vz = Math.min(vz + dz, 0);
-            else if (vz > 0) vz = Math.max(vz - dz, 0);
-        }
+            float v = velocity.get(axis);
+            float d = drag.get(axis);
 
-        velocity = new Vector(vx, vy, vz);
+            if (v < 0)
+                velocity = velocity.set(axis, Math.min(v + d, 0));
+            else if (v > 0)
+                velocity = velocity.set(axis, Math.max(v - d, 0));
+        }
     }
 
     /**
@@ -330,8 +324,9 @@ public abstract class Physics extends Box {
     private Vector calculateDrag() {
         Vector output = new Vector();
         for (Axis axis : Axis.values()) {
-            if (isKinematicOn(axis))
-                output = output.set(axis, drag.get(axis) * getFaceArea(axis) * deltaTime * Math.abs(velocity.get(axis)));
+            if (isKinematic(axis))
+                output = output.set(axis, drag.get(axis) * getFaceArea(Side.getSide(axis, 1))
+                        * deltaTime * Math.abs(velocity.get(axis)));
         }
         return output;
     }
@@ -342,17 +337,17 @@ public abstract class Physics extends Box {
     private void applyMomentum() {
         skipMomentum.clear();
         for (Axis axis : Axis.values()) {
-            if (!isKinematicOn(axis)) continue;
+            if (!isKinematic(axis)) continue;
 
             float v = velocity.get(axis);
 
-            if (collidesOn(axis)) {
+            if (isColliding(Side.getSide(axis, -1)) || isColliding(Side.getSide(axis, 1))) {
                 Side side = Side.getSide(axis, v);
-                if (side != null && collidesOn(side)) {
+                if (side != null && isColliding(side)) {
                     for (Physics physics : collidingObjects.get(side)) {
 
                         if (physics.updatable) {
-                            if (physics.isKinematicOn(axis) && physics.isPushableOn(axis)) {
+                            if (physics.isKinematic(axis) && physics.isPushable(axis)) {
 
                                 float sum = mass + physics.mass;
                                 float diff = mass - physics.mass;
@@ -380,7 +375,7 @@ public abstract class Physics extends Box {
      */
     private void updatePosition() {
         for (Axis axis : Axis.values()) {
-            if (isKinematicOn(axis))
+            if (isKinematic(axis))
                 setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));
         }
     }
@@ -389,14 +384,14 @@ public abstract class Physics extends Box {
      * Check if an object has collided with this object
      */
     public void tickCollisions() {
-        if (!updatable || otherObjects == null) return;
+        if (!updatable || sceneObjects == null) return;
         resetCollisions();
-        for (Physics physics : otherObjects) {
+        for (Physics physics : sceneObjects) {
             if (physics != this && physics.updatable && super.overlaps(physics)) {
                 if (isCollideable()) {
-                    collideWith(physics);
+                    collide(physics);
                 } else {
-                    overlapWith(physics);
+                    overlap(physics);
                 }
             }
         }
@@ -416,7 +411,7 @@ public abstract class Physics extends Box {
      *
      * @param physics Object colliding with this object
      */
-    private void collideWith(Physics physics) {
+    private void collide(Physics physics) {
         float[] overlaps = new float[6];
         overlaps[0] = Math.abs(getMinimum().getX() - physics.getMaximum().getX()); //left overlap
         overlaps[1] = Math.abs(getMaximum().getX() - physics.getMinimum().getX()); //right overlap
@@ -447,7 +442,7 @@ public abstract class Physics extends Box {
         Side side = Side.getSide(axis, dir);
 
         if (collidableSides.contains(side) && physics.collidableSides.contains(Side.getSide(axis, -dir))) {
-            if (isKinematicOn(axis) && velocity.get(axis) * dir > 0) {
+            if (isKinematic(axis) && velocity.get(axis) * dir > 0) {
                 if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
                         && !physics.specialCollisions.contains(this)) {
                     distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
@@ -457,7 +452,7 @@ public abstract class Physics extends Box {
             }
             collidingObjects.get(side).add(physics);
         } else {
-            overlapWith(physics);
+            overlap(physics);
         }
     }
 
@@ -466,7 +461,7 @@ public abstract class Physics extends Box {
      *
      * @param physics Object to overlap with
      */
-    private void overlapWith(Physics physics) {
+    private void overlap(Physics physics) {
         overlappingObjects.add(physics);
     }
 
@@ -552,22 +547,22 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Get the terminal velocity for this object
+     * Get the max velocity for this object
      *
-     * @return Terminal velocity Vector
+     * @return Max velocity Vector
      */
-    public Vector getTerminalVelocity() {
-        return terminalVelocity;
+    public Vector getMaxVelocity() {
+        return maxVelocity;
     }
 
     /**
-     * Set the terminal velocity for this object
+     * Set the max velocity for this object
      *
-     * @param terminalVelocity Terminal velocity Vector
+     * @param maxVelocity Max velocity Vector
      * @return This Physics object
      */
-    public Physics setTerminalVelocity(Vector terminalVelocity) {
-        this.terminalVelocity = terminalVelocity;
+    public Physics setMaxVelocity(Vector maxVelocity) {
+        this.maxVelocity = maxVelocity;
         return this;
     }
 
@@ -612,421 +607,6 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Check if an object can be collided with on any side
-     *
-     * @return True if able to be collided with on any side
-     */
-    public boolean isCollideable() {
-        return !collidableSides.isEmpty();
-    }
-
-    /**
-     * Check if an object can be collided with on a specific Side
-     *
-     * @return True if able to be collided with on a specific Side
-     */
-    public boolean isCollideableOn(Side side) {
-        return collidableSides.contains(side);
-    }
-
-    /**
-     * Check if an object can be collided with on a specific Axis
-     *
-     * @return True if able to be collided with on a specific Axis
-     */
-    public boolean isCollideableOn(Axis axis) {
-        return switch (axis) {
-            case X -> isCollideableOn(Side.LEFT) || isCollideableOn(Side.RIGHT);
-            case Y -> isCollideableOn(Side.BOTTOM) || isCollideableOn(Side.TOP);
-            case Z -> isCollideableOn(Side.BACK) || isCollideableOn(Side.FRONT);
-        };
-    }
-
-    /**
-     * Check if an object can be collided with on all sides
-     *
-     * @return True if able to be collided with on all sides
-     */
-    public boolean isFullyCollideable() {
-        return collidableSides.size() == 6;
-    }
-
-    /**
-     * Get the Sides the object can collide on
-     *
-     * @return HashSet of Sides the Object can collide on
-     */
-    public HashSet<Side> getCollideableSides() {
-        return collidableSides;
-    }
-
-    /**
-     * Set the object to be collideable on all sides or no sides
-     *
-     * @param collideable True to allow colliding on all sides, false for no sides
-     * @return This Physics object
-     */
-    public Physics setFullyCollideable(boolean collideable) {
-        collidableSides.clear();
-        if (collideable) collidableSides.addAll(Arrays.asList(Side.values()));
-        return this;
-    }
-
-    /**
-     * Set the object to be collideable per Side
-     *
-     * @param sides Variable amount of Sides
-     * @return This Physics object
-     */
-    public Physics setCollidableOn(Side... sides) {
-        collidableSides.clear();
-        collidableSides.addAll(Arrays.asList(sides));
-        return this;
-    }
-
-    /**
-     * Set the object to be collideable per Axis
-     *
-     * @param axes Variable amount of Axes
-     * @return This Physics object
-     */
-    public Physics setCollidableOn(Axis... axes) {
-        collidableSides.clear();
-        for (Axis axis : axes) {
-            collidableSides.add(Side.getSide(axis, 1));
-            collidableSides.add(Side.getSide(axis, -1));
-        }
-        return this;
-    }
-
-    /**
-     * Set the object to be collideable per Side
-     *
-     * @param sides HashSet of Sides
-     * @return This Physics object
-     */
-    public Physics setCollidableSides(HashSet<Side> sides) {
-        collidableSides.clear();
-        collidableSides.addAll(sides);
-        return this;
-    }
-
-    /**
-     * Check if the object is currently colliding with another object
-     *
-     * @return True if the Object is colliding with another object
-     */
-    public boolean isColliding() {
-        for (Side side : Side.values()) {
-            if (collidesOn(side)) return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check if an object collides with this object
-     *
-     * @param physics Object to check if colliding with
-     * @return True if this object collides with the other object
-     */
-    public boolean collidesWith(Physics physics) {
-        for (HashSet<Physics> list : collidingObjects.values()) {
-            if (list.contains(physics)) return true;
-        }
-        return false;
-    }
-
-    /**
-     * Check if this object is colliding on the specified Side
-     *
-     * @param side Side of the object
-     * @return True if the Object is colliding on the Side
-     */
-    public boolean collidesOn(Side side) {
-        return !collidingObjects.get(side).isEmpty();
-    }
-
-    /**
-     * Check if this object is colliding on the specified Sides perpendicular to the Axis
-     *
-     * @param axis Axis of collision
-     * @return True if the object is colliding on the Axis
-     */
-    public boolean collidesOn(Axis axis) {
-        return switch (axis) {
-            case X -> collidesOn(Side.LEFT) || collidesOn(Side.RIGHT);
-            case Y -> collidesOn(Side.BOTTOM) || collidesOn(Side.TOP);
-            case Z -> collidesOn(Side.BACK) || collidesOn(Side.FRONT);
-        };
-    }
-
-    /**
-     * Check if an object collides with this one on a specific Side
-     *
-     * @param physics Object to check if colliding with
-     * @param side    Side of object
-     * @return True if the object is colliding with the other object on the specified Side
-     */
-    public boolean collidesWithOn(Physics physics, Side side) {
-        return collidingObjects.get(side).contains(physics);
-    }
-
-    /**
-     * Check if an object collides with this one on a specific Axis
-     *
-     * @param physics Object to check if colliding with
-     * @param axis    Axis of the grid
-     * @return True if the object is colliding with the other object on the specified Axis
-     */
-    public boolean collidesWithOn(Physics physics, Axis axis) {
-        return switch (axis) {
-            case X -> collidesWithOn(physics, Side.LEFT) || collidesWithOn(physics, Side.RIGHT);
-            case Y -> collidesWithOn(physics, Side.BOTTOM) || collidesWithOn(physics, Side.TOP);
-            case Z -> collidesWithOn(physics, Side.BACK) || collidesWithOn(physics, Side.FRONT);
-        };
-    }
-
-    /**
-     * Get all objects colliding on the specified Side
-     *
-     * @param side Side to get colliding objects of
-     * @return Set of all objects colliding on the Side
-     */
-    public HashSet<Physics> getCollidingObjects(Side side) {
-        return collidingObjects.get(side);
-    }
-
-    /**
-     * Get all objects colliding on the specified Axis
-     *
-     * @param axis Axis to get colliding objects of
-     * @return Set of all objects colliding on the Axis
-     */
-    public HashSet<Physics> getCollidingObjects(Axis axis) {
-        HashSet<Physics> colliding = new HashSet<>();
-        switch (axis) {
-            case X -> {
-                colliding.addAll(getCollidingObjects(Side.LEFT));
-                colliding.addAll(getCollidingObjects(Side.RIGHT));
-            }
-            case Y -> {
-                colliding.addAll(getCollidingObjects(Side.BOTTOM));
-                colliding.addAll(getCollidingObjects(Side.TOP));
-            }
-            case Z -> {
-                colliding.addAll(getCollidingObjects(Side.BACK));
-                colliding.addAll(getCollidingObjects(Side.FRONT));
-            }
-        }
-        return colliding;
-    }
-
-    /**
-     * Get a Set of all objects colliding with this one
-     *
-     * @return Set of all colliding objects
-     */
-    public HashSet<Physics> getCollidingObjects() {
-        HashSet<Physics> allObjects = new HashSet<>();
-        for (Side side : Side.values()) allObjects.addAll(collidingObjects.get(side));
-        return allObjects;
-    }
-
-    /**
-     * Get all the Sides the object is colliding on
-     *
-     * @return Set of all colliding Sides
-     */
-    public HashSet<Side> getCollidingSides() {
-        HashSet<Side> sides = new HashSet<>();
-        for (Side side : Side.values()) if (collidesOn(side)) sides.add(side);
-        return sides;
-    }
-
-    /**
-     * Get all the axes the object is colliding on
-     *
-     * @return Set of all colliding axes
-     */
-    public HashSet<Axis> getCollidingAxes() {
-        HashSet<Axis> axes = new HashSet<>();
-        for (Axis axis : Axis.values()) if (collidesOn(axis)) axes.add(axis);
-        return axes;
-    }
-
-    /**
-     * See if this object is overlapping any object
-     *
-     * @return True if overlapping
-     */
-    public boolean isOverlapping() {
-        return !overlappingObjects.isEmpty();
-    }
-
-    /**
-     * Check if this object overlaps another
-     *
-     * @param physics Object to check with
-     * @return True if this Object overlaps the specified Object
-     */
-    public boolean overlaps(Physics physics) {
-        return overlappingObjects.contains(physics);
-    }
-
-    /**
-     * Get the set of all objects overlapping this one
-     *
-     * @return Set of overlapping objects
-     */
-    public HashSet<Physics> getOverlappingObjects() {
-        return overlappingObjects;
-    }
-
-    /**
-     * Check if the object is kinematic on any axis
-     *
-     * @return True if the object is kinematic on any axis
-     */
-    public boolean isKinematic() {
-        return !kinematicAxes.isEmpty();
-    }
-
-    /**
-     * Check if the object is kinematic on every axis
-     *
-     * @return True if the object is kinematic on any axis
-     */
-    public boolean isFullyKinematic() {
-        return kinematicAxes.size() == 3;
-    }
-
-    /**
-     * Check if the object is kinematic on the specified Axis
-     *
-     * @return True if the object is kinematic on the specified Axis
-     */
-    public boolean isKinematicOn(Axis axis) {
-        return kinematicAxes.contains(axis);
-    }
-
-    /**
-     * Get the Axes the object is kinematic on
-     *
-     * @return HashSet of Axes the object is kinematic on
-     */
-    public HashSet<Axis> getKinematicAxes() {
-        return kinematicAxes;
-    }
-
-    /**
-     * Set whether the object can move or not per Axis
-     *
-     * @param axes Axes to set kinematic
-     * @return This Physics object
-     */
-    public Physics setKinematicOn(Axis... axes) {
-        kinematicAxes.clear();
-        kinematicAxes.addAll(Arrays.asList(axes));
-        return this;
-    }
-
-    /**
-     * Set whether the object can move or not for all axes
-     *
-     * @param kinematic True to allow motion on all axes
-     * @return This Physics object
-     */
-    public Physics setFullyKinematic(boolean kinematic) {
-        kinematicAxes.clear();
-        if (kinematic) kinematicAxes.addAll(Arrays.asList(Axis.values()));
-        return this;
-    }
-
-    /**
-     * Set the kinematic axes for the object
-     *
-     * @param axes HashSet of Axes to set kinematic
-     * @return This Physics object
-     */
-    public Physics setKinematicAxes(HashSet<Axis> axes) {
-        kinematicAxes.clear();
-        kinematicAxes.addAll(axes);
-        return this;
-    }
-
-    /**
-     * Check if the object is pushable on any axis
-     *
-     * @return True if the object is pushable on any axis
-     */
-    public boolean isPushable() {
-        return !pushableAxes.isEmpty();
-    }
-
-    /**
-     * Check if the object is pushable on every axis
-     *
-     * @return True if the object is pushable on every axis
-     */
-    public boolean isFullyPushable() {
-        return pushableAxes.size() == 3;
-    }
-
-    /**
-     * Check if the object is pushable on the specified Axis
-     *
-     * @return True if the object is pushable on the specified Axis
-     */
-    public boolean isPushableOn(Axis axis) {
-        return pushableAxes.contains(axis);
-    }
-
-    /**
-     * Get the Axes the object is pushable on
-     *
-     * @return HashSet of Axes the object is pushable on
-     */
-    public HashSet<Axis> getPushableAxes() {
-        return pushableAxes;
-    }
-
-    /**
-     * Set whether the object can be pushed or not per Axis
-     *
-     * @param axes Axes to set pushable
-     * @return This Physics object
-     */
-    public Physics setPushableOn(Axis... axes) {
-        pushableAxes.clear();
-        pushableAxes.addAll(Arrays.asList(axes));
-        return this;
-    }
-
-    /**
-     * Set whether the object can be pushed or not for all axes
-     *
-     * @param pushable True to allow being pushed on all axes
-     * @return This Physics object
-     */
-    public Physics setFullyPushable(boolean pushable) {
-        pushableAxes.clear();
-        if (pushable) pushableAxes.addAll(Arrays.asList(Axis.values()));
-        return this;
-    }
-
-    /**
-     * Set the pushable axes for the object
-     *
-     * @param axes HashSet of Axes to set pushable
-     * @return This Physics object
-     */
-    public Physics setPushableAxes(HashSet<Axis> axes) {
-        pushableAxes.clear();
-        pushableAxes.addAll(axes);
-        return this;
-    }
-
-    /**
      * Get the mass of the object
      *
      * @return Mass of the object
@@ -1047,20 +627,172 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Set the object this object is in a Scene with
-     * <p>
-     * This is only able to be called by the parent class
+     * Check which Sides the object is collideable on
+     * <br>
+     * Specify no Sides to check if collideable in general
      *
-     * @param objects List of Physics objects
+     * @return True if collideable on all specified Sides
      */
-    @SuppressWarnings("unchecked")
-    protected void setOtherObjects(LinkedList<? extends Physics> objects) {
-        this.otherObjects = (LinkedList<Physics>) objects;
+    public boolean isCollideable(Side... side) {
+        if (side.length == 0) return !collidableSides.isEmpty();
+        return collidableSides.containsAll(Arrays.asList(side));
+    }
+
+
+    /**
+     * Set the Sides the object can collide on
+     * <br>
+     * Specify no Sides to make non-collideable
+     *
+     * @param side Sides to set collidable
+     * @return This Physics object
+     */
+    public Physics setCollideable(Side... side) {
+        collidableSides.clear();
+        collidableSides.addAll(Arrays.asList(side));
+        return this;
+    }
+
+    /**
+     * Check which Axes the object is kinematic on
+     * <br>
+     * Specify no Axes to check if kinematic in general
+     *
+     * @return True if kinematic on all specified Axes
+     */
+    public boolean isKinematic(Axis... axis) {
+        if (axis.length == 0) return !kinematicAxes.isEmpty();
+        return kinematicAxes.containsAll(Arrays.asList(axis));
+    }
+
+    /**
+     * Set the Axes the object can move on
+     * <br>
+     * Specify no Axes to make non-kinematic
+     *
+     * @param axis Axes to set as kinematic
+     * @return This Physics object
+     */
+    public Physics setKinematic(Axis... axis) {
+        kinematicAxes.clear();
+        kinematicAxes.addAll(Arrays.asList(axis));
+        return this;
+    }
+
+    /**
+     * Check which Axes the object is pushable on
+     * <br>
+     * Specify no Axes to check if pushable in general
+     *
+     * @return True if pushable on all specified Axes
+     */
+    public boolean isPushable(Axis... axis) {
+        if (axis.length == 0) return !pushableAxes.isEmpty();
+        return pushableAxes.containsAll(Arrays.asList(axis));
+    }
+
+    /**
+     * Set the Axes the object can be pushed on
+     * <br>
+     * Specify no Axes to make non-pushable
+     *
+     * @param axis Axes to set as pushable
+     * @return This Physics object
+     */
+    public Physics setPushable(Axis... axis) {
+        pushableAxes.clear();
+        pushableAxes.addAll(Arrays.asList(axis));
+        return this;
+    }
+
+    /**
+     * Check if the object is currently colliding with another object
+     *
+     * @return True if the object is colliding with another object
+     */
+    public boolean isColliding() {
+        for (Side side : Side.values()) {
+            if (isColliding(side)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if one or more specific objects are colliding with this object
+     *
+     * @param physics objects to check if colliding with
+     * @return True if this object collides with the other objects
+     */
+    public boolean isColliding(Physics... physics) {
+        for (HashSet<Physics> list : collidingObjects.values()) {
+            if (list.containsAll(Arrays.asList(physics))) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Check if this object is colliding on the specified Sides
+     *
+     * @param side Sides of the object
+     * @return True if the object is colliding on the Sides
+     */
+    public boolean isColliding(Side... side) {
+        for (Side s : side) {
+            if (collidingObjects.get(s).isEmpty()) return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if a specific object collides with this one on a specific Side
+     *
+     * @param physics Object to check if colliding with
+     * @param side    Side of object
+     * @return True if the object is colliding with the other object on the specified Side
+     */
+    public boolean isColliding(Physics physics, Side side) {
+        return collidingObjects.get(side).contains(physics);
+    }
+
+    /**
+     * Get all objects colliding on the specified Sides
+     * <br>
+     * Specify no Sides to get all objects colliding with this object
+     *
+     * @param side Sides to get colliding objects of
+     * @return Set of all objects colliding on the Sides
+     */
+    public HashSet<Physics> getCollidingObjects(Side... side) {
+        HashSet<Physics> objects = new HashSet<>();
+        for (Side s : (side.length > 0 ? side : Side.values())) {
+            objects.addAll(collidingObjects.get(s));
+        }
+        return objects;
+    }
+
+    /**
+     * Check if this object overlaps one or more objects
+     *
+     * @param physics Objects to check for overlap
+     * @return True if this object overlaps the specified objects
+     */
+    public boolean isOverlapping(Physics... physics) {
+        if (physics.length == 0) return !overlappingObjects.isEmpty();
+        return overlappingObjects.containsAll(Arrays.asList(physics));
+    }
+
+    /**
+     * Get the set of all objects overlapping this one
+     *
+     * @return Set of overlapping objects
+     */
+    public HashSet<Physics> getOverlappingObjects() {
+        return overlappingObjects;
     }
 
     /**
      * Set if the object can update
-     * <p>
+     * <br>
      * This is only able to be called by the parent class
      *
      * @param updatable True to allow updating
@@ -1071,13 +803,25 @@ public abstract class Physics extends Box {
 
     /**
      * Check if the object can update
-     * <p>
+     * <br>
      * This is only able to be called by the parent class
      *
-     * @return True if Object can update
+     * @return True if object can update
      */
     protected boolean isUpdatable() {
         return updatable;
+    }
+
+    /**
+     * Set the object this object is in a Scene with
+     * <br>
+     * This is only able to be called by the parent class
+     *
+     * @param objects List of Physics objects
+     */
+    @SuppressWarnings("unchecked")
+    protected void setSceneObjects(LinkedList<? extends Physics> objects) {
+        this.sceneObjects = (LinkedList<Physics>) objects;
     }
 
     /**
@@ -1097,7 +841,7 @@ public abstract class Physics extends Box {
                 Objects.equals(gravity, physics.gravity) &&
                 Objects.equals(position, physics.position) &&
                 Objects.equals(velocity, physics.velocity) &&
-                Objects.equals(terminalVelocity, physics.terminalVelocity) &&
+                Objects.equals(maxVelocity, physics.maxVelocity) &&
                 Objects.equals(acceleration, physics.acceleration) &&
                 Objects.equals(drag, physics.drag) &&
                 Objects.equals(roughness, physics.roughness) &&

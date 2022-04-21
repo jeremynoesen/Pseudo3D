@@ -4,6 +4,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
 import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,28 +27,19 @@ public class Mouse {
 
     /**
      * Get the rotation of the scroll wheel
-     * <p>
+     * <br>
      * Positive values indicate scrolling up, while negative values indicate scrolling down
      */
     private static float wheelRotation = 0;
 
     /**
-     * Get a Set of all buttons pressed as MouseButtons
+     * Check if MouseButtons are pressed
      *
-     * @return Set of MouseButtons pressed
+     * @param button MouseButtons to check if pressed
+     * @return True if the MouseButtons are pressed
      */
-    public static Set<MouseButton> getPressed() {
-        return pressed;
-    }
-
-    /**
-     * Check if a MouseButton is pressed
-     *
-     * @param button MouseButton to check if pressed
-     * @return True if the MouseButton is pressed
-     */
-    public static boolean isPressed(MouseButton button) {
-        return pressed.contains(button);
+    public static boolean isPressed(MouseButton... button) {
+        return pressed.containsAll(Arrays.asList(button));
     }
 
     /**

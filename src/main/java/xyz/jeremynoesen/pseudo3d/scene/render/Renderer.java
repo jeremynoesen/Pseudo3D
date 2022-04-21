@@ -20,7 +20,7 @@ public class Renderer {
     /**
      * Comparator used to sort Scene Entities from lowest to highest z position for draw order
      */
-    private static final Comparator<Entity> zComparator = (o1, o2) -> {
+    private final Comparator<Entity> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
         return Math.round(diff / (diff == 0 ? 1 : Math.abs(diff)));
     };
@@ -99,12 +99,10 @@ public class Renderer {
                 graphicsContext.setTransform(transform);
             }
 
-            float zoom = camera.getZoom();
+            float drawWidth = background.getWidth() * scene.getGridScale().getX() * camera.getZoom();
+            float drawHeight = background.getHeight() * scene.getGridScale().getY() * camera.getZoom();
             graphicsContext.drawImage(scene.getBackground().getImage(),
-                    (renderPos.getX() - (background.getWidth() * scene.getGridScale().getX() * zoom) / 2),
-                    (renderPos.getY() - (background.getHeight() * scene.getGridScale().getY() * zoom) / 2),
-                    background.getWidth() * zoom * scene.getGridScale().getX(),
-                    background.getHeight() * zoom * scene.getGridScale().getY());
+                    (renderPos.getX() - (drawWidth) / 2), (renderPos.getY() - (drawHeight) / 2), drawWidth, drawHeight);
             graphicsContext.setTransform(original);
             scene.getBackground().update(deltaTime);
         }
@@ -126,9 +124,9 @@ public class Renderer {
             return;
         }
 
+        double fovRad = Math.toRadians(camera.getFieldOfView());
         float scale = (float) (camera.getZoom() * (camera.getSensorSize() / (camera.getSensorSize() + (2.0 *
-                camDist * (Math.sin(Math.toRadians(camera.getFieldOfView()) / 2.0f) /
-                Math.sin((Math.PI / 2.0) - Math.toRadians(camera.getFieldOfView()) / 2.0f))))));
+                camDist * (Math.sin(fovRad / 2.0f) / Math.sin((Math.PI / 2.0) - (fovRad / 2.0f)))))));
 
         if (scale <= 0) {
             entity.setOnScreen(false);

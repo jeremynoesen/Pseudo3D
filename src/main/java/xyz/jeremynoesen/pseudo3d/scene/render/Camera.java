@@ -23,14 +23,14 @@ public class Camera {
 
     /**
      * Camera sensor size
-     * <p>
+     * <br>
      * Rendered Scenes will scale to fit a square with side length of sensorSize pixels
      */
     private float sensorSize;
 
     /**
      * Camera zoom
-     * <p>
+     * <br>
      * Scales the rendered image by this amount
      */
     private float zoom;

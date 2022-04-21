@@ -163,54 +163,44 @@ public class Vector {
     }
 
     /**
-     * Add together this Vector and another Vector
+     * Add together this Vector and other Vectors
      *
-     * @param vector Vector to add
-     * @return Vector from the sum of two Vectors
+     * @param vector Vectors to add
+     * @return Vector from the sum of the Vectors
      */
-    public Vector add(Vector vector) {
-        return new Vector(x + vector.getX(), y + vector.getY(), z + vector.getZ());
+    public Vector add(Vector... vector) {
+        Vector output = new Vector(this);
+        for (Vector v : vector) {
+            output = new Vector(output.x + v.x, output.y + v.y, output.z + v.z);
+        }
+        return output;    }
+
+    /**
+     * Subtract Vectors from this Vector
+     *
+     * @param vector Vectors to subtract
+     * @return Vector from subtraction of the Vectors
+     */
+    public Vector subtract(Vector... vector) {
+        Vector output = new Vector(this);
+        for (Vector v : vector) {
+            output = new Vector(output.x - v.x, output.y - v.y, output.z - v.z);
+        }
+        return output;
     }
 
     /**
-     * Increase the magnitude of this Vector by a specific value
+     * Multiply vector Components by other Vectors' components
      *
-     * @param magnitude Magnitude to add
-     * @return Vector from the sum of the magnitude
+     * @param vector Vectors to multiply
+     * @return Vector from multiplication of the Vectors
      */
-    public Vector add(float magnitude) {
-        return add(normalize().multiply(magnitude));
-    }
-
-    /**
-     * Subtract a Vector from this Vector
-     *
-     * @param vector Vector to subtract
-     * @return Vector from subtraction of two Vectors
-     */
-    public Vector subtract(Vector vector) {
-        return new Vector(x - vector.getX(), y - vector.getY(), z - vector.getZ());
-    }
-
-    /**
-     * Decrease the magnitude of this Vector by a specific value
-     *
-     * @param magnitude Magnitude to subtract
-     * @return Vector from the subtraction of the magnitude
-     */
-    public Vector subtract(float magnitude) {
-        return subtract(normalize().multiply(magnitude));
-    }
-
-    /**
-     * Multiply vector Components by another Vector's components
-     *
-     * @param vector Vector to multiply
-     * @return Vector from multiplication of two Vectors
-     */
-    public Vector multiply(Vector vector) {
-        return new Vector(x * vector.getX(), y * vector.getY(), z * vector.getZ());
-    }
+    public Vector multiply(Vector... vector) {
+        Vector output = new Vector(this);
+        for (Vector v : vector) {
+            output = new Vector(output.x * v.x, output.y * v.y, output.z * v.z);
+        }
+        return output;    }
 
     /**
      * Multiply a Vector's magnitude by a scalar, which multiplies each component by the scalar
@@ -220,6 +210,29 @@ public class Vector {
      */
     public Vector multiply(float scale) {
         return new Vector(x * scale, y * scale, z * scale);
+    }
+
+    /**
+     * Divide Vector components by other Vectors' components
+     *
+     * @param vector Vectors to divide
+     * @return Vector from division of the Vectors
+     */
+    public Vector divide(Vector... vector) {
+        Vector output = new Vector(this);
+        for (Vector v : vector) {
+            output = new Vector(output.x / v.x, output.y / v.y, output.z / v.z);
+        }
+        return output;    }
+
+    /**
+     * Divide a Vector's magnitude by a scalar, which divides each component by the scalar
+     *
+     * @param scale What to scale the Vector by
+     * @return Scaled Vector
+     */
+    public Vector divide(float scale) {
+        return new Vector(x / scale, y / scale, z / scale);
     }
 
     /**
@@ -243,26 +256,6 @@ public class Vector {
         float j = -((x * vector.getZ()) - (z * vector.getX()));
         float k = (x * vector.getY()) - (y * vector.getX());
         return new Vector(i, j, k);
-    }
-
-    /**
-     * Divide Vector components by another Vector's components
-     *
-     * @param vector Vector to divide
-     * @return Vector from division of two Vectors
-     */
-    public Vector divide(Vector vector) {
-        return new Vector(x / vector.getX(), y / vector.getY(), z / vector.getZ());
-    }
-
-    /**
-     * Divide a Vector's magnitude by a scalar, which divides each component by the scalar
-     *
-     * @param scale What to scale the Vector by
-     * @return Scaled Vector
-     */
-    public Vector divide(float scale) {
-        return new Vector(x / scale, y / scale, z / scale);
     }
 
     /**

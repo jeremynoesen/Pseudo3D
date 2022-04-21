@@ -35,7 +35,7 @@ public class Example {
         Entity player = (Entity) new Entity()
                 .setUpdateOffScreen(true)
                 .setSprite(playerFront)
-                .setTerminalVelocity(new Vector(2, 10, 2))
+                .setMaxVelocity(new Vector(2, 10, 2))
                 .setDimensions(new Vector(0.8f, 2, 0.8f));
         //Create player Entity
 
@@ -58,7 +58,7 @@ public class Example {
                 Entity block = (Entity) new Entity()
                         .setSprite(floor)
                         .setPosition(new Vector(j, -4.75f, i))
-                        .setFullyKinematic(false)
+                        .setKinematic()
                         .setDimensions(new Vector(1, 1, 1));
                 scene.addEntity(block);
             }
@@ -104,12 +104,12 @@ public class Example {
             player.setAcceleration(accel);
 
             if (camera.getFieldOfView() > 0) {
-                player.setFullyKinematic(true);
+                player.setKinematic(Axis.values());
             } else {
-                player.setKinematicOn(Axis.X, Axis.Y);
+                player.setKinematic(Axis.X, Axis.Y);
             }
     
-            if (Keyboard.isPressed(KeyCode.SPACE) && player.collidesOn(Side.BOTTOM)) {
+            if (Keyboard.isPressed(KeyCode.SPACE) && player.isColliding(Side.BOTTOM)) {
                 player.setVelocity(player.getVelocity().setY(7.5f));
             }
             //Jump

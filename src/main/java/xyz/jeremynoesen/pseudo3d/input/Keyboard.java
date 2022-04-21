@@ -3,6 +3,7 @@ package xyz.jeremynoesen.pseudo3d.input;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,22 +20,13 @@ public class Keyboard {
     private static final Set<KeyCode> pressed = new HashSet<>();
 
     /**
-     * Get a Set of all keys currently pressed by their key codes
+     * Check if keys are pressed
      *
-     * @return Set of KeyCodes currently pressed
+     * @param key KeyCodes to check if pressed
+     * @return True if the keys are pressed
      */
-    public static Set<KeyCode> getPressed() {
-        return pressed;
-    }
-
-    /**
-     * Check if a key is pressed
-     *
-     * @param key KeyCode to check if pressed
-     * @return True if the key is pressed
-     */
-    public static boolean isPressed(KeyCode key) {
-        return pressed.contains(key);
+    public static boolean isPressed(KeyCode... key) {
+        return pressed.containsAll(Arrays.asList(key));
     }
 
     /**
