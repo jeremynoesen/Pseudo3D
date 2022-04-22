@@ -172,7 +172,7 @@ public abstract class Physics extends Box {
         applyFriction();
         applyDrag();
         applyMomentum();
-        updatePosition();
+        applyVelocity();
     }
 
     /**
@@ -373,7 +373,7 @@ public abstract class Physics extends Box {
     /**
      * Update the position of the object based on the velocity
      */
-    private void updatePosition() {
+    private void applyVelocity() {
         for (Axis axis : Axis.values()) {
             if (isKinematic(axis))
                 setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));

@@ -123,8 +123,8 @@ public class Pseudo3D extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();
-        Mouse.initialize(canvas);
-        Keyboard.initialize(canvas);
+        Mouse.init(canvas);
+        Keyboard.init(canvas);
         root.getChildren().add(canvas);
         scene = new Scene(root);
         primaryStage.setTitle(title);

@@ -173,7 +173,7 @@ public class Entity extends Physics {
     }
 
     /**
-     * Get the speed modifier of the Entity
+     * Get the speed modifier of the Entity for physics and rendering
      *
      * @return Speed modifier value
      */
@@ -182,7 +182,7 @@ public class Entity extends Physics {
     }
 
     /**
-     * Set the speed modifier for the Entity
+     * Set the speed modifier for the Entity for physics and rendering
      *
      * @param speed New speed modifier value
      * @return This Entity

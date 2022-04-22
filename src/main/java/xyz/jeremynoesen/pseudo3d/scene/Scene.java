@@ -302,7 +302,7 @@ public class Scene {
     }
 
     /**
-     * Get the speed modifier of the Scene
+     * Get the speed modifier of the Scene for physics and rendering
      *
      * @return Speed modifier
      */
@@ -311,7 +311,7 @@ public class Scene {
     }
 
     /**
-     * Set the speed modifier for the Scene
+     * Set the speed modifier for the Scene for physics and rendering
      *
      * @param speed Speed modifier
      * @return This Scene

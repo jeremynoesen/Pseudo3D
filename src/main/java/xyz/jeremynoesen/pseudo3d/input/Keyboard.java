@@ -34,7 +34,7 @@ public class Keyboard {
      *
      * @param canvas Main Canvas of the program
      */
-    public static void initialize(Canvas canvas) {
+    public static void init(Canvas canvas) {
         canvas.setOnKeyPressed(e -> pressed.add(e.getCode()));
         canvas.setOnKeyReleased(e -> pressed.remove(e.getCode()));
     }

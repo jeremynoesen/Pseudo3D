@@ -65,7 +65,7 @@ public class Mouse {
      *
      * @param canvas Main Canvas of the program
      */
-    public static void initialize(Canvas canvas) {
+    public static void init(Canvas canvas) {
         canvas.setOnMouseClicked(e -> pressed.add(e.getButton()));
         canvas.setOnMouseReleased(e -> pressed.remove(e.getButton()));
         canvas.setOnScroll(e -> wheelRotation = (float) e.getDeltaY());
