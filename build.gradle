@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'application'
-    id 'org.openjfx.javafxplugin' version '0.0.10'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'com.github.johnrengelman.shadow' version '6.1.0'
 }
 
@@ -10,7 +10,7 @@ version '1.0.0'
 compileJava.options.encoding = 'UTF-8'
 
 javafx {
-    version = "14"
+    version = "18"
     modules = [ 'javafx.controls', 'javafx.fxml']
 }
 
