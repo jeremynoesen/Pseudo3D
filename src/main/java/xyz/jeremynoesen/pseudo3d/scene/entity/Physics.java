@@ -443,12 +443,20 @@ public abstract class Physics extends Box {
 
         if (collidableSides.contains(side) && physics.collidableSides.contains(Side.getSide(axis, -dir))) {
             if (isKinematic(axis) && velocity.get(axis) * dir > 0) {
+
                 if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
                         && !physics.specialCollisions.contains(this)) {
                     distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
                     specialCollisions.add(physics);
                 }
-                setPosition(position.set(axis, position.get(axis) - (distance * dir)));
+
+                for (Axis axes : Axis.values()) {
+                    if (isKinematic(axes)) {
+                        setPosition(position.set(axes,
+                                position.get(axes) - (velocity.get(axes) * Math.abs(distance / velocity.get(axis)))));
+                    }
+                }
+
             }
             collidingObjects.get(side).add(physics);
         } else {
