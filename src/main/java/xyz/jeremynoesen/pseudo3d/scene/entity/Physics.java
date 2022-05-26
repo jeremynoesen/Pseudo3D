@@ -416,21 +416,21 @@ public abstract class Physics extends Box {
         overlaps[4] = Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()); //back overlap
         overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front overlap
 
+        float distance = overlaps[0];
         Side side = Side.LEFT;
         byte zeros = 0;
-        float distance = overlaps[0];
 
         for (int i = 0; i < 6; i++) {
             if (overlaps[i] < distance) {
                 distance = overlaps[i];
-                switch (i) {
-                    case 0 -> side = Side.LEFT;
-                    case 1 -> side = Side.RIGHT;
-                    case 2 -> side = Side.BOTTOM;
-                    case 3 -> side = Side.TOP;
-                    case 4 -> side = Side.BACK;
-                    case 5 -> side = Side.FRONT;
-                }
+                side = switch (i) {
+                    case 1 -> Side.RIGHT;
+                    case 2 -> Side.BOTTOM;
+                    case 3 -> Side.TOP;
+                    case 4 -> Side.BACK;
+                    case 5 -> Side.FRONT;
+                    default -> Side.LEFT;
+                };
             }
             if (overlaps[i] == 0) zeros++;
         }
