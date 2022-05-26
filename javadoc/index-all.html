@@ -261,10 +261,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the active Pseudo3D Scene</div>
 </dd>
-<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Axis.html#getAxis(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getAxis(Side)</a></span> - Static method in enum xyz.jeremynoesen.pseudo3d.scene.util.<a href="xyz/jeremynoesen/pseudo3d/scene/util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a></dt>
-<dd>
-<div class="block">Get Axis of normal for a Side</div>
-</dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/Scene.html#getBackground()">getBackground()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.<a href="xyz/jeremynoesen/pseudo3d/scene/Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></dt>
 <dd>
 <div class="block">Get the background Sprite of the Scene</div>
@@ -321,6 +317,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the framerate of the Sprite</div>
 </dd>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html#getFromNormal(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">getFromNormal(Axis, float)</a></span> - Static method in enum xyz.jeremynoesen.pseudo3d.scene.util.<a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></dt>
+<dd>
+<div class="block">Get a Side whose normal has specified direction on an Axis</div>
+</dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#getGravity()">getGravity()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
 <dd>
 <div class="block">Get the gravity applied to the object</div>
@@ -361,9 +361,21 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the minimum of the Box</div>
 </dd>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html#getNormalAxis(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getNormalAxis(Side)</a></span> - Static method in enum xyz.jeremynoesen.pseudo3d.scene.util.<a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></dt>
+<dd>
+<div class="block">Get Axis of normal for a Side</div>
+</dd>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html#getNormalVector(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getNormalVector(Side)</a></span> - Static method in enum xyz.jeremynoesen.pseudo3d.scene.util.<a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></dt>
+<dd>
+<div class="block">Get the Vector normal to a side</div>
+</dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/render/Camera.html#getOffset()">getOffset()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.render.<a href="xyz/jeremynoesen/pseudo3d/scene/render/Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></dt>
 <dd>
 <div class="block">Get the offset of the render from the center of the window</div>
+</dd>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html#getOpposite(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getOpposite(Side)</a></span> - Static method in enum xyz.jeremynoesen.pseudo3d.scene.util.<a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></dt>
+<dd>
+<div class="block">Get the Side opposite of the specified Side of a box</div>
 </dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#getOverlappingObjects()">getOverlappingObjects()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
 <dd>
@@ -416,10 +428,6 @@ loadScripts(document, 'script');</script>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/render/Camera.html#getSensorSize()">getSensorSize()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.render.<a href="xyz/jeremynoesen/pseudo3d/scene/render/Camera.html" title="class in xyz.jeremynoesen.pseudo3d.scene.render">Camera</a></dt>
 <dd>
 <div class="block">Get the sensor size of the Camera in pixels</div>
-</dd>
-<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html#getSide(xyz.jeremynoesen.pseudo3d.scene.util.Axis,float)">getSide(Axis, float)</a></span> - Static method in enum xyz.jeremynoesen.pseudo3d.scene.util.<a href="xyz/jeremynoesen/pseudo3d/scene/util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a></dt>
-<dd>
-<div class="block">Get a Side whose normal has specified direction on an Axis</div>
 </dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Entity.html#getSpeed()">getSpeed()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></dt>
 <dd>
