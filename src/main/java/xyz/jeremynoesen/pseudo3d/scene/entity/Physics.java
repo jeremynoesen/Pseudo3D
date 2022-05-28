@@ -35,13 +35,6 @@ public abstract class Physics extends Box {
     private Vector velocity;
 
     /**
-     * Maximum velocity of the object (meters / second)
-     * <br>
-     * This will limit how fast the object can go based on gravity and acceleration
-     */
-    private Vector maxVelocity;
-
-    /**
      * Acceleration of the object (meters / second ^ 2)
      */
     private Vector acceleration;
@@ -115,7 +108,6 @@ public abstract class Physics extends Box {
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
-        maxVelocity = new Vector(20, 20, 20);
         drag = new Vector(0.5f, 0.5f, 0.5f);
         roughness = new Vector(5, 5, 5);
         sceneObjects = null;
@@ -143,7 +135,6 @@ public abstract class Physics extends Box {
         position = physics.position;
         velocity = physics.velocity;
         acceleration = physics.acceleration;
-        maxVelocity = physics.maxVelocity;
         drag = physics.drag;
         roughness = physics.roughness;
         mass = physics.mass;
@@ -180,14 +171,7 @@ public abstract class Physics extends Box {
      */
     private void applyAcceleration() {
         for (Axis axis : kinematicAxes) {
-            float v = velocity.get(axis);
-            float a = acceleration.get(axis) + gravity.get(axis);
-            float vm = maxVelocity.get(axis);
-
-            if (v > -vm && a < 0)
-                velocity = velocity.set(axis, Math.max(v + (a * deltaTime), -vm));
-            else if (v < vm && a > 0)
-                velocity = velocity.set(axis, Math.min(v + (a * deltaTime), vm));
+            velocity = velocity.set(axis, velocity.get(axis) + (acceleration.get(axis) + gravity.get(axis) * deltaTime));
         }
     }
 
@@ -520,26 +504,6 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Get the max velocity for this object
-     *
-     * @return Max velocity Vector
-     */
-    public Vector getMaxVelocity() {
-        return maxVelocity;
-    }
-
-    /**
-     * Set the max velocity for this object
-     *
-     * @param maxVelocity Max velocity Vector
-     * @return This Physics object
-     */
-    public Physics setMaxVelocity(Vector maxVelocity) {
-        this.maxVelocity = maxVelocity;
-        return this;
-    }
-
-    /**
      * Get the drag coefficient of the object
      *
      * @return Drag coefficient Vector of the object
@@ -853,7 +817,6 @@ public abstract class Physics extends Box {
                 Objects.equals(gravity, physics.gravity) &&
                 Objects.equals(position, physics.position) &&
                 Objects.equals(velocity, physics.velocity) &&
-                Objects.equals(maxVelocity, physics.maxVelocity) &&
                 Objects.equals(acceleration, physics.acceleration) &&
                 Objects.equals(drag, physics.drag) &&
                 Objects.equals(roughness, physics.roughness) &&

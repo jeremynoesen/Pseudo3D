@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
  * @author Jeremy Noesen
  */
 public class Example {
-    
+
     /**
      * Run the example Scene
      *
@@ -31,17 +31,16 @@ public class Example {
         Sprite floor = new Sprite(1, 1, "src/test/resources/images/floor.png");
         Sprite background = new Sprite(16, 16, "src/test/resources/images/background.png");
         //Load all Sprites
-        
+
         Entity player = (Entity) new Entity()
                 .setUpdateOffScreen(true)
                 .setSprite(playerFront)
-                .setMaxVelocity(new Vector(2, 10, 2))
                 .setDimensions(new Vector(0.8f, 2, 0.8f));
         //Create player Entity
 
         Entity dummy = new Entity(player).setUpdateOffScreen(false);
         //Create dummy Entity
-        
+
         Camera camera = new Camera().setFieldOfView(49);
         //Create Camera
 
@@ -52,7 +51,7 @@ public class Example {
                 .addEntity(dummy)
                 .setCamera(camera);
         //Create and initialize Scene
-        
+
         for (int j = -8; j <= 8; j++) {
             for (int i = -3; i <= 0; i++) {
                 Entity block = (Entity) new Entity()
@@ -64,76 +63,80 @@ public class Example {
             }
         }
         //Generate floor
-        
+
         Pseudo3D.launch(500, 500, 60, 120, false, true, "Sandbox");
         //Launch program
-        
+
         Pseudo3D.setActiveScene(scene);
         //Set active Scene
 
         //Scene Keyboard controls
         scene.addTickRunnable(() -> {
             Vector accel = new Vector();
-            
-            player.setAcceleration(accel);
-            
+
             if (Keyboard.isPressed(KeyCode.W)) {
-                accel = accel.subtract(new Vector(0, 0, 20));
+                if (player.getVelocity().getZ() > -2)
+                    accel = accel.subtract(new Vector(0, 0, 0.2f));
                 player.setSprite(playerBack);
             }
             //Accelerate forward
-            
+
             if (Keyboard.isPressed(KeyCode.S)) {
-                accel = accel.add(new Vector(0, 0, 20));
+                if (player.getVelocity().getZ() < 2)
+                    accel = accel.add(new Vector(0, 0, 0.2f));
                 player.setSprite(playerFront);
             }
             //Accelerate backward
-            
+
             if (Keyboard.isPressed(KeyCode.A)) {
-                accel = accel.subtract(new Vector(20, 0, 0));
+                if (player.getVelocity().getX() > -2)
+                    accel = accel.subtract(new Vector(0.2f, 0, 0));
                 player.setSprite(playerLeft);
             }
             //Accelerate left
-            
+
             if (Keyboard.isPressed(KeyCode.D)) {
-                accel = accel.add(new Vector(20, 0, 0));
+                if (player.getVelocity().getX() < 2)
+                    accel = accel.add(new Vector(0.2f, 0, 0));
                 player.setSprite(playerRight);
             }
             //Accelerate right
-    
+
             player.setAcceleration(accel);
+            //Apply acceleration
 
             if (camera.getFieldOfView() > 0) {
                 player.setKinematic(Axis.values());
             } else {
                 player.setKinematic(Axis.X, Axis.Y);
             }
-    
+            //Prevent moving on Z axis when FOV is 0
+
             if (Keyboard.isPressed(KeyCode.SPACE) && player.isColliding(Side.BOTTOM)) {
                 player.setVelocity(player.getVelocity().setY(7.5f));
             }
             //Jump
-    
+
             if (Keyboard.isPressed(KeyCode.UP)) {
                 camera.setFieldOfView(camera.getFieldOfView() + 0.5f);
             }
             //Increase Camera FOV
-            
+
             if (Keyboard.isPressed(KeyCode.DOWN)) {
                 camera.setFieldOfView(Math.max(camera.getFieldOfView() - 0.5f, 0));
             }
             //Decrease Camera FOV
-            
+
             if (Keyboard.isPressed(KeyCode.LEFT)) {
                 camera.setRotation(camera.getRotation() + 0.5f);
             }
             //Rotate Camera counter-clock-wise
-            
+
             if (Keyboard.isPressed(KeyCode.RIGHT)) {
                 camera.setRotation(camera.getRotation() - 0.5f);
             }
             //Rotate Camera clock-wise
-            
+
             if (Keyboard.isPressed(KeyCode.R)) {
                 camera.setOffset(new Vector());
                 camera.setRotation(0);
