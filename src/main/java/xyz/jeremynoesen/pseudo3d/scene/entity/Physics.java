@@ -229,7 +229,6 @@ public abstract class Physics extends Box {
             if (isKinematic(axis)) {
                 float f = 0;
                 int count = 0;
-                float stackedMass = calculateStackedMass(side);
 
                 for (Physics physics : collidingObjects.get(side)) {
                     if (physics.updatable) {
@@ -239,7 +238,7 @@ public abstract class Physics extends Box {
                 }
 
                 if (count > 0) {
-                    f = ((f + roughness.get(axis)) / (count + 1)) * stackedMass * deltaTime;
+                    f = ((f + roughness.get(axis)) / (count + 1)) * calculateStackedMass(side) * deltaTime;
                     output = output.set(axis, output.get(axis) + f);
                 }
             }
@@ -255,8 +254,8 @@ public abstract class Physics extends Box {
      */
     private float calculateStackedMass(Side side) {
         float totalMass = 0;
-        Queue<Physics> current = new ArrayDeque<>();
-        Set<Physics> visited = new HashSet<>();
+        ArrayDeque<Physics> current = new ArrayDeque<>();
+        HashSet<Physics> visited = new HashSet<>();
         current.add(this);
 
         while (!current.isEmpty()) {
