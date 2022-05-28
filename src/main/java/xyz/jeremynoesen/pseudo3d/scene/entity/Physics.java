@@ -225,43 +225,26 @@ public abstract class Physics extends Box {
      */
     private Vector calculateFriction() {
         Vector output = new Vector();
-        for (Axis axis : Axis.values()) {
-            if (!isKinematic(axis)) continue;
+        for (Side side : Side.values()) {
+            Axis axis = Side.getNormalAxis(side);
 
-            float v = velocity.get(axis);
-            float stackedMass = calculateStackedMass(v, axis);
+            if (isKinematic(axis) && isColliding(side)) {
+                float f = 0;
+                int count = 0;
+                float stackedMass = calculateStackedMass(side);
 
-            float f = 0;
-            int count = 0;
-            Side side = Side.getFromNormal(axis, v);
-
-            if (side != null && isColliding(side)) {
                 for (Physics physics : collidingObjects.get(side)) {
                     if (physics.updatable) {
-                        f += physics.roughness.get(axis) * Math.abs(v - physics.getVelocity().get(axis));
+                        f += physics.roughness.get(axis) * Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
                         count++;
                     }
                 }
-            }
 
-            if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * stackedMass * deltaTime;
-            output = output.set(axis, f);
-
-            f = 0;
-            count = 0;
-            side = Side.getFromNormal(axis, -v);
-
-            if (side != null && isColliding(side)) {
-                for (Physics physics : collidingObjects.get(side)) {
-                    if (physics.updatable && Math.signum(physics.getVelocity().get(axis)) == Math.signum(v)) {
-                        f += physics.roughness.get(axis) * Math.abs(physics.getVelocity().get(axis) - v);
-                        count++;
-                    }
+                if (count > 0) {
+                    f = ((f + roughness.get(axis)) / (count + 1)) * stackedMass * deltaTime;
+                    output = output.set(axis, output.get(axis) + f);
                 }
             }
-
-            if (count > 0) f = ((f + roughness.get(axis)) / (count + 1)) * (stackedMass - mass) * deltaTime;
-            output = output.set(axis, output.get(axis) + f);
         }
         return output;
     }
@@ -269,11 +252,10 @@ public abstract class Physics extends Box {
     /**
      * Sum the masses of stacked objects
      *
-     * @param velocity Input velocity
-     * @param axis     Axis of motion
-     * @return Sum of masses
+     * @param side Side of object to sum stacked masses
+     * @return Sum of stacked masses
      */
-    private float calculateStackedMass(float velocity, Axis axis) {
+    private float calculateStackedMass(Side side) {
         float totalMass = 0;
         Queue<Physics> current = new ArrayDeque<>();
         Set<Physics> visited = new HashSet<>();
@@ -284,11 +266,9 @@ public abstract class Physics extends Box {
 
             if (!visited.contains(physics)) {
                 totalMass += physics.mass;
-                Side side = Side.getFromNormal(axis, -velocity);
-                if (side != null) {
-                    for (Physics colliding : physics.getCollidingObjects(side))
-                        if (colliding.updatable && colliding.isKinematic(axis)) current.add(colliding);
-                }
+                for (Physics colliding : physics.getCollidingObjects(Side.getOpposite(side)))
+                    if (colliding.updatable && colliding.isKinematic(Side.getNormalAxis(side)))
+                        current.add(colliding);
                 visited.add(physics);
             }
         }
@@ -439,7 +419,7 @@ public abstract class Physics extends Box {
         Axis axis = Side.getNormalAxis(side);
 
         if (collidableSides.contains(side) && physics.collidableSides.contains(Side.getOpposite(side))) {
-            if (isKinematic(axis) && velocity.get(axis) * Side.getNormalVector(side).get(axis) > 0) {
+            if (isKinematic(axis) && Math.signum(velocity.get(axis)) == Math.signum(Side.getNormalVector(side).get(axis))) {
 
                 if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
                         && !physics.specialCollisions.contains(this)) {
