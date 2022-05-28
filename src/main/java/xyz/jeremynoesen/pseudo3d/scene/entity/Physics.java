@@ -179,9 +179,7 @@ public abstract class Physics extends Box {
      * Apply acceleration and gravity to the velocity
      */
     private void applyAcceleration() {
-        for (Axis axis : Axis.values()) {
-            if (!isKinematic(axis)) continue;
-
+        for (Axis axis : kinematicAxes) {
             float v = velocity.get(axis);
             float a = acceleration.get(axis) + gravity.get(axis);
             float vm = maxVelocity.get(axis);
@@ -225,10 +223,10 @@ public abstract class Physics extends Box {
      */
     private Vector calculateFriction() {
         Vector output = new Vector();
-        for (Side side : Side.values()) {
+        for (Side side : getCollidingSides()) {
             Axis axis = Side.getNormalAxis(side);
 
-            if (isKinematic(axis) && isColliding(side)) {
+            if (isKinematic(axis)) {
                 float f = 0;
                 int count = 0;
                 float stackedMass = calculateStackedMass(side);
@@ -281,9 +279,7 @@ public abstract class Physics extends Box {
     private void applyDrag() {
         Vector drag = calculateDrag();
 
-        for (Axis axis : Axis.values()) {
-            if (!isKinematic(axis)) continue;
-
+        for (Axis axis : kinematicAxes) {
             float v = velocity.get(axis);
             float d = drag.get(axis);
 
@@ -301,10 +297,9 @@ public abstract class Physics extends Box {
      */
     private Vector calculateDrag() {
         Vector output = new Vector();
-        for (Axis axis : Axis.values()) {
-            if (isKinematic(axis))
-                output = output.set(axis, drag.get(axis) * getFaceArea(Side.getFromNormal(axis, 1))
-                        * deltaTime * Math.abs(velocity.get(axis)));
+        for (Axis axis : kinematicAxes) {
+            output = output.set(axis, drag.get(axis) * getFaceArea(Side.getFromNormal(axis, 1))
+                    * deltaTime * Math.abs(velocity.get(axis)));
         }
         return output;
     }
@@ -314,13 +309,10 @@ public abstract class Physics extends Box {
      */
     private void applyMomentum() {
         skipMomentum.clear();
-        for (Axis axis : Axis.values()) {
-            if (!isKinematic(axis)) continue;
-
+        for (Axis axis : kinematicAxes) {
             float v = velocity.get(axis);
-
             Side side = Side.getFromNormal(axis, v);
-            if (side != null && isColliding(side)) {
+            if (side != null) {
                 for (Physics physics : collidingObjects.get(side)) {
 
                     if (physics.updatable) {
@@ -350,9 +342,8 @@ public abstract class Physics extends Box {
      * Update the position of the object based on the velocity
      */
     private void applyVelocity() {
-        for (Axis axis : Axis.values()) {
-            if (isKinematic(axis))
-                setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));
+        for (Axis axis : kinematicAxes) {
+            setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));
         }
     }
 
@@ -418,7 +409,7 @@ public abstract class Physics extends Box {
 
         Axis axis = Side.getNormalAxis(side);
 
-        if (collidableSides.contains(side) && physics.collidableSides.contains(Side.getOpposite(side))) {
+        if (isCollideable(side) && physics.isCollideable(Side.getOpposite(side))) {
             if (isKinematic(axis) && Math.signum(velocity.get(axis)) == Math.signum(Side.getNormalVector(side).get(axis))) {
 
                 if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
@@ -427,11 +418,9 @@ public abstract class Physics extends Box {
                     specialCollisions.add(physics);
                 }
 
-                for (Axis axes : Axis.values()) {
-                    if (isKinematic(axes)) {
-                        setPosition(position.set(axes,
-                                position.get(axes) - (velocity.get(axes) * Math.abs(distance / velocity.get(axis)))));
-                    }
+                for (Axis axes : kinematicAxes) {
+                    setPosition(position.set(axes,
+                            position.get(axes) - (velocity.get(axes) * Math.abs(distance / velocity.get(axis)))));
                 }
 
             }
@@ -639,6 +628,16 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * Get the Sides the object can collide on
+     * <br>
+     *
+     * @return HashSet of Sides the Object can collide on
+     */
+    public HashSet<Side> getCollideableSides() {
+        return collidableSides;
+    }
+
+    /**
      * Check which Axes the object is kinematic on
      * <br>
      * Specify no Axes to check if kinematic in general
@@ -665,6 +664,15 @@ public abstract class Physics extends Box {
     }
 
     /**
+     * Get the Axes the object is kinematic on
+     *
+     * @return HashSet of Axes the object is kinematic on
+     */
+    public HashSet<Axis> getKinematicAxes() {
+        return kinematicAxes;
+    }
+
+    /**
      * Check which Axes the object is pushable on
      * <br>
      * Specify no Axes to check if pushable in general
@@ -688,6 +696,15 @@ public abstract class Physics extends Box {
         pushableAxes.clear();
         pushableAxes.addAll(Arrays.asList(axis));
         return this;
+    }
+
+    /**
+     * Get the Axes the object is pushable on
+     *
+     * @return HashSet of Axes the object is pushable on
+     */
+    public HashSet<Axis> getPushableAxes() {
+        return pushableAxes;
     }
 
     /**
@@ -753,6 +770,17 @@ public abstract class Physics extends Box {
             objects.addAll(collidingObjects.get(s));
         }
         return objects;
+    }
+
+    /**
+     * Get all the Sides the object is colliding on
+     *
+     * @return Set of all colliding Sides
+     */
+    public HashSet<Side> getCollidingSides() {
+        HashSet<Side> sides = new HashSet<>();
+        for (Side side : Side.values()) if (isColliding(side)) sides.add(side);
+        return sides;
     }
 
     /**
