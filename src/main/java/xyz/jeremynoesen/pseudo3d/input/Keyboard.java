@@ -30,6 +30,15 @@ public class Keyboard {
     }
 
     /**
+     * Get a Set of all keys currently pressed by their key codes
+     *
+     * @return Set of KeyCodes currently pressed
+     */
+    public static Set<KeyCode> getPressedKeys() {
+        return pressed;
+    }
+
+    /**
      * Add the event listeners to the main Canvas of the program
      *
      * @param canvas Main Canvas of the program

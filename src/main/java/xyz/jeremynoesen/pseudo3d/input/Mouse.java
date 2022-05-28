@@ -43,6 +43,15 @@ public class Mouse {
     }
 
     /**
+     * Get a Set of all buttons pressed as MouseButtons
+     *
+     * @return Set of MouseButtons pressed
+     */
+    public static Set<MouseButton> getPressedButtons() {
+        return pressed;
+    }
+
+    /**
      * Get the rotation of the scroll wheel with speed and direction
      *
      * @return Rotation of the scroll wheel
