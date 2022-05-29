@@ -300,9 +300,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the dimensions of the Box for a specific Axis</div>
 </dd>
-<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#getDrag()">getDrag()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#getDrag(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getDrag(Side)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
 <dd>
-<div class="block">Get the drag coefficient of the object</div>
+<div class="block">Get the drag coefficient of the object for a Side</div>
 </dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/Scene.html#getEntities()">getEntities()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.<a href="xyz/jeremynoesen/pseudo3d/scene/Scene.html" title="class in xyz.jeremynoesen.pseudo3d.scene">Scene</a></dt>
 <dd>
@@ -434,9 +434,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the rotation of the Sprite</div>
 </dd>
-<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#getRoughness()">getRoughness()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#getRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getRoughness(Side)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
 <dd>
-<div class="block">Get the roughness of the object</div>
+<div class="block">Get the roughness of the object for a Side</div>
 </dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/Pseudo3D.html#getScene()">getScene()</a></span> - Static method in class xyz.jeremynoesen.pseudo3d.<a href="xyz/jeremynoesen/pseudo3d/Pseudo3D.html" title="class in xyz.jeremynoesen.pseudo3d">Pseudo3D</a></dt>
 <dd>
@@ -812,9 +812,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the dimensions of the Box</div>
 </dd>
-<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag(Vector)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#setDrag(float,float,float,float,float,float)">setDrag(float, float, float, float, float, float)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
 <dd>
-<div class="block">Set the drag coefficient for the object</div>
+<div class="block">Set the drag coefficients for all Sides</div>
+</dd>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#setDrag(float,xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setDrag(float, Side...)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
+<dd>
+<div class="block">Set the drag coefficient for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
 </dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Entity.html#setEnabled(boolean)">setEnabled(boolean)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></dt>
 <dd>
@@ -910,9 +916,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the rotation of the Sprite</div>
 </dd>
-<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness(Vector)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#setRoughness(float,float,float,float,float,float)">setRoughness(float, float, float, float, float, float)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
 <dd>
-<div class="block">Set the roughness of the object</div>
+<div class="block">Set the roughness for all Sides</div>
+</dd>
+<dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html#setRoughness(float,xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setRoughness(float, Side...)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></dt>
+<dd>
+<div class="block">Set the roughness for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
 </dd>
 <dt><span class="memberNameLink"><a href="xyz/jeremynoesen/pseudo3d/scene/entity/Entity.html#setScene(xyz.jeremynoesen.pseudo3d.scene.Scene)">setScene(Scene)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.scene.entity.<a href="xyz/jeremynoesen/pseudo3d/scene/entity/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Entity</a></dt>
 <dd>

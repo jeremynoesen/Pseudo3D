@@ -19,7 +19,7 @@
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.js"></script>
 </head>
 <body class="class-declaration">
-<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -193,10 +193,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 </td>
 </tr>
 <tr class="rowColor" id="i5">
-<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDrag()">getDrag</a></span>()</code></th>
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDrag(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getDrag</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</code></th>
 <td class="colLast">
-<div class="block">Get the drag coefficient of the object</div>
+<div class="block">Get the drag coefficient of the object for a Side</div>
 </td>
 </tr>
 <tr class="altColor" id="i6">
@@ -242,10 +242,10 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 </td>
 </tr>
 <tr class="altColor" id="i12">
-<td class="colFirst"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRoughness()">getRoughness</a></span>()</code></th>
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getRoughness</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</code></th>
 <td class="colLast">
-<div class="block">Get the roughness of the object</div>
+<div class="block">Get the roughness of the object for a Side</div>
 </td>
 </tr>
 <tr class="rowColor" id="i13">
@@ -345,19 +345,34 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 </tr>
 <tr class="rowColor" id="i25">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;drag)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDrag(float,float,float,float,float,float)">setDrag</a></span>&#8203;(float&nbsp;left,
+float&nbsp;right,
+float&nbsp;bottom,
+float&nbsp;top,
+float&nbsp;back,
+float&nbsp;front)</code></th>
 <td class="colLast">
-<div class="block">Set the drag coefficient for the object</div>
+<div class="block">Set the drag coefficients for all Sides</div>
 </td>
 </tr>
 <tr class="altColor" id="i26">
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDrag(float,xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setDrag</a></span>&#8203;(float&nbsp;drag,
+<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>...&nbsp;side)</code></th>
+<td class="colLast">
+<div class="block">Set the drag coefficient for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
+</td>
+</tr>
+<tr class="rowColor" id="i27">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGravity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setGravity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;gravity)</code></th>
 <td class="colLast">
 <div class="block">Set the gravity applied to the object</div>
 </td>
 </tr>
-<tr class="rowColor" id="i27">
+<tr class="altColor" id="i28">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setKinematic(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setKinematic</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axis)</code></th>
 <td class="colLast">
@@ -366,21 +381,21 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
  Specify no Axes to make non-kinematic</div>
 </td>
 </tr>
-<tr class="altColor" id="i28">
+<tr class="rowColor" id="i29">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMass(float)">setMass</a></span>&#8203;(float&nbsp;mass)</code></th>
 <td class="colLast">
 <div class="block">Set the mass of the object</div>
 </td>
 </tr>
-<tr class="rowColor" id="i29">
+<tr class="altColor" id="i30">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPosition(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setPosition</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;position)</code></th>
 <td class="colLast">
 <div class="block">Set the position of the object</div>
 </td>
 </tr>
-<tr class="altColor" id="i30">
+<tr class="rowColor" id="i31">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPushable(xyz.jeremynoesen.pseudo3d.scene.util.Axis...)">setPushable</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Axis</a>...&nbsp;axis)</code></th>
 <td class="colLast">
@@ -389,14 +404,29 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
  Specify no Axes to make non-pushable</div>
 </td>
 </tr>
-<tr class="rowColor" id="i31">
+<tr class="altColor" id="i32">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;roughness)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRoughness(float,float,float,float,float,float)">setRoughness</a></span>&#8203;(float&nbsp;left,
+float&nbsp;right,
+float&nbsp;bottom,
+float&nbsp;top,
+float&nbsp;back,
+float&nbsp;front)</code></th>
 <td class="colLast">
-<div class="block">Set the roughness of the object</div>
+<div class="block">Set the roughness for all Sides</div>
 </td>
 </tr>
-<tr class="altColor" id="i32">
+<tr class="rowColor" id="i33">
+<td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRoughness(float,xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setRoughness</a></span>&#8203;(float&nbsp;roughness,
+<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>...&nbsp;side)</code></th>
+<td class="colLast">
+<div class="block">Set the roughness for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
+</td>
+</tr>
+<tr class="altColor" id="i34">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSceneObjects(java.util.LinkedList)">setSceneObjects</a></span>&#8203;(java.util.LinkedList&lt;? extends <a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a>&gt;&nbsp;objects)</code></th>
 <td class="colLast">
@@ -405,7 +435,7 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
  This is only able to be called by the parent class</div>
 </td>
 </tr>
-<tr class="rowColor" id="i33">
+<tr class="rowColor" id="i35">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUpdatable(boolean)">setUpdatable</a></span>&#8203;(boolean&nbsp;updatable)</code></th>
 <td class="colLast">
@@ -414,21 +444,21 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
  This is only able to be called by the parent class</div>
 </td>
 </tr>
-<tr class="altColor" id="i34">
+<tr class="altColor" id="i36">
 <td class="colFirst"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVelocity(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setVelocity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;velocity)</code></th>
 <td class="colLast">
 <div class="block">Set the velocity of the object</div>
 </td>
 </tr>
-<tr class="rowColor" id="i35">
+<tr class="rowColor" id="i37">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tickCollisions()">tickCollisions</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Check if an object has collided with this object</div>
 </td>
 </tr>
-<tr class="altColor" id="i36">
+<tr class="altColor" id="i38">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tickMotion(float)">tickMotion</a></span>&#8203;(float&nbsp;deltaTime)</code></th>
 <td class="colLast">
@@ -610,23 +640,29 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="getDrag()">getDrag</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getDrag</span>()</div>
-<div class="block">Get the drag coefficient of the object</div>
+<h3><a id="getDrag(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getDrag</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getDrag</span>&#8203;(<span class="arguments"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</span></div>
+<div class="block">Get the drag coefficient of the object for a Side</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>side</code> - Side to get drag coefficient of</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Drag coefficient Vector of the object</dd>
+<dd>Drag coefficient of the object Side</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="setDrag(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setDrag</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setDrag</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;drag)</span></div>
-<div class="block">Set the drag coefficient for the object</div>
+<h3><a id="setDrag(float,xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setDrag</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setDrag</span>&#8203;(<span class="arguments">float&nbsp;drag,
+<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>...&nbsp;side)</span></div>
+<div class="block">Set the drag coefficient for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>drag</code> - Drag coefficient Vector</dd>
+<dd><code>drag</code> - Drag coefficient</dd>
+<dd><code>side</code> - Sides to set drag for</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This Physics object</dd>
 </dl>
@@ -634,23 +670,75 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.sce
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="getRoughness()">getRoughness</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a></span>&nbsp;<span class="memberName">getRoughness</span>()</div>
-<div class="block">Get the roughness of the object</div>
+<h3><a id="setDrag(float,float,float,float,float,float)">setDrag</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setDrag</span>&#8203;(<span class="arguments">float&nbsp;left,
+float&nbsp;right,
+float&nbsp;bottom,
+float&nbsp;top,
+float&nbsp;back,
+float&nbsp;front)</span></div>
+<div class="block">Set the drag coefficients for all Sides</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>left</code> - Drag coefficient for the left Side</dd>
+<dd><code>right</code> - Drag coefficient for the right Side</dd>
+<dd><code>bottom</code> - Drag coefficient for the bottom Side</dd>
+<dd><code>top</code> - Drag coefficient for the top Side</dd>
+<dd><code>back</code> - Drag coefficient for the back Side</dd>
+<dd><code>front</code> - Drag coefficient for the front Side</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Roughness per axis as a Vector</dd>
+<dd>This Physics object</dd>
 </dl>
 </section>
 </li>
 <li class="blockList">
 <section class="detail">
-<h3><a id="setRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Vector)">setRoughness</a></h3>
-<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setRoughness</span>&#8203;(<span class="arguments"><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.scene.util">Vector</a>&nbsp;roughness)</span></div>
-<div class="block">Set the roughness of the object</div>
+<h3><a id="getRoughness(xyz.jeremynoesen.pseudo3d.scene.util.Side)">getRoughness</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType">float</span>&nbsp;<span class="memberName">getRoughness</span>&#8203;(<span class="arguments"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>&nbsp;side)</span></div>
+<div class="block">Get the roughness of the object for a Side</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>roughness</code> - Roughness per axis as a Vector</dd>
+<dd><code>side</code> - Side to get roughness of</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>Roughness of the object Side</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setRoughness(float,xyz.jeremynoesen.pseudo3d.scene.util.Side...)">setRoughness</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setRoughness</span>&#8203;(<span class="arguments">float&nbsp;roughness,
+<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.scene.util">Side</a>...&nbsp;side)</span></div>
+<div class="block">Set the roughness for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>roughness</code> - Roughness</dd>
+<dd><code>side</code> - Sides to set roughness for</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>This Physics object</dd>
+</dl>
+</section>
+</li>
+<li class="blockList">
+<section class="detail">
+<h3><a id="setRoughness(float,float,float,float,float,float)">setRoughness</a></h3>
+<div class="memberSignature"><span class="modifiers">public</span>&nbsp;<span class="returnType"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.scene.entity">Physics</a></span>&nbsp;<span class="memberName">setRoughness</span>&#8203;(<span class="arguments">float&nbsp;left,
+float&nbsp;right,
+float&nbsp;bottom,
+float&nbsp;top,
+float&nbsp;back,
+float&nbsp;front)</span></div>
+<div class="block">Set the roughness for all Sides</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>left</code> - Roughness for the left Side</dd>
+<dd><code>right</code> - Roughness for the right Side</dd>
+<dd><code>bottom</code> - Roughness for the bottom Side</dd>
+<dd><code>top</code> - Roughness for the top Side</dd>
+<dd><code>back</code> - Roughness for the back Side</dd>
+<dd><code>front</code> - Roughness for the front Side</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>This Physics object</dd>
 </dl>
