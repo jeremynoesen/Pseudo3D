@@ -357,31 +357,24 @@ public abstract class Physics extends Box {
      * @param physics Object colliding with this object
      */
     private void collide(Physics physics) {
-        float[] overlaps = new float[6];
-        overlaps[0] = Math.abs(getMinimum().getX() - physics.getMaximum().getX()); //left overlap
-        overlaps[1] = Math.abs(getMaximum().getX() - physics.getMinimum().getX()); //right overlap
-        overlaps[2] = Math.abs(getMinimum().getY() - physics.getMaximum().getY()); //bottom overlap
-        overlaps[3] = Math.abs(getMaximum().getY() - physics.getMinimum().getY()); //top overlap
-        overlaps[4] = Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()); //back overlap
-        overlaps[5] = Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()); //front overlap
+        HashMap<Side, Float> overlaps = new HashMap<>();
+        overlaps.put(Side.LEFT, Math.abs(getMinimum().getX() - physics.getMaximum().getX()));
+        overlaps.put(Side.RIGHT ,Math.abs(getMaximum().getX() - physics.getMinimum().getX()));
+        overlaps.put(Side.BOTTOM ,Math.abs(getMinimum().getY() - physics.getMaximum().getY()));
+        overlaps.put(Side.TOP ,Math.abs(getMaximum().getY() - physics.getMinimum().getY()));
+        overlaps.put(Side.BACK ,Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()));
+        overlaps.put(Side.FRONT ,Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()));
 
-        float distance = overlaps[0];
-        Side side = Side.LEFT;
+        float distance = Float.MAX_VALUE;
+        Side side = null;
         byte zeros = 0;
 
-        for (int i = 0; i < 6; i++) {
-            if (overlaps[i] < distance) {
-                distance = overlaps[i];
-                side = switch (i) {
-                    case 1 -> Side.RIGHT;
-                    case 2 -> Side.BOTTOM;
-                    case 3 -> Side.TOP;
-                    case 4 -> Side.BACK;
-                    case 5 -> Side.FRONT;
-                    default -> Side.LEFT;
-                };
+        for (Side s : Side.values()) {
+            if (overlaps.get(s) < distance) {
+                distance = overlaps.get(s);
+                side = s;
             }
-            if (overlaps[i] == 0) zeros++;
+            if (overlaps.get(s) == 0) zeros++;
         }
         if (zeros > 1) return;
 
