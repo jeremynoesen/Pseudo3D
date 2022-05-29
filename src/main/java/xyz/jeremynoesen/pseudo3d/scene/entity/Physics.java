@@ -179,7 +179,7 @@ public abstract class Physics extends Box {
      */
     private void applyAcceleration() {
         for (Axis axis : kinematicAxes) {
-            velocity = velocity.set(axis, velocity.get(axis) + (acceleration.get(axis) + gravity.get(axis) * deltaTime));
+            velocity = velocity.set(axis, velocity.get(axis) + ((acceleration.get(axis) + gravity.get(axis)) * deltaTime));
         }
     }
 

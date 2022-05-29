@@ -76,28 +76,28 @@ public class Example {
 
             if (Keyboard.isPressed(KeyCode.W)) {
                 if (player.getVelocity().getZ() > -2)
-                    accel = accel.subtract(new Vector(0, 0, 0.2f));
+                    accel = accel.subtract(new Vector(0, 0, 20));
                 player.setSprite(playerBack);
             }
             //Accelerate forward
 
             if (Keyboard.isPressed(KeyCode.S)) {
                 if (player.getVelocity().getZ() < 2)
-                    accel = accel.add(new Vector(0, 0, 0.2f));
+                    accel = accel.add(new Vector(0, 0, 20));
                 player.setSprite(playerFront);
             }
             //Accelerate backward
 
             if (Keyboard.isPressed(KeyCode.A)) {
                 if (player.getVelocity().getX() > -2)
-                    accel = accel.subtract(new Vector(0.2f, 0, 0));
+                    accel = accel.subtract(new Vector(20, 0, 0));
                 player.setSprite(playerLeft);
             }
             //Accelerate left
 
             if (Keyboard.isPressed(KeyCode.D)) {
                 if (player.getVelocity().getX() < 2)
-                    accel = accel.add(new Vector(0.2f, 0, 0));
+                    accel = accel.add(new Vector(20, 0, 0));
                 player.setSprite(playerRight);
             }
             //Accelerate right
