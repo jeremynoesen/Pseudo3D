@@ -40,17 +40,17 @@ public abstract class Physics extends Box {
     private Vector acceleration;
 
     /**
-     * Coefficient of drag per axis
+     * Coefficient of drag per side
      */
-    private Vector drag;
+    private HashMap<Side, Float> drag;
 
     /**
-     * Roughness of the object per axis, used for friction
+     * Roughness of the object per side, used for friction
      */
-    private Vector roughness;
+    private HashMap<Side, Float> roughness;
 
     /**
-     * Set of collide-able sides
+     * Set of collideable sides
      */
     private final HashSet<Side> collidableSides;
 
@@ -108,8 +108,8 @@ public abstract class Physics extends Box {
         position = new Vector();
         velocity = new Vector();
         acceleration = new Vector();
-        drag = new Vector(0.5f, 0.5f, 0.5f);
-        roughness = new Vector(5, 5, 5);
+        drag = new HashMap<>();
+        roughness = new HashMap<>();
         sceneObjects = null;
         collidableSides = new HashSet<>(Arrays.asList(Side.values()));
         kinematicAxes = new HashSet<>(Arrays.asList(Axis.values()));
@@ -121,7 +121,11 @@ public abstract class Physics extends Box {
         mass = 1;
         collidingObjects = new HashMap<>();
         overlappingObjects = new HashSet<>();
-        for (Side s : Side.values()) collidingObjects.put(s, new HashSet<>());
+        for (Side s : Side.values()) {
+            collidingObjects.put(s, new HashSet<>());
+            drag.put(s, 0.5f);
+            roughness.put(s, 5f);
+        }
     }
 
     /**
@@ -135,8 +139,8 @@ public abstract class Physics extends Box {
         position = physics.position;
         velocity = physics.velocity;
         acceleration = physics.acceleration;
-        drag = physics.drag;
-        roughness = physics.roughness;
+        drag = new HashMap<>();
+        roughness = new HashMap<>();
         mass = physics.mass;
         collidableSides = new HashSet<>(physics.collidableSides);
         kinematicAxes = new HashSet<>(physics.kinematicAxes);
@@ -148,7 +152,11 @@ public abstract class Physics extends Box {
         collidingObjects = new HashMap<>();
         overlappingObjects = new HashSet<>(physics.overlappingObjects);
         sceneObjects = physics.sceneObjects;
-        for (Side s : Side.values()) collidingObjects.put(s, new HashSet<>(physics.collidingObjects.get(s)));
+        for (Side s : Side.values()) {
+            collidingObjects.put(s, new HashSet<>(physics.collidingObjects.get(s)));
+            drag.put(s, physics.drag.get(s));
+            roughness.put(s, physics.roughness.get(s));
+        }
     }
 
     /**
@@ -216,13 +224,13 @@ public abstract class Physics extends Box {
 
                 for (Physics physics : collidingObjects.get(side)) {
                     if (physics.updatable) {
-                        f += physics.roughness.get(axis) * Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
+                        f += physics.roughness.get(side) * Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
                         count++;
                     }
                 }
 
                 if (count > 0) {
-                    f = ((f + roughness.get(axis)) / (count + 1)) * calculateStackedMass(side) * deltaTime;
+                    f = ((f + roughness.get(side)) / (count + 1)) * calculateStackedMass(side) * deltaTime;
                     output = output.set(axis, output.get(axis) + f);
                 }
             }
@@ -247,7 +255,7 @@ public abstract class Physics extends Box {
 
             if (!visited.contains(physics)) {
                 totalMass += physics.mass;
-                for (Physics colliding : physics.getCollidingObjects(Side.getOpposite(side)))
+                for (Physics colliding : physics.collidingObjects.get(Side.getOpposite(side)))
                     if (colliding.updatable && colliding.isKinematic(Side.getNormalAxis(side)))
                         current.add(colliding);
                 visited.add(physics);
@@ -260,31 +268,18 @@ public abstract class Physics extends Box {
      * Apply the effect of drag to the velocity
      */
     private void applyDrag() {
-        Vector drag = calculateDrag();
-
         for (Axis axis : kinematicAxes) {
             float v = velocity.get(axis);
-            float d = drag.get(axis);
+            if (v != 0) {
+                float d = drag.get(Side.getFromNormal(axis, v)) * getFaceArea(Side.getFromNormal(axis, 1))
+                        * deltaTime * Math.abs(velocity.get(axis));
 
-            if (v < 0)
-                velocity = velocity.set(axis, Math.min(v + d, 0));
-            else if (v > 0)
-                velocity = velocity.set(axis, Math.max(v - d, 0));
+                if (v < 0)
+                    velocity = velocity.set(axis, Math.min(v + d, 0));
+                else if (v > 0)
+                    velocity = velocity.set(axis, Math.max(v - d, 0));
+            }
         }
-    }
-
-    /**
-     * Get the drag Vector based on velocity and dimensions
-     *
-     * @return Drag Vector
-     */
-    private Vector calculateDrag() {
-        Vector output = new Vector();
-        for (Axis axis : kinematicAxes) {
-            output = output.set(axis, drag.get(axis) * getFaceArea(Side.getFromNormal(axis, 1))
-                    * deltaTime * Math.abs(velocity.get(axis)));
-        }
-        return output;
     }
 
     /**
@@ -504,42 +499,92 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Get the drag coefficient of the object
+     * Get the drag coefficient of the object for a Side
      *
-     * @return Drag coefficient Vector of the object
+     * @param side Side to get drag coefficient of
+     * @return Drag coefficient of the object Side
      */
-    public Vector getDrag() {
-        return drag;
+    public float getDrag(Side side) {
+        return drag.get(side);
     }
 
     /**
-     * Set the drag coefficient for the object
+     * Set the drag coefficient for the object on specific Sides
+     * <br>
+     * Specify no Sides to apply to all Sides
      *
-     * @param drag Drag coefficient Vector
+     * @param drag Drag coefficient
+     * @param side Sides to set drag for
      * @return This Physics object
      */
-    public Physics setDrag(Vector drag) {
-        this.drag = drag;
+    public Physics setDrag(float drag, Side... side) {
+        for (Side sides : side.length > 0 ? side : Side.values()) this.drag.put(sides, drag);
         return this;
     }
 
     /**
-     * Get the roughness of the object
+     * Set the drag coefficients for all Sides
      *
-     * @return Roughness per axis as a Vector
+     * @param left Drag coefficient for the left Side
+     * @param right Drag coefficient for the right Side
+     * @param bottom Drag coefficient for the bottom Side
+     * @param top Drag coefficient for the top Side
+     * @param back Drag coefficient for the back Side
+     * @param front Drag coefficient for the front Side
+     * @return This Physics object
      */
-    public Vector getRoughness() {
-        return roughness;
+    public Physics setDrag(float left, float right, float bottom, float top, float back, float front) {
+        drag.put(Side.LEFT, left);
+        drag.put(Side.RIGHT, right);
+        drag.put(Side.BOTTOM, bottom);
+        drag.put(Side.TOP, top);
+        drag.put(Side.BACK, back);
+        drag.put(Side.FRONT, front);
+        return this;
     }
 
     /**
-     * Set the roughness of the object
+     * Get the roughness of the object for a Side
      *
-     * @param roughness Roughness per axis as a Vector
+     * @param side Side to get roughness of
+     * @return Roughness of the object Side
+     */
+    public float getRoughness(Side side) {
+        return roughness.get(side);
+    }
+
+    /**
+     * Set the roughness for the object on specific Sides
+     * <br>
+     * Specify no Sides to apply to all Sides
+     *
+     * @param roughness Roughness
+     * @param side Sides to set roughness for
      * @return This Physics object
      */
-    public Physics setRoughness(Vector roughness) {
-        this.roughness = roughness;
+    public Physics setRoughness(float roughness, Side... side) {
+        for (Side sides : side.length > 0 ? side : Side.values()) this.roughness.put(sides, roughness);
+        return this;
+    }
+
+    /**
+     * Set the roughness for all Sides
+     *
+     * @param left Roughness for the left Side
+     * @param right Roughness for the right Side
+     * @param bottom Roughness for the bottom Side
+     * @param top Roughness for the top Side
+     * @param back Roughness for the back Side
+     * @param front Roughness for the front Side
+     * @return This Physics object
+     */
+    public Physics setRoughness(float left, float right, float bottom, float top, float back, float front) {
+        roughness.put(Side.LEFT, left);
+        roughness.put(Side.RIGHT, right);
+        roughness.put(Side.BOTTOM, bottom);
+        roughness.put(Side.TOP, top);
+        roughness.put(Side.BACK, back);
+        roughness.put(Side.FRONT, front);
         return this;
     }
 
