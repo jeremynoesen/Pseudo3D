@@ -42,12 +42,12 @@ public abstract class Physics extends Box {
     /**
      * Coefficient of drag per side
      */
-    private HashMap<Side, Float> drag;
+    private final HashMap<Side, Float> drag;
 
     /**
      * Roughness of the object per side, used for friction
      */
-    private HashMap<Side, Float> roughness;
+    private final HashMap<Side, Float> roughness;
 
     /**
      * Set of collideable sides
@@ -167,11 +167,38 @@ public abstract class Physics extends Box {
     public void tickMotion(float deltaTime) {
         if (!updatable || !isKinematic()) return;
         this.deltaTime = deltaTime;
+        applyMomentum();
         applyAcceleration();
         applyFriction();
         applyDrag();
-        applyMomentum();
         applyVelocity();
+    }
+
+    /**
+     * Apply the effects of momentum to the velocity
+     */
+    private void applyMomentum() {
+        skipMomentum.clear();
+        for (Axis axis : kinematicAxes) {
+            float v = velocity.get(axis);
+            if (v != 0) {
+                for (Physics physics : collidingObjects.get(Side.getFromNormal(axis, v))) {
+                    if (physics.updatable && physics.isKinematic(axis) && physics.isPushable(axis)) {
+                        float sum = mass + physics.mass;
+                        float diff = mass - physics.mass;
+                        float v1 = v;
+                        float v2 = physics.velocity.get(axis);
+                        v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                        if (!physics.skipMomentum.contains(axis))
+                            physics.velocity =
+                                    physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                    } else {
+                        skipMomentum.add(axis);
+                    }
+                }
+            }
+            velocity = velocity.set(axis, v);
+        }
     }
 
     /**
@@ -179,7 +206,8 @@ public abstract class Physics extends Box {
      */
     private void applyAcceleration() {
         for (Axis axis : kinematicAxes) {
-            velocity = velocity.set(axis, velocity.get(axis) + ((acceleration.get(axis) + gravity.get(axis)) * deltaTime));
+            velocity = velocity.set(axis,
+                    velocity.get(axis) + ((acceleration.get(axis) + gravity.get(axis)) * deltaTime));
         }
     }
 
@@ -188,7 +216,6 @@ public abstract class Physics extends Box {
      */
     private void applyFriction() {
         Vector friction = calculateFriction();
-
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
 
@@ -224,7 +251,8 @@ public abstract class Physics extends Box {
 
                 for (Physics physics : collidingObjects.get(side)) {
                     if (physics.updatable) {
-                        f += physics.roughness.get(side) * Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
+                        f += physics.roughness.get(side) *
+                                Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
                         count++;
                     }
                 }
@@ -252,7 +280,6 @@ public abstract class Physics extends Box {
 
         while (!current.isEmpty()) {
             Physics physics = current.poll();
-
             if (!visited.contains(physics)) {
                 totalMass += physics.mass;
                 for (Physics colliding : physics.collidingObjects.get(Side.getOpposite(side)))
@@ -273,7 +300,6 @@ public abstract class Physics extends Box {
             if (v != 0) {
                 float d = drag.get(Side.getFromNormal(axis, v)) * getFaceArea(Side.getFromNormal(axis, 1))
                         * deltaTime * Math.abs(velocity.get(axis));
-
                 if (v < 0)
                     velocity = velocity.set(axis, Math.min(v + d, 0));
                 else if (v > 0)
@@ -283,45 +309,15 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Apply the effects of momentum to the velocity
-     */
-    private void applyMomentum() {
-        skipMomentum.clear();
-        for (Axis axis : kinematicAxes) {
-            float v = velocity.get(axis);
-            Side side = Side.getFromNormal(axis, v);
-            if (side != null) {
-                for (Physics physics : collidingObjects.get(side)) {
-
-                    if (physics.updatable) {
-                        if (physics.isKinematic(axis) && physics.isPushable(axis)) {
-
-                            float sum = mass + physics.mass;
-                            float diff = mass - physics.mass;
-                            float v1 = v;
-                            float v2 = physics.velocity.get(axis);
-                            v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                            if (!physics.skipMomentum.contains(axis) || velocity.get(axis) != 0)
-                                physics.velocity =
-                                        physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
-
-                        } else {
-                            v = 0;
-                            skipMomentum.add(axis);
-                        }
-                    }
-                }
-            }
-            velocity = velocity.set(axis, v);
-        }
-    }
-
-    /**
      * Update the position of the object based on the velocity
      */
     private void applyVelocity() {
         for (Axis axis : kinematicAxes) {
-            setPosition(position.set(axis, position.get(axis) + velocity.multiply(deltaTime).get(axis)));
+            float v = velocity.multiply(deltaTime).get(axis);
+            if (!getCollidingSides().contains(Side.getFromNormal(axis, v)))
+                setPosition(position.set(axis, position.get(axis) + v));
+            else
+                velocity = velocity.set(axis, 0);
         }
     }
 
@@ -359,16 +355,15 @@ public abstract class Physics extends Box {
     private void collide(Physics physics) {
         HashMap<Side, Float> overlaps = new HashMap<>();
         overlaps.put(Side.LEFT, Math.abs(getMinimum().getX() - physics.getMaximum().getX()));
-        overlaps.put(Side.RIGHT ,Math.abs(getMaximum().getX() - physics.getMinimum().getX()));
-        overlaps.put(Side.BOTTOM ,Math.abs(getMinimum().getY() - physics.getMaximum().getY()));
-        overlaps.put(Side.TOP ,Math.abs(getMaximum().getY() - physics.getMinimum().getY()));
-        overlaps.put(Side.BACK ,Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()));
-        overlaps.put(Side.FRONT ,Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()));
+        overlaps.put(Side.RIGHT, Math.abs(getMaximum().getX() - physics.getMinimum().getX()));
+        overlaps.put(Side.BOTTOM, Math.abs(getMinimum().getY() - physics.getMaximum().getY()));
+        overlaps.put(Side.TOP, Math.abs(getMaximum().getY() - physics.getMinimum().getY()));
+        overlaps.put(Side.BACK, Math.abs(getMinimum().getZ() - physics.getMaximum().getZ()));
+        overlaps.put(Side.FRONT, Math.abs(getMaximum().getZ() - physics.getMinimum().getZ()));
 
         float distance = Float.MAX_VALUE;
         Side side = null;
         byte zeros = 0;
-
         for (Side s : Side.values()) {
             if (overlaps.get(s) < distance) {
                 distance = overlaps.get(s);
@@ -379,9 +374,9 @@ public abstract class Physics extends Box {
         if (zeros > 1) return;
 
         Axis axis = Side.getNormalAxis(side);
-
         if (isCollideable(side) && physics.isCollideable(Side.getOpposite(side))) {
-            if (isKinematic(axis) && Math.signum(velocity.get(axis)) == Math.signum(Side.getNormalVector(side).get(axis))) {
+            if (isKinematic(axis) && Math.signum(velocity.get(axis)) ==
+                    Math.signum(Side.getNormalVector(side).get(axis))) {
 
                 if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
                         && !physics.specialCollisions.contains(this)) {
@@ -393,7 +388,6 @@ public abstract class Physics extends Box {
                     setPosition(position.set(axes,
                             position.get(axes) - (velocity.get(axes) * Math.abs(distance / velocity.get(axis)))));
                 }
-
             }
             collidingObjects.get(side).add(physics);
         } else {
@@ -518,12 +512,12 @@ public abstract class Physics extends Box {
     /**
      * Set the drag coefficients for all Sides
      *
-     * @param left Drag coefficient for the left Side
-     * @param right Drag coefficient for the right Side
+     * @param left   Drag coefficient for the left Side
+     * @param right  Drag coefficient for the right Side
      * @param bottom Drag coefficient for the bottom Side
-     * @param top Drag coefficient for the top Side
-     * @param back Drag coefficient for the back Side
-     * @param front Drag coefficient for the front Side
+     * @param top    Drag coefficient for the top Side
+     * @param back   Drag coefficient for the back Side
+     * @param front  Drag coefficient for the front Side
      * @return This Physics object
      */
     public Physics setDrag(float left, float right, float bottom, float top, float back, float front) {
@@ -552,7 +546,7 @@ public abstract class Physics extends Box {
      * Specify no Sides to apply to all Sides
      *
      * @param roughness Roughness
-     * @param side Sides to set roughness for
+     * @param side      Sides to set roughness for
      * @return This Physics object
      */
     public Physics setRoughness(float roughness, Side... side) {
@@ -563,12 +557,12 @@ public abstract class Physics extends Box {
     /**
      * Set the roughness for all Sides
      *
-     * @param left Roughness for the left Side
-     * @param right Roughness for the right Side
+     * @param left   Roughness for the left Side
+     * @param right  Roughness for the right Side
      * @param bottom Roughness for the bottom Side
-     * @param top Roughness for the top Side
-     * @param back Roughness for the back Side
-     * @param front Roughness for the front Side
+     * @param top    Roughness for the top Side
+     * @param back   Roughness for the back Side
+     * @param front  Roughness for the front Side
      * @return This Physics object
      */
     public Physics setRoughness(float left, float right, float bottom, float top, float back, float front) {
