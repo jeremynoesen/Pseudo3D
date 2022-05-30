@@ -90,6 +90,7 @@ public class Pseudo3D extends Application {
         Pseudo3D.resizable = resizable;
         Pseudo3D.title = title;
 
+        tickLoop.setCycleCount(Animation.INDEFINITE);
         tickLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / tickSpeed), ae -> {
             if (!fixedDeltaTime && lastTick > 0) tickDeltaTime = (System.nanoTime() - lastTick) / 1000000000.0f;
             else if (fixedDeltaTime) tickDeltaTime = 1f / tickSpeed;
@@ -100,6 +101,7 @@ public class Pseudo3D extends Application {
             lastTick = System.nanoTime();
         }));
 
+        renderLoop.setCycleCount(Animation.INDEFINITE);
         renderLoop.getKeyFrames().add(new KeyFrame(Duration.millis(1000f / framerate), ae -> {
             if (!fixedDeltaTime && lastRender > 0) renderDeltaTime = (System.nanoTime() - lastRender) / 1000000000.0f;
             else if (fixedDeltaTime) renderDeltaTime = 1f / framerate;
@@ -112,6 +114,9 @@ public class Pseudo3D extends Application {
 
         canvas = new Canvas(width, height);
 
+        Mouse.init(canvas);
+        Keyboard.init(canvas);
+
         new Thread(Application::launch).start();
     }
 
@@ -123,20 +128,16 @@ public class Pseudo3D extends Application {
     @Override
     public void start(Stage primaryStage) {
         Pane root = new Pane();
-        Mouse.init(canvas);
-        Keyboard.init(canvas);
         root.getChildren().add(canvas);
         scene = new Scene(root);
         primaryStage.setTitle(title);
         primaryStage.setResizable(resizable);
         primaryStage.setScene(scene);
-        primaryStage.show();
         primaryStage.setOnCloseRequest(e -> System.exit(0));
+        primaryStage.show();
         canvas.widthProperty().bind(root.widthProperty());
         canvas.heightProperty().bind(root.heightProperty());
         canvas.requestFocus();
-        tickLoop.setCycleCount(Animation.INDEFINITE);
-        renderLoop.setCycleCount(Animation.INDEFINITE);
         setPaused(false);
     }
 
@@ -147,10 +148,10 @@ public class Pseudo3D extends Application {
      */
     @Override
     public void stop() throws Exception {
-        renderLoop.stop();
         tickLoop.stop();
-        lastRender = 0;
+        renderLoop.stop();
         lastTick = 0;
+        lastRender = 0;
         super.stop();
     }
 
@@ -161,13 +162,13 @@ public class Pseudo3D extends Application {
      */
     public static void setPaused(boolean paused) {
         if (paused) {
-            renderLoop.pause();
             tickLoop.pause();
-            lastRender = 0;
+            renderLoop.pause();
             lastTick = 0;
+            lastRender = 0;
         } else {
-            renderLoop.play();
             tickLoop.play();
+            renderLoop.play();
         }
     }
 
