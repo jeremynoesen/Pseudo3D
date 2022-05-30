@@ -215,7 +215,45 @@ public abstract class Physics extends Box {
      * Apply the effect of friction to the velocity
      */
     private void applyFriction() {
-        Vector friction = calculateFriction();
+        Vector friction = new Vector();
+        for (Side side : getCollidingSides()) {
+            Axis axis = Side.getNormalAxis(side);
+
+            if (isKinematic(axis)) {
+                float f = 0;
+                int count = 0;
+
+                for (Physics physics : collidingObjects.get(side)) {
+                    if (physics.updatable) {
+                        f += physics.roughness.get(side) *
+                                Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
+                        count++;
+                    }
+                }
+
+                if (count > 0) {
+                    float totalMass = 0;
+                    ArrayDeque<Physics> current = new ArrayDeque<>();
+                    HashSet<Physics> visited = new HashSet<>();
+                    current.add(this);
+
+                    while (!current.isEmpty()) {
+                        Physics physics = current.poll();
+                        if (!visited.contains(physics)) {
+                            totalMass += physics.mass;
+                            for (Physics colliding : physics.collidingObjects.get(Side.getOpposite(side)))
+                                if (colliding.updatable && colliding.isKinematic(Side.getNormalAxis(side)))
+                                    current.add(colliding);
+                            visited.add(physics);
+                        }
+                    }
+
+                    f = ((f + roughness.get(side)) / (count + 1)) * totalMass * deltaTime;
+                    friction = friction.set(axis, friction.get(axis) + f);
+                }
+            }
+        }
+
         float vx = velocity.getX(), vy = velocity.getY(), vz = velocity.getZ();
         float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
 
@@ -233,62 +271,6 @@ public abstract class Physics extends Box {
         }
 
         velocity = new Vector(vx, vy, vz);
-    }
-
-    /**
-     * Get the friction Vector for the object
-     *
-     * @return Friction Vector
-     */
-    private Vector calculateFriction() {
-        Vector output = new Vector();
-        for (Side side : getCollidingSides()) {
-            Axis axis = Side.getNormalAxis(side);
-
-            if (isKinematic(axis)) {
-                float f = 0;
-                int count = 0;
-
-                for (Physics physics : collidingObjects.get(side)) {
-                    if (physics.updatable) {
-                        f += physics.roughness.get(side) *
-                                Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
-                        count++;
-                    }
-                }
-
-                if (count > 0) {
-                    f = ((f + roughness.get(side)) / (count + 1)) * calculateStackedMass(side) * deltaTime;
-                    output = output.set(axis, output.get(axis) + f);
-                }
-            }
-        }
-        return output;
-    }
-
-    /**
-     * Sum the masses of stacked objects
-     *
-     * @param side Side of object to sum stacked masses
-     * @return Sum of stacked masses
-     */
-    private float calculateStackedMass(Side side) {
-        float totalMass = 0;
-        ArrayDeque<Physics> current = new ArrayDeque<>();
-        HashSet<Physics> visited = new HashSet<>();
-        current.add(this);
-
-        while (!current.isEmpty()) {
-            Physics physics = current.poll();
-            if (!visited.contains(physics)) {
-                totalMass += physics.mass;
-                for (Physics colliding : physics.collidingObjects.get(Side.getOpposite(side)))
-                    if (colliding.updatable && colliding.isKinematic(Side.getNormalAxis(side)))
-                        current.add(colliding);
-                visited.add(physics);
-            }
-        }
-        return totalMass;
     }
 
     /**
