@@ -20,14 +20,14 @@ public abstract class Physics extends Box {
     private LinkedList<Physics> sceneObjects;
 
     /**
-     * Gravity applied to the object (meters / second ^ 2)
+     * Time elapsed in the previous tick
      */
-    private Vector gravity;
+    private float deltaTime;
 
     /**
-     * Position of the object (meters)
+     * Whether the object can update or not
      */
-    private Vector position;
+    private boolean updatable;
 
     /**
      * Velocity of the object (meters / second)
@@ -38,6 +38,16 @@ public abstract class Physics extends Box {
      * Acceleration of the object (meters / second ^ 2)
      */
     private Vector acceleration;
+
+    /**
+     * Gravity applied to the object (meters / second ^ 2)
+     */
+    private Vector gravity;
+
+    /**
+     * Mass of the object
+     */
+    private float mass;
 
     /**
      * Coefficient of drag per side
@@ -55,16 +65,6 @@ public abstract class Physics extends Box {
     private final HashSet<Side> collidableSides;
 
     /**
-     * Set of objects colliding with this object per Side
-     */
-    private final HashMap<Side, HashSet<Physics>> collidingObjects;
-
-    /**
-     * Set of objects overlapping this one
-     */
-    private final HashSet<Physics> overlappingObjects;
-
-    /**
      * Set of kinematic Axes
      */
     private final HashSet<Axis> kinematicAxes;
@@ -75,19 +75,14 @@ public abstract class Physics extends Box {
     private final HashSet<Axis> pushableAxes;
 
     /**
-     * Mass of the object
+     * Set of objects colliding with this object per Side
      */
-    private float mass;
+    private final HashMap<Side, HashSet<Physics>> collidingObjects;
 
     /**
-     * Whether the object can update or not
+     * Set of objects overlapping this one
      */
-    private boolean updatable;
-
-    /**
-     * Time elapsed in the previous tick
-     */
-    private float deltaTime;
+    private final HashSet<Physics> overlappingObjects;
 
     /**
      * Temporary Set used in special cases of momentum
@@ -104,27 +99,25 @@ public abstract class Physics extends Box {
      */
     public Physics() {
         super();
-        gravity = new Vector(0, -9.81f, 0);
-        position = new Vector();
+        deltaTime = 0;
+        updatable = true;
         velocity = new Vector();
         acceleration = new Vector();
+        gravity = new Vector(0, -9.81f, 0);
+        mass = 1;
         drag = new HashMap<>();
         roughness = new HashMap<>();
-        sceneObjects = null;
         collidableSides = new HashSet<>(Arrays.asList(Side.values()));
         kinematicAxes = new HashSet<>(Arrays.asList(Axis.values()));
         pushableAxes = new HashSet<>(Arrays.asList(Axis.values()));
-        skipMomentum = new HashSet<>();
-        specialCollisions = new HashSet<>();
-        updatable = true;
-        deltaTime = 0;
-        mass = 1;
         collidingObjects = new HashMap<>();
         overlappingObjects = new HashSet<>();
+        skipMomentum = new HashSet<>();
+        specialCollisions = new HashSet<>();
         for (Side s : Side.values()) {
-            collidingObjects.put(s, new HashSet<>());
             drag.put(s, 0.5f);
             roughness.put(s, 5f);
+            collidingObjects.put(s, new HashSet<>());
         }
     }
 
@@ -135,27 +128,26 @@ public abstract class Physics extends Box {
      */
     public Physics(Physics physics) {
         super(physics);
-        gravity = physics.gravity;
-        position = physics.position;
+        sceneObjects = physics.sceneObjects;
+        deltaTime = physics.deltaTime;
+        updatable = physics.updatable;
         velocity = physics.velocity;
         acceleration = physics.acceleration;
+        gravity = physics.gravity;
+        mass = physics.mass;
         drag = new HashMap<>();
         roughness = new HashMap<>();
-        mass = physics.mass;
         collidableSides = new HashSet<>(physics.collidableSides);
         kinematicAxes = new HashSet<>(physics.kinematicAxes);
         pushableAxes = new HashSet<>(physics.pushableAxes);
-        updatable = physics.updatable;
-        deltaTime = physics.deltaTime;
-        skipMomentum = new HashSet<>();
-        specialCollisions = new HashSet<>();
         collidingObjects = new HashMap<>();
         overlappingObjects = new HashSet<>(physics.overlappingObjects);
-        sceneObjects = physics.sceneObjects;
+        skipMomentum = new HashSet<>();
+        specialCollisions = new HashSet<>();
         for (Side s : Side.values()) {
-            collidingObjects.put(s, new HashSet<>(physics.collidingObjects.get(s)));
             drag.put(s, physics.drag.get(s));
             roughness.put(s, physics.roughness.get(s));
+            collidingObjects.put(s, new HashSet<>(physics.collidingObjects.get(s)));
         }
     }
 
@@ -297,7 +289,7 @@ public abstract class Physics extends Box {
         for (Axis axis : kinematicAxes) {
             float v = velocity.multiply(deltaTime).get(axis);
             if (!getCollidingSides().contains(Side.getFromNormal(axis, v)))
-                setPosition(position.set(axis, position.get(axis) + v));
+                setPosition(getPosition().set(axis, getPosition().get(axis) + v));
             else
                 velocity = velocity.set(axis, 0);
         }
@@ -367,8 +359,8 @@ public abstract class Physics extends Box {
                 }
 
                 for (Axis axes : kinematicAxes) {
-                    setPosition(position.set(axes,
-                            position.get(axes) - (velocity.get(axes) * Math.abs(distance / velocity.get(axis)))));
+                    setPosition(getPosition().set(axes,
+                            getPosition().get(axes) - (velocity.get(axes) * Math.abs(distance / velocity.get(axis)))));
                 }
             }
             collidingObjects.get(side).add(physics);
@@ -384,27 +376,6 @@ public abstract class Physics extends Box {
      */
     private void overlap(Physics physics) {
         overlappingObjects.add(physics);
-    }
-
-    /**
-     * Get the position of the object
-     *
-     * @return Position Vector of the object
-     */
-    public Vector getPosition() {
-        return position;
-    }
-
-    /**
-     * Set the position of the object
-     *
-     * @param position Position Vector
-     * @return This Physics object
-     */
-    public Physics setPosition(Vector position) {
-        this.position = position;
-        super.setPosition(position);
-        return this;
     }
 
     /**
@@ -464,6 +435,26 @@ public abstract class Physics extends Box {
      */
     public Physics setGravity(Vector gravity) {
         this.gravity = gravity;
+        return this;
+    }
+
+    /**
+     * Get the mass of the object
+     *
+     * @return Mass of the object
+     */
+    public float getMass() {
+        return mass;
+    }
+
+    /**
+     * Set the mass of the object
+     *
+     * @param mass New mass for the object
+     * @return This Physics object
+     */
+    public Physics setMass(float mass) {
+        this.mass = mass;
         return this;
     }
 
@@ -558,26 +549,6 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Get the mass of the object
-     *
-     * @return Mass of the object
-     */
-    public float getMass() {
-        return mass;
-    }
-
-    /**
-     * Set the mass of the object
-     *
-     * @param mass New mass for the object
-     * @return This Physics object
-     */
-    public Physics setMass(float mass) {
-        this.mass = mass;
-        return this;
-    }
-
-    /**
      * Check which Sides the object is collideable on
      * <br>
      * Specify no Sides to check if collideable in general
@@ -588,7 +559,6 @@ public abstract class Physics extends Box {
         if (side.length == 0) return !collidableSides.isEmpty();
         return collidableSides.containsAll(Arrays.asList(side));
     }
-
 
     /**
      * Set the Sides the object can collide on
@@ -803,7 +773,7 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Set the object this object is in a Scene with
+     * Set the objects this object is in a Scene with
      * <br>
      * This is only able to be called by the parent class
      *
@@ -826,18 +796,17 @@ public abstract class Physics extends Box {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Physics physics = (Physics) o;
-        return Float.compare(physics.mass, mass) == 0 &&
-                updatable == physics.updatable &&
-                Objects.equals(gravity, physics.gravity) &&
-                Objects.equals(position, physics.position) &&
+        return updatable == physics.updatable &&
                 Objects.equals(velocity, physics.velocity) &&
                 Objects.equals(acceleration, physics.acceleration) &&
+                Objects.equals(gravity, physics.gravity) &&
+                Float.compare(physics.mass, mass) == 0 &&
                 Objects.equals(drag, physics.drag) &&
                 Objects.equals(roughness, physics.roughness) &&
-                Objects.equals(collidingObjects, physics.collidingObjects) &&
-                Objects.equals(overlappingObjects, physics.overlappingObjects) &&
+                Objects.equals(collidableSides, physics.collidableSides) &&
                 Objects.equals(kinematicAxes, physics.kinematicAxes) &&
                 Objects.equals(pushableAxes, physics.pushableAxes) &&
-                Objects.equals(collidableSides, physics.collidableSides);
+                Objects.equals(collidingObjects, physics.collidingObjects) &&
+                Objects.equals(overlappingObjects, physics.overlappingObjects);
     }
 }

@@ -56,8 +56,8 @@ public class Example {
             for (int i = -3; i <= 0; i++) {
                 Entity block = (Entity) new Entity()
                         .setSprite(floor)
-                        .setPosition(new Vector(j, -4.75f, i))
                         .setKinematic()
+                        .setPosition(new Vector(j, -4.75f, i))
                         .setDimensions(new Vector(1, 1, 1));
                 scene.addEntity(block);
             }
