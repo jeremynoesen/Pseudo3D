@@ -173,7 +173,8 @@ public class Vector {
         for (Vector v : vector) {
             output = new Vector(output.x + v.x, output.y + v.y, output.z + v.z);
         }
-        return output;    }
+        return output;
+    }
 
     /**
      * Subtract Vectors from this Vector
@@ -200,7 +201,8 @@ public class Vector {
         for (Vector v : vector) {
             output = new Vector(output.x * v.x, output.y * v.y, output.z * v.z);
         }
-        return output;    }
+        return output;
+    }
 
     /**
      * Multiply a Vector's magnitude by a scalar, which multiplies each component by the scalar
@@ -223,7 +225,8 @@ public class Vector {
         for (Vector v : vector) {
             output = new Vector(output.x / v.x, output.y / v.y, output.z / v.z);
         }
-        return output;    }
+        return output;
+    }
 
     /**
      * Divide a Vector's magnitude by a scalar, which divides each component by the scalar
