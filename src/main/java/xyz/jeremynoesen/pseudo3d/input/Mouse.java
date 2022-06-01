@@ -2,7 +2,7 @@ package xyz.jeremynoesen.pseudo3d.input;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseButton;
-import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.core.util.Vector;
 
 import java.util.Arrays;
 import java.util.HashSet;

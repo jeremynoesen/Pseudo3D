@@ -1,10 +1,10 @@
-package xyz.jeremynoesen.pseudo3d.scene.render;
+package xyz.jeremynoesen.pseudo3d.core.graphics;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
-import xyz.jeremynoesen.pseudo3d.scene.util.Axis;
-import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.core.util.Axis;
+import xyz.jeremynoesen.pseudo3d.core.util.Vector;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

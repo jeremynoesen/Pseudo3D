@@ -1,11 +1,11 @@
-package xyz.jeremynoesen.pseudo3d.scene.render;
+package xyz.jeremynoesen.pseudo3d.core.graphics;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Affine;
-import xyz.jeremynoesen.pseudo3d.scene.Scene;
-import xyz.jeremynoesen.pseudo3d.scene.entity.Entity;
-import xyz.jeremynoesen.pseudo3d.scene.util.Box;
-import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.core.Scene;
+import xyz.jeremynoesen.pseudo3d.core.object.Entity;
+import xyz.jeremynoesen.pseudo3d.core.util.Box;
+import xyz.jeremynoesen.pseudo3d.core.util.Vector;
 
 import java.util.Comparator;
 import java.util.Objects;

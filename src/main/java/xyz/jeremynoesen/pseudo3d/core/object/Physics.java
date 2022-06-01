@@ -1,9 +1,9 @@
-package xyz.jeremynoesen.pseudo3d.scene.entity;
+package xyz.jeremynoesen.pseudo3d.core.object;
 
-import xyz.jeremynoesen.pseudo3d.scene.util.Axis;
-import xyz.jeremynoesen.pseudo3d.scene.util.Box;
-import xyz.jeremynoesen.pseudo3d.scene.util.Side;
-import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.core.util.Axis;
+import xyz.jeremynoesen.pseudo3d.core.util.Box;
+import xyz.jeremynoesen.pseudo3d.core.util.Side;
+import xyz.jeremynoesen.pseudo3d.core.util.Vector;
 
 import java.util.*;
 

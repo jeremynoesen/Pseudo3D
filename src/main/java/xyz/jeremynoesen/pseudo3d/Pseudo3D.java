@@ -32,7 +32,7 @@ public class Pseudo3D extends Application {
     /**
      * Active Pseudo3D Scene to render and tick
      */
-    private static xyz.jeremynoesen.pseudo3d.scene.Scene activeScene;
+    private static xyz.jeremynoesen.pseudo3d.core.Scene activeScene;
 
     /**
      * Whether the window can be resized or not
@@ -204,7 +204,7 @@ public class Pseudo3D extends Application {
      *
      * @return Active Pseudo3D Scene
      */
-    public static xyz.jeremynoesen.pseudo3d.scene.Scene getActiveScene() {
+    public static xyz.jeremynoesen.pseudo3d.core.Scene getActiveScene() {
         return activeScene;
     }
 
@@ -213,7 +213,7 @@ public class Pseudo3D extends Application {
      *
      * @param activeScene Pseudo3D Scene
      */
-    public static void setActiveScene(xyz.jeremynoesen.pseudo3d.scene.Scene activeScene) {
+    public static void setActiveScene(xyz.jeremynoesen.pseudo3d.core.Scene activeScene) {
         Pseudo3D.activeScene = activeScene;
     }
 

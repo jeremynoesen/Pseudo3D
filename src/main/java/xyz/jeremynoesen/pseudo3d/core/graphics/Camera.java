@@ -1,6 +1,6 @@
-package xyz.jeremynoesen.pseudo3d.scene.render;
+package xyz.jeremynoesen.pseudo3d.core.graphics;
 
-import xyz.jeremynoesen.pseudo3d.scene.util.Vector;
+import xyz.jeremynoesen.pseudo3d.core.util.Vector;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
-package xyz.jeremynoesen.pseudo3d.scene.entity;
+package xyz.jeremynoesen.pseudo3d.core.object;
 
-import xyz.jeremynoesen.pseudo3d.scene.Scene;
-import xyz.jeremynoesen.pseudo3d.scene.render.Sprite;
+import xyz.jeremynoesen.pseudo3d.core.Scene;
+import xyz.jeremynoesen.pseudo3d.core.graphics.Sprite;
 
 import java.util.Objects;
 
