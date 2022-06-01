@@ -124,9 +124,14 @@ public class Renderer {
             return;
         }
 
-        double fovRad = Math.toRadians(camera.getFieldOfView());
-        float scale = (float) (camera.getZoom() * (camera.getSensorSize() / (camera.getSensorSize() + (2.0 *
-                camDist * (Math.sin(fovRad / 2.0f) / Math.sin((Math.PI / 2.0) - (fovRad / 2.0f)))))));
+        float scale;
+        try {
+            double fovRad = Math.toRadians(camera.getFieldOfView());
+            scale = (float) (camera.getZoom() * (camera.getSensorSize() / (camera.getSensorSize() + (2.0 *
+                    camDist * (Math.sin(fovRad / 2.0f) / Math.sin((Math.PI / 2.0) - (fovRad / 2.0f)))))));
+        } catch (ArithmeticException e) {
+            return;
+        }
 
         if (scale <= 0) {
             entity.setOnScreen(false);

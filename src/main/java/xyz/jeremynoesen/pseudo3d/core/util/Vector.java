@@ -223,6 +223,7 @@ public class Vector {
     public Vector divide(Vector... vector) {
         Vector output = new Vector(this);
         for (Vector v : vector) {
+            if (v.x == 0 || v.y == 0 || v.z == 0) throw new ArithmeticException("Cannot divide by zero");
             output = new Vector(output.x / v.x, output.y / v.y, output.z / v.z);
         }
         return output;
@@ -235,6 +236,7 @@ public class Vector {
      * @return Scaled Vector
      */
     public Vector divide(float scale) {
+        if (scale == 0) throw new ArithmeticException("Cannot divide by zero");
         return new Vector(x / scale, y / scale, z / scale);
     }
 
@@ -278,6 +280,7 @@ public class Vector {
      */
     public Vector normalize() {
         float mag = getMagnitude();
+        if (mag == 0) throw new ArithmeticException("Cannot divide by zero");
         return new Vector(x / mag, y / mag, z / mag);
     }
 

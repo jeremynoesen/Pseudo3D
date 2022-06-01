@@ -180,10 +180,12 @@ public abstract class Physics extends Box {
                         float diff = mass - physics.mass;
                         float v1 = v;
                         float v2 = physics.velocity.get(axis);
-                        v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
-                        if (!physics.skipMomentum.contains(axis))
-                            physics.velocity =
-                                    physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        if (sum != 0) {
+                            v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
+                            if (!physics.skipMomentum.contains(axis))
+                                physics.velocity =
+                                        physics.velocity.set(axis, ((-diff / sum) * v2) + ((2 * mass / sum) * v1));
+                        }
                     } else {
                         skipMomentum.add(axis);
                     }
@@ -240,8 +242,10 @@ public abstract class Physics extends Box {
                         }
                     }
 
-                    f = ((f + roughness.get(side)) / (count + 1)) * totalMass * deltaTime;
-                    friction = friction.set(axis, friction.get(axis) + f);
+                    if (totalMass != 0) {
+                        f = ((f + roughness.get(side)) / (count + 1)) * totalMass * deltaTime;
+                        friction = friction.set(axis, friction.get(axis) + f);
+                    }
                 }
             }
         }

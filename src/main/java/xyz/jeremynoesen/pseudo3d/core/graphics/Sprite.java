@@ -111,7 +111,7 @@ public class Sprite {
         this.width = width;
         this.height = height;
         this.rotation = 0;
-        this.frameStep = 1 / frameRate;
+        setFramerate(frameRate);
         this.currentFrame = 0;
         this.loop = loop;
     }
@@ -259,6 +259,8 @@ public class Sprite {
      * @return This Sprite
      */
     public Sprite setFramerate(float framerate) {
+        if (framerate == 0)
+            throw new IllegalArgumentException("Cannot set framerate to 0");
         frameStep = 1 / framerate;
         return this;
     }
