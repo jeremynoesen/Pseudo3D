@@ -22,7 +22,7 @@ public class Renderer {
      */
     private final Comparator<Entity> zComparator = (o1, o2) -> {
         float diff = o1.getPosition().getZ() - o2.getPosition().getZ();
-        return Math.round(diff / (diff == 0 ? 1 : Math.abs(diff)));
+        return Math.round(diff / (Float.compare(diff, 0) == 0 ? 1 : Math.abs(diff)));
     };
 
     /**
@@ -92,7 +92,7 @@ public class Renderer {
             Sprite background = scene.getBackground();
             Affine original = graphicsContext.getTransform();
 
-            if (camera.getRotation() != 0 || background.getRotation() != 0) {
+            if (Float.compare(camera.getRotation(), 0) != 0 || Float.compare(background.getRotation(), 0) != 0) {
                 Affine transform = new Affine();
                 transform.appendRotation(-camera.getRotation() - background.getRotation(),
                         renderPos.getX(), renderPos.getY());
@@ -119,7 +119,7 @@ public class Renderer {
         float camDist = camPos.getZ() - objPos.getZ();
 
         if (!entity.isEnabled() || !entity.isVisible() || entity.getSprite() == null ||
-                camDist >= camera.getViewDistance() * scene.getGridScale().getZ()) {
+                Float.compare(camDist, camera.getViewDistance() * scene.getGridScale().getZ()) >= 0) {
             entity.setOnScreen(false);
             return;
         }
@@ -133,7 +133,7 @@ public class Renderer {
             return;
         }
 
-        if (scale <= 0) {
+        if (Float.compare(scale, 0) <= 0) {
             entity.setOnScreen(false);
             return;
         }
@@ -152,7 +152,7 @@ public class Renderer {
         Affine original = graphicsContext.getTransform();
         Affine transform = new Affine();
 
-        if (camera.getRotation() != 0 || sprite.getRotation() != 0) {
+        if (Float.compare(camera.getRotation(), 0) != 0 || Float.compare(sprite.getRotation(), 0) != 0) {
             float spriteRotation = -sprite.getRotation();
             float cameraRotation = -camera.getRotation();
             transform.appendRotation(cameraRotation, renderPos.getX(), renderPos.getY());

@@ -75,28 +75,28 @@ public class Example {
             Vector accel = new Vector();
 
             if (Keyboard.isPressed(KeyCode.W)) {
-                if (player.getVelocity().getZ() > -2)
+                if (Float.compare(player.getVelocity().getZ(), -2) > 0)
                     accel = accel.subtract(new Vector(0, 0, 20));
                 player.setSprite(playerBack);
             }
             //Accelerate forward
 
             if (Keyboard.isPressed(KeyCode.S)) {
-                if (player.getVelocity().getZ() < 2)
+                if (Float.compare(player.getVelocity().getZ(), 2) < 0)
                     accel = accel.add(new Vector(0, 0, 20));
                 player.setSprite(playerFront);
             }
             //Accelerate backward
 
             if (Keyboard.isPressed(KeyCode.A)) {
-                if (player.getVelocity().getX() > -2)
+                if (Float.compare(player.getVelocity().getX(), -2) > 0)
                     accel = accel.subtract(new Vector(20, 0, 0));
                 player.setSprite(playerLeft);
             }
             //Accelerate left
 
             if (Keyboard.isPressed(KeyCode.D)) {
-                if (player.getVelocity().getX() < 2)
+                if (Float.compare(player.getVelocity().getX(), 2) < 0)
                     accel = accel.add(new Vector(20, 0, 0));
                 player.setSprite(playerRight);
             }
@@ -105,7 +105,7 @@ public class Example {
             player.setAcceleration(accel);
             //Apply acceleration
 
-            if (camera.getFieldOfView() > 0) {
+            if (Float.compare(camera.getFieldOfView(), 0) > 0) {
                 player.setKinematic(Axis.values());
             } else {
                 player.setKinematic(Axis.X, Axis.Y);

@@ -85,9 +85,9 @@ public class Pseudo3D extends Application {
      * @param resizable      Resizable status
      * @param title          Window title
      */
-    public static void launch(int width, int height, int framerate, int tickSpeed,
+    public static void launch(int width, int height, float framerate, float tickSpeed,
                               boolean fixedDeltaTime, boolean resizable, String title) {
-        if (tickSpeed == 0 || framerate == 0)
+        if (Float.compare(tickSpeed, 0) == 0 || Float.compare(framerate, 0) == 0)
             throw new IllegalArgumentException("Cannot set tickSpeed or framerate to 0");
 
         Pseudo3D.resizable = resizable;

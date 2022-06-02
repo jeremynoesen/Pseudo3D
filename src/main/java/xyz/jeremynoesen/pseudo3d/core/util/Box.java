@@ -259,9 +259,13 @@ public class Box {
      */
     public boolean overlaps(Box... box) {
         for (Box b : box) {
-            if (!(min.getX() <= b.getMaximum().getX() && max.getX() >= b.getMinimum().getX() &&
-                    min.getY() <= b.getMaximum().getY() && max.getY() >= b.getMinimum().getY() &&
-                    min.getZ() <= b.getMaximum().getZ() && max.getZ() >= b.getMinimum().getZ())) return false;
+            if (!(Float.compare(min.getX(), b.getMaximum().getX()) <= 0 &&
+                    Float.compare(max.getX(), b.getMinimum().getX()) >= 0 &&
+                    Float.compare(min.getY(), b.getMaximum().getY()) <= 0 &&
+                    Float.compare(max.getY(), b.getMinimum().getY()) >= 0 &&
+                    Float.compare(min.getZ(), b.getMaximum().getZ()) <= 0 &&
+                    Float.compare(max.getZ(), b.getMinimum().getZ()) >= 0))
+                return false;
         }
         return true;
     }
@@ -274,9 +278,13 @@ public class Box {
      */
     public boolean contains(Box... box) {
         for (Box b : box) {
-            if (!(min.getX() <= b.getMinimum().getX() && max.getX() >= b.getMaximum().getX() &&
-                    min.getY() <= b.getMinimum().getY() && max.getY() >= b.getMaximum().getY() &&
-                    min.getZ() <= b.getMinimum().getZ() && max.getZ() >= b.getMaximum().getZ())) return false;
+            if (!(Float.compare(min.getX(), b.getMinimum().getX()) <= 0 &&
+                    Float.compare(max.getX(), b.getMaximum().getX()) >= 0 &&
+                    Float.compare(min.getY(), b.getMinimum().getY()) <= 0 &&
+                    Float.compare(max.getY(), b.getMaximum().getY()) >= 0 &&
+                    Float.compare(min.getZ(), b.getMinimum().getZ()) <= 0 &&
+                    Float.compare(max.getZ(), b.getMaximum().getZ()) >= 0))
+                return false;
         }
         return true;
     }
@@ -289,9 +297,13 @@ public class Box {
      */
     public boolean contains(Vector... position) {
         for (Vector v : position) {
-            if (!(min.getX() <= v.getX() && max.getX() >= v.getX() &&
-                    min.getY() <= v.getY() && max.getY() >= v.getY() &&
-                    min.getZ() <= v.getZ() && max.getZ() >= v.getZ())) return false;
+            if (!(Float.compare(min.getX(), v.getX()) <= 0 &&
+                    Float.compare(max.getX(), v.getX()) >= 0 &&
+                    Float.compare(min.getY(), v.getY()) <= 0 &&
+                    Float.compare(max.getY(), v.getY()) >= 0 &&
+                    Float.compare(min.getZ(), v.getZ()) <= 0 &&
+                    Float.compare(max.getZ(), v.getZ()) >= 0))
+                return false;
         }
         return true;
     }

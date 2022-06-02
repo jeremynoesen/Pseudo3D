@@ -173,14 +173,14 @@ public abstract class Physics extends Box {
         skipMomentum.clear();
         for (Axis axis : kinematicAxes) {
             float v = velocity.get(axis);
-            if (v != 0) {
+            if (Float.compare(v, 0) != 0) {
                 for (Physics physics : collidingObjects.get(Side.getFromNormal(axis, v))) {
                     if (physics.updatable && physics.isKinematic(axis) && physics.isPushable(axis)) {
                         float sum = mass + physics.mass;
                         float diff = mass - physics.mass;
                         float v1 = v;
                         float v2 = physics.velocity.get(axis);
-                        if (sum != 0) {
+                        if (Float.compare(sum, 0) != 0) {
                             v = ((diff / sum) * v1) + ((2 * physics.mass / sum) * v2);
                             if (!physics.skipMomentum.contains(axis))
                                 physics.velocity =
@@ -242,7 +242,7 @@ public abstract class Physics extends Box {
                         }
                     }
 
-                    if (totalMass != 0) {
+                    if (Float.compare(totalMass, 0) != 0) {
                         f = ((f + roughness.get(side)) / (count + 1)) * totalMass * deltaTime;
                         friction = friction.set(axis, friction.get(axis) + f);
                     }
@@ -254,16 +254,16 @@ public abstract class Physics extends Box {
         float fx = friction.getX(), fy = friction.getY(), fz = friction.getZ();
 
         if (isKinematic(Axis.X)) {
-            if (vx < 0) vx = Math.min(vx + fy + fz, 0);
-            else if (vx > 0) vx = Math.max(vx - fy - fz, 0);
+            if (Float.compare(vx, 0) < 0) vx = Math.min(vx + fy + fz, 0);
+            else if (Float.compare(vx, 0) > 0) vx = Math.max(vx - fy - fz, 0);
         }
         if (isKinematic(Axis.Y)) {
-            if (vy < 0) vy = Math.min(vy + fx + fz, 0);
-            else if (vy > 0) vy = Math.max(vy - fx - fz, 0);
+            if (Float.compare(vy, 0) < 0) vy = Math.min(vy + fx + fz, 0);
+            else if (Float.compare(vy, 0) > 0) vy = Math.max(vy - fx - fz, 0);
         }
         if (isKinematic(Axis.Z)) {
-            if (vz < 0) vz = Math.min(vz + fx + fy, 0);
-            else if (vz > 0) vz = Math.max(vz - fx - fy, 0);
+            if (Float.compare(vz, 0) < 0) vz = Math.min(vz + fx + fy, 0);
+            else if (Float.compare(vz, 0) > 0) vz = Math.max(vz - fx - fy, 0);
         }
 
         velocity = new Vector(vx, vy, vz);
@@ -275,12 +275,12 @@ public abstract class Physics extends Box {
     private void applyDrag() {
         for (Axis axis : kinematicAxes) {
             float v = velocity.get(axis);
-            if (v != 0) {
+            if (Float.compare(v, 0) != 0) {
                 float d = drag.get(Side.getFromNormal(axis, v)) * getFaceArea(Side.getFromNormal(axis, 1))
                         * deltaTime * Math.abs(velocity.get(axis));
-                if (v < 0)
+                if (Float.compare(v, 0) < 0)
                     velocity = velocity.set(axis, Math.min(v + d, 0));
-                else if (v > 0)
+                else if (Float.compare(v, 0) > 0)
                     velocity = velocity.set(axis, Math.max(v - d, 0));
             }
         }
@@ -343,20 +343,20 @@ public abstract class Physics extends Box {
         Side side = null;
         byte zeros = 0;
         for (Side s : Side.values()) {
-            if (overlaps.get(s) < distance) {
+            if (Float.compare(overlaps.get(s), distance) < 0) {
                 distance = overlaps.get(s);
                 side = s;
             }
-            if (overlaps.get(s) == 0) zeros++;
+            if (Float.compare(overlaps.get(s), 0) == 0) zeros++;
         }
         if (zeros > 1) return;
 
         Axis axis = Side.getNormalAxis(side);
         if (isCollideable(side) && physics.isCollideable(Side.getOpposite(side))) {
-            if (isKinematic(axis) && Math.signum(velocity.get(axis)) ==
-                    Math.signum(Side.getNormalVector(side).get(axis))) {
+            if (isKinematic(axis) && Float.compare(Math.signum(velocity.get(axis)),
+                    Math.signum(Side.getNormalVector(side).get(axis))) == 0) {
 
-                if (Math.signum(velocity.get(axis)) == -Math.signum(physics.velocity.get(axis))
+                if (Float.compare(Math.signum(velocity.get(axis)), -Math.signum(physics.velocity.get(axis))) == 0
                         && !physics.specialCollisions.contains(this)) {
                     distance *= velocity.get(axis) / (velocity.get(axis) - physics.velocity.get(axis));
                     specialCollisions.add(physics);

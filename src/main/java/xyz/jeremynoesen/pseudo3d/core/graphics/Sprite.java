@@ -259,7 +259,7 @@ public class Sprite {
      * @return This Sprite
      */
     public Sprite setFramerate(float framerate) {
-        if (framerate == 0)
+        if (Float.compare(framerate, 0) == 0)
             throw new IllegalArgumentException("Cannot set framerate to 0");
         frameStep = 1 / framerate;
         return this;
@@ -313,16 +313,16 @@ public class Sprite {
      * @param deltaTime Time elapsed for the render frame
      */
     public void update(float deltaTime) {
-        if (!paused && images != null && !images.isEmpty() && frameStep != 0) {
+        if (!paused && images != null && !images.isEmpty() && Float.compare(frameStep, 0) != 0) {
             try {
                 currentFrame = currentFrame + (deltaTime / frameStep);
                 image = images.get(getFrame());
             } catch (IndexOutOfBoundsException e) {
                 if (loop) {
-                    currentFrame = frameStep > 0 ? (currentFrame - images.size()) : (currentFrame + images.size());
+                    currentFrame = Float.compare(frameStep, 0) > 0 ? (currentFrame - images.size()) : (currentFrame + images.size());
                     image = images.get(getFrame());
                 } else {
-                    currentFrame = frameStep > 0 ? 0 : images.size();
+                    currentFrame = Float.compare(frameStep, 0) > 0 ? 0 : images.size();
                     paused = true;
                 }
             }
@@ -364,7 +364,7 @@ public class Sprite {
      * @return Current frame of the animation
      */
     public int getFrame() {
-        return frameStep > 0 ? (int) Math.floor(currentFrame) : (int) Math.ceil(currentFrame);
+        return Float.compare(frameStep, 0) > 0 ? (int) Math.floor(currentFrame) : (int) Math.ceil(currentFrame);
     }
 
     /**

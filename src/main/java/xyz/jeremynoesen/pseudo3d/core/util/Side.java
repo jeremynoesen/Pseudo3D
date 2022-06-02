@@ -16,11 +16,11 @@ public enum Side {
      * @return Side based on normal direction and Axis
      */
     public static Side getFromNormal(Axis axis, float dir) {
-        if (dir == 0) return null;
+        if (Float.compare(dir, 0) == 0) return null;
         return switch (axis) {
-            case X -> dir < 0 ? LEFT : RIGHT;
-            case Y -> dir < 0 ? BOTTOM : TOP;
-            case Z -> dir < 0 ? BACK : FRONT;
+            case X -> Float.compare(dir, 0) < 0 ? LEFT : RIGHT;
+            case Y -> Float.compare(dir, 0) < 0 ? BOTTOM : TOP;
+            case Z -> Float.compare(dir, 0) < 0 ? BACK : FRONT;
         };
     }
 
