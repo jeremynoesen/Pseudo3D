@@ -16,7 +16,7 @@ For now, view the [Example class](src/test/java/Example.java) for a basic idea o
 There are also [JavaDocs](https://jeremynoesen.github.io/Pseudo3D/javadoc) available.
 
 ## Building
-This project is not yet complete, but if you wish to build it to use it:  
+If you wish to build Pseudo3D to use it your own project:  
 
 1. Clone or download this repository.
 2. Run `./gradlew shadowJar` in the directory of the project.
@@ -30,16 +30,9 @@ The following are recordings of the Pseudo3D renderer and physics in action. You
 ### Orthographic
 This is what an orthographic, or zero-degree field-of-view, render looks like. This is the style used for 2D sprite-based games. There is no depth whatsoever, making it difficult to decipher the exact positioning of the character with respect to the other character or the ground. In this, the character can only move in 2D space. Sprites are only drawn in 2D.
 
-
 <div align="center" ><img src="img/Orthographic.gif" alt="Orthographic example" title="Orthographic example" /></div>
 
 ### Perspective
 This is what the Pseudo3D rendering looks like. Sprites scale based on distance from the camera, camera field of view, camera sensor size, and zoom; however, they are still rendered as 2D sprites. You can make out the position of the moving character in relation to the stationary character in what feels like 3D space.
 
 <div align="center" ><img src="img/Perspective.gif" alt="Perspective example" title="Perspective example" /></div>
-
-## Contributing
-This is a solo project of mine at the moment, so I am not looking to allow any other contributors. You are welcome to create an issue if something is not working right.
-
-## Notice
-This project is incomplete. You can view the project boards to see what is planned for the future. A wiki will eventually be made with documentation and examples, but until then, there are no direct explanations available. Not everything is implemented yet, so use at your own risk.
