@@ -55,9 +55,9 @@ public abstract class Physics extends Box {
     private final HashMap<Side, Float> drag;
 
     /**
-     * Roughness of the object per side, used for friction
+     * Coefficient of friction per side
      */
-    private final HashMap<Side, Float> roughness;
+    private final HashMap<Side, Float> friction;
 
     /**
      * Set of collideable sides
@@ -106,7 +106,7 @@ public abstract class Physics extends Box {
         gravity = new Vector(0, -9.81f, 0);
         mass = 1;
         drag = new HashMap<>();
-        roughness = new HashMap<>();
+        friction = new HashMap<>();
         collidableSides = new HashSet<>(Arrays.asList(Side.values()));
         kinematicAxes = new HashSet<>(Arrays.asList(Axis.values()));
         pushableAxes = new HashSet<>(Arrays.asList(Axis.values()));
@@ -116,7 +116,7 @@ public abstract class Physics extends Box {
         specialCollisions = new HashSet<>();
         for (Side s : Side.values()) {
             drag.put(s, 0.5f);
-            roughness.put(s, 5f);
+            friction.put(s, 5f);
             collidingObjects.put(s, new HashSet<>());
         }
     }
@@ -136,7 +136,7 @@ public abstract class Physics extends Box {
         gravity = physics.gravity;
         mass = physics.mass;
         drag = new HashMap<>();
-        roughness = new HashMap<>();
+        friction = new HashMap<>();
         collidableSides = new HashSet<>(physics.collidableSides);
         kinematicAxes = new HashSet<>(physics.kinematicAxes);
         pushableAxes = new HashSet<>(physics.pushableAxes);
@@ -146,7 +146,7 @@ public abstract class Physics extends Box {
         specialCollisions = new HashSet<>();
         for (Side s : Side.values()) {
             drag.put(s, physics.drag.get(s));
-            roughness.put(s, physics.roughness.get(s));
+            friction.put(s, physics.friction.get(s));
             collidingObjects.put(s, new HashSet<>(physics.collidingObjects.get(s)));
         }
     }
@@ -219,7 +219,7 @@ public abstract class Physics extends Box {
 
                 for (Physics physics : collidingObjects.get(side)) {
                     if (physics.updatable) {
-                        f += physics.roughness.get(side) *
+                        f += physics.friction.get(side) *
                                 Math.abs(velocity.get(axis) - physics.getVelocity().get(axis));
                         count++;
                     }
@@ -243,7 +243,7 @@ public abstract class Physics extends Box {
                     }
 
                     if (Float.compare(totalMass, 0) != 0) {
-                        f = ((f + roughness.get(side)) / (count + 1)) * totalMass * deltaTime;
+                        f = ((f + this.friction.get(side)) / (count + 1)) * totalMass * deltaTime;
                         friction = friction.set(axis, friction.get(axis) + f);
                     }
                 }
@@ -508,47 +508,47 @@ public abstract class Physics extends Box {
     }
 
     /**
-     * Get the roughness of the object for a Side
+     * Get the coefficient of friction of the object for a Side
      *
-     * @param side Side to get roughness of
-     * @return Roughness of the object Side
+     * @param side Side to get coefficient of friction of
+     * @return Coefficient of friction of the object Side
      */
-    public float getRoughness(Side side) {
-        return roughness.get(side);
+    public float getFriction(Side side) {
+        return friction.get(side);
     }
 
     /**
-     * Set the roughness for the object on specific Sides
+     * Set the coefficient of friction for the object on specific Sides
      * <br>
      * Specify no Sides to apply to all Sides
      *
-     * @param roughness Roughness
-     * @param side      Sides to set roughness for
+     * @param friction Coefficient of friction
+     * @param side     Sides to set coefficient of friction for
      * @return This Physics object
      */
-    public Physics setRoughness(float roughness, Side... side) {
-        for (Side sides : side.length > 0 ? side : Side.values()) this.roughness.put(sides, roughness);
+    public Physics setFriction(float friction, Side... side) {
+        for (Side sides : side.length > 0 ? side : Side.values()) this.friction.put(sides, friction);
         return this;
     }
 
     /**
-     * Set the roughness for all Sides
+     * Set the coefficients of friction for all Sides
      *
-     * @param left   Roughness for the left Side
-     * @param right  Roughness for the right Side
-     * @param bottom Roughness for the bottom Side
-     * @param top    Roughness for the top Side
-     * @param back   Roughness for the back Side
-     * @param front  Roughness for the front Side
+     * @param left   Coefficient of friction for the left Side
+     * @param right  Coefficient of friction for the right Side
+     * @param bottom Coefficient of friction for the bottom Side
+     * @param top    Coefficient of friction for the top Side
+     * @param back   Coefficient of friction for the back Side
+     * @param front  Coefficient of friction for the front Side
      * @return This Physics object
      */
-    public Physics setRoughness(float left, float right, float bottom, float top, float back, float front) {
-        roughness.put(Side.LEFT, left);
-        roughness.put(Side.RIGHT, right);
-        roughness.put(Side.BOTTOM, bottom);
-        roughness.put(Side.TOP, top);
-        roughness.put(Side.BACK, back);
-        roughness.put(Side.FRONT, front);
+    public Physics setFriction(float left, float right, float bottom, float top, float back, float front) {
+        friction.put(Side.LEFT, left);
+        friction.put(Side.RIGHT, right);
+        friction.put(Side.BOTTOM, bottom);
+        friction.put(Side.TOP, top);
+        friction.put(Side.BACK, back);
+        friction.put(Side.FRONT, front);
         return this;
     }
 
@@ -806,7 +806,7 @@ public abstract class Physics extends Box {
                 Objects.equals(gravity, physics.gravity) &&
                 Float.compare(physics.mass, mass) == 0 &&
                 Objects.equals(drag, physics.drag) &&
-                Objects.equals(roughness, physics.roughness) &&
+                Objects.equals(friction, physics.friction) &&
                 Objects.equals(collidableSides, physics.collidableSides) &&
                 Objects.equals(kinematicAxes, physics.kinematicAxes) &&
                 Objects.equals(pushableAxes, physics.pushableAxes) &&
