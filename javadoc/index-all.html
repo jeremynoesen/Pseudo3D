@@ -296,6 +296,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the framerate of the Sprite</div>
 </dd>
+<dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html#getFriction(xyz.jeremynoesen.pseudo3d.core.util.Side)">getFriction(Side)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></dt>
+<dd>
+<div class="block">Get the coefficient of friction of the object for a Side</div>
+</dd>
 <dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/util/Side.html#getFromNormal(xyz.jeremynoesen.pseudo3d.core.util.Axis,float)">getFromNormal(Axis, float)</a></span> - Static method in enum xyz.jeremynoesen.pseudo3d.core.util.<a href="xyz/jeremynoesen/pseudo3d/core/util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a></dt>
 <dd>
 <div class="block">Get a Side whose normal has specified direction on an Axis</div>
@@ -399,10 +403,6 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/graphics/Sprite.html#getRotation()">getRotation()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.graphics.<a href="xyz/jeremynoesen/pseudo3d/core/graphics/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.core.graphics">Sprite</a></dt>
 <dd>
 <div class="block">Get the rotation of the Sprite</div>
-</dd>
-<dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html#getRoughness(xyz.jeremynoesen.pseudo3d.core.util.Side)">getRoughness(Side)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></dt>
-<dd>
-<div class="block">Get the roughness of the object for a Side</div>
 </dd>
 <dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Entity.html#getScene()">getScene()</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Entity</a></dt>
 <dd>
@@ -774,6 +774,16 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the framerate for the Sprite</div>
 </dd>
+<dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html#setFriction(float,float,float,float,float,float)">setFriction(float, float, float, float, float, float)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></dt>
+<dd>
+<div class="block">Set the coefficients of friction for all Sides</div>
+</dd>
+<dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html#setFriction(float,xyz.jeremynoesen.pseudo3d.core.util.Side...)">setFriction(float, Side...)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></dt>
+<dd>
+<div class="block">Set the coefficient of friction for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
+</dd>
 <dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html#setGravity(xyz.jeremynoesen.pseudo3d.core.util.Vector)">setGravity(Vector)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></dt>
 <dd>
 <div class="block">Set the gravity applied to the object</div>
@@ -847,16 +857,6 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/graphics/Sprite.html#setRotation(float)">setRotation(float)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.graphics.<a href="xyz/jeremynoesen/pseudo3d/core/graphics/Sprite.html" title="class in xyz.jeremynoesen.pseudo3d.core.graphics">Sprite</a></dt>
 <dd>
 <div class="block">Set the rotation of the Sprite</div>
-</dd>
-<dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html#setRoughness(float,float,float,float,float,float)">setRoughness(float, float, float, float, float, float)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></dt>
-<dd>
-<div class="block">Set the roughness for all Sides</div>
-</dd>
-<dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html#setRoughness(float,xyz.jeremynoesen.pseudo3d.core.util.Side...)">setRoughness(float, Side...)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></dt>
-<dd>
-<div class="block">Set the roughness for the object on specific Sides
- <br>
- Specify no Sides to apply to all Sides</div>
 </dd>
 <dt><span class="member-name-link"><a href="xyz/jeremynoesen/pseudo3d/core/object/Entity.html#setScene(xyz.jeremynoesen.pseudo3d.core.Scene)">setScene(Scene)</a></span> - Method in class xyz.jeremynoesen.pseudo3d.core.object.<a href="xyz/jeremynoesen/pseudo3d/core/object/Entity.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Entity</a></dt>
 <dd>

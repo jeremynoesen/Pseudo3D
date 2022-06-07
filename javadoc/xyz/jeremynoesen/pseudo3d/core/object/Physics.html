@@ -185,45 +185,45 @@ extends <a href="../util/Box.html" title="class in xyz.jeremynoesen.pseudo3d.cor
 </td>
 </tr>
 <tr class="alt-color" id="i6">
+<td class="col-first"><code>float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getFriction(xyz.jeremynoesen.pseudo3d.core.util.Side)">getFriction</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a>&nbsp;side)</code></th>
+<td class="col-last">
+<div class="block">Get the coefficient of friction of the object for a Side</div>
+</td>
+</tr>
+<tr class="row-color" id="i7">
 <td class="col-first"><code><a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.core.util">Vector</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getGravity()">getGravity</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Get the gravity applied to the object</div>
 </td>
 </tr>
-<tr class="row-color" id="i7">
+<tr class="alt-color" id="i8">
 <td class="col-first"><code>java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Axis</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getKinematicAxes()">getKinematicAxes</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Get the Axes the object is kinematic on</div>
 </td>
 </tr>
-<tr class="alt-color" id="i8">
+<tr class="row-color" id="i9">
 <td class="col-first"><code>float</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getMass()">getMass</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Get the mass of the object</div>
 </td>
 </tr>
-<tr class="row-color" id="i9">
+<tr class="alt-color" id="i10">
 <td class="col-first"><code>java.util.HashSet&lt;<a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getOverlappingObjects()">getOverlappingObjects</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Get the set of all objects overlapping this one</div>
 </td>
 </tr>
-<tr class="alt-color" id="i10">
+<tr class="row-color" id="i11">
 <td class="col-first"><code>java.util.HashSet&lt;<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Axis</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getPushableAxes()">getPushableAxes</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Get the Axes the object is pushable on</div>
-</td>
-</tr>
-<tr class="row-color" id="i11">
-<td class="col-first"><code>float</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getRoughness(xyz.jeremynoesen.pseudo3d.core.util.Side)">getRoughness</a></span>&#8203;(<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a>&nbsp;side)</code></th>
-<td class="col-last">
-<div class="block">Get the roughness of the object for a Side</div>
 </td>
 </tr>
 <tr class="alt-color" id="i12">
@@ -345,12 +345,34 @@ float&nbsp;front)</code></th>
 </tr>
 <tr class="alt-color" id="i26">
 <td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setFriction(float,float,float,float,float,float)">setFriction</a></span>&#8203;(float&nbsp;left,
+float&nbsp;right,
+float&nbsp;bottom,
+float&nbsp;top,
+float&nbsp;back,
+float&nbsp;front)</code></th>
+<td class="col-last">
+<div class="block">Set the coefficients of friction for all Sides</div>
+</td>
+</tr>
+<tr class="row-color" id="i27">
+<td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setFriction(float,xyz.jeremynoesen.pseudo3d.core.util.Side...)">setFriction</a></span>&#8203;(float&nbsp;friction,
+<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a>...&nbsp;side)</code></th>
+<td class="col-last">
+<div class="block">Set the coefficient of friction for the object on specific Sides
+ <br>
+ Specify no Sides to apply to all Sides</div>
+</td>
+</tr>
+<tr class="alt-color" id="i28">
+<td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setGravity(xyz.jeremynoesen.pseudo3d.core.util.Vector)">setGravity</a></span>&#8203;(<a href="../util/Vector.html" title="class in xyz.jeremynoesen.pseudo3d.core.util">Vector</a>&nbsp;gravity)</code></th>
 <td class="col-last">
 <div class="block">Set the gravity applied to the object</div>
 </td>
 </tr>
-<tr class="row-color" id="i27">
+<tr class="row-color" id="i29">
 <td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setKinematic(xyz.jeremynoesen.pseudo3d.core.util.Axis...)">setKinematic</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Axis</a>...&nbsp;axis)</code></th>
 <td class="col-last">
@@ -359,42 +381,20 @@ float&nbsp;front)</code></th>
  Specify no Axes to make non-kinematic</div>
 </td>
 </tr>
-<tr class="alt-color" id="i28">
+<tr class="alt-color" id="i30">
 <td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setMass(float)">setMass</a></span>&#8203;(float&nbsp;mass)</code></th>
 <td class="col-last">
 <div class="block">Set the mass of the object</div>
 </td>
 </tr>
-<tr class="row-color" id="i29">
+<tr class="row-color" id="i31">
 <td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setPushable(xyz.jeremynoesen.pseudo3d.core.util.Axis...)">setPushable</a></span>&#8203;(<a href="../util/Axis.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Axis</a>...&nbsp;axis)</code></th>
 <td class="col-last">
 <div class="block">Set the Axes the object can be pushed on
  <br>
  Specify no Axes to make non-pushable</div>
-</td>
-</tr>
-<tr class="alt-color" id="i30">
-<td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setRoughness(float,float,float,float,float,float)">setRoughness</a></span>&#8203;(float&nbsp;left,
-float&nbsp;right,
-float&nbsp;bottom,
-float&nbsp;top,
-float&nbsp;back,
-float&nbsp;front)</code></th>
-<td class="col-last">
-<div class="block">Set the roughness for all Sides</div>
-</td>
-</tr>
-<tr class="row-color" id="i31">
-<td class="col-first"><code><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setRoughness(float,xyz.jeremynoesen.pseudo3d.core.util.Side...)">setRoughness</a></span>&#8203;(float&nbsp;roughness,
-<a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a>...&nbsp;side)</code></th>
-<td class="col-last">
-<div class="block">Set the roughness for the object on specific Sides
- <br>
- Specify no Sides to apply to all Sides</div>
 </td>
 </tr>
 <tr class="alt-color" id="i32">
@@ -651,53 +651,53 @@ float&nbsp;front)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="getRoughness(xyz.jeremynoesen.pseudo3d.core.util.Side)">
-<h3>getRoughness</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">getRoughness</span>&#8203;(<span class="parameters"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a>&nbsp;side)</span></div>
-<div class="block">Get the roughness of the object for a Side</div>
+<section class="detail" id="getFriction(xyz.jeremynoesen.pseudo3d.core.util.Side)">
+<h3>getFriction</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">getFriction</span>&#8203;(<span class="parameters"><a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a>&nbsp;side)</span></div>
+<div class="block">Get the coefficient of friction of the object for a Side</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>side</code> - Side to get roughness of</dd>
+<dd><code>side</code> - Side to get coefficient of friction of</dd>
 <dt>Returns:</dt>
-<dd>Roughness of the object Side</dd>
+<dd>Coefficient of friction of the object Side</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setRoughness(float,xyz.jeremynoesen.pseudo3d.core.util.Side...)">
-<h3>setRoughness</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></span>&nbsp;<span class="member-name">setRoughness</span>&#8203;(<span class="parameters">float&nbsp;roughness,
+<section class="detail" id="setFriction(float,xyz.jeremynoesen.pseudo3d.core.util.Side...)">
+<h3>setFriction</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></span>&nbsp;<span class="member-name">setFriction</span>&#8203;(<span class="parameters">float&nbsp;friction,
 <a href="../util/Side.html" title="enum in xyz.jeremynoesen.pseudo3d.core.util">Side</a>...&nbsp;side)</span></div>
-<div class="block">Set the roughness for the object on specific Sides
+<div class="block">Set the coefficient of friction for the object on specific Sides
  <br>
  Specify no Sides to apply to all Sides</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>roughness</code> - Roughness</dd>
-<dd><code>side</code> - Sides to set roughness for</dd>
+<dd><code>friction</code> - Coefficient of friction</dd>
+<dd><code>side</code> - Sides to set coefficient of friction for</dd>
 <dt>Returns:</dt>
 <dd>This Physics object</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setRoughness(float,float,float,float,float,float)">
-<h3>setRoughness</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></span>&nbsp;<span class="member-name">setRoughness</span>&#8203;(<span class="parameters">float&nbsp;left,
+<section class="detail" id="setFriction(float,float,float,float,float,float)">
+<h3>setFriction</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Physics.html" title="class in xyz.jeremynoesen.pseudo3d.core.object">Physics</a></span>&nbsp;<span class="member-name">setFriction</span>&#8203;(<span class="parameters">float&nbsp;left,
 float&nbsp;right,
 float&nbsp;bottom,
 float&nbsp;top,
 float&nbsp;back,
 float&nbsp;front)</span></div>
-<div class="block">Set the roughness for all Sides</div>
+<div class="block">Set the coefficients of friction for all Sides</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>left</code> - Roughness for the left Side</dd>
-<dd><code>right</code> - Roughness for the right Side</dd>
-<dd><code>bottom</code> - Roughness for the bottom Side</dd>
-<dd><code>top</code> - Roughness for the top Side</dd>
-<dd><code>back</code> - Roughness for the back Side</dd>
-<dd><code>front</code> - Roughness for the front Side</dd>
+<dd><code>left</code> - Coefficient of friction for the left Side</dd>
+<dd><code>right</code> - Coefficient of friction for the right Side</dd>
+<dd><code>bottom</code> - Coefficient of friction for the bottom Side</dd>
+<dd><code>top</code> - Coefficient of friction for the top Side</dd>
+<dd><code>back</code> - Coefficient of friction for the back Side</dd>
+<dd><code>front</code> - Coefficient of friction for the front Side</dd>
 <dt>Returns:</dt>
 <dd>This Physics object</dd>
 </dl>
